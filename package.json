@@ -1,0 +1,45 @@
+{
+  "name": "jinro-judgment-fansite",
+  "version": "1.0.0",
+  "description": "人狼ジャッジメントの役職情報、立ち回り、初心者向け解説、編成考察をまとめるファンサイト",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win",
+    "build:win:portable": "electron-builder --win portable"
+  },
+  "build": {
+    "appId": "com.jinro-judgment.fansite",
+    "productName": "人狼ジャッジメント ファンサイト",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerLanguages": ["ja"],
+      "language": "1041"
+    }
+  },
+  "keywords": ["jinro", "werewolf", "judgment", "fansite"],
+  "author": "toukanno",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  }
+}

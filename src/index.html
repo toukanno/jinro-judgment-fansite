@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'">
+  <title>人狼ジャッジメント ファンサイト</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>人狼ジャッジメント ファンサイト</h1>
+      <nav>
+        <a href="#roles" class="nav-link active" data-section="roles">役職一覧</a>
+        <a href="#beginner" class="nav-link" data-section="beginner">初心者ガイド</a>
+        <a href="#strategy" class="nav-link" data-section="strategy">立ち回り</a>
+        <a href="#composition" class="nav-link" data-section="composition">編成考察</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="roles" class="section active">
+      <h2>役職一覧</h2>
+      <div class="role-grid">
+        <div class="role-card village">
+          <div class="role-team">市民陣営</div>
+          <h3>市民</h3>
+          <p>特殊な能力を持たない一般市民。投票と議論で人狼を見つけ出そう。</p>
+        </div>
+        <div class="role-card village">
+          <div class="role-team">市民陣営</div>
+          <h3>占い師</h3>
+          <p>毎晩一人を占い、人狼かどうかを知ることができる。村の要。</p>
+        </div>
+        <div class="role-card village">
+          <div class="role-team">市民陣営</div>
+          <h3>霊能者</h3>
+          <p>処刑された人が人狼だったかどうかを知ることができる。</p>
+        </div>
+        <div class="role-card village">
+          <div class="role-team">市民陣営</div>
+          <h3>狩人</h3>
+          <p>毎晩一人を護衛し、人狼の襲撃から守ることができる。</p>
+        </div>
+        <div class="role-card werewolf">
+          <div class="role-team">人狼陣営</div>
+          <h3>人狼</h3>
+          <p>毎晩一人を襲撃できる。仲間の人狼と協力して市民を減らそう。</p>
+        </div>
+        <div class="role-card werewolf">
+          <div class="role-team">人狼陣営</div>
+          <h3>狂人</h3>
+          <p>人狼の味方だが、占い結果は市民と出る。人狼の勝利が自分の勝利。</p>
+        </div>
+        <div class="role-card fox">
+          <div class="role-team">第三陣営</div>
+          <h3>妖狐</h3>
+          <p>人狼に襲撃されても死なないが、占われると死ぬ。生存が勝利条件。</p>
+        </div>
+        <div class="role-card village">
+          <div class="role-team">市民陣営</div>
+          <h3>猫又</h3>
+          <p>処刑や襲撃で死亡した時、道連れにランダムで一人を殺す。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="beginner" class="section">
+      <h2>初心者ガイド</h2>
+      <div class="guide-list">
+        <div class="guide-item">
+          <h3>1. ゲームの基本ルール</h3>
+          <p>人狼ジャッジメントは「市民陣営」と「人狼陣営」に分かれて戦うゲームです。昼のターンでは議論と投票で怪しい人を処刑し、夜のターンでは人狼が市民を襲撃します。</p>
+        </div>
+        <div class="guide-item">
+          <h3>2. 勝利条件</h3>
+          <p><strong>市民陣営：</strong>人狼を全員処刑すれば勝利。<br><strong>人狼陣営：</strong>市民の数を人狼と同数以下にすれば勝利。</p>
+        </div>
+        <div class="guide-item">
+          <h3>3. 初心者が気をつけること</h3>
+          <ul>
+            <li>発言しないと怪しまれる。積極的に議論に参加しよう</li>
+            <li>役職を騙る場合はリスクを理解してから</li>
+            <li>投票先の理由を必ず述べよう</li>
+            <li>感情的にならず、論理的に推理しよう</li>
+          </ul>
+        </div>
+        <div class="guide-item">
+          <h3>4. よく使われる用語</h3>
+          <ul>
+            <li><strong>CO（カミングアウト）：</strong>自分の役職を宣言すること</li>
+            <li><strong>ローラー：</strong>特定の役職COした人を全員処刑すること</li>
+            <li><strong>グレー：</strong>占われていない、COもしていない人</li>
+            <li><strong>ライン：</strong>プレイヤー間のつながり・関係性</li>
+            <li><strong>SG（スケープゴート）：</strong>人狼が最後に吊らせるために残す人</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="strategy" class="section">
+      <h2>立ち回りガイド</h2>
+      <div class="guide-list">
+        <div class="guide-item">
+          <h3>占い師の立ち回り</h3>
+          <p>初日は潜伏か即COかを状況に応じて判断。占い先はグレーの中から発言が少ない人や怪しい人を優先的に占おう。結果は正確に伝え、偽占い師との差別化を図ろう。</p>
+        </div>
+        <div class="guide-item">
+          <h3>霊能者の立ち回り</h3>
+          <p>基本的には早めにCOして信用を取ろう。処刑結果を正確に伝え、占い師の真偽判断の材料を提供しよう。</p>
+        </div>
+        <div class="guide-item">
+          <h3>狩人の立ち回り</h3>
+          <p>基本は潜伏。占い師や霊能者など重要役職を護衛しよう。GJ（護衛成功）が出たら状況に応じてCOを検討。</p>
+        </div>
+        <div class="guide-item">
+          <h3>人狼の立ち回り</h3>
+          <p>市民に紛れて発言しよう。仲間の人狼と連携し、襲撃先を慎重に選ぼう。占い師や霊能者を騙ることで村を混乱させよう。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="composition" class="section">
+      <h2>編成考察</h2>
+      <div class="guide-list">
+        <div class="guide-item">
+          <h3>9人村スタンダード編成</h3>
+          <div class="composition">
+            <span class="comp-village">市民×3</span>
+            <span class="comp-village">占い師×1</span>
+            <span class="comp-village">霊能者×1</span>
+            <span class="comp-village">狩人×1</span>
+            <span class="comp-werewolf">人狼×2</span>
+            <span class="comp-werewolf">狂人×1</span>
+          </div>
+          <p>最も基本的な編成。役職のバランスが良く、初心者にもおすすめ。占い師と霊能者のCOタイミングが鍵。</p>
+        </div>
+        <div class="guide-item">
+          <h3>12人村 妖狐入り編成</h3>
+          <div class="composition">
+            <span class="comp-village">市民×4</span>
+            <span class="comp-village">占い師×1</span>
+            <span class="comp-village">霊能者×1</span>
+            <span class="comp-village">狩人×1</span>
+            <span class="comp-village">猫又×1</span>
+            <span class="comp-werewolf">人狼×2</span>
+            <span class="comp-werewolf">狂人×1</span>
+            <span class="comp-fox">妖狐×1</span>
+          </div>
+          <p>第三陣営が加わり、より複雑な読み合いが楽しめる。妖狐の処理が重要になる。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>人狼ジャッジメント ファンサイト &copy; 2026 | このサイトは非公式のファンサイトです</p>
+    <p class="app-version"></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

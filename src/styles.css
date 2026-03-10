@@ -1,0 +1,229 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', 'Yu Gothic UI', 'Meiryo UI', sans-serif;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  line-height: 1.7;
+}
+
+header {
+  background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+  border-bottom: 2px solid #e94560;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+h1 {
+  font-size: 1.4rem;
+  color: #e94560;
+  white-space: nowrap;
+}
+
+nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  color: #a0a0c0;
+  text-decoration: none;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.nav-link:hover {
+  color: #fff;
+  background: rgba(233, 69, 96, 0.2);
+}
+
+.nav-link.active {
+  color: #fff;
+  background: #e94560;
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+}
+
+h2 {
+  font-size: 1.6rem;
+  color: #e94560;
+  margin-bottom: 24px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #333;
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.role-card {
+  background: #16213e;
+  border-radius: 12px;
+  padding: 20px;
+  border-left: 4px solid #555;
+  transition: transform 0.2s;
+}
+
+.role-card:hover {
+  transform: translateY(-2px);
+}
+
+.role-card.village {
+  border-left-color: #4ecca3;
+}
+
+.role-card.werewolf {
+  border-left-color: #e94560;
+}
+
+.role-card.fox {
+  border-left-color: #f5a623;
+}
+
+.role-team {
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.village .role-team { color: #4ecca3; }
+.werewolf .role-team { color: #e94560; }
+.fox .role-team { color: #f5a623; }
+
+.role-card h3 {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.role-card p {
+  font-size: 0.9rem;
+  color: #b0b0c8;
+}
+
+.guide-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.guide-item {
+  background: #16213e;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.guide-item h3 {
+  color: #e94560;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+.guide-item p {
+  color: #c0c0d8;
+  font-size: 0.95rem;
+}
+
+.guide-item ul {
+  margin-top: 8px;
+  padding-left: 20px;
+  color: #c0c0d8;
+}
+
+.guide-item li {
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+
+.composition {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.composition span {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.comp-village {
+  background: rgba(78, 204, 163, 0.2);
+  color: #4ecca3;
+}
+
+.comp-werewolf {
+  background: rgba(233, 69, 96, 0.2);
+  color: #e94560;
+}
+
+.comp-fox {
+  background: rgba(245, 166, 35, 0.2);
+  color: #f5a623;
+}
+
+footer {
+  text-align: center;
+  padding: 24px;
+  color: #666;
+  font-size: 0.85rem;
+  border-top: 1px solid #333;
+  margin-top: 40px;
+}
+
+.app-version {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  color: #555;
+}
+
+@media (max-width: 600px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  h1 {
+    font-size: 1.1rem;
+  }
+
+  .role-grid {
+    grid-template-columns: 1fr;
+  }
+}
