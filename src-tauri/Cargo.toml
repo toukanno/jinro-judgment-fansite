@@ -1,0 +1,19 @@
+[package]
+name = "jinro-judgment-fansite"
+version = "1.0.0"
+description = "人狼ジャッジメント ファンサイト macOSアプリ"
+authors = ["toukanno"]
+license = "MIT"
+edition = "2021"
+
+[lib]
+name = "jinro_judgment_fansite_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+serde_json = "1"
+serde = { version = "1", features = ["derive"] }
+tauri = { version = "2", features = [] }
