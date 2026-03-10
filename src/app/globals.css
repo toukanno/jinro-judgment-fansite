@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #1a1a2e;
+  --color-secondary: #16213e;
+  --color-accent: #e94560;
+  --color-accent-light: #ff6b81;
+  --color-text: #eaeaea;
+  --color-text-muted: #a0a0b0;
+  --color-surface: #1f1f3a;
+  --color-surface-light: #2a2a4a;
+  --color-border: #333355;
+  --color-villager: #4fc3f7;
+  --color-werewolf: #e94560;
+  --color-neutral: #ffd54f;
+}
+
+body {
+  background-color: var(--color-primary);
+  color: var(--color-text);
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Meiryo",
+    sans-serif;
+}
+
+@utility bg-primary { background-color: var(--color-primary); }
+@utility bg-secondary { background-color: var(--color-secondary); }
+@utility bg-surface { background-color: var(--color-surface); }
+@utility bg-surface-light { background-color: var(--color-surface-light); }
+@utility bg-accent { background-color: var(--color-accent); }
+@utility text-accent { color: var(--color-accent); }
+@utility text-accent-light { color: var(--color-accent-light); }
+@utility text-muted { color: var(--color-text-muted); }
+@utility border-custom { border-color: var(--color-border); }
+@utility text-villager { color: var(--color-villager); }
+@utility text-werewolf { color: var(--color-werewolf); }
+@utility text-neutral-role { color: var(--color-neutral); }
