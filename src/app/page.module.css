@@ -1,0 +1,40 @@
+.pageTitle {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+}
+
+.description {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.linkList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.linkCard {
+  display: block;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.2rem;
+  transition: border-color 0.2s;
+}
+
+.linkCard:hover {
+  border-color: var(--accent);
+  text-decoration: none;
+}
+
+.linkCard h3 {
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+
+.linkCard p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}

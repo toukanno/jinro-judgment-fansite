@@ -1,0 +1,114 @@
+.pageTitle {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+}
+
+.description {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.3rem;
+  margin-top: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+}
+
+/* カード一覧 */
+.cardList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.cardTitle {
+  font-size: 1.1rem;
+  margin-bottom: 0.6rem;
+}
+
+.incompatibleList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tag {
+  background-color: var(--accent-secondary);
+  color: var(--text-primary);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.note {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* マトリクス表 */
+.tableWrapper {
+  overflow-x: auto;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.matrix {
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  min-width: 100%;
+}
+
+.matrix th,
+.matrix td {
+  border: 1px solid var(--border);
+  padding: 0.3rem 0.4rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.colHeader {
+  background-color: var(--bg-secondary);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  padding: 0.5rem 0.3rem;
+  font-weight: 600;
+}
+
+.rowHeader {
+  background-color: var(--bg-secondary);
+  text-align: right;
+  padding-right: 0.6rem;
+  font-weight: 600;
+}
+
+.selfCell {
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.incompatibleCell {
+  background-color: rgba(233, 69, 96, 0.25);
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.compatibleCell {
+  background-color: transparent;
+}
+
+.backLink {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
