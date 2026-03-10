@@ -1,0 +1,136 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Meiryo", sans-serif;
+  background-color: #1a1a2e;
+  color: #e0e0e0;
+  line-height: 1.8;
+}
+
+header {
+  background-color: #16213e;
+  padding: 1.5rem 2rem;
+  border-bottom: 2px solid #e94560;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  color: #e94560;
+  margin-bottom: 0.5rem;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+nav a {
+  color: #a0a0c0;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+nav a:hover {
+  color: #e94560;
+}
+
+main {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+main > h2 {
+  font-size: 1.8rem;
+  color: #e94560;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #333;
+  padding-bottom: 0.5rem;
+}
+
+main > p {
+  margin-bottom: 2rem;
+  color: #a0a0c0;
+}
+
+.hero {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.hero h2 {
+  font-size: 2rem;
+  color: #e94560;
+  margin-bottom: 1rem;
+}
+
+.links {
+  margin-top: 2rem;
+}
+
+.links h2 {
+  font-size: 1.3rem;
+  color: #e94560;
+  margin-bottom: 1rem;
+}
+
+.links ul {
+  list-style: none;
+}
+
+.links a {
+  color: #a0a0c0;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.2s;
+}
+
+.links a:hover {
+  color: #e94560;
+}
+
+.quote-section {
+  margin-bottom: 2.5rem;
+}
+
+.quote-section h3 {
+  font-size: 1.2rem;
+  color: #e94560;
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+  border-left: 3px solid #e94560;
+}
+
+.quote-card {
+  background-color: #16213e;
+  border-radius: 8px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 0.8rem;
+  border: 1px solid #2a2a4a;
+  transition: border-color 0.2s;
+}
+
+.quote-card:hover {
+  border-color: #e94560;
+}
+
+blockquote p {
+  font-size: 1.05rem;
+  font-style: italic;
+  color: #d0d0e0;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem;
+  color: #606080;
+  font-size: 0.85rem;
+  border-top: 1px solid #2a2a4a;
+  margin-top: 3rem;
+}
