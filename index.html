@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <!-- iOS Web App Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JMファン">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/apple-touch-icon-152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon-180.png">
+  <link rel="apple-touch-startup-image" href="icons/splash.png">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1a1a2e">
+
+  <!-- General -->
+  <meta name="description" content="人狼ジャッジメントの役職情報、立ち回り、初心者向け解説、編成考察をまとめるファンサイト">
+  <meta name="format-detection" content="telephone=no">
+  <title>人狼ジャッジメント ファンサイト</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="site-title">人狼ジャッジメント<span class="subtitle">ファンサイト</span></h1>
+      <button class="menu-toggle" aria-label="メニューを開く" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="site-nav" id="site-nav">
+        <ul>
+          <li><a href="#roles">役職一覧</a></li>
+          <li><a href="#beginner">初心者ガイド</a></li>
+          <li><a href="#strategy">立ち回り</a></li>
+          <li><a href="#compositions">編成考察</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h2>人狼ジャッジメントを<br>もっと楽しもう</h2>
+        <p>役職情報・立ち回り・編成考察をまとめたファンサイトです。</p>
+      </div>
+    </section>
+
+    <section id="roles" class="section">
+      <div class="container">
+        <h2 class="section-title">役職一覧</h2>
+        <div class="role-grid">
+          <div class="role-card" data-team="village">
+            <h3>市民</h3>
+            <p class="role-team">市民陣営</p>
+            <p>特殊な能力を持たない一般市民。議論と投票で人狼を見つけ出すのが役目。</p>
+          </div>
+          <div class="role-card" data-team="village">
+            <h3>占い師</h3>
+            <p class="role-team">市民陣営</p>
+            <p>毎晩一人を占い、人狼かどうかを知ることができる。市民陣営の要。</p>
+          </div>
+          <div class="role-card" data-team="village">
+            <h3>霊能者</h3>
+            <p class="role-team">市民陣営</p>
+            <p>処刑された人が人狼だったかどうかを知ることができる。</p>
+          </div>
+          <div class="role-card" data-team="village">
+            <h3>騎士</h3>
+            <p class="role-team">市民陣営</p>
+            <p>毎晩一人を護衛し、人狼の襲撃から守ることができる。</p>
+          </div>
+          <div class="role-card" data-team="wolf">
+            <h3>人狼</h3>
+            <p class="role-team">人狼陣営</p>
+            <p>毎晩一人を襲撃できる。市民に紛れて生き残ることが目的。</p>
+          </div>
+          <div class="role-card" data-team="wolf">
+            <h3>狂人</h3>
+            <p class="role-team">人狼陣営</p>
+            <p>人狼の味方だが、占い結果は市民と出る。人狼を有利にするために行動する。</p>
+          </div>
+          <div class="role-card" data-team="fox">
+            <h3>妖狐</h3>
+            <p class="role-team">第三陣営</p>
+            <p>人狼に襲撃されても死なないが、占われると死亡する。生存していれば勝利。</p>
+          </div>
+          <div class="role-card" data-team="village">
+            <h3>猫又</h3>
+            <p class="role-team">市民陣営</p>
+            <p>処刑か襲撃で死亡した際、道連れにする。人狼への強力な抑止力。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="beginner" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">初心者ガイド</h2>
+        <div class="guide-list">
+          <article class="guide-item">
+            <h3>基本ルール</h3>
+            <p>人狼ジャッジメントは「市民陣営」と「人狼陣営」に分かれて戦うゲームです。昼の議論で怪しい人を見つけ出し、投票で処刑します。夜になると人狼が市民を襲撃します。</p>
+          </article>
+          <article class="guide-item">
+            <h3>勝利条件</h3>
+            <p><strong>市民陣営：</strong>すべての人狼を処刑すれば勝利。<br><strong>人狼陣営：</strong>市民の数が人狼と同数以下になれば勝利。</p>
+          </article>
+          <article class="guide-item">
+            <h3>初日の動き方</h3>
+            <p>まずは自分の役職を確認しましょう。市民なら積極的に発言して情報を集め、役職持ちなら適切なタイミングで情報を出すことが大切です。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="strategy" class="section">
+      <div class="container">
+        <h2 class="section-title">立ち回り</h2>
+        <div class="guide-list">
+          <article class="guide-item">
+            <h3>占い師の立ち回り</h3>
+            <p>初日に占い結果をCO（カミングアウト）するかどうかが重要な判断。偽占い師が出た場合は対抗COして信用勝負に持ち込みましょう。</p>
+          </article>
+          <article class="guide-item">
+            <h3>騎士の立ち回り</h3>
+            <p>基本的に占い師を護衛するのが安定。GJ（護衛成功）を出せば大きなアドバンテージになります。COのタイミングは慎重に。</p>
+          </article>
+          <article class="guide-item">
+            <h3>人狼の立ち回り</h3>
+            <p>市民らしく振る舞いつつ、仲間の人狼と連携しましょう。襲撃先の選択が勝敗を分けます。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="compositions" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">編成考察</h2>
+        <div class="guide-list">
+          <article class="guide-item">
+            <h3>9人スタンダード編成</h3>
+            <p><strong>市民3・占い師1・霊能者1・騎士1・人狼2・狂人1</strong><br>最も基本的な編成。初心者にもおすすめ。</p>
+          </article>
+          <article class="guide-item">
+            <h3>12人妖狐入り編成</h3>
+            <p><strong>市民4・占い師1・霊能者1・騎士1・猫又1・人狼3・狂人1・妖狐1</strong><br>第三陣営が加わり、より戦略的な展開に。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>このサイトはファンが作成した非公式サイトです。</p>
+      <p>&copy; 2026 人狼ジャッジメント ファンサイト</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
