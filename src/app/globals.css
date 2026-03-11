@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-950 text-gray-100;
+  }
+}
+
+@layer components {
+  .status-bar {
+    @apply h-3 rounded-full bg-gray-700 overflow-hidden;
+  }
+  .status-bar-fill {
+    @apply h-full rounded-full transition-all duration-700 ease-out;
+  }
+  .affinity-badge {
+    @apply inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold;
+  }
+  .affinity-S { @apply bg-yellow-500 text-gray-900; }
+  .affinity-A { @apply bg-red-500 text-white; }
+  .affinity-B { @apply bg-blue-500 text-white; }
+  .affinity-C { @apply bg-green-600 text-white; }
+  .affinity-D { @apply bg-gray-500 text-white; }
+  .rating-star {
+    @apply text-xl;
+  }
+  .card {
+    @apply bg-gray-900 border border-gray-800 rounded-2xl p-6 hover:border-gray-700 transition-colors;
+  }
+}
