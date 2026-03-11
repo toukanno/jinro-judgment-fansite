@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>役職一覧 - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントの全役職の能力・陣営・立ち回りを検索・フィルタリングできるデータベース。">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .role-detail { display: none; background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; }
+    .role-detail.show { display: block; animation: fadeIn .3s; }
+    .role-detail h3 { font-size: 1.3rem; margin-bottom: .5rem; }
+    .role-detail .meta { color: #8b949e; font-size: .88rem; margin-bottom: .8rem; }
+    .role-detail .strat { background: rgba(88,166,255,.06); border-radius: 6px; padding: .8rem 1rem; margin-top: .8rem; font-size: .9rem; }
+    .role-detail .strat strong { color: #58a6ff; }
+    .role-card { cursor: pointer; }
+    .role-count { color: #8b949e; font-size: .9rem; margin-bottom: 1rem; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> 役職一覧</div>
+
+  <h1 class="section-title">&#x1F3AD; 役職データベース</h1>
+
+  <div class="search-bar">
+    <input type="text" class="search-input" id="roleSearch" placeholder="役職名で検索...">
+    <button class="filter-btn active" data-team="all">全て</button>
+    <button class="filter-btn" data-team="village">市民陣営</button>
+    <button class="filter-btn" data-team="werewolf">人狼陣営</button>
+    <button class="filter-btn" data-team="fox">妖狐陣営</button>
+    <button class="filter-btn" data-team="lovers">恋人陣営</button>
+  </div>
+  <div class="role-count" id="roleCount"></div>
+
+  <div id="roleList" class="card-grid"></div>
+  <div id="roleDetail" class="role-detail"></div>
+
+  <h2 class="section-title" style="margin-top:2rem;">&#x1F4CA; 役職比較表</h2>
+  <div style="overflow-x:auto;">
+    <table class="data-table" id="roleTable">
+      <thead>
+        <tr>
+          <th>役職名</th>
+          <th>陣営</th>
+          <th>レアリティ</th>
+          <th>夜アクション</th>
+          <th>能力</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。</p>
+</footer>
+
+<script src="js/roles-data.js"></script>
+<script src="js/common.js"></script>
+<script>
+(function() {
+  const list = document.getElementById('roleList');
+  const detail = document.getElementById('roleDetail');
+  const searchInput = document.getElementById('roleSearch');
+  const countEl = document.getElementById('roleCount');
+  let activeTeam = 'all';
+
+  function renderCards(filter = '', team = 'all') {
+    const filtered = ROLES_DATA.filter(r => {
+      const matchName = r.name.includes(filter) || r.description.includes(filter) || r.ability.includes(filter);
+      const matchTeam = team === 'all' || r.team === team;
+      return matchName && matchTeam;
+    });
+    countEl.textContent = `${filtered.length} 件の役職が見つかりました`;
+    list.innerHTML = filtered.map((r, i) => {
+      const info = TEAM_INFO[r.team];
+      return `<div class="card role-card" data-idx="${ROLES_DATA.indexOf(r)}">
+        <h3>${r.name}</h3>
+        <span class="role-badge ${r.team}">${info.name}</span>
+        <p style="margin-top:.5rem;">${r.description.slice(0, 50)}...</p>
+      </div>`;
+    }).join('');
+
+    list.querySelectorAll('.role-card').forEach(card => {
+      card.addEventListener('click', () => showDetail(parseInt(card.dataset.idx)));
+    });
+
+    // Table
+    const tbody = document.querySelector('#roleTable tbody');
+    tbody.innerHTML = filtered.map(r => {
+      const info = TEAM_INFO[r.team];
+      return `<tr>
+        <td><strong>${r.name}</strong></td>
+        <td><span class="role-badge ${r.team}">${info.name}</span></td>
+        <td>${r.rarity}</td>
+        <td>${r.nightAction ? '&#x2705; あり' : '&#x274C; なし'}</td>
+        <td>${r.ability}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  function showDetail(idx) {
+    const r = ROLES_DATA[idx];
+    const info = TEAM_INFO[r.team];
+    detail.innerHTML = `
+      <h3>${r.name} <span class="role-badge ${r.team}">${info.name}</span></h3>
+      <div class="meta">能力: ${r.ability} ｜ レアリティ: ${r.rarity} ｜ 夜アクション: ${r.nightAction ? 'あり' : 'なし'}</div>
+      <p>${r.description}</p>
+      <div class="strat"><strong>&#x1F4A1; 立ち回りのコツ:</strong><br>${r.strategy}</div>
+    `;
+    detail.classList.add('show');
+    detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // Filter buttons
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeTeam = btn.dataset.team;
+      detail.classList.remove('show');
+      renderCards(searchInput.value, activeTeam);
+    });
+  });
+
+  searchInput.addEventListener('input', () => {
+    detail.classList.remove('show');
+    renderCards(searchInput.value, activeTeam);
+  });
+
+  renderCards();
+})();
+</script>
+</body>
+</html>

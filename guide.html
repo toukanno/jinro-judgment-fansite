@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>初心者ガイド - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントを始めたばかりの方へ。ゲームの基本ルール・進行の流れ・マナーを解説。">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> 初心者ガイド</div>
+
+  <h1 class="section-title">&#x1F331; 初心者ガイド</h1>
+
+  <div class="tip-box">
+    <strong>このページの対象</strong><br>
+    人狼ジャッジメントを初めてプレイする方、ルールがよく分からない方向けの解説です。基本を押さえればすぐに楽しめます！
+  </div>
+
+  <!-- ===== Section: ゲームの基本 ===== -->
+  <h2 class="section-title">&#x1F3AE; ゲームの基本</h2>
+
+  <div class="accordion-item">
+    <button class="accordion-header">人狼ゲームとは？</button>
+    <div class="accordion-body">
+      <div class="accordion-body-inner">
+        <p>人狼ゲーム（汝は人狼なりや？）は、村に紛れ込んだ<strong>人狼</strong>を<strong>話し合い</strong>と<strong>投票</strong>で見つけ出す推理ゲームです。</p>
+        <p>プレイヤーはそれぞれ秘密の役職を持ち、<strong>市民陣営</strong>は人狼を全員処刑すれば勝利、<strong>人狼陣営</strong>は市民と同数以下まで減らせば勝利です。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header">ゲームの流れ（昼と夜のフェーズ）</button>
+    <div class="accordion-body">
+      <div class="accordion-body-inner">
+        <h4>&#x2600; 昼フェーズ</h4>
+        <ol style="margin-left:1.5rem;margin-bottom:1rem;">
+          <li><strong>議論</strong> - 制限時間内に全員でチャットで話し合います</li>
+          <li><strong>投票</strong> - 最も怪しいと思う人に投票します</li>
+          <li><strong>処刑</strong> - 最多得票の人が処刑されます（同票は再投票やランダム）</li>
+        </ol>
+        <h4>&#x1F319; 夜フェーズ</h4>
+        <ol style="margin-left:1.5rem;">
+          <li><strong>人狼の襲撃</strong> - 人狼が誰を襲撃するか相談して決めます</li>
+          <li><strong>役職の行動</strong> - 占い師は占い、狩人は護衛などを行います</li>
+          <li>翌朝、襲撃結果が発表されます</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header">勝利条件</button>
+    <div class="accordion-body">
+      <div class="accordion-body-inner">
+        <table class="data-table">
+          <tr><th>陣営</th><th>勝利条件</th></tr>
+          <tr><td><span class="role-badge village">市民陣営</span></td><td>人狼を全員処刑する</td></tr>
+          <tr><td><span class="role-badge werewolf">人狼陣営</span></td><td>人狼の数 &ge; 市民の数になる</td></tr>
+          <tr><td><span class="role-badge fox">妖狐陣営</span></td><td>ゲーム終了時に生存している</td></tr>
+          <tr><td><span class="role-badge lovers">恋人陣営</span></td><td>恋人同士だけで生存する</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Section: 最初に覚えること ===== -->
+  <h2 class="section-title">&#x1F4DD; 最初に覚える5つのこと</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">1&#xFE0F;&#x20E3;</div>
+      <h3>とにかく発言する</h3>
+      <p>寡黙（あまり喋らない人）は「吊り先」にされやすいです。理由がなくても意見を言いましょう。「○○さんが怪しい」「占い師は誰を占いましたか？」など。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">2&#xFE0F;&#x20E3;</div>
+      <h3>CO（カミングアウト）を知る</h3>
+      <p>COとは自分の役職を公開すること。占い師や霊能者は基本的にCOして結果を報告します。市民がCOすることは基本ありません。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">3&#xFE0F;&#x20E3;</div>
+      <h3>占い結果を整理する</h3>
+      <p>占い師が報告する「白（人間）」「黒（人狼）」の結果をメモしましょう。アプリ内のメモ機能を活用！</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">4&#xFE0F;&#x20E3;</div>
+      <h3>投票の理由を持つ</h3>
+      <p>「なんとなく」で投票せず、「発言が少ないから」「占い結果と矛盾するから」など理由を持ちましょう。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">5&#xFE0F;&#x20E3;</div>
+      <h3>死んでも最後まで見る</h3>
+      <p>処刑・襲撃で死んでも観戦できます。他の人のプレイを見ることで上達が早くなります。途中退出はマナー違反です。</p>
+    </div>
+  </div>
+
+  <!-- ===== Section: やってはいけないこと ===== -->
+  <h2 class="section-title">&#x26D4; やってはいけないこと（マナー）</h2>
+
+  <div class="tip-box danger">
+    <strong>荒らし・暴言</strong><br>
+    ゲームの勝敗に関係なく、暴言や荒らし行為は絶対にやめましょう。通報対象になります。
+  </div>
+  <div class="tip-box danger">
+    <strong>利敵行為（りてきこうい）</strong><br>
+    自分の陣営を故意に不利にする行為（市民なのに人狼に味方する等）はマナー違反です。
+  </div>
+  <div class="tip-box warning">
+    <strong>メタ発言</strong><br>
+    ゲーム外の情報を使う行為。「前の試合で○○さんは～」などはNGです。各試合は独立です。
+  </div>
+  <div class="tip-box warning">
+    <strong>突然死（時間切れ離脱）</strong><br>
+    投票しないまま時間切れになると「突然死」扱いになり、ゲームバランスが崩れます。必ず投票しましょう。
+  </div>
+
+  <!-- ===== Section: おすすめ初心者設定 ===== -->
+  <h2 class="section-title">&#x2699; おすすめ初心者部屋設定</h2>
+
+  <table class="data-table">
+    <tr><th>項目</th><th>おすすめ設定</th><th>理由</th></tr>
+    <tr><td>人数</td><td>9人</td><td>バランスが良く、長すぎない</td></tr>
+    <tr><td>役職構成</td><td>占・霊・狩・狂・狼2・市民3</td><td>基本的な役職で学びやすい</td></tr>
+    <tr><td>議論時間</td><td>5分</td><td>初心者は長めの方が良い</td></tr>
+    <tr><td>連続ガード</td><td>なし</td><td>基本ルール</td></tr>
+    <tr><td>初日占い</td><td>ランダム白</td><td>初日の議論がしやすい</td></tr>
+  </table>
+
+  <div class="tip-box">
+    <strong>次のステップ</strong><br>
+    基本を覚えたら、<a href="strategy.html">立ち回りガイド</a>で各役職の戦術を学びましょう。<a href="roles.html">役職データベース</a>で気になる役職を調べるのもおすすめです！
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。</p>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>
