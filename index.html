@@ -31,64 +31,115 @@
 <section class="hero">
   <h1>人狼ジャッジメント 攻略データベース</h1>
   <p>全役職の能力・立ち回り・編成考察を網羅したファンサイト。初心者から上級者まで役立つ情報をお届けします。</p>
+  <div class="hero-buttons">
+    <a href="roles.html" class="btn btn-accent btn-lg">&#x1F3AD; 役職一覧を見る</a>
+    <a href="guide.html" class="btn btn-secondary btn-lg">&#x1F331; 初心者はこちら</a>
+    <a href="composition.html" class="btn btn-outline btn-lg">&#x2699; 編成シミュレーター</a>
+  </div>
 </section>
 
 <main class="container">
 
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-num">28</div>
+      <div class="stat-label">収録役職数</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">4</div>
+      <div class="stat-label">陣営数</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">5</div>
+      <div class="stat-label">攻略ガイド</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">42</div>
+      <div class="stat-label">用語収録数</div>
+    </div>
+  </div>
+
+  <!-- Quick Nav Buttons -->
+  <div class="section-header">
+    <h2>&#x26A1; クイックアクセス</h2>
+  </div>
+  <div class="btn-group" style="margin-bottom:2rem;">
+    <a href="roles.html" class="btn btn-secondary">&#x1F3AD; 全役職一覧</a>
+    <a href="guide.html" class="btn btn-secondary">&#x1F4D6; ルール解説</a>
+    <a href="strategy.html" class="btn btn-secondary">&#x1F9E0; 戦術ガイド</a>
+    <a href="composition.html" class="btn btn-secondary">&#x2699; 編成ツール</a>
+    <a href="glossary.html" class="btn btn-secondary">&#x1F4DA; 用語辞典</a>
+    <button class="btn btn-ghost" onclick="document.getElementById('rolesByTeam').scrollIntoView({behavior:'smooth'})">&#x1F50D; 陣営別で探す</button>
+    <button class="btn btn-ghost" onclick="document.getElementById('todayTip').scrollIntoView({behavior:'smooth'})">&#x1F4A1; 今日のコツ</button>
+  </div>
+
+  <!-- Content Cards -->
   <h2 class="section-title">&#x1F4D6; コンテンツ一覧</h2>
   <div class="card-grid">
     <a href="roles.html" class="card" style="text-decoration:none;">
       <div class="card-icon">&#x1F3AD;</div>
       <h3>役職データベース</h3>
       <p>全役職の能力詳細・陣営・勝利条件を検索・フィルタリングできるデータベース。</p>
+      <div class="card-actions">
+        <span class="btn btn-sm btn-accent">詳しく見る</span>
+      </div>
     </a>
     <a href="guide.html" class="card" style="text-decoration:none;">
       <div class="card-icon">&#x1F331;</div>
       <h3>初心者ガイド</h3>
       <p>ゲームの基本ルール、進行の流れ、最初に覚えるべきことをわかりやすく解説。</p>
+      <div class="card-actions">
+        <span class="btn btn-sm btn-primary">始めてみる</span>
+      </div>
     </a>
     <a href="strategy.html" class="card" style="text-decoration:none;">
       <div class="card-icon">&#x1F9E0;</div>
       <h3>立ち回りガイド</h3>
       <p>陣営・役職別の基本戦術と応用テクニックをまとめた攻略ガイド。</p>
+      <div class="card-actions">
+        <span class="btn btn-sm btn-outline">戦術を学ぶ</span>
+      </div>
     </a>
     <a href="composition.html" class="card" style="text-decoration:none;">
       <div class="card-icon">&#x2699;</div>
       <h3>編成シミュレーター</h3>
       <p>人数・役職を自由に組み合わせてバランスを確認。おすすめ編成テンプレートも。</p>
+      <div class="card-actions">
+        <span class="btn btn-sm btn-secondary">試してみる</span>
+      </div>
     </a>
     <a href="glossary.html" class="card" style="text-decoration:none;">
       <div class="card-icon">&#x1F4DA;</div>
       <h3>用語集</h3>
       <p>人狼ジャッジメントで使われる専門用語・略語を五十音順で検索。</p>
+      <div class="card-actions">
+        <span class="btn btn-sm btn-secondary">調べる</span>
+      </div>
     </a>
   </div>
 
-  <h2 class="section-title">&#x2B50; 人気の役職</h2>
-  <div class="card-grid">
-    <div class="card">
-      <h3>&#x1F52E; 占い師</h3>
-      <span class="role-badge village">市民陣営</span>
-      <p>毎晩一人を占い、人狼かどうかを知ることができる。村の最重要役職。</p>
-    </div>
-    <div class="card">
-      <h3>&#x1F3AF; 狩人</h3>
-      <span class="role-badge village">市民陣営</span>
-      <p>毎晩一人を護衛し、人狼の襲撃から守る。占い師の護衛が基本。</p>
-    </div>
-    <div class="card">
-      <h3>&#x1F47A; 人狼</h3>
-      <span class="role-badge werewolf">人狼陣営</span>
-      <p>夜に一人を襲撃できる。仲間の人狼と協力して市民を欺く。</p>
-    </div>
-    <div class="card">
-      <h3>&#x1F98A; 妖狐</h3>
-      <span class="role-badge fox">妖狐陣営</span>
-      <p>人狼に襲われても死なないが、占い師に占われると死ぬ。生存勝利を目指す第三勢力。</p>
+  <!-- Roles by Team Section -->
+  <div class="section-header" id="rolesByTeam">
+    <h2>&#x2B50; 陣営別おすすめ役職</h2>
+    <div class="btn-group" style="margin:0;">
+      <button class="btn btn-sm filter-btn active" data-home-team="all" onclick="filterHomeRoles('all', this)">全て</button>
+      <button class="btn btn-sm filter-btn" data-home-team="village" onclick="filterHomeRoles('village', this)">&#x1F33F; 市民</button>
+      <button class="btn btn-sm filter-btn" data-home-team="werewolf" onclick="filterHomeRoles('werewolf', this)">&#x1F43A; 人狼</button>
+      <button class="btn btn-sm filter-btn" data-home-team="fox" onclick="filterHomeRoles('fox', this)">&#x1F98A; 妖狐</button>
+      <button class="btn btn-sm filter-btn" data-home-team="lovers" onclick="filterHomeRoles('lovers', this)">&#x1F495; 恋人</button>
     </div>
   </div>
 
-  <h2 class="section-title">&#x1F4A1; 今日のワンポイント</h2>
+  <div id="homeRoleList" class="card-grid"></div>
+
+  <div style="text-align:center; margin-bottom:3rem;">
+    <a href="roles.html" class="btn btn-accent">&#x1F3AD; 全28役職を見る</a>
+    <a href="roles.html#roleTable" class="btn btn-outline">&#x1F4CA; 比較表で見る</a>
+  </div>
+
+  <!-- Today's Tips -->
+  <h2 class="section-title" id="todayTip">&#x1F4A1; 今日のワンポイント</h2>
   <div class="tip-box">
     <strong>初日のCO（カミングアウト）タイミング</strong><br>
     占い師は初日朝に即COするのが安定です。遅れると信用を落としたり、真占いが噛まれるリスクが高まります。ただし、潜伏占いという戦術もあるので、部屋のルールや雰囲気に合わせましょう。
@@ -98,6 +149,11 @@
     役職を騙る（嘘のCOをする）場合は、最後まで矛盾なく演じ切る覚悟が必要です。中途半端な騙りは村に迷惑がかかるので、慣れるまでは素直にプレイしましょう。
   </div>
 
+  <div class="btn-group" style="justify-content:center; margin-top:1.5rem;">
+    <a href="strategy.html" class="btn btn-primary">&#x1F9E0; もっと戦術を学ぶ</a>
+    <a href="guide.html" class="btn btn-secondary">&#x1F331; 基本から学ぶ</a>
+  </div>
+
 </main>
 
 <footer class="site-footer">
@@ -105,6 +161,85 @@
   <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
 </footer>
 
+<!-- Role Detail Modal -->
+<div class="modal-overlay" id="roleModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeRoleModal()">&times;</button>
+    <div id="roleModalContent"></div>
+  </div>
+</div>
+
+<script src="js/roles-data.js"></script>
 <script src="js/common.js"></script>
+<script>
+// Home page role cards with modal
+function filterHomeRoles(team, btnEl) {
+  // Update active button
+  document.querySelectorAll('[data-home-team]').forEach(b => b.classList.remove('active'));
+  if (btnEl) btnEl.classList.add('active');
+
+  const filtered = team === 'all' ? ROLES_DATA : ROLES_DATA.filter(r => r.team === team);
+  const list = document.getElementById('homeRoleList');
+  list.innerHTML = filtered.map((r, i) => {
+    const idx = ROLES_DATA.indexOf(r);
+    const info = TEAM_INFO[r.team];
+    return `<div class="card role-card" onclick="openRoleModal(${idx})" style="cursor:pointer;">
+      <h3>${r.name}</h3>
+      <span class="role-badge ${r.team}">${info.name}</span>
+      <p style="margin-top:.5rem;">${r.description.slice(0, 60)}...</p>
+      <div class="card-actions">
+        <span class="btn btn-sm btn-outline">詳細を見る</span>
+        <span class="btn btn-sm btn-ghost">${r.nightAction ? '&#x1F319; 夜行動あり' : '&#x2600; 夜行動なし'}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openRoleModal(idx) {
+  const r = ROLES_DATA[idx];
+  const info = TEAM_INFO[r.team];
+  document.getElementById('roleModalContent').innerHTML = `
+    <h3>${r.name}</h3>
+    <div class="meta-row">
+      <span class="role-badge ${r.team}">${info.name}</span>
+      <span class="meta-tag">&#x2728; ${r.rarity}</span>
+      <span class="meta-tag">${r.nightAction ? '&#x1F319; 夜行動あり' : '&#x2600; 夜行動なし'}</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-tag">&#x1F3AF; 能力: ${r.ability}</span>
+    </div>
+    <div class="description">${r.description}</div>
+    <div class="strategy-box">
+      <strong>&#x1F4A1; 立ち回りのコツ</strong>
+      ${r.strategy}
+    </div>
+    <div class="modal-actions">
+      <a href="roles.html" class="btn btn-sm btn-accent">&#x1F3AD; 役職一覧へ</a>
+      <a href="strategy.html" class="btn btn-sm btn-outline">&#x1F9E0; 戦術ガイド</a>
+      <button class="btn btn-sm btn-ghost" onclick="closeRoleModal()">閉じる</button>
+    </div>
+  `;
+  document.getElementById('roleModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeRoleModal() {
+  document.getElementById('roleModal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+// Close modal on overlay click
+document.getElementById('roleModal').addEventListener('click', function(e) {
+  if (e.target === this) closeRoleModal();
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeRoleModal();
+});
+
+// Initial render
+filterHomeRoles('all', document.querySelector('[data-home-team="all"]'));
+</script>
 </body>
 </html>
