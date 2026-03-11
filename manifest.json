@@ -1,0 +1,12 @@
+{
+  "name": "人狼ジャッジメント 攻略データベース",
+  "short_name": "人狼JGDB",
+  "description": "人狼ジャッジメントの役職情報、立ち回り、初心者向け解説、編成考察をまとめたファンサイトです。",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#161b22",
+  "orientation": "portrait-primary",
+  "icons": []
+}
