@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>役職詳細 - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントの役職詳細ページ。能力・立ち回り・陣営情報を掲載。">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .char-hero {
+      padding: 3rem 1.5rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid #30363d;
+      position: relative;
+      overflow: hidden;
+    }
+    .char-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: .15;
+      z-index: 0;
+    }
+    .char-hero.village { background: linear-gradient(135deg, #0d1117 0%, #0f2018 100%); }
+    .char-hero.village::before { background: radial-gradient(circle at 50% 80%, #7ee787, transparent 70%); }
+    .char-hero.werewolf { background: linear-gradient(135deg, #0d1117 0%, #1a0f0f 100%); }
+    .char-hero.werewolf::before { background: radial-gradient(circle at 50% 80%, #f85149, transparent 70%); }
+    .char-hero.fox { background: linear-gradient(135deg, #0d1117 0%, #1a1508 100%); }
+    .char-hero.fox::before { background: radial-gradient(circle at 50% 80%, #d29922, transparent 70%); }
+    .char-hero.lovers { background: linear-gradient(135deg, #0d1117 0%, #1a0f20 100%); }
+    .char-hero.lovers::before { background: radial-gradient(circle at 50% 80%, #db7ff7, transparent 70%); }
+
+    .char-hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .char-icon {
+      font-size: 4rem;
+      margin-bottom: .5rem;
+      display: block;
+    }
+    .char-name {
+      font-size: 2.2rem;
+      font-weight: 900;
+      margin-bottom: .5rem;
+    }
+    .char-ability-label {
+      color: #8b949e;
+      font-size: 1rem;
+      margin-bottom: .5rem;
+    }
+
+    .char-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .info-card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .info-card .label {
+      display: block;
+      font-size: .78rem;
+      color: #8b949e;
+      margin-bottom: .3rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .info-card .value {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .char-section {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .char-section h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: .8rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .char-section p {
+      color: #c9d1d9;
+      font-size: .95rem;
+      line-height: 1.8;
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .related-card {
+      display: block;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 1rem;
+      text-decoration: none;
+      transition: border-color .2s, transform .2s;
+    }
+    .related-card:hover {
+      border-color: #58a6ff;
+      transform: translateY(-2px);
+    }
+    .related-card h4 {
+      color: #e6edf3;
+      font-size: 1rem;
+      margin-bottom: .3rem;
+    }
+    .related-card p {
+      color: #8b949e;
+      font-size: .82rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      margin-bottom: 1.5rem;
+      font-size: .9rem;
+      color: #58a6ff;
+    }
+    .back-link:hover { color: #79c0ff; }
+
+    .not-found {
+      text-align: center;
+      padding: 4rem 1.5rem;
+    }
+    .not-found h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .not-found p {
+      color: #8b949e;
+      margin-bottom: 1.5rem;
+    }
+
+    .nav-arrows {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #30363d;
+    }
+    .nav-arrow {
+      display: flex;
+      flex-direction: column;
+      gap: .2rem;
+      text-decoration: none;
+      padding: .8rem 1rem;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      transition: border-color .2s, background .2s;
+      min-width: 0;
+    }
+    .nav-arrow:hover { border-color: #58a6ff; background: rgba(88,166,255,.06); }
+    .nav-arrow .dir { font-size: .75rem; color: #8b949e; }
+    .nav-arrow .name { font-size: .95rem; color: #e6edf3; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-arrow.next { text-align: right; margin-left: auto; }
+
+    @media (max-width: 600px) {
+      .char-name { font-size: 1.6rem; }
+      .char-icon { font-size: 3rem; }
+      .info-grid { grid-template-columns: repeat(2, 1fr); }
+      .char-content { padding: 1.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div id="charHero" class="char-hero">
+  <div class="char-hero-inner">
+    <span class="char-icon" id="charIcon"></span>
+    <h1 class="char-name" id="charName"></h1>
+    <div id="charBadge"></div>
+    <div class="char-ability-label" id="charAbilityLabel"></div>
+  </div>
+</div>
+
+<div class="char-content" id="charContent">
+  <!-- Dynamically rendered -->
+</div>
+
+<footer class="site-footer">
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。</p>
+</footer>
+
+<script src="js/roles-data.js"></script>
+<script src="js/common.js"></script>
+<script>
+(function() {
+  var ROLE_ICONS = {
+    '市民': '&#x1F464;', '占い師': '&#x1F52E;', '霊能者': '&#x1F47B;',
+    '狩人': '&#x1F3AF;', '猫又': '&#x1F431;', '双子': '&#x1F46F;',
+    '罠師': '&#x1FAA4;', '医者': '&#x1FA7A;', '暗殺者': '&#x1F5E1;',
+    'パン屋': '&#x1F35E;', '長老': '&#x1F9D3;', '巫女': '&#x26E9;',
+    '賢者': '&#x1F4D6;', '人狼': '&#x1F47A;', '狂人': '&#x1F608;',
+    '狂信者': '&#x1F631;', 'ささやく狂人': '&#x1F5E3;', '黒猫': '&#x1F408;',
+    '賢狼': '&#x1F9D0;', '強欲な人狼': '&#x1F4B0;', '妖狐': '&#x1F98A;',
+    '子狐': '&#x1F43E;', '背徳者': '&#x1F47D;', '恋人': '&#x1F495;'
+  };
+
+  var params = new URLSearchParams(location.search);
+  var roleName = params.get('role');
+
+  if (!roleName) {
+    showNotFound();
+    return;
+  }
+
+  var idx = ROLES_DATA.findIndex(function(r) { return r.name === roleName; });
+  if (idx === -1) {
+    showNotFound();
+    return;
+  }
+
+  var role = ROLES_DATA[idx];
+  var info = TEAM_INFO[role.team];
+
+  // Update page title
+  document.title = role.name + ' - 人狼ジャッジメント攻略';
+  document.querySelector('meta[name="description"]').content =
+    role.name + 'の能力・立ち回り詳細。' + role.description;
+
+  // Hero
+  document.getElementById('charHero').classList.add(role.team);
+  document.getElementById('charIcon').innerHTML = ROLE_ICONS[role.name] || info.icon;
+  document.getElementById('charName').textContent = role.name;
+  document.getElementById('charBadge').innerHTML =
+    '<span class="role-badge ' + role.team + '">' + info.icon + ' ' + info.name + '</span>';
+  document.getElementById('charAbilityLabel').textContent = '能力: ' + role.ability;
+
+  // Content
+  var sameTeam = ROLES_DATA.filter(function(r) { return r.team === role.team && r.name !== role.name; });
+
+  // Prev / Next
+  var prevRole = idx > 0 ? ROLES_DATA[idx - 1] : null;
+  var nextRole = idx < ROLES_DATA.length - 1 ? ROLES_DATA[idx + 1] : null;
+
+  var html = '';
+  html += '<a href="roles.html" class="back-link">&#x2190; 役職一覧に戻る</a>';
+  html += '<div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> <a href="roles.html">役職一覧</a> <span>&gt;</span> ' + role.name + '</div>';
+
+  // Info cards
+  html += '<div class="info-grid">';
+  html += '<div class="info-card"><span class="label">陣営</span><span class="value" style="color:' + info.color + '">' + info.name + '</span></div>';
+  html += '<div class="info-card"><span class="label">能力</span><span class="value">' + role.ability + '</span></div>';
+  html += '<div class="info-card"><span class="label">レアリティ</span><span class="value">' + role.rarity + '</span></div>';
+  html += '<div class="info-card"><span class="label">夜アクション</span><span class="value">' + (role.nightAction ? '&#x2705; あり' : '&#x274C; なし') + '</span></div>';
+  html += '</div>';
+
+  // Description
+  html += '<div class="char-section">';
+  html += '<h2>&#x1F4DD; 役職説明</h2>';
+  html += '<p>' + role.description + '</p>';
+  html += '</div>';
+
+  // Strategy
+  html += '<div class="char-section">';
+  html += '<h2>&#x1F4A1; 立ち回りのコツ</h2>';
+  html += '<p>' + role.strategy + '</p>';
+  html += '</div>';
+
+  // Related roles
+  if (sameTeam.length > 0) {
+    html += '<div class="char-section">';
+    html += '<h2>' + info.icon + ' ' + info.name + 'の他の役職</h2>';
+    html += '<div class="related-grid">';
+    sameTeam.forEach(function(r) {
+      var icon = ROLE_ICONS[r.name] || TEAM_INFO[r.team].icon;
+      html += '<a href="character.html?role=' + encodeURIComponent(r.name) + '" class="related-card">';
+      html += '<h4>' + icon + ' ' + r.name + '</h4>';
+      html += '<p>' + r.ability + '</p>';
+      html += '</a>';
+    });
+    html += '</div>';
+    html += '</div>';
+  }
+
+  // Prev/Next navigation
+  html += '<div class="nav-arrows">';
+  if (prevRole) {
+    html += '<a href="character.html?role=' + encodeURIComponent(prevRole.name) + '" class="nav-arrow prev">';
+    html += '<span class="dir">&#x2190; 前の役職</span>';
+    html += '<span class="name">' + prevRole.name + '</span>';
+    html += '</a>';
+  } else {
+    html += '<span></span>';
+  }
+  if (nextRole) {
+    html += '<a href="character.html?role=' + encodeURIComponent(nextRole.name) + '" class="nav-arrow next">';
+    html += '<span class="dir">次の役職 &#x2192;</span>';
+    html += '<span class="name">' + nextRole.name + '</span>';
+    html += '</a>';
+  }
+  html += '</div>';
+
+  document.getElementById('charContent').innerHTML = html;
+
+  function showNotFound() {
+    document.getElementById('charHero').style.display = 'none';
+    document.getElementById('charContent').innerHTML =
+      '<div class="not-found">' +
+      '<h2>&#x1F50D; 役職が見つかりませんでした</h2>' +
+      '<p>指定された役職は存在しないか、URLが間違っている可能性があります。</p>' +
+      '<a href="roles.html" class="btn btn-primary">役職一覧へ戻る</a>' +
+      '</div>';
+  }
+})();
+</script>
+</body>
+</html>

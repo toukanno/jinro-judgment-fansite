@@ -96,11 +96,11 @@
     countEl.textContent = `${filtered.length} 件の役職が見つかりました`;
     list.innerHTML = filtered.map((r, i) => {
       const info = TEAM_INFO[r.team];
-      return `<div class="card role-card" data-idx="${ROLES_DATA.indexOf(r)}">
+      return `<a href="character.html?role=${encodeURIComponent(r.name)}" class="card role-card" data-idx="${ROLES_DATA.indexOf(r)}" style="text-decoration:none;">
         <h3>${r.name}</h3>
         <span class="role-badge ${r.team}">${info.name}</span>
         <p style="margin-top:.5rem;">${r.description.slice(0, 50)}...</p>
-      </div>`;
+      </a>`;
     }).join('');
 
     list.querySelectorAll('.role-card').forEach(card => {
@@ -112,7 +112,7 @@
     tbody.innerHTML = filtered.map(r => {
       const info = TEAM_INFO[r.team];
       return `<tr>
-        <td><strong>${r.name}</strong></td>
+        <td><a href="character.html?role=${encodeURIComponent(r.name)}" style="color:#e6edf3;text-decoration:none;font-weight:700;">${r.name}</a></td>
         <td><span class="role-badge ${r.team}">${info.name}</span></td>
         <td>${r.rarity}</td>
         <td>${r.nightAction ? '&#x2705; あり' : '&#x274C; なし'}</td>
