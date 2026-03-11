@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用語集 - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントで使われる専門用語・略語を五十音順でまとめた用語集。">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .glossary-item { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: .6rem; }
+    .glossary-item h3 { font-size: 1rem; color: #58a6ff; margin-bottom: .3rem; display: flex; align-items: center; gap: .5rem; }
+    .glossary-item h3 .reading { font-size: .8rem; color: #484f58; font-weight: 400; }
+    .glossary-item p { font-size: .9rem; color: #c9d1d9; }
+    .glossary-index { display: flex; gap: .3rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .glossary-index a { display: block; padding: .3rem .6rem; border: 1px solid #30363d; border-radius: 4px; font-size: .82rem; color: #8b949e; }
+    .glossary-index a:hover { border-color: #58a6ff; color: #58a6ff; }
+    .glossary-section-header { font-size: 1.2rem; font-weight: 800; color: #e6edf3; margin: 1.5rem 0 .8rem; padding-bottom: .3rem; border-bottom: 1px solid #30363d; }
+    .tag { display: inline-block; font-size: .72rem; padding: .1rem .4rem; border-radius: 3px; margin-left: .3rem; }
+    .tag-basic { background: rgba(88,166,255,.15); color: #58a6ff; }
+    .tag-advanced { background: rgba(210,153,34,.15); color: #d29922; }
+    .tag-slang { background: rgba(219,127,247,.15); color: #db7ff7; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> 用語集</div>
+
+  <h1 class="section-title">&#x1F4DA; 人狼用語集</h1>
+
+  <div class="search-bar">
+    <input type="text" class="search-input" id="glossarySearch" placeholder="用語を検索...">
+    <button class="filter-btn active" data-cat="all">全て</button>
+    <button class="filter-btn" data-cat="basic">基本</button>
+    <button class="filter-btn" data-cat="advanced">上級</button>
+    <button class="filter-btn" data-cat="slang">俗語</button>
+  </div>
+
+  <div id="glossaryIndex" class="glossary-index"></div>
+  <div id="glossaryList"></div>
+</main>
+
+<footer class="site-footer">
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。</p>
+</footer>
+
+<script src="js/common.js"></script>
+<script>
+const GLOSSARY = [
+  { term: 'CO', reading: 'しーおー', category: 'basic',
+    definition: 'カミングアウトの略。自分の役職を公開すること。「占いCO」「霊能CO」のように使う。' },
+  { term: 'GJ', reading: 'ぐっじょぶ', category: 'basic',
+    definition: 'グッジョブの略。狩人が護衛に成功し、人狼の襲撃を防いだこと。翌朝死体が出ない。' },
+  { term: 'PP', reading: 'ぴーぴー', category: 'advanced',
+    definition: 'パワープレイの略。人狼と狂人が協力して多数派を取り、投票で村人を処刑すること。' },
+  { term: 'RPP', reading: 'あーるぴーぴー', category: 'advanced',
+    definition: 'ランダムパワープレイの略。PPが成立するかどうかランダム（同票）になる状況。' },
+  { term: 'SG', reading: 'えすじー', category: 'advanced',
+    definition: 'スケープゴートの略。人狼が最終日に吊り先として使うために残す村人のこと。' },
+  { term: 'グレー', reading: 'ぐれー', category: 'basic',
+    definition: '占い師に占われていない、白とも黒とも確定していない人のこと。「グレラン」はグレーの中からランダムに吊ること。' },
+  { term: 'グレラン', reading: 'ぐれらん', category: 'basic',
+    definition: 'グレーランダムの略。占い結果で白にも黒にもなっていない人の中から投票すること。' },
+  { term: '確白', reading: 'かくしろ', category: 'basic',
+    definition: '確定白の略。人狼ではないと確定している人。複数占いで白が一致した場合など。' },
+  { term: '寡黙', reading: 'かもく', category: 'basic',
+    definition: '発言が少ない人。人狼を見つけにくくするため、寡黙吊りの対象になりやすい。' },
+  { term: '噛み', reading: 'かみ', category: 'basic',
+    definition: '人狼が夜に市民を襲撃すること。「○○が噛まれた」のように使う。' },
+  { term: '騙り', reading: 'かたり', category: 'basic',
+    definition: '本当の役職と違う役職をCOする（嘘のCOをする）こと。人狼や狂人が占い師を騙るのが代表的。' },
+  { term: '吊り', reading: 'つり', category: 'basic',
+    definition: '昼の投票で処刑すること。「○○を吊る」のように使う。' },
+  { term: 'ロラ', reading: 'ろら', category: 'basic',
+    definition: 'ローラーの略。対立する複数のCO者を順番に全員処刑すること。「占いロラ」など。' },
+  { term: 'ライン', reading: 'らいん', category: 'advanced',
+    definition: 'プレイヤー間の関係性。「占い-霊能ライン」で占い結果と霊能結果が一致するかどうかなど。' },
+  { term: '潜伏', reading: 'せんぷく', category: 'basic',
+    definition: '役職を持っているがCOせずに隠していること。または人狼が騙らずに市民のふりをすること。' },
+  { term: '対抗', reading: 'たいこう', category: 'basic',
+    definition: '同じ役職をCOする人が複数いること。「占い対抗が出た」のように使う。' },
+  { term: '真', reading: 'しん', category: 'basic',
+    definition: '本物の役職者のこと。「真占い」は本物の占い師を指す。' },
+  { term: '偽', reading: 'にせ', category: 'basic',
+    definition: '偽物（騙り）の役職者のこと。「偽占い」は占い師を騙っている人を指す。' },
+  { term: '呪殺', reading: 'じゅさつ', category: 'advanced',
+    definition: '占い師が妖狐を占った際に妖狐が死ぬこと。死体が2つ出る（襲撃+呪殺）場合がある。' },
+  { term: '縄', reading: 'なわ', category: 'advanced',
+    definition: '残りの吊り回数のこと。「縄が足りない」は人狼を全員吊る猶予がないことを意味する。' },
+  { term: '柱', reading: 'はしら', category: 'advanced',
+    definition: '自ら吊り先に立候補すること。情報を整理する時間を稼ぐ目的で行われることがある。' },
+  { term: 'ベグ', reading: 'べぐ', category: 'advanced',
+    definition: '真偽不明の状態で、人狼が占い師候補のどちらかを噛むこと。ベーグルの略。' },
+  { term: '囲い', reading: 'かこい', category: 'advanced',
+    definition: '偽占い師が仲間の人狼に白を出すこと。人狼を守る戦術。' },
+  { term: '逆囲い', reading: 'ぎゃくかこい', category: 'advanced',
+    definition: '偽占い師があえて仲間の人狼に黒を出すこと。信用を得るための高度な戦術。' },
+  { term: '身内切り', reading: 'みうちぎり', category: 'advanced',
+    definition: '人狼が仲間の人狼に投票すること。村人のふりをするための戦術。' },
+  { term: '多弁', reading: 'たべん', category: 'basic',
+    definition: '発言が多い人。情報量は多いが、多弁すぎると「人狼が誘導している」と疑われることも。' },
+  { term: 'メタ', reading: 'めた', category: 'basic',
+    definition: 'ゲーム外の情報を使うこと。前回の試合の結果やプレイヤーの傾向など。基本的にマナー違反。' },
+  { term: '突然死', reading: 'とつぜんし', category: 'basic',
+    definition: '投票時間内に投票しないことで強制的に死亡すること。マナー違反であり、ペナルティ対象。' },
+  { term: '初日犠牲者', reading: 'しょにちぎせいしゃ', category: 'basic',
+    definition: 'ゲーム最初の夜に人狼に噛まれるNPC。初日占いの対象となることもある。' },
+  { term: '最終日', reading: 'さいしゅうび', category: 'basic',
+    definition: '生存者が3人（人狼1匹の場合）になった日。正しく人狼を吊れるかの最終勝負。' },
+  { term: '漂白噛み', reading: 'ひょうはくがみ', category: 'advanced',
+    definition: '偽占い師が白を出した村人を人狼が噛むこと。「確白を噛んだ」に見せかけ、偽占いの信用を上げる。' },
+  { term: 'LWCO', reading: 'えるだぶりゅーしーおー', category: 'advanced',
+    definition: 'ラストウルフCOの略。最後の人狼が自ら人狼COすること。PPを狙う場面で使われる。' },
+  { term: '狼利', reading: 'おおかみり', category: 'slang',
+    definition: '人狼に有利な展開や行動のこと。「その行動は狼利」のように使う。' },
+  { term: 'ムーブ', reading: 'むーぶ', category: 'slang',
+    definition: '立ち回りや行動のこと。「村ムーブ（村人っぽい行動）」「狼ムーブ（人狼っぽい行動）」など。' },
+  { term: '透ける', reading: 'すける', category: 'slang',
+    definition: '役職や陣営が発言や行動から推測されること。「狼が透けている」のように使う。' },
+  { term: '白打ち', reading: 'しろうち', category: 'slang',
+    definition: '自分が白（人間）であることをアピールする行為。「白打ちが上手い」のように使う。' },
+  { term: '吊り位置', reading: 'つりいち', category: 'slang',
+    definition: '吊られそうなポジションにいること。「吊り位置にいるから弁明して」のように使う。' },
+];
+
+// Sort by reading
+GLOSSARY.sort((a, b) => a.reading.localeCompare(b.reading, 'ja'));
+
+const catTags = { basic: 'tag-basic', advanced: 'tag-advanced', slang: 'tag-slang' };
+const catNames = { basic: '基本', advanced: '上級', slang: '俗語' };
+
+let activeCat = 'all';
+
+function renderGlossary(filter = '', cat = 'all') {
+  const filtered = GLOSSARY.filter(g => {
+    const matchText = g.term.toLowerCase().includes(filter.toLowerCase()) || g.reading.includes(filter) || g.definition.includes(filter);
+    const matchCat = cat === 'all' || g.category === cat;
+    return matchText && matchCat;
+  });
+
+  // Group by first kana character
+  const groups = {};
+  filtered.forEach(g => {
+    const first = g.reading.charAt(0);
+    const row = getKanaRow(first);
+    if (!groups[row]) groups[row] = [];
+    groups[row].push(g);
+  });
+
+  const listEl = document.getElementById('glossaryList');
+  listEl.innerHTML = Object.entries(groups).map(([row, items]) => `
+    <div id="row-${row}" class="glossary-section-header">${row}行</div>
+    ${items.map(g => `
+      <div class="glossary-item">
+        <h3>${g.term} <span class="reading">（${g.reading}）</span> <span class="tag ${catTags[g.category]}">${catNames[g.category]}</span></h3>
+        <p>${g.definition}</p>
+      </div>
+    `).join('')}
+  `).join('');
+
+  // Index
+  const indexEl = document.getElementById('glossaryIndex');
+  const rows = ['あ','か','さ','た','な','は','ま','や','ら','わ','A'];
+  indexEl.innerHTML = rows.map(r => {
+    const exists = groups[r];
+    return exists ? `<a href="#row-${r}">${r}</a>` : `<a href="#" style="opacity:.3">${r}</a>`;
+  }).join('');
+}
+
+function getKanaRow(ch) {
+  const rows = [
+    { row: 'あ', chars: 'あいうえお' },
+    { row: 'か', chars: 'かきくけこがぎぐげご' },
+    { row: 'さ', chars: 'さしすせそざじずぜぞ' },
+    { row: 'た', chars: 'たちつてとだぢづでど' },
+    { row: 'な', chars: 'なにぬねの' },
+    { row: 'は', chars: 'はひふへほばびぶべぼぱぴぷぺぽ' },
+    { row: 'ま', chars: 'まみむめも' },
+    { row: 'や', chars: 'やゆよ' },
+    { row: 'ら', chars: 'らりるれろ' },
+    { row: 'わ', chars: 'わをん' },
+  ];
+  for (const r of rows) {
+    if (r.chars.includes(ch)) return r.row;
+  }
+  return 'A'; // Alphabet
+}
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeCat = btn.dataset.cat;
+    renderGlossary(document.getElementById('glossarySearch').value, activeCat);
+  });
+});
+
+document.getElementById('glossarySearch').addEventListener('input', (e) => {
+  renderGlossary(e.target.value, activeCat);
+});
+
+renderGlossary();
+</script>
+</body>
+</html>

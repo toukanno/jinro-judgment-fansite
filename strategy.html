@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>立ち回りガイド - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントの陣営別・役職別の立ち回り戦術を詳しく解説。">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .strat-section { margin-bottom: 3rem; }
+    .strat-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; }
+    .strat-card h3 { margin-bottom: .8rem; display: flex; align-items: center; gap: .5rem; }
+    .strat-card h4 { color: #58a6ff; margin: 1rem 0 .5rem; font-size: .95rem; }
+    .strat-card ul { margin-left: 1.5rem; margin-bottom: .8rem; }
+    .strat-card li { margin-bottom: .3rem; color: #c9d1d9; font-size: .92rem; }
+    .do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+    .do-dont > div { border-radius: 8px; padding: 1rem; }
+    .do-box { background: rgba(126,231,135,.06); border: 1px solid rgba(126,231,135,.2); }
+    .dont-box { background: rgba(248,81,73,.06); border: 1px solid rgba(248,81,73,.2); }
+    .do-box h5 { color: #7ee787; margin-bottom: .5rem; }
+    .dont-box h5 { color: #f85149; margin-bottom: .5rem; }
+    @media (max-width: 600px) { .do-dont { grid-template-columns: 1fr; } }
+    .flowchart { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 1.5rem; margin: 1rem 0; font-size: .88rem; }
+    .flowchart .step { display: flex; align-items: flex-start; gap: .8rem; margin-bottom: .8rem; }
+    .flowchart .step-num { background: #238636; color: #fff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .82rem; flex-shrink: 0; }
+    .flowchart .step-num.wolf { background: #da3633; }
+    .flowchart .step-num.fox { background: #9e6a03; }
+    .flowchart .arrow { text-align: center; color: #484f58; margin: .2rem 0; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> 立ち回りガイド</div>
+
+  <h1 class="section-title">&#x1F9E0; 立ち回りガイド</h1>
+
+  <!-- ===== 市民陣営 ===== -->
+  <div class="strat-section">
+    <h2 class="section-title"><span class="role-badge village">市民陣営</span> の立ち回り</h2>
+
+    <div class="strat-card">
+      <h3>&#x1F52E; 占い師の立ち回り</h3>
+      <p>村の勝敗を左右する最重要役職。正確な情報提供と生存が最優先。</p>
+
+      <div class="flowchart">
+        <div class="step"><div class="step-num">1</div><div><strong>初日朝：即CO</strong><br>朝一番に「占いCO ○○白」とCOする。遅れると信用低下。</div></div>
+        <div class="arrow">&#x25BC;</div>
+        <div class="step"><div class="step-num">2</div><div><strong>占い先の選択</strong><br>グレー（未占い）の中から怪しい人・発言力のある人を占う。</div></div>
+        <div class="arrow">&#x25BC;</div>
+        <div class="step"><div class="step-num">3</div><div><strong>結果報告</strong><br>毎朝、占い結果を報告。「○○白」「○○黒」を明確に。</div></div>
+        <div class="arrow">&#x25BC;</div>
+        <div class="step"><div class="step-num">4</div><div><strong>対抗への対応</strong><br>偽占いが出た場合、結果の比較で真偽を証明していく。</div></div>
+      </div>
+
+      <div class="do-dont">
+        <div class="do-box">
+          <h5>&#x2705; やるべきこと</h5>
+          <ul>
+            <li>初日に即COする</li>
+            <li>占い理由を毎回説明する</li>
+            <li>グレーを効率よく詰める</li>
+            <li>狩人の護衛を信頼して堂々と動く</li>
+          </ul>
+        </div>
+        <div class="dont-box">
+          <h5>&#x274C; やってはいけないこと</h5>
+          <ul>
+            <li>COを遅らせすぎる</li>
+            <li>白を出した人ばかり占う</li>
+            <li>占い理由を言わない</li>
+            <li>感情的になって議論を荒らす</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="strat-card">
+      <h3>&#x1F3AF; 狩人の立ち回り</h3>
+      <p>占い師を守ることが最大の仕事。生存して護衛し続けることが勝利に直結。</p>
+
+      <h4>護衛先の優先順位</h4>
+      <ol style="margin-left:1.5rem;margin-bottom:1rem;">
+        <li><strong>占い師</strong> - 最優先。真占いが生存すれば情報が増え続ける</li>
+        <li><strong>確白の重要位置</strong> - 占い師が死亡した場合、議論をリードする確白を守る</li>
+        <li><strong>霊能者</strong> - 占い師が不在の場合に重要度が上がる</li>
+      </ol>
+
+      <div class="tip-box">
+        <strong>GJが出たら？</strong><br>
+        GJ（護衛成功）が出た場合、状況によってはCOして「どこを守ったか」を報告することで情報が得られます。ただし、狩人COは人狼に噛まれるリスクがあるので、タイミングを見極めましょう。
+      </div>
+
+      <div class="do-dont">
+        <div class="do-box">
+          <h5>&#x2705; やるべきこと</h5>
+          <ul>
+            <li>占い師を優先護衛</li>
+            <li>COは慎重に、でもGJの情報は活かす</li>
+            <li>護衛日記をつけておく</li>
+          </ul>
+        </div>
+        <div class="dont-box">
+          <h5>&#x274C; やってはいけないこと</h5>
+          <ul>
+            <li>初日から狩人COする</li>
+            <li>護衛先をコロコロ変える</li>
+            <li>「狩人います」アピールをしすぎる</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="strat-card">
+      <h3>&#x1F464; 市民（役職なし）の立ち回り</h3>
+      <p>特殊能力はないが、推理と議論で村に貢献できる重要な存在。</p>
+
+      <h4>基本の動き方</h4>
+      <ul>
+        <li><strong>積極的に発言する</strong> - 寡黙は吊り対象。意見を言うことが最大の仕事</li>
+        <li><strong>占い結果を整理する</strong> - 白・黒の情報をまとめ、矛盾がないか確認</li>
+        <li><strong>投票先を明言する</strong> - 理由付きで投票先を宣言し、周りの反応を見る</li>
+        <li><strong>人狼の反応を観察する</strong> - 黒が出た時、吊り先が決まる時の反応に注目</li>
+      </ul>
+
+      <div class="tip-box warning">
+        <strong>市民が騙りをするべき？</strong><br>
+        基本的にNO。市民が役職を騙ると、本物の役職者のCOを阻害し、村全体が混乱します。特に初心者のうちは素直にプレイしましょう。
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 人狼陣営 ===== -->
+  <div class="strat-section">
+    <h2 class="section-title"><span class="role-badge werewolf">人狼陣営</span> の立ち回り</h2>
+
+    <div class="strat-card">
+      <h3>&#x1F47A; 人狼の立ち回り</h3>
+      <p>市民に紛れ込み、夜の襲撃と昼の議論で勝利を目指す。</p>
+
+      <h4>基本戦術：潜伏 vs 騙り</h4>
+      <table class="data-table">
+        <tr><th>戦術</th><th>メリット</th><th>デメリット</th><th>おすすめ状況</th></tr>
+        <tr>
+          <td><strong>潜伏</strong></td>
+          <td>バレにくい、市民として議論を誘導できる</td>
+          <td>占い師に黒を出されると即吊り</td>
+          <td>狂人が騙ってくれそうな時</td>
+        </tr>
+        <tr>
+          <td><strong>占い騙り</strong></td>
+          <td>偽の白黒で村を混乱させる</td>
+          <td>対抗（真占い）との戦いになる</td>
+          <td>仲間の人狼が複数いる時</td>
+        </tr>
+        <tr>
+          <td><strong>霊能騙り</strong></td>
+          <td>占い師ほどリスクが高くない</td>
+          <td>霊能結果を合わせる必要がある</td>
+          <td>占い騙りが狂人に任せられる時</td>
+        </tr>
+      </table>
+
+      <h4>噛み先の選び方</h4>
+      <div class="flowchart">
+        <div class="step"><div class="step-num wolf">1</div><div><strong>占い師を噛む</strong><br>真占いが特定できたら最優先。ただし狩人GJのリスクあり。</div></div>
+        <div class="arrow">&#x25BC;</div>
+        <div class="step"><div class="step-num wolf">2</div><div><strong>議論の中心を噛む</strong><br>推理が鋭い村人を消すことで、村の推理力を下げる。</div></div>
+        <div class="arrow">&#x25BC;</div>
+        <div class="step"><div class="step-num wolf">3</div><div><strong>SG位置を残す</strong><br>最終日に人狼と疑われそうな村人を意図的に残す。</div></div>
+      </div>
+    </div>
+
+    <div class="strat-card">
+      <h3>&#x1F921; 狂人の立ち回り</h3>
+      <p>人狼の味方だが、人狼が誰かは分からない。占い結果は白。</p>
+
+      <h4>主な戦術</h4>
+      <ul>
+        <li><strong>占い師騙り</strong> - 最も一般的。偽の占い結果で村を混乱させる</li>
+        <li><strong>霊能者騙り</strong> - 占い師騙りよりリスクが低い</li>
+        <li><strong>潜伏狂人</strong> - 騙らずに村人のふりをして人狼を援護。上級テクニック</li>
+      </ul>
+
+      <div class="tip-box">
+        <strong>人狼が誰かを推理する</strong><br>
+        狂人は人狼が分からないため、「誰が人狼か」を自力で推理する必要があります。人狼も狂人の存在を意識して動くので、お互いの行動パターンから相方を見つけましょう。
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 妖狐陣営 ===== -->
+  <div class="strat-section">
+    <h2 class="section-title"><span class="role-badge fox">妖狐陣営</span> の立ち回り</h2>
+
+    <div class="strat-card">
+      <h3>&#x1F98A; 妖狐の立ち回り</h3>
+      <p>唯一の生存勝利陣営。占われると死に、噛まれても死なない特殊な存在。</p>
+
+      <h4>生存戦略</h4>
+      <div class="flowchart">
+        <div class="step"><div class="step-num fox">1</div><div><strong>占い師に占われない</strong><br>目立ちすぎず、かといって寡黙すぎず、「占う必要がない」ポジションを取る。</div></div>
+        <div class="arrow">&#x25BC;</div>
+        <div class="step"><div class="step-num fox">2</div><div><strong>吊られない</strong><br>村人として自然な発言をし、吊り候補にならないようにする。</div></div>
+        <div class="arrow">&#x25BC;</div>
+        <div class="step"><div class="step-num fox">3</div><div><strong>最終日まで生存</strong><br>村と狼の両方を利用し、自分だけが最後に残る展開を目指す。</div></div>
+      </div>
+
+      <div class="tip-box warning">
+        <strong>妖狐の天敵</strong><br>
+        占い師の呪殺が最大のリスク。占い師の占い先傾向を読み、自分が占われそうなタイミングでは何かアクションを起こして「占う優先度が低い」と思わせましょう。
+      </div>
+
+      <div class="do-dont">
+        <div class="do-box">
+          <h5>&#x2705; やるべきこと</h5>
+          <ul>
+            <li>村に有益そうな発言をして信頼を得る</li>
+            <li>占い師COの展開では中立的な立場を取る</li>
+            <li>村と狼のどちらが有利かを見極める</li>
+          </ul>
+        </div>
+        <div class="dont-box">
+          <h5>&#x274C; やってはいけないこと</h5>
+          <ul>
+            <li>目立ちすぎて占い対象になる</li>
+            <li>占い師を強く攻撃する（占われやすくなる）</li>
+            <li>噛まれても死なないことを露呈する</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 上級テクニック ===== -->
+  <div class="strat-section">
+    <h2 class="section-title">&#x1F451; 上級テクニック集</h2>
+
+    <div class="accordion-item">
+      <button class="accordion-header">ライン考察の方法</button>
+      <div class="accordion-body"><div class="accordion-body-inner">
+        <p><strong>ライン考察</strong>とは、プレイヤー間の投票・発言・反応の関係性から陣営を推理する手法です。</p>
+        <ul style="margin-left:1.5rem;">
+          <li><strong>占い-霊能ライン</strong>：占い師の黒出しと霊能結果が一致するか</li>
+          <li><strong>投票ライン</strong>：誰が誰に投票したかのパターン。人狼同士は身内切りしないことが多い</li>
+          <li><strong>発言ライン</strong>：特定の人を不自然に庇う、または攻撃する関係性</li>
+        </ul>
+        <p style="margin-top:.5rem;">ラインは複合的に見ることが重要。1つの要素だけで判断せず、全体の整合性を確認しましょう。</p>
+      </div></div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-header">最終日の立ち回り</button>
+      <div class="accordion-body"><div class="accordion-body-inner">
+        <p>3人最終日（生存: 村人・村人・人狼）は人狼ゲームの醍醐味です。</p>
+        <h4 style="margin-top:.5rem;">村側のポイント</h4>
+        <ul style="margin-left:1.5rem;margin-bottom:.5rem;">
+          <li>これまでの情報を全て整理して論理的に追い詰める</li>
+          <li>相手の弁明の矛盾点を指摘する</li>
+          <li>感情論ではなく、事実ベースで議論する</li>
+        </ul>
+        <h4>人狼側のポイント</h4>
+        <ul style="margin-left:1.5rem;">
+          <li>もう一人の村人に疑いを集中させる（SG戦術）</li>
+          <li>「自分が村であることの証明」ではなく「相手が狼である理由」を述べる</li>
+          <li>冷静に、感情的にならず、論理的に話す</li>
+        </ul>
+      </div></div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-header">PPPP/RPPの状況と対策</button>
+      <div class="accordion-body"><div class="accordion-body-inner">
+        <p><strong>PP（パワープレイ）</strong>は、人狼+狂人系が生存者の過半数を占め、確実に村人を吊れる状況です。</p>
+        <p><strong>RPP（ランダムパワープレイ）</strong>は、人狼+狂人系と村人が同数で、ランダムになる状況です。</p>
+        <h4 style="margin-top:.5rem;">PP/RPPを防ぐには</h4>
+        <ul style="margin-left:1.5rem;">
+          <li>狂人を早めに処理する（占い師ローラーなど）</li>
+          <li>縄計算を常に行い、PPが成立する人数を意識する</li>
+          <li>最終日に狂人が残らないよう、グレー詰めの順番を考える</li>
+        </ul>
+      </div></div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-header">縄計算（吊り回数の計算方法）</button>
+      <div class="accordion-body"><div class="accordion-body-inner">
+        <p>縄計算は人狼ゲームで最も重要な計算の一つです。</p>
+        <p><strong>計算式：</strong>残り吊り回数 = (生存人数 - 1) &divide; 2（小数点切り捨て）- 残り人狼数 + 1</p>
+        <table class="data-table" style="margin-top:.5rem;">
+          <tr><th>生存人数</th><th>残り人狼</th><th>吊り猶予</th><th>状況</th></tr>
+          <tr><td>9人</td><td>2匹</td><td>2回</td><td>余裕あり</td></tr>
+          <tr><td>7人</td><td>2匹</td><td>1回</td><td>ギリギリ</td></tr>
+          <tr><td>5人</td><td>2匹</td><td>0回</td><td>確実に当てる必要あり</td></tr>
+          <tr><td>7人</td><td>1匹</td><td>2回</td><td>余裕あり</td></tr>
+          <tr><td>5人</td><td>1匹</td><td>1回</td><td>最終日</td></tr>
+          <tr><td>3人</td><td>1匹</td><td>0回</td><td>ラスト1回で当てる</td></tr>
+        </table>
+      </div></div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。</p>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

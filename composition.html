@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>編成シミュレーター - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントの編成をシミュレーション。人数と役職を自由に組み合わせてバランスをチェック。">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .sim-result { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 1.5rem; margin-top: 1.5rem; }
+    .sim-result h3 { margin-bottom: 1rem; }
+    .balance-bar { height: 24px; border-radius: 12px; overflow: hidden; display: flex; margin-bottom: .5rem; }
+    .balance-bar div { height: 100%; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 700; }
+    .bar-village { background: #238636; }
+    .bar-werewolf { background: #da3633; }
+    .bar-fox { background: #9e6a03; }
+    .bar-lovers { background: #8957e5; }
+    .balance-legend { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; font-size: .85rem; }
+    .balance-legend span::before { content: ''; display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: .3rem; vertical-align: middle; }
+    .leg-village::before { background: #238636; }
+    .leg-werewolf::before { background: #da3633; }
+    .leg-fox::before { background: #9e6a03; }
+    .leg-lovers::before { background: #8957e5; }
+    .sim-warnings { margin-top: 1rem; }
+    .template-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .template-card { cursor: pointer; }
+    .template-card:hover { border-color: #238636; }
+    .role-selector { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap: .5rem; margin-bottom: 1rem; }
+    .role-sel-item { display: flex; align-items: center; gap: .5rem; background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: .4rem .7rem; }
+    .role-sel-item label { flex: 1; font-size: .85rem; cursor: pointer; }
+    .role-sel-item input { width: 50px; padding: .2rem .4rem; border: 1px solid #30363d; border-radius: 4px; background: #0d1117; color: #e6edf3; text-align: center; font-size: .85rem; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> 編成シミュレーター</div>
+
+  <h1 class="section-title">&#x2699; 編成シミュレーター</h1>
+
+  <p style="color:#8b949e;margin-bottom:1.5rem;">役職の人数を設定して、編成のバランスを確認できます。テンプレートから始めるのもおすすめです。</p>
+
+  <!-- Templates -->
+  <h2 class="section-title">&#x1F4CB; おすすめ編成テンプレート</h2>
+  <div class="template-grid" id="templates"></div>
+
+  <!-- Simulator -->
+  <h2 class="section-title">&#x1F527; カスタム編成</h2>
+  <div id="roleSelector" class="role-selector"></div>
+
+  <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
+    <button class="btn btn-primary" onclick="analyze()">&#x1F50D; 編成を分析</button>
+    <button class="btn btn-secondary" onclick="resetAll()">&#x1F504; リセット</button>
+  </div>
+
+  <div id="simResult" class="sim-result" style="display:none;"></div>
+
+  <!-- 編成考察 -->
+  <h2 class="section-title" style="margin-top:3rem;">&#x1F4D6; 編成考察コラム</h2>
+
+  <div class="accordion-item">
+    <button class="accordion-header">9人村スタンダード編成の考察</button>
+    <div class="accordion-body"><div class="accordion-body-inner">
+      <p><strong>構成：</strong>市民3, 占い師1, 霊能者1, 狩人1, 人狼2, 狂人1</p>
+      <p>最もバランスの取れた基本編成。初日は占い師COからスタートし、対抗が出るかどうかで展開が変わります。</p>
+      <p>村側のポイントは<strong>占い師の真偽判定</strong>と<strong>グレー詰め</strong>。人狼側は<strong>占い騙り</strong>か<strong>潜伏</strong>かの判断が重要です。</p>
+      <p>吊り回数は4回（9人→7人→5人→3人）。人狼2匹なので最短2日で人狼を吊る必要がありますが、狂人が騙ることで実質3回の猶予があります。</p>
+    </div></div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header">妖狐入り12人村の考察</button>
+    <div class="accordion-body"><div class="accordion-body-inner">
+      <p><strong>構成例：</strong>市民4, 占い師1, 霊能者1, 狩人1, 猫又1, 人狼3, 狂人1, 妖狐1</p>
+      <p>第三勢力の妖狐が入ることで、村も狼も「妖狐を処理してからゲームを終わらせる」必要があります。</p>
+      <p>占い師は人狼だけでなく妖狐の呪殺も狙える重要な存在。狩人は占い師を守りつつ、妖狐の呪殺がGJと区別されることに注意。</p>
+      <p>人狼側は妖狐を噛めないため、占い師に呪殺させるか、告発して吊らせる戦略も必要です。</p>
+    </div></div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-header">特殊役職入り編成のバランス調整</button>
+    <div class="accordion-body"><div class="accordion-body-inner">
+      <p>猫又、罠師、暗殺者などの特殊役職を入れる場合、基本的に<strong>村の戦力が上がる</strong>ため、人狼側にも強化が必要です。</p>
+      <ul style="margin-left:1.5rem;">
+        <li><strong>猫又を入れる場合</strong> → 黒猫を対に入れるとバランスが取れる</li>
+        <li><strong>賢者を入れる場合</strong> → 賢狼や狂信者で人狼側も強化</li>
+        <li><strong>罠師を入れる場合</strong> → 強欲な人狼で突破力を補完</li>
+      </ul>
+      <p>大事なのは、<strong>村側の確定情報が増えすぎない</strong>ようにすること。確定白が増えると人狼は身動きが取れなくなります。</p>
+    </div></div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。</p>
+</footer>
+
+<script src="js/roles-data.js"></script>
+<script src="js/common.js"></script>
+<script>
+const TEMPLATES = [
+  { name: '9人村スタンダード', desc: '初心者向け基本構成', roles: { '市民': 3, '占い師': 1, '霊能者': 1, '狩人': 1, '人狼': 2, '狂人': 1 }},
+  { name: '9人村 猫又入り', desc: '猫又で村を強化', roles: { '市民': 2, '占い師': 1, '霊能者': 1, '狩人': 1, '猫又': 1, '人狼': 2, '狂人': 1 }},
+  { name: '12人村 妖狐入り', desc: '第三勢力ありの中級編成', roles: { '市民': 4, '占い師': 1, '霊能者': 1, '狩人': 1, '猫又': 1, '人狼': 2, '狂信者': 1, '妖狐': 1 }},
+  { name: '15人村 フル構成', desc: '大人数の上級者向け', roles: { '市民': 4, '占い師': 1, '霊能者': 1, '狩人': 1, '猫又': 1, '罠師': 1, '人狼': 3, '狂信者': 1, '黒猫': 1, '妖狐': 1, '背徳者': 1 }},
+  { name: '9人村 恋人入り', desc: '恋人陣営で混沌', roles: { '市民': 2, '占い師': 1, '霊能者': 1, '狩人': 1, '人狼': 2, '狂人': 1, '恋人': 2 }},
+];
+
+// Render templates
+const tplGrid = document.getElementById('templates');
+tplGrid.innerHTML = TEMPLATES.map((t, i) => `
+  <div class="card template-card" onclick="applyTemplate(${i})">
+    <h3>${t.name}</h3>
+    <p>${t.desc}</p>
+    <div style="margin-top:.5rem;">${Object.entries(t.roles).map(([r,n]) => {
+      const rd = ROLES_DATA.find(x => x.name === r);
+      const team = rd ? rd.team : 'village';
+      return `<span class="role-badge ${team}">${r} x${n}</span>`;
+    }).join(' ')}</div>
+  </div>
+`).join('');
+
+// Render role selector
+const selDiv = document.getElementById('roleSelector');
+selDiv.innerHTML = ROLES_DATA.map(r => {
+  const info = TEAM_INFO[r.team];
+  return `<div class="role-sel-item">
+    <label for="sel-${r.name}">${r.name}</label>
+    <input type="number" id="sel-${r.name}" min="0" max="10" value="0" data-role="${r.name}" data-team="${r.team}">
+  </div>`;
+}).join('');
+
+function applyTemplate(idx) {
+  resetAll();
+  const t = TEMPLATES[idx];
+  Object.entries(t.roles).forEach(([name, count]) => {
+    const input = document.querySelector(`input[data-role="${name}"]`);
+    if (input) input.value = count;
+  });
+  analyze();
+}
+
+function resetAll() {
+  document.querySelectorAll('#roleSelector input').forEach(i => i.value = 0);
+  document.getElementById('simResult').style.display = 'none';
+}
+
+function analyze() {
+  const inputs = document.querySelectorAll('#roleSelector input');
+  const counts = { village: 0, werewolf: 0, fox: 0, lovers: 0 };
+  let total = 0;
+  const selected = [];
+
+  inputs.forEach(input => {
+    const n = parseInt(input.value) || 0;
+    if (n > 0) {
+      counts[input.dataset.team] += n;
+      total += n;
+      selected.push({ name: input.dataset.role, team: input.dataset.team, count: n });
+    }
+  });
+
+  if (total === 0) { alert('役職を1つ以上選んでください。'); return; }
+
+  const res = document.getElementById('simResult');
+  res.style.display = 'block';
+
+  // Balance bar
+  const pcts = {};
+  for (const t in counts) pcts[t] = total > 0 ? (counts[t] / total * 100) : 0;
+
+  // Warnings
+  const warnings = [];
+  if (counts.werewolf === 0) warnings.push({ type: 'danger', msg: '人狼がいません。ゲームが成立しません。' });
+  if (counts.village <= counts.werewolf) warnings.push({ type: 'danger', msg: '市民陣営の人数が人狼陣営以下です。ゲーム開始と同時に人狼の勝利です。' });
+  if (total < 5) warnings.push({ type: 'warning', msg: '人数が少なすぎます（5人以上推奨）。' });
+  if (total > 20) warnings.push({ type: 'warning', msg: '人数が多すぎます（20人以下推奨）。' });
+
+  const wolfCount = selected.filter(s => s.team === 'werewolf' && ROLES_DATA.find(r => r.name === s.name && r.ability === '襲撃')).reduce((a, s) => a + s.count, 0);
+  if (wolfCount === 0 && counts.werewolf > 0) warnings.push({ type: 'warning', msg: '襲撃能力を持つ人狼がいません。狂人系のみでは襲撃できません。' });
+
+  const hasFortuneteller = selected.some(s => s.name === '占い師' || s.name === '賢者');
+  if (counts.fox > 0 && !hasFortuneteller) warnings.push({ type: 'warning', msg: '妖狐がいますが占い師がいません。呪殺できず妖狐有利になります。' });
+
+  // Turns to win calculation
+  const villageTotal = counts.village + counts.fox + counts.lovers;
+  const turnsAvailable = total - counts.werewolf - (counts.werewolf); // rough estimate
+  const maxTurns = Math.max(0, total - 2 * counts.werewolf - 1);
+
+  let balanceText = '';
+  const ratio = counts.village / (counts.werewolf || 1);
+  if (ratio >= 4) balanceText = '村有利 - 人狼が少なめです';
+  else if (ratio >= 2.5) balanceText = 'バランス良好';
+  else if (ratio >= 1.5) balanceText = 'やや人狼有利';
+  else balanceText = '人狼有利 - 市民が少なめです';
+
+  res.innerHTML = `
+    <h3>&#x1F4CA; 編成分析結果</h3>
+    <p><strong>合計人数:</strong> ${total}人</p>
+    <div class="balance-legend">
+      <span class="leg-village">市民陣営: ${counts.village}人</span>
+      <span class="leg-werewolf">人狼陣営: ${counts.werewolf}人</span>
+      ${counts.fox > 0 ? `<span class="leg-fox">妖狐陣営: ${counts.fox}人</span>` : ''}
+      ${counts.lovers > 0 ? `<span class="leg-lovers">恋人陣営: ${counts.lovers}人</span>` : ''}
+    </div>
+    <div class="balance-bar">
+      ${pcts.village > 0 ? `<div class="bar-village" style="width:${pcts.village}%">${counts.village}</div>` : ''}
+      ${pcts.werewolf > 0 ? `<div class="bar-werewolf" style="width:${pcts.werewolf}%">${counts.werewolf}</div>` : ''}
+      ${pcts.fox > 0 ? `<div class="bar-fox" style="width:${pcts.fox}%">${counts.fox}</div>` : ''}
+      ${pcts.lovers > 0 ? `<div class="bar-lovers" style="width:${pcts.lovers}%">${counts.lovers}</div>` : ''}
+    </div>
+    <p><strong>バランス評価:</strong> ${balanceText}</p>
+    <p><strong>吊り回数:</strong> 最大 ${maxTurns} 回（人狼を ${wolfCount} 匹吊る必要あり）</p>
+    <div class="sim-warnings">
+      ${warnings.map(w => `<div class="tip-box ${w.type}">${w.msg}</div>`).join('')}
+      ${warnings.length === 0 ? '<div class="tip-box">問題は見つかりませんでした。バランスの良い編成です。</div>' : ''}
+    </div>
+    <h4 style="margin-top:1rem;">選択した役職:</h4>
+    <div class="role-pool">${selected.map(s => `<span class="role-badge ${s.team}">${s.name} x${s.count}</span>`).join('')}</div>
+  `;
+  res.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
