@@ -6,6 +6,27 @@
   <title>初心者ガイド - 人狼ジャッジメント攻略</title>
   <meta name="description" content="人狼ジャッジメントを始めたばかりの方へ。ゲームの基本ルール・進行の流れ・マナーを解説。">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .modal-trigger-list { display: grid; gap: .8rem; margin-bottom: 1.2rem; }
+    .modal-trigger {
+      width: 100%; text-align: left; background: #161b22; border: 1px solid #30363d; border-radius: 8px;
+      color: #e6edf3; padding: .9rem 1rem; font-size: .92rem; cursor: pointer; transition: border-color .2s, background .2s;
+    }
+    .modal-trigger:hover { border-color: #58a6ff; background: #1c2129; }
+    .modal-trigger .label { display: inline-block; color: #58a6ff; font-weight: 700; margin-bottom: .2rem; }
+
+    .modal-overlay { position: fixed; inset: 0; background: rgba(1,4,9,.75); display: none; align-items: center; justify-content: center; z-index: 250; padding: 1rem; }
+    .modal-overlay.open { display: flex; }
+    .modal-dialog {
+      width: min(720px, 100%); max-height: 85vh; overflow: auto; background: #0d1117; border: 1px solid #30363d;
+      border-radius: 12px; box-shadow: 0 20px 45px rgba(0,0,0,.45); padding: 1.1rem 1.2rem;
+    }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .7rem; }
+    .modal-title { font-size: 1.06rem; font-weight: 800; color: #e6edf3; }
+    .modal-close { border: 1px solid #30363d; background: #161b22; color: #8b949e; border-radius: 6px; padding: .3rem .55rem; cursor: pointer; }
+    .modal-close:hover { color: #e6edf3; border-color: #58a6ff; }
+    .modal-body p { font-size: .92rem; color: #c9d1d9; margin-bottom: .8rem; }
+  </style>
 </head>
 <body>
 
@@ -147,9 +168,36 @@
     <tr><td>初日占い</td><td>ランダム白</td><td>初日の議論がしやすい</td></tr>
   </table>
 
+  <h2 class="section-title">&#x1F4CC; Wikiでよく使われる進行メモ</h2>
+  <div class="modal-trigger-list">
+    <button class="modal-trigger" type="button" data-modal="memo-2-1">
+      <span class="label">2-1進行（占い2・霊能1）</span><br>
+      タップして詳しい進め方を見る
+    </button>
+    <button class="modal-trigger" type="button" data-modal="memo-3-1">
+      <span class="label">3-1進行（占い3・霊能1）</span><br>
+      タップして詳しい進め方を見る
+    </button>
+    <button class="modal-trigger" type="button" data-modal="memo-rules">
+      <span class="label">部屋ルールの確認は最優先</span><br>
+      タップして確認ポイントを見る
+    </button>
+  </div>
+
   <div class="tip-box">
     <strong>次のステップ</strong><br>
     基本を覚えたら、<a href="strategy.html">立ち回りガイド</a>で各役職の戦術を学びましょう。<a href="roles.html">役職データベース</a>で気になる役職を調べるのもおすすめです！
+  </div>
+
+
+  <div id="wikiMemoModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="wikiMemoModalTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="wikiMemoModalTitle" class="modal-title">進行メモ</h3>
+        <button type="button" class="modal-close" id="wikiMemoModalClose" aria-label="閉じる">&#x2715;</button>
+      </div>
+      <div class="modal-body" id="wikiMemoModalBody"></div>
+    </div>
   </div>
 
 </main>
@@ -160,5 +208,62 @@
 </footer>
 
 <script src="js/common.js"></script>
+
+<script>
+const wikiMemoData = {
+  'memo-2-1': {
+    title: '2-1進行（占い2・霊能1）',
+    body: `
+      <p>初日はグレー詰め（グレラン）で情報を増やし、翌日以降に占い結果と投票先のラインを照合して詰める進行が基本です。</p>
+      <p>占い候補は結果だけでなく、占い理由・発言の一貫性・噛み先との整合性をセットで比較すると真偽を見分けやすくなります。</p>
+      <p>片方を早期に盲信すると情報を捨てやすいので、黒先・白先・投票傾向を毎日メモするのがおすすめです。</p>
+    `
+  },
+  'memo-3-1': {
+    title: '3-1進行（占い3・霊能1）',
+    body: `
+      <p>人狼・狂人の騙りが混ざっている可能性が高いため、占いロラ（占い候補を順番に吊る）で人外を確実に減らす進行が安定しやすいです。</p>
+      <p>途中で黒が出ても、霊能結果や縄余裕と相談しながら「ロラ完遂」を重視すると取りこぼしを防げます。</p>
+      <p>ロラ中は灰の発言精査が重要です。最終日に備えて、誰がどの占い候補を強く庇っていたかを整理しておきましょう。</p>
+    `
+  },
+  'memo-rules': {
+    title: '部屋ルールの確認は最優先',
+    body: `
+      <p>連続ガード可否、初日占いの仕様、欠け役職の有無などで最適な進行は大きく変わります。</p>
+      <p>入村直後にテンプレや部屋説明を確認し、その部屋の進行方針（例：初日FO推奨・寡黙整理優先）に合わせましょう。</p>
+      <p>ルール未確認は不要な対立の原因になります。分からない場合は昼開始直後に短く確認するのが安全です。</p>
+    `
+  }
+};
+
+const memoModal = document.getElementById('wikiMemoModal');
+const memoTitle = document.getElementById('wikiMemoModalTitle');
+const memoBody = document.getElementById('wikiMemoModalBody');
+const memoClose = document.getElementById('wikiMemoModalClose');
+
+function closeMemoModal() {
+  memoModal.classList.remove('open');
+}
+
+document.querySelectorAll('.modal-trigger').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const data = wikiMemoData[btn.dataset.modal];
+    if (!data) return;
+    memoTitle.textContent = data.title;
+    memoBody.innerHTML = data.body;
+    memoModal.classList.add('open');
+  });
+});
+
+memoClose.addEventListener('click', closeMemoModal);
+memoModal.addEventListener('click', (e) => {
+  if (e.target === memoModal) closeMemoModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && memoModal.classList.contains('open')) closeMemoModal();
+});
+</script>
+
 </body>
 </html>
