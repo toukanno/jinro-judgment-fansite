@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #0f0f14;
+  --color-surface: #1a1a24;
+  --color-surface-alt: #22222e;
+  --color-border: #2a2a3a;
+  --color-text: #e4e4ef;
+  --color-text-muted: #8888a0;
+  --color-primary: #6366f1;
+  --color-village: #4A90D9;
+  --color-wolf: #D94A4A;
+  --color-fox: #D9A04A;
+  --color-lover: #D94A9A;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+}
+
+.ad-slot {
+  background: var(--color-surface-alt);
+  border: 1px dashed var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  min-height: 90px;
+}
