@@ -81,6 +81,14 @@
       text-align: center;
     }
 
+    @media (max-width: 768px) {
+      .color-grid { grid-template-columns: repeat(4, 1fr); gap: .8rem; }
+      .swatch-circle { width: 44px; height: 44px; }
+      .color-swatch { padding: .6rem; min-height: 44px; }
+      .settings-section { padding: 1.2rem; }
+      .settings-section h2 { font-size: 1.05rem; }
+    }
+
     @media (max-width: 600px) {
       .color-grid { grid-template-columns: repeat(3, 1fr); gap: .8rem; }
       .swatch-circle { width: 44px; height: 44px; }

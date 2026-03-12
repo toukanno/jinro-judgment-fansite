@@ -390,6 +390,35 @@
     }
 
     /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .memo-container {
+        padding: 0.8rem;
+      }
+
+      .memo-page-title {
+        font-size: 1.15rem;
+      }
+
+      .player-slot {
+        grid-template-columns: 44px 1fr auto;
+        grid-template-rows: auto auto auto;
+      }
+
+      .trust-group {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+      }
+
+      .player-memo {
+        grid-column: 1 / -1;
+      }
+
+      .memo-action-btn {
+        padding: 10px 16px;
+        font-size: 0.82rem;
+      }
+    }
+
     @media (max-width: 600px) {
       .memo-container {
         padding: 0.5rem;
