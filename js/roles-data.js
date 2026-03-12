@@ -254,6 +254,10 @@ const ROLES_DATA = [
     description: '特定の条件を満たすことで勝利する独立陣営。周囲を味方に引き込む力を持つ。',
     strategy: '独自の勝利条件達成のため、状況を見極めて立ち回る。どの陣営とも協力・敵対し得る。',
     nightAction: true, icon: '\u{1F396}', color: '#f0c000' },
+  { name: '銀色の影', team: 'other', rarity: 'V3', ability: '潜伏',
+    description: '独立陣営の役職。特殊な勝利条件を持ち、どの陣営にも属さず独自に生存を目指す。',
+    strategy: '誰にも正体を悟られないよう潜伏し、独自の勝利条件を達成しよう。',
+    nightAction: false, icon: '\u{1FA9F}', color: '#c0c0c0' },
 
   // ===== V3 新役職（市民陣営） =====
   { name: '聖騎士', team: 'village', rarity: 'V3', ability: '決闘',
@@ -288,6 +292,10 @@ const ROLES_DATA = [
     description: '役職確認後、屋敷に含まれていない市民陣営の役職にランダムで変化する。全役職の能力を把握する上級者向け。',
     strategy: '変化先の役職を正しく運用する知識が必要。全役職の立ち回りを習得しておこう。',
     nightAction: true, icon: '\u{2728}', color: '#f0e68c' },
+  { name: '新聞配達', team: 'village', rarity: 'V3', ability: '新聞配り',
+    description: '毎朝新聞を届ける。新聞配達が生存している間、毎朝「新聞が届きました」と表示される。死亡すると届かなくなる。',
+    strategy: 'パン屋と同様の生存確認役職。死亡がバレるため狼の噛み先選択に影響を与える。新聞は毎日設定を忘れないこと。',
+    nightAction: false, icon: '\u{1F4F0}', color: '#7ee787' },
   { name: '詩人', team: 'village', rarity: 'V3', ability: '歌の啓示',
     description: '毎朝、前夜に能力を使用した役職からランダムで一人について、誰に能力を使用したかを全体に歌で知らせる。',
     strategy: '自動で情報が公開されるため推理を助ける。ただし狩人の護衛先なども公開される可能性がある点に注意。',
@@ -338,6 +346,10 @@ const ROLES_DATA = [
     description: '女王のふりをする人狼陣営の役職。女王が存在する屋敷で効果を発揮し、村を混乱させる。',
     strategy: '偽女王との関係性を利用して村を混乱させよう。本物の女王がいる屋敷では強力。',
     nightAction: false, icon: '\u{1F3AD}', color: '#f85149' },
+  { name: '闇の代身', team: 'werewolf', rarity: 'V3', ability: '身代わり',
+    description: '人狼陣営の身代わり役職。仲間の人狼が処刑された場合、代わりに死亡することがある。人狼の生存を助ける。',
+    strategy: '人狼の盾となる存在。処刑から仲間を守りつつ、自身の正体を隠して立ち回ろう。',
+    nightAction: false, icon: '\u{1F311}', color: '#da3633' },
 
   // ===== V3 新役職（妖狐陣営） =====
   { name: '饒舌な妖狐', team: 'fox', rarity: 'V3', ability: '饒舌＋襲撃耐性',
