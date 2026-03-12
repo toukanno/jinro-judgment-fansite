@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0e17">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JGDB">
+  <title>縄計算ツール - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントの縄計算（吊り回数）を自動計算。生存人数と人狼数を入力するだけで吊り余裕が分かります。">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .calc-frame {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    .calc-input-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .calc-input-group label {
+      flex: 1;
+      font-size: .95rem;
+      font-weight: 600;
+      color: #c9d1d9;
+    }
+    .calc-input-group .input-wrap {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .calc-btn {
+      width: 36px;
+      height: 36px;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      background: #21262d;
+      color: #e6edf3;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .15s;
+    }
+    .calc-btn:hover { background: #30363d; border-color: #58a6ff; }
+    .calc-btn:active { transform: scale(.9); }
+    .calc-num {
+      width: 50px;
+      height: 36px;
+      text-align: center;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      background: #0d1117;
+      color: #e6edf3;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .calc-result {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1.5rem;
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+    .result-main {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: .3rem;
+    }
+    .result-main.safe { color: #7ee787; }
+    .result-main.warning { color: #d29922; }
+    .result-main.danger { color: #f85149; }
+    .result-label {
+      font-size: .9rem;
+      color: #8b949e;
+    }
+    .result-detail {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .8rem;
+    }
+    .detail-item {
+      background: rgba(22,27,34,.5);
+      border: 1px solid rgba(48,54,61,.5);
+      border-radius: 8px;
+      padding: .8rem;
+      text-align: center;
+    }
+    .detail-item .num {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #e6edf3;
+    }
+    .detail-item .label {
+      font-size: .78rem;
+      color: #8b949e;
+      margin-top: .2rem;
+    }
+    .situation-msg {
+      margin-top: 1rem;
+      padding: .8rem 1rem;
+      border-radius: 8px;
+      font-size: .9rem;
+      font-weight: 600;
+    }
+    .situation-msg.safe { background: rgba(126,231,135,.08); color: #7ee787; border: 1px solid rgba(126,231,135,.2); }
+    .situation-msg.warning { background: rgba(210,153,34,.08); color: #d29922; border: 1px solid rgba(210,153,34,.2); }
+    .situation-msg.danger { background: rgba(248,81,73,.08); color: #f85149; border: 1px solid rgba(248,81,73,.2); }
+
+    .formula-box {
+      background: rgba(88,166,255,.06);
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .formula-box h3 { color: #58a6ff; margin-bottom: .5rem; font-size: 1rem; }
+    .formula-box code {
+      display: block;
+      background: #0d1117;
+      padding: .8rem 1rem;
+      border-radius: 6px;
+      color: #e6edf3;
+      font-size: .95rem;
+      margin: .5rem 0;
+      text-align: center;
+    }
+    .formula-box p { font-size: .88rem; color: #8b949e; line-height: 1.6; }
+
+    .ref-table {
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    .timeline {
+      max-width: 600px;
+      margin: 1.5rem auto 0;
+    }
+    .timeline-day {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      padding: .6rem 0;
+      border-bottom: 1px solid rgba(48,54,61,.3);
+      font-size: .88rem;
+    }
+    .timeline-day .day-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: .82rem;
+      flex-shrink: 0;
+    }
+    .day-num.active { background: #238636; color: #fff; }
+    .day-num.past { background: #30363d; color: #8b949e; }
+    .day-num.future { background: rgba(48,54,61,.3); color: #484f58; }
+    .timeline-day .day-info { flex: 1; color: #c9d1d9; }
+    .timeline-day .day-count { font-weight: 700; color: #8b949e; font-size: .82rem; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="character.html">キャラクター</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+        <li><a href="templates.html">部屋テンプレ</a></li>
+        <li><a href="copipe.html">コピペ集</a></li>
+        <li><a href="v3roles.html">V3新役職</a></li>
+        <li><a href="queen-wise.html">女王部屋</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="timer.html">タイマー</a></li>
+        <li><a href="exclusion.html">同村制限</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> <a href="strategy.html">立ち回り</a> <span>&gt;</span> 縄計算ツール</div>
+
+  <h1 class="section-title">&#x1F9EE; 縄計算ツール</h1>
+
+  <div class="tip-box">
+    <strong>縄計算とは？</strong><br>
+    残りの吊り回数（縄）を計算し、あと何回投票ミスが許されるかを把握するための計算です。人狼ゲームで最も重要な計算の一つです。
+  </div>
+
+  <div class="calc-frame">
+    <div class="calc-input-group">
+      <label>&#x1F465; 生存人数</label>
+      <div class="input-wrap">
+        <button class="calc-btn" onclick="adjust('alive', -1)">-</button>
+        <input type="number" class="calc-num" id="alive" value="9" min="3" max="20">
+        <button class="calc-btn" onclick="adjust('alive', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="calc-input-group">
+      <label>&#x1F43A; 残り人狼数</label>
+      <div class="input-wrap">
+        <button class="calc-btn" onclick="adjust('wolves', -1)">-</button>
+        <input type="number" class="calc-num" id="wolves" value="2" min="1" max="6">
+        <button class="calc-btn" onclick="adjust('wolves', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="calc-input-group">
+      <label>&#x1F98A; 妖狐生存</label>
+      <div class="input-wrap">
+        <button class="calc-btn" onclick="adjust('foxes', -1)">-</button>
+        <input type="number" class="calc-num" id="foxes" value="0" min="0" max="3">
+        <button class="calc-btn" onclick="adjust('foxes', 1)">+</button>
+      </div>
+    </div>
+
+    <div class="calc-result" id="calcResult"></div>
+
+    <div class="timeline" id="timeline"></div>
+  </div>
+
+  <div class="formula-box">
+    <h3>&#x1F4D0; 計算式</h3>
+    <code>吊り回数 = floor((生存人数 - 1) / 2)</code>
+    <code>吊り余裕 = 吊り回数 - 残り人狼数 - 妖狐数</code>
+    <p>吊り余裕が0以下の場合、1回も間違えられない状況です。マイナスの場合は、通常の吊りだけでは人狼を全員処刑できません。</p>
+  </div>
+
+  <h2 class="section-title">&#x1F4CA; よくある状況の縄計算</h2>
+  <div class="ref-table">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>生存</th>
+          <th>人狼</th>
+          <th>吊り回数</th>
+          <th>余裕</th>
+          <th>状況</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>13</td><td>3</td><td>6</td><td>3</td><td style="color:#7ee787">余裕あり</td></tr>
+        <tr><td>11</td><td>3</td><td>5</td><td>2</td><td style="color:#7ee787">やや余裕</td></tr>
+        <tr><td>9</td><td>2</td><td>4</td><td>2</td><td style="color:#7ee787">余裕あり</td></tr>
+        <tr><td>7</td><td>2</td><td>3</td><td>1</td><td style="color:#d29922">1ミスで負け</td></tr>
+        <tr><td>5</td><td>2</td><td>2</td><td>0</td><td style="color:#f85149">ミス不可</td></tr>
+        <tr><td>7</td><td>1</td><td>3</td><td>2</td><td style="color:#7ee787">余裕あり</td></tr>
+        <tr><td>5</td><td>1</td><td>2</td><td>1</td><td style="color:#d29922">最終日</td></tr>
+        <tr><td>3</td><td>1</td><td>1</td><td>0</td><td style="color:#f85149">ラスト1回</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tip-box warning" style="max-width:600px;margin:0 auto;">
+    <strong>注意：妖狐がいる場合</strong><br>
+    妖狐が生存している状態で人狼を全滅させると、妖狐の勝利になります。人狼を全員吊る前に妖狐を処理する必要があるため、実質的な吊り余裕はさらに少なくなります。
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="index.html">ホーム</a>
+    <a href="roles.html">役職一覧</a>
+    <a href="guide.html">初心者ガイド</a>
+    <a href="strategy.html">立ち回り</a>
+    <a href="glossary.html">用語集</a>
+  </div>
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
+</footer>
+
+<script src="js/common.js"></script>
+<script>
+(function() {
+  const aliveEl = document.getElementById('alive');
+  const wolvesEl = document.getElementById('wolves');
+  const foxesEl = document.getElementById('foxes');
+  const resultEl = document.getElementById('calcResult');
+  const timelineEl = document.getElementById('timeline');
+
+  function adjust(id, delta) {
+    const el = document.getElementById(id);
+    const val = parseInt(el.value) + delta;
+    const min = parseInt(el.min);
+    const max = parseInt(el.max);
+    el.value = Math.max(min, Math.min(max, val));
+    calculate();
+  }
+  window.adjust = adjust;
+
+  function calculate() {
+    const alive = parseInt(aliveEl.value) || 3;
+    const wolves = parseInt(wolvesEl.value) || 1;
+    const foxes = parseInt(foxesEl.value) || 0;
+
+    const totalHangs = Math.floor((alive - 1) / 2);
+    const margin = totalHangs - wolves - foxes;
+
+    let statusClass, statusMsg;
+    if (margin >= 2) {
+      statusClass = 'safe';
+      statusMsg = '余裕があります。グレランや情報収集に時間を使えます。';
+    } else if (margin === 1) {
+      statusClass = 'warning';
+      statusMsg = '1回だけミスが許されます。慎重に投票先を選びましょう。';
+    } else if (margin === 0) {
+      statusClass = 'danger';
+      statusMsg = 'ミスは許されません！全て正確に人外を吊る必要があります。';
+    } else {
+      statusClass = 'danger';
+      statusMsg = '通常の吊りだけでは勝てません！呪殺・GJ・道連れなどの追加キルが必要です。';
+    }
+
+    const ppLine = wolves + 1;
+    const ppPossible = alive <= ppLine * 2;
+
+    resultEl.innerHTML = `
+      <div class="result-main ${statusClass}">${margin >= 0 ? margin : margin} 回</div>
+      <div class="result-label">吊り余裕</div>
+      <div class="result-detail">
+        <div class="detail-item">
+          <div class="num">${totalHangs}</div>
+          <div class="label">総吊り回数</div>
+        </div>
+        <div class="detail-item">
+          <div class="num">${wolves + foxes}</div>
+          <div class="label">処理必要人外</div>
+        </div>
+      </div>
+      <div class="situation-msg ${statusClass}">${statusMsg}</div>
+      ${ppPossible ? '<div class="situation-msg danger" style="margin-top:.5rem;">&#x26A0; PP/RPP圏内の可能性があります。狂人の生存に注意！</div>' : ''}
+    `;
+
+    // Timeline
+    let html = '';
+    let ppl = alive;
+    let w = wolves;
+    for (let day = 1; ppl > 2 && w > 0; day++) {
+      const hangsLeft = Math.floor((ppl - 1) / 2);
+      const isLast = hangsLeft <= w;
+      html += `
+        <div class="timeline-day">
+          <div class="day-num ${day === 1 ? 'active' : 'future'}">${day}日</div>
+          <div class="day-info">${ppl}人生存 → 昼処刑 → 夜襲撃</div>
+          <div class="day-count">縄${hangsLeft} ${isLast ? '(最終)' : ''}</div>
+        </div>
+      `;
+      ppl -= 2; // 1 execution + 1 kill
+    }
+    timelineEl.innerHTML = html;
+  }
+
+  aliveEl.addEventListener('input', calculate);
+  wolvesEl.addEventListener('input', calculate);
+  foxesEl.addEventListener('input', calculate);
+
+  calculate();
+})();
+</script>
+</body>
+</html>
