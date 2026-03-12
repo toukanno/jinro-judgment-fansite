@@ -328,10 +328,10 @@ function copyText(text, btn) {
   navigator.clipboard.writeText(text).then(() => {
     btn.textContent = 'OK!';
     btn.classList.add('copied');
-    setTimeout(() => {
-      btn.textContent = 'コピー';
-      btn.classList.remove('copied');
-    }, 1500);
+    setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 1500);
+  }).catch(() => {
+    btn.textContent = '失敗';
+    setTimeout(() => { btn.textContent = 'コピー'; }, 1500);
   });
 }
 

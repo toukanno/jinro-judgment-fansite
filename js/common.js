@@ -37,6 +37,27 @@ document.addEventListener('DOMContentLoaded', () => {
       group.querySelector(`#${btn.dataset.tab}`).classList.add('active');
     });
   });
+
+  // Back to Top button (auto-inject)
+  if (!document.querySelector('.back-to-top')) {
+    const btn = document.createElement('button');
+    btn.className = 'back-to-top';
+    btn.setAttribute('aria-label', 'ページトップへ戻る');
+    btn.innerHTML = '&#x25B2;';
+    document.body.appendChild(btn);
+    btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    window.addEventListener('scroll', () => {
+      btn.classList.toggle('show', window.scrollY > 300);
+    }, { passive: true });
+  }
+
+  // Header scroll effect
+  const header = document.querySelector('.site-header');
+  if (header) {
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+  }
 });
 
 if ('serviceWorker' in navigator) {

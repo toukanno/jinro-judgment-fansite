@@ -176,8 +176,15 @@
 </main>
 
 <footer class="site-footer">
+  <div class="footer-links">
+    <a href="index.html">ホーム</a>
+    <a href="roles.html">役職一覧</a>
+    <a href="guide.html">初心者ガイド</a>
+    <a href="strategy.html">立ち回り</a>
+    <a href="glossary.html">用語集</a>
+  </div>
   <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
-  <p>本サイトは非公式のファンサイトです。</p>
+  <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
 </footer>
 
 <script src="js/common.js"></script>
@@ -381,10 +388,10 @@ function copyText(text, btn) {
   navigator.clipboard.writeText(text).then(() => {
     btn.textContent = 'OK!';
     btn.classList.add('copied');
-    setTimeout(() => {
-      btn.textContent = 'コピー';
-      btn.classList.remove('copied');
-    }, 1500);
+    setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 1500);
+  }).catch(() => {
+    btn.textContent = '失敗';
+    setTimeout(() => { btn.textContent = 'コピー'; }, 1500);
   });
 }
 
