@@ -7,11 +7,243 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="人狼JGDB">
-  <title>役職詳細 - 人狼ジャッジメント攻略</title>
-  <meta name="description" content="人狼ジャッジメントの役職詳細ページ。能力・立ち回り・陣営情報を掲載。">
+  <title>人物紹介 - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントの全役職キャラクター紹介。市民陣営・人狼陣営・妖狐陣営など各役職の能力・立ち回りを掲載。">
   <link rel="stylesheet" href="css/style.css">
   <link rel="manifest" href="manifest.json">
   <style>
+    /* ===== Gallery Mode ===== */
+    .gallery-hero {
+      padding: 3rem 1.5rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid #30363d;
+      background: linear-gradient(135deg, #1a1025 0%, #0d1117 50%, #0a1628 100%);
+    }
+    .gallery-hero h1 {
+      font-size: 2.2rem;
+      font-weight: 900;
+      background: linear-gradient(90deg, #7ee787, #58a6ff, #f85149, #d29922);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: .5rem;
+    }
+    .gallery-hero p { color: #8b949e; font-size: 1rem; }
+
+    .gallery-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Search & Filter */
+    .gallery-controls {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .gallery-search {
+      flex: 1;
+      min-width: 200px;
+      padding: .65rem 1rem .65rem 2.5rem;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      background: #0d1117 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23484f58' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 10-1.397 1.398h-.001l3.85 3.85a1 1 0 001.415-1.414l-3.85-3.85zm-5.242.156a5 5 0 110-10 5 5 0 010 10z'/%3E%3C/svg%3E") no-repeat .8rem center;
+      color: #e6edf3;
+      font-size: .92rem;
+    }
+    .gallery-search:focus { outline: none; border-color: #58a6ff; }
+    .team-filter {
+      padding: .55rem 1rem;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      background: transparent;
+      color: #8b949e;
+      cursor: pointer;
+      font-size: .85rem;
+      font-weight: 600;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+    .team-filter.active { border-color: currentColor; }
+    .team-filter[data-team="all"].active { color: #e6edf3; background: #21262d; }
+    .team-filter[data-team="village"].active { color: #7ee787; background: rgba(126,231,135,.12); }
+    .team-filter[data-team="werewolf"].active { color: #f85149; background: rgba(248,81,73,.12); }
+    .team-filter[data-team="fox"].active { color: #d29922; background: rgba(210,153,34,.12); }
+    .team-filter[data-team="lovers"].active { color: #db7ff7; background: rgba(219,127,247,.12); }
+    .team-filter[data-team="other"].active { color: #8b949e; background: rgba(139,148,158,.12); }
+
+    .team-section-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin: 2.5rem 0 1.2rem;
+      padding-bottom: .5rem;
+      border-bottom: 2px solid #30363d;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .team-section-title:first-child { margin-top: 0; }
+    .team-section-title .count {
+      font-size: .85rem;
+      font-weight: 500;
+      color: #484f58;
+      margin-left: .5rem;
+    }
+
+    /* Character Cards */
+    .char-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+    .char-card {
+      position: relative;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+    .char-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0,0,0,.4);
+    }
+    .char-card[data-team="village"]:hover { border-color: #7ee787; box-shadow: 0 8px 30px rgba(126,231,135,.15); }
+    .char-card[data-team="werewolf"]:hover { border-color: #f85149; box-shadow: 0 8px 30px rgba(248,81,73,.15); }
+    .char-card[data-team="fox"]:hover { border-color: #d29922; box-shadow: 0 8px 30px rgba(210,153,34,.15); }
+    .char-card[data-team="lovers"]:hover { border-color: #db7ff7; box-shadow: 0 8px 30px rgba(219,127,247,.15); }
+    .char-card[data-team="other"]:hover { border-color: #8b949e; box-shadow: 0 8px 30px rgba(139,148,158,.15); }
+
+    .char-card-banner {
+      height: 100px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .char-card[data-team="village"] .char-card-banner {
+      background: linear-gradient(135deg, #0f2018 0%, #132a1c 50%, #0d1117 100%);
+    }
+    .char-card[data-team="werewolf"] .char-card-banner {
+      background: linear-gradient(135deg, #1a0f0f 0%, #2a1215 50%, #0d1117 100%);
+    }
+    .char-card[data-team="fox"] .char-card-banner {
+      background: linear-gradient(135deg, #1a1508 0%, #2a2010 50%, #0d1117 100%);
+    }
+    .char-card[data-team="lovers"] .char-card-banner {
+      background: linear-gradient(135deg, #1a0f20 0%, #251530 50%, #0d1117 100%);
+    }
+    .char-card[data-team="other"] .char-card-banner {
+      background: linear-gradient(135deg, #15181e 0%, #1c2026 50%, #0d1117 100%);
+    }
+    .char-card-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: .2;
+    }
+    .char-card[data-team="village"] .char-card-banner::before {
+      background: radial-gradient(circle at 50% 120%, #7ee787, transparent 70%);
+    }
+    .char-card[data-team="werewolf"] .char-card-banner::before {
+      background: radial-gradient(circle at 50% 120%, #f85149, transparent 70%);
+    }
+    .char-card[data-team="fox"] .char-card-banner::before {
+      background: radial-gradient(circle at 50% 120%, #d29922, transparent 70%);
+    }
+    .char-card[data-team="lovers"] .char-card-banner::before {
+      background: radial-gradient(circle at 50% 120%, #db7ff7, transparent 70%);
+    }
+    .char-card[data-team="other"] .char-card-banner::before {
+      background: radial-gradient(circle at 50% 120%, #8b949e, transparent 70%);
+    }
+
+    .char-card-icon {
+      font-size: 3.2rem;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,.5));
+      line-height: 1;
+    }
+
+    .char-card-body {
+      padding: 1rem 1.2rem 1.2rem;
+    }
+    .char-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: .5rem;
+      gap: .5rem;
+    }
+    .char-card-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #e6edf3;
+    }
+    .char-card-badge {
+      display: inline-block;
+      padding: .15rem .55rem;
+      border-radius: 20px;
+      font-size: .7rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .char-card[data-team="village"] .char-card-badge { background: rgba(126,231,135,.15); color: #7ee787; border: 1px solid rgba(126,231,135,.3); }
+    .char-card[data-team="werewolf"] .char-card-badge { background: rgba(248,81,73,.15); color: #f85149; border: 1px solid rgba(248,81,73,.3); }
+    .char-card[data-team="fox"] .char-card-badge { background: rgba(210,153,34,.15); color: #d29922; border: 1px solid rgba(210,153,34,.3); }
+    .char-card[data-team="lovers"] .char-card-badge { background: rgba(219,127,247,.15); color: #db7ff7; border: 1px solid rgba(219,127,247,.3); }
+    .char-card[data-team="other"] .char-card-badge { background: rgba(139,148,158,.15); color: #8b949e; border: 1px solid rgba(139,148,158,.3); }
+
+    .char-card-ability {
+      font-size: .82rem;
+      color: #58a6ff;
+      font-weight: 600;
+      margin-bottom: .5rem;
+    }
+    .char-card-desc {
+      font-size: .85rem;
+      color: #8b949e;
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .char-card-rarity {
+      position: absolute;
+      top: .6rem;
+      right: .6rem;
+      font-size: .65rem;
+      font-weight: 700;
+      padding: .15rem .5rem;
+      border-radius: 6px;
+      background: rgba(0,0,0,.5);
+      color: #e6edf3;
+      z-index: 2;
+      backdrop-filter: blur(4px);
+    }
+
+    .char-card-color-bar {
+      height: 3px;
+      width: 100%;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #484f58;
+      font-size: 1.1rem;
+    }
+
+    /* ===== Detail Mode ===== */
     .char-hero {
       padding: 3rem 1.5rem 2rem;
       text-align: center;
@@ -34,6 +266,8 @@
     .char-hero.fox::before { background: radial-gradient(circle at 50% 80%, #d29922, transparent 70%); }
     .char-hero.lovers { background: linear-gradient(135deg, #0d1117 0%, #1a0f20 100%); }
     .char-hero.lovers::before { background: radial-gradient(circle at 50% 80%, #db7ff7, transparent 70%); }
+    .char-hero.other { background: linear-gradient(135deg, #0d1117 0%, #15181e 100%); }
+    .char-hero.other::before { background: radial-gradient(circle at 50% 80%, #8b949e, transparent 70%); }
 
     .char-hero-inner {
       position: relative;
@@ -186,11 +420,42 @@
     .nav-arrow .name { font-size: .95rem; color: #e6edf3; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .nav-arrow.next { text-align: right; margin-left: auto; }
 
+    .char-banner {
+      max-width: 100%;
+      padding: 1.5rem;
+      background: #0d1117;
+      border-bottom: 1px solid #30363d;
+      text-align: center;
+    }
+    .char-banner img {
+      display: block;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      border-radius: 12px;
+      border: 1px solid #30363d;
+      box-shadow: 0 4px 20px rgba(0,0,0,.4);
+    }
+    .char-banner p {
+      color: #8b949e;
+      font-size: .85rem;
+      margin-top: .8rem;
+    }
+
     @media (max-width: 600px) {
+      .gallery-hero h1 { font-size: 1.6rem; }
+      .char-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+      .char-card-banner { height: 75px; }
+      .char-card-icon { font-size: 2.4rem; }
+      .char-card-body { padding: .8rem 1rem 1rem; }
+      .char-card-name { font-size: 1rem; }
+      .char-card-desc { -webkit-line-clamp: 2; }
       .char-name { font-size: 1.6rem; }
       .char-icon { font-size: 3rem; }
       .info-grid { grid-template-columns: repeat(2, 1fr); }
       .char-content { padding: 1.5rem 1rem; }
+      .char-banner { padding: 1rem; }
+      .gallery-container { padding: 1.5rem 1rem; }
     }
   </style>
 </head>
@@ -199,38 +464,53 @@
 <header class="site-header">
   <div class="header-inner">
     <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
-    <div class="theme-switcher">
-      <button class="theme-btn" data-theme="day" aria-label="昼間テーマ">&#9728;&#65039;<span class="theme-label">昼間</span></button>
-      <button class="theme-btn" data-theme="evening" aria-label="夕方テーマ">&#127749;<span class="theme-label">夕方</span></button>
-      <button class="theme-btn" data-theme="night" aria-label="夜テーマ">&#127769;<span class="theme-label">夜</span></button>
-    </div>
     <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
     <nav class="main-nav">
       <ul>
         <li><a href="index.html">ホーム</a></li>
         <li><a href="roles.html">役職一覧</a></li>
-        <li><a href="characters.html">キャラクター</a></li>
+        <li><a href="character.html" class="active">キャラクター一覧</a></li>
         <li><a href="guide.html">初心者ガイド</a></li>
         <li><a href="strategy.html">立ち回り</a></li>
         <li><a href="composition.html">編成考察</a></li>
         <li><a href="glossary.html">用語集</a></li>
-        <li><a href="copipe.html">コピペ集</a></li>
       </ul>
     </nav>
   </div>
 </header>
 
-<div id="charHero" class="char-hero">
-  <div class="char-hero-inner">
-    <span class="char-icon" id="charIcon"></span>
-    <h1 class="char-name" id="charName"></h1>
-    <div id="charBadge"></div>
-    <div class="char-ability-label" id="charAbilityLabel"></div>
+<!-- Gallery View (no ?role= parameter) -->
+<div id="galleryView" style="display:none;">
+  <div class="gallery-hero">
+    <h1>&#x1F3AD; 人物紹介</h1>
+    <p>人狼ジャッジメントに登場する全役職キャラクターを陣営別に紹介</p>
+  </div>
+  <div class="gallery-container">
+    <div class="gallery-controls">
+      <input type="text" class="gallery-search" id="gallerySearch" placeholder="役職名・能力で検索...">
+      <button class="team-filter active" data-team="all">全て</button>
+      <button class="team-filter" data-team="village">&#x1F33F; 市民</button>
+      <button class="team-filter" data-team="werewolf">&#x1F43A; 人狼</button>
+      <button class="team-filter" data-team="fox">&#x1F98A; 妖狐</button>
+      <button class="team-filter" data-team="lovers">&#x1F495; 恋人</button>
+      <button class="team-filter" data-team="other">&#x2753; その他</button>
+    </div>
+    <div id="galleryContent"></div>
   </div>
 </div>
 
-<div class="char-content" id="charContent">
-  <!-- Dynamically rendered -->
+<!-- Detail View (?role= parameter) -->
+<div id="detailView" style="display:none;">
+
+  <div id="charHero" class="char-hero">
+    <div class="char-hero-inner">
+      <span class="char-icon" id="charIcon"></span>
+      <h1 class="char-name" id="charName"></h1>
+      <div id="charBadge"></div>
+      <div class="char-ability-label" id="charAbilityLabel"></div>
+    </div>
+  </div>
+  <div class="char-content" id="charContent"></div>
 </div>
 
 <footer class="site-footer">
@@ -242,122 +522,198 @@
 <script src="js/common.js"></script>
 <script>
 (function() {
-  var ROLE_ICONS = {
-    '市民': '&#x1F464;', '占い師': '&#x1F52E;', '霊能者': '&#x1F47B;',
-    '狩人': '&#x1F3AF;', '猫又': '&#x1F431;', '双子': '&#x1F46F;',
-    '罠師': '&#x1FAA4;', '医者': '&#x1FA7A;', '暗殺者': '&#x1F5E1;',
-    'パン屋': '&#x1F35E;', '長老': '&#x1F9D3;', '巫女': '&#x26E9;',
-    '賢者': '&#x1F4D6;', '人狼': '&#x1F47A;', '狂人': '&#x1F608;',
-    '狂信者': '&#x1F631;', 'ささやく狂人': '&#x1F5E3;', '黒猫': '&#x1F408;',
-    '賢狼': '&#x1F9D0;', '強欲な人狼': '&#x1F4B0;', '妖狐': '&#x1F98A;',
-    '子狐': '&#x1F43E;', '背徳者': '&#x1F47D;', '恋人': '&#x1F495;'
-  };
-
   var params = new URLSearchParams(location.search);
   var roleName = params.get('role');
 
-  if (!roleName) {
-    showNotFound();
-    return;
-  }
-
-  var idx = ROLES_DATA.findIndex(function(r) { return r.name === roleName; });
-  if (idx === -1) {
-    showNotFound();
-    return;
-  }
-
-  var role = ROLES_DATA[idx];
-  var info = TEAM_INFO[role.team];
-
-  // Update page title
-  document.title = role.name + ' - 人狼ジャッジメント攻略';
-  document.querySelector('meta[name="description"]').content =
-    role.name + 'の能力・立ち回り詳細。' + role.description;
-
-  // Hero
-  document.getElementById('charHero').classList.add(role.team);
-  document.getElementById('charIcon').innerHTML = ROLE_ICONS[role.name] || info.icon;
-  document.getElementById('charName').textContent = role.name;
-  document.getElementById('charBadge').innerHTML =
-    '<span class="role-badge ' + role.team + '">' + info.icon + ' ' + info.name + '</span>';
-  document.getElementById('charAbilityLabel').textContent = '能力: ' + role.ability;
-
-  // Content
-  var sameTeam = ROLES_DATA.filter(function(r) { return r.team === role.team && r.name !== role.name; });
-
-  // Prev / Next
-  var prevRole = idx > 0 ? ROLES_DATA[idx - 1] : null;
-  var nextRole = idx < ROLES_DATA.length - 1 ? ROLES_DATA[idx + 1] : null;
-
-  var html = '';
-  html += '<a href="roles.html" class="back-link">&#x2190; 役職一覧に戻る</a>';
-  html += '<div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> <a href="roles.html">役職一覧</a> <span>&gt;</span> ' + role.name + '</div>';
-
-  // Info cards
-  html += '<div class="info-grid">';
-  html += '<div class="info-card"><span class="label">陣営</span><span class="value" style="color:' + info.color + '">' + info.name + '</span></div>';
-  html += '<div class="info-card"><span class="label">能力</span><span class="value">' + role.ability + '</span></div>';
-  html += '<div class="info-card"><span class="label">レアリティ</span><span class="value">' + role.rarity + '</span></div>';
-  html += '<div class="info-card"><span class="label">夜アクション</span><span class="value">' + (role.nightAction ? '&#x2705; あり' : '&#x274C; なし') + '</span></div>';
-  html += '</div>';
-
-  // Description
-  html += '<div class="char-section">';
-  html += '<h2>&#x1F4DD; 役職説明</h2>';
-  html += '<p>' + role.description + '</p>';
-  html += '</div>';
-
-  // Strategy
-  html += '<div class="char-section">';
-  html += '<h2>&#x1F4A1; 立ち回りのコツ</h2>';
-  html += '<p>' + role.strategy + '</p>';
-  html += '</div>';
-
-  // Related roles
-  if (sameTeam.length > 0) {
-    html += '<div class="char-section">';
-    html += '<h2>' + info.icon + ' ' + info.name + 'の他の役職</h2>';
-    html += '<div class="related-grid">';
-    sameTeam.forEach(function(r) {
-      var icon = ROLE_ICONS[r.name] || TEAM_INFO[r.team].icon;
-      html += '<a href="character.html?role=' + encodeURIComponent(r.name) + '" class="related-card">';
-      html += '<h4>' + icon + ' ' + r.name + '</h4>';
-      html += '<p>' + r.ability + '</p>';
-      html += '</a>';
-    });
-    html += '</div>';
-    html += '</div>';
-  }
-
-  // Prev/Next navigation
-  html += '<div class="nav-arrows">';
-  if (prevRole) {
-    html += '<a href="character.html?role=' + encodeURIComponent(prevRole.name) + '" class="nav-arrow prev">';
-    html += '<span class="dir">&#x2190; 前の役職</span>';
-    html += '<span class="name">' + prevRole.name + '</span>';
-    html += '</a>';
+  if (roleName) {
+    showDetail(roleName);
   } else {
-    html += '<span></span>';
+    showGallery();
   }
-  if (nextRole) {
-    html += '<a href="character.html?role=' + encodeURIComponent(nextRole.name) + '" class="nav-arrow next">';
-    html += '<span class="dir">次の役職 &#x2192;</span>';
-    html += '<span class="name">' + nextRole.name + '</span>';
-    html += '</a>';
+
+  // ===== GALLERY =====
+  function showGallery() {
+    document.getElementById('galleryView').style.display = '';
+    var currentTeam = 'all';
+    var currentSearch = '';
+
+    var teamOrder = ['village', 'werewolf', 'fox', 'lovers', 'other'];
+    var teamNames = {
+      village: '&#x1F33F; 市民陣営',
+      werewolf: '&#x1F43A; 人狼陣営',
+      fox: '&#x1F98A; 妖狐陣営',
+      lovers: '&#x1F495; 恋人陣営',
+      other: '&#x2753; その他陣営'
+    };
+
+    function renderGallery() {
+      var filtered = ROLES_DATA.filter(function(r) {
+        var matchTeam = currentTeam === 'all' || r.team === currentTeam;
+        var matchSearch = !currentSearch ||
+          r.name.indexOf(currentSearch) !== -1 ||
+          r.ability.indexOf(currentSearch) !== -1 ||
+          r.description.indexOf(currentSearch) !== -1;
+        return matchTeam && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        document.getElementById('galleryContent').innerHTML =
+          '<div class="no-results">&#x1F50D; 該当する役職が見つかりませんでした</div>';
+        return;
+      }
+
+      var html = '';
+      teamOrder.forEach(function(team) {
+        var teamRoles = filtered.filter(function(r) { return r.team === team; });
+        if (teamRoles.length === 0) return;
+
+        html += '<h2 class="team-section-title">' + teamNames[team] +
+          '<span class="count">' + teamRoles.length + '役職</span></h2>';
+        html += '<div class="char-grid">';
+        teamRoles.forEach(function(r) {
+          html += '<a href="character.html?role=' + encodeURIComponent(r.name) + '" class="char-card" data-team="' + r.team + '">';
+          html += '<div class="char-card-rarity">' + r.rarity + '</div>';
+          html += '<div class="char-card-banner">';
+          html += '<span class="char-card-icon">' + (r.icon || '') + '</span>';
+          html += '</div>';
+          html += '<div class="char-card-color-bar" style="background:' + (r.color || '#30363d') + ';"></div>';
+          html += '<div class="char-card-body">';
+          html += '<div class="char-card-header">';
+          html += '<span class="char-card-name">' + r.name + '</span>';
+          html += '<span class="char-card-badge">' + TEAM_INFO[r.team].name + '</span>';
+          html += '</div>';
+          html += '<div class="char-card-ability">&#x2699;&#xFE0F; ' + r.ability + '</div>';
+          html += '<div class="char-card-desc">' + r.description + '</div>';
+          html += '</div>';
+          html += '</a>';
+        });
+        html += '</div>';
+      });
+
+      document.getElementById('galleryContent').innerHTML = html;
+    }
+
+    // Filter buttons
+    document.querySelectorAll('.team-filter').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.team-filter').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        currentTeam = btn.dataset.team;
+        renderGallery();
+      });
+    });
+
+    // Search
+    document.getElementById('gallerySearch').addEventListener('input', function() {
+      currentSearch = this.value.trim();
+      renderGallery();
+    });
+
+    renderGallery();
   }
-  html += '</div>';
 
-  document.getElementById('charContent').innerHTML = html;
+  // ===== DETAIL =====
+  function showDetail(name) {
+    document.getElementById('detailView').style.display = '';
 
-  function showNotFound() {
-    document.getElementById('charHero').style.display = 'none';
-    document.getElementById('charContent').innerHTML =
-      '<div class="not-found">' +
-      '<h2>&#x1F50D; 役職が見つかりませんでした</h2>' +
-      '<p>指定された役職は存在しないか、URLが間違っている可能性があります。</p>' +
-      '<a href="roles.html" class="btn btn-primary">役職一覧へ戻る</a>' +
-      '</div>';
+    var idx = ROLES_DATA.findIndex(function(r) { return r.name === name; });
+    if (idx === -1) {
+      document.getElementById('charHero').style.display = 'none';
+      document.getElementById('charContent').innerHTML =
+        '<div class="not-found">' +
+        '<h2>&#x1F50D; 役職が見つかりませんでした</h2>' +
+        '<p>指定された役職は存在しないか、URLが間違っている可能性があります。</p>' +
+        '<a href="character.html" class="btn btn-primary">人物紹介へ戻る</a>' +
+        '</div>';
+      return;
+    }
+
+    var role = ROLES_DATA[idx];
+    var info = TEAM_INFO[role.team];
+
+    document.title = role.name + ' - 人狼ジャッジメント攻略';
+    document.querySelector('meta[name="description"]').content =
+      role.name + 'の能力・立ち回り詳細。' + role.description;
+
+    // Hero
+    document.getElementById('charHero').classList.add(role.team);
+    document.getElementById('charIcon').textContent = role.icon || '';
+    document.getElementById('charName').textContent = role.name;
+    document.getElementById('charBadge').innerHTML =
+      '<span class="role-badge ' + role.team + '">' + info.icon + ' ' + info.name + '</span>';
+    document.getElementById('charAbilityLabel').textContent = '能力: ' + role.ability;
+
+    // Content
+    var sameTeam = ROLES_DATA.filter(function(r) { return r.team === role.team && r.name !== role.name; });
+    var prevRole = idx > 0 ? ROLES_DATA[idx - 1] : null;
+    var nextRole = idx < ROLES_DATA.length - 1 ? ROLES_DATA[idx + 1] : null;
+
+    var html = '';
+    html += '<a href="character.html" class="back-link">&#x2190; 人物紹介に戻る</a>';
+    html += '<div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> <a href="character.html">人物紹介</a> <span>&gt;</span> ' + role.name + '</div>';
+
+    // Info cards
+    html += '<div class="info-grid">';
+    html += '<div class="info-card"><span class="label">陣営</span><span class="value" style="color:' + info.color + '">' + info.name + '</span></div>';
+    html += '<div class="info-card"><span class="label">能力</span><span class="value">' + role.ability + '</span></div>';
+    html += '<div class="info-card"><span class="label">レアリティ</span><span class="value">' + role.rarity + '</span></div>';
+    html += '<div class="info-card"><span class="label">夜アクション</span><span class="value">' + (role.nightAction ? '&#x2705; あり' : '&#x274C; なし') + '</span></div>';
+    html += '</div>';
+
+    // Description
+    html += '<div class="char-section">';
+    html += '<h2>&#x1F4DD; 役職説明</h2>';
+    html += '<p>' + role.description + '</p>';
+    html += '</div>';
+
+    // Strategy
+    html += '<div class="char-section">';
+    html += '<h2>&#x1F4A1; 立ち回りのコツ</h2>';
+    html += '<p>' + role.strategy + '</p>';
+    html += '</div>';
+
+    // Quote
+    if (role.quote) {
+      html += '<div class="char-section" style="background:linear-gradient(135deg,#161b22,#1a1525);border-color:#30363d;">';
+      html += '<h2>&#x1F3AD; 名セリフ</h2>';
+      html += '<blockquote style="margin:0;padding:1rem 1.2rem;border-left:3px solid #58a6ff;color:#c9d1d9;font-style:italic;white-space:pre-line;line-height:2;">' + role.quote + '</blockquote>';
+      html += '</div>';
+    }
+
+    // Related roles
+    if (sameTeam.length > 0) {
+      html += '<div class="char-section">';
+      html += '<h2>' + info.icon + ' ' + info.name + 'の他の役職</h2>';
+      html += '<div class="related-grid">';
+      sameTeam.forEach(function(r) {
+        html += '<a href="character.html?role=' + encodeURIComponent(r.name) + '" class="related-card">';
+        html += '<h4>' + (r.icon || '') + ' ' + r.name + '</h4>';
+        html += '<p>' + r.ability + '</p>';
+        html += '</a>';
+      });
+      html += '</div>';
+      html += '</div>';
+    }
+
+    // Prev/Next
+    html += '<div class="nav-arrows">';
+    if (prevRole) {
+      html += '<a href="character.html?role=' + encodeURIComponent(prevRole.name) + '" class="nav-arrow prev">';
+      html += '<span class="dir">&#x2190; 前の役職</span>';
+      html += '<span class="name">' + prevRole.name + '</span>';
+      html += '</a>';
+    } else {
+      html += '<span></span>';
+    }
+    if (nextRole) {
+      html += '<a href="character.html?role=' + encodeURIComponent(nextRole.name) + '" class="nav-arrow next">';
+      html += '<span class="dir">次の役職 &#x2192;</span>';
+      html += '<span class="name">' + nextRole.name + '</span>';
+      html += '</a>';
+    }
+    html += '</div>';
+
+    document.getElementById('charContent').innerHTML = html;
   }
 })();
 </script>

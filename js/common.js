@@ -1,11 +1,5 @@
-// ===== Theme Switcher =====
-(function() {
-  const saved = localStorage.getItem('jg-theme') || 'night';
-  document.documentElement.setAttribute('data-theme', saved);
-})();
-
+// ===== Mobile Nav Toggle =====
 document.addEventListener('DOMContentLoaded', () => {
-  // ===== Mobile Nav Toggle =====
   const toggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.main-nav');
   if (toggle && nav) {
@@ -16,21 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const currentPage = location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.main-nav a').forEach(a => {
     if (a.getAttribute('href') === currentPage) a.classList.add('active');
-  });
-
-  // ===== Theme Switcher =====
-  const themeBtns = document.querySelectorAll('.theme-btn');
-  const currentTheme = localStorage.getItem('jg-theme') || 'night';
-
-  themeBtns.forEach(btn => {
-    if (btn.dataset.theme === currentTheme) btn.classList.add('active');
-    btn.addEventListener('click', () => {
-      const theme = btn.dataset.theme;
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('jg-theme', theme);
-      themeBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    });
   });
 
   // Accordion

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#161b22">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JGDB">
+  <title>20人女王部屋（賢者・妖術構成）攻略 - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメント20人女王部屋（女王賢者構成・縦横村）の基本ルール・役職解説・陣営別立ち回りを詳しく攻略。">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .qw-hero {
+      background: linear-gradient(135deg, #1a0f20 0%, #0d1117 40%, #1a1508 100%);
+      padding: 3.5rem 1.5rem 2.5rem;
+      text-align: center;
+      border-bottom: 1px solid #30363d;
+      position: relative;
+      overflow: hidden;
+    }
+    .qw-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 80%, rgba(219,127,247,.12), transparent 50%),
+                  radial-gradient(circle at 70% 80%, rgba(210,153,34,.12), transparent 50%);
+    }
+    .qw-hero-inner { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+    .qw-hero h1 {
+      font-size: 2.2rem;
+      font-weight: 900;
+      background: linear-gradient(90deg, #db7ff7, #58a6ff, #d29922);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: .5rem;
+    }
+    .qw-hero p { color: #8b949e; font-size: 1rem; }
+    .qw-hero .badge-row { margin-top: .8rem; display: flex; justify-content: center; gap: .5rem; flex-wrap: wrap; }
+
+    .comp-table { margin-bottom: 2rem; }
+    .comp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: .6rem;
+    }
+    .comp-chip {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: .6rem .8rem;
+      text-align: center;
+      font-size: .85rem;
+      font-weight: 600;
+    }
+    .comp-chip.village { border-color: rgba(126,231,135,.3); color: #7ee787; }
+    .comp-chip.werewolf { border-color: rgba(248,81,73,.3); color: #f85149; }
+    .comp-chip.other { border-color: rgba(88,166,255,.3); color: #58a6ff; }
+
+    .strat-section { margin-bottom: 3rem; }
+    .strat-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; }
+    .strat-card h3 { margin-bottom: .8rem; display: flex; align-items: center; gap: .5rem; }
+    .strat-card h4 { color: #58a6ff; margin: 1rem 0 .5rem; font-size: .95rem; }
+    .strat-card ul { margin-left: 1.5rem; margin-bottom: .8rem; }
+    .strat-card li { margin-bottom: .3rem; color: #c9d1d9; font-size: .92rem; }
+    .strat-card p { color: #c9d1d9; font-size: .92rem; line-height: 1.8; margin-bottom: .5rem; }
+
+    .do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+    .do-dont > div { border-radius: 8px; padding: 1rem; }
+    .do-box { background: rgba(126,231,135,.06); border: 1px solid rgba(126,231,135,.2); }
+    .dont-box { background: rgba(248,81,73,.06); border: 1px solid rgba(248,81,73,.2); }
+    .do-box h5 { color: #7ee787; margin-bottom: .5rem; }
+    .dont-box h5 { color: #f85149; margin-bottom: .5rem; }
+    @media (max-width: 600px) { .do-dont { grid-template-columns: 1fr; } }
+
+    .flowchart { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 1.5rem; margin: 1rem 0; font-size: .88rem; }
+    .flowchart .step { display: flex; align-items: flex-start; gap: .8rem; margin-bottom: .8rem; }
+    .flowchart .step-num { border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .82rem; flex-shrink: 0; color: #fff; }
+    .flowchart .step-num.village { background: #238636; }
+    .flowchart .step-num.wolf { background: #da3633; }
+    .flowchart .step-num.neutral { background: #58a6ff; }
+    .flowchart .arrow { text-align: center; color: #484f58; margin: .2rem 0; }
+
+    .role-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .role-mini {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1.2rem;
+    }
+    .role-mini h4 { font-size: 1rem; margin-bottom: .4rem; display: flex; align-items: center; gap: .4rem; }
+    .role-mini p { color: #8b949e; font-size: .85rem; line-height: 1.6; }
+
+    .zone-explain {
+      background: rgba(88,166,255,.06);
+      border: 1px solid rgba(88,166,255,.2);
+      border-radius: 8px;
+      padding: 1.2rem;
+      margin: 1rem 0;
+    }
+    .zone-explain h5 { color: #58a6ff; margin-bottom: .5rem; font-size: .95rem; }
+    .zone-explain p { color: #c9d1d9; font-size: .88rem; line-height: 1.7; }
+
+    @media (max-width: 600px) {
+      .qw-hero h1 { font-size: 1.5rem; }
+      .qw-hero { padding: 2.5rem 1rem 2rem; }
+      .comp-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="character.html">キャラクター一覧</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="qw-hero">
+  <div class="qw-hero-inner">
+    <h1>&#x1F451; 20人女王部屋 攻略ガイド</h1>
+    <p>女王・賢者・妖術師が登場する20人大部屋構成の立ち回りを徹底解説</p>
+    <div class="badge-row">
+      <span class="role-badge village">市民陣営</span>
+      <span class="role-badge werewolf">人狼陣営</span>
+      <span class="role-badge" style="background:rgba(88,166,255,.15);color:#58a6ff;border:1px solid rgba(88,166,255,.3);">特殊役職多数</span>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> <a href="strategy.html">立ち回り</a> <span>&gt;</span> 20人女王部屋攻略</div>
+
+  <!-- ===== 構成概要 ===== -->
+  <div class="strat-section">
+    <h2 class="section-title">&#x1F4CB; 構成概要</h2>
+
+    <div class="strat-card">
+      <h3>&#x1F3AF; この構成の特徴</h3>
+      <p>20人という大人数で行われる特殊構成です。「女王」と「プリンセス」という、死亡すると陣営全体に影響を及ぼす重要役職が存在するのが最大の特徴です。賢者と妖術師による占い対決、そして多彩な特殊役職が絡み合う、高度な読み合いが楽しめる上級者向け構成です。</p>
+    </div>
+
+    <h3 style="margin-bottom:1rem;">役職一覧</h3>
+    <div class="comp-table">
+      <h4 style="color:#7ee787;margin-bottom:.5rem;">市民陣営（11人）</h4>
+      <div class="comp-grid" style="margin-bottom:1rem;">
+        <div class="comp-chip village">女王</div>
+        <div class="comp-chip village">プリンセス</div>
+        <div class="comp-chip village">賢者</div>
+        <div class="comp-chip village">霊能者</div>
+        <div class="comp-chip village">狩人</div>
+        <div class="comp-chip village">番犬</div>
+        <div class="comp-chip village">猫又</div>
+        <div class="comp-chip village">罠師</div>
+        <div class="comp-chip village">暗殺者</div>
+        <div class="comp-chip village">新聞配達</div>
+        <div class="comp-chip village">呪われし者</div>
+      </div>
+      <h4 style="color:#f85149;margin-bottom:.5rem;">人狼陣営（7人）</h4>
+      <div class="comp-grid" style="margin-bottom:1rem;">
+        <div class="comp-chip werewolf">賢狼</div>
+        <div class="comp-chip werewolf">大狼</div>
+        <div class="comp-chip werewolf">強欲な人狼</div>
+        <div class="comp-chip werewolf">一途な人狼</div>
+        <div class="comp-chip werewolf">ささやく狂人</div>
+        <div class="comp-chip werewolf">妖術師</div>
+        <div class="comp-chip werewolf">黒猫</div>
+      </div>
+      <h4 style="color:#58a6ff;margin-bottom:.5rem;">その他</h4>
+      <div class="comp-grid">
+        <div class="comp-chip other">サイコ</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 勝利条件 ===== -->
+  <div class="strat-section">
+    <h2 class="section-title">&#x1F3C6; 各陣営の目標</h2>
+
+    <div class="strat-card">
+      <h3>&#x1F33F; 市民陣営の目標</h3>
+      <p>女王とプリンセスを守りながら、人狼を処刑していくことが基本方針です。女王が死亡すると市民陣営は即座に敗北するため、女王の位置を人狼に知られないことが最重要です。プリンセスは女王の後継者として、女王の死後も戦える切り札となります。</p>
+    </div>
+
+    <div class="strat-card">
+      <h3>&#x1F43A; 人狼陣営の目標</h3>
+      <p>護衛役（狩人・番犬）を早期に排除し、女王やプリンセスの位置を特定することが勝利への近道です。一途な人狼による特攻（女王を直接噛む作戦）を成功させるのが最も効率的な勝ち筋となります。そのためにも妖術師が女王の位置を特定し、仲間に伝達することが重要です。</p>
+    </div>
+  </div>
+
+  <!-- ===== キーロール解説 ===== -->
+  <div class="strat-section">
+    <h2 class="section-title">&#x1F4D6; 主要役職の解説</h2>
+
+    <div class="role-summary">
+      <div class="role-mini">
+        <h4><span style="color:#db7ff7;">&#x1F451;</span> 女王</h4>
+        <p>市民陣営の柱。女王が襲撃や処刑で死亡すると、市民陣営は即座に敗北する。自分の正体を隠し通すことが最大の使命。</p>
+      </div>
+      <div class="role-mini">
+        <h4><span style="color:#f778ba;">&#x1F478;</span> プリンセス</h4>
+        <p>女王の後継者。女王が死亡した場合でも、プリンセスが生存していれば市民陣営は戦い続けられる。女王同様に正体を隠す必要がある。</p>
+      </div>
+      <div class="role-mini">
+        <h4><span style="color:#7ee787;">&#x1F4D6;</span> 賢者</h4>
+        <p>占った相手の「役職名」まで判明する強力な占い師。通常の占い師と異なり、相手が何の役職かまで特定できるため、騙りの看破にも有効。</p>
+      </div>
+      <div class="role-mini">
+        <h4><span style="color:#f85149;">&#x1F9D9;</span> 妖術師</h4>
+        <p>人狼陣営の占い師。占った相手の役職が分かるが、結果を人狼チャットで共有し、女王やプリンセスの位置特定に活用する。賢者の対抗として出ることが多い。</p>
+      </div>
+      <div class="role-mini">
+        <h4><span style="color:#58a6ff;">&#x1F6E1;</span> 番犬</h4>
+        <p>初日の夜にのみ、指定した相手を護衛できる特殊な護衛職。初日に噛まれやすい女王の保護に重要な役割を果たす。</p>
+      </div>
+      <div class="role-mini">
+        <h4><span style="color:#f85149;">&#x1F5E1;</span> 一途な人狼</h4>
+        <p>指定した相手を護衛を無視して襲撃できる特殊な人狼。女王の位置が判明した場合の特攻役として、試合を決定づける力を持つ。</p>
+      </div>
+      <div class="role-mini">
+        <h4><span style="color:#f85149;">&#x1F43A;</span> 賢狼</h4>
+        <p>襲撃した相手の役職名がわかる人狼。噛み先の役職を確認できるため、護衛職の生存状況を正確に把握できる。</p>
+      </div>
+      <div class="role-mini">
+        <h4><span style="color:#f85149;">&#x1F4B0;</span> 強欲な人狼</h4>
+        <p>ゲーム中に一度だけ、一晩で二人を同時に襲撃できる。終盤の詰めや、護衛が手薄な瞬間を狙った奇襲に有効。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 賢者の立ち回り ===== -->
+  <div class="strat-section">
+    <h2 class="section-title"><span class="role-badge village">市民陣営</span> 賢者の立ち回り</h2>
+
+    <div class="strat-card">
+      <h3>&#x1F4D6; 賢者の基本戦略</h3>
+      <p>賢者はこの構成における村側の要です。占い結果から人狼を見つけるだけでなく、妖術師の騙りを見破ること、そして白確定した味方を保護することが求められます。</p>
+
+      <h4>占い先の選び方</h4>
+      <div class="flowchart">
+        <div class="step"><div class="step-num village">1</div><div><strong>1日目：怪しい位置を占う</strong><br>発言内容から黒い（人狼っぽい）と感じた相手を占い、早期に人狼を発見することを目指す。</div></div>
+        <div class="arrow">&#x25BC;</div>
+        <div class="step"><div class="step-num village">2</div><div><strong>2日目：信頼獲得を意識</strong><br>村人っぽい（白い）位置をあえて占うことで、結果の精度と自分への信頼を高める。対抗の妖術師との差別化にもなる。</div></div>
+        <div class="arrow">&#x25BC;</div>
+        <div class="step"><div class="step-num village">3</div><div><strong>3日目以降：残りのグレーを詰める</strong><br>未確定の位置を効率よく占い、村の情報量を最大化する。猫又や暗殺者など味方の特殊役職を白確させることも重要。</div></div>
+      </div>
+    </div>
+
+    <div class="strat-card">
+      <h3>&#x1F50D; ゾーン（占い対象外）の出し方</h3>
+      <p>ゾーンとは、「この中に人狼はいない」と宣言する範囲のことです。賢者は自分の占い結果に基づいてゾーンを提示し、村の議論を効率化します。</p>
+
+      <div class="zone-explain">
+        <h5>ゾーン提示のルール</h5>
+        <p>基本的に女王を除いた2人をゾーンとして提示します。真賢者の場合は、ギリギリのタイミングで出すのが有利です。初日から女王をゾーンに含めて出してくる賢者COは、妖術師の可能性が高いと疑われやすいため注意が必要です。</p>
+      </div>
+
+      <div class="do-dont">
+        <div class="do-box">
+          <h5>&#x2705; やるべきこと</h5>
+          <ul>
+            <li>占い結果を根拠にゾーンを提示する</li>
+            <li>対抗のゾーンとの矛盾を指摘する</li>
+            <li>人狼の囲い（味方への白出し）がないか注視する</li>
+            <li>白確させた味方役職を守る発言をする</li>
+          </ul>
+        </div>
+        <div class="dont-box">
+          <h5>&#x274C; やってはいけないこと</h5>
+          <ul>
+            <li>初日から女王をゾーンに入れる（偽目が上がる）</li>
+            <li>占い理由を曖昧にする</li>
+            <li>対抗の妖術師と同じ位置ばかり占う</li>
+            <li>感情的な発言で信頼を失う</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 妖術師の立ち回り ===== -->
+  <div class="strat-section">
+    <h2 class="section-title"><span class="role-badge werewolf">人狼陣営</span> 妖術師の立ち回り</h2>
+
+    <div class="strat-card">
+      <h3>&#x1F9D9; 妖術師の基本戦略</h3>
+      <p>妖術師は人狼陣営の情報役です。賢者の対抗として占いCOし、占い結果を操作しながら仲間の人狼を囲い、女王やプリンセスの位置を特定して仲間に伝えることが最大の仕事です。</p>
+
+      <h4>2つのアプローチ</h4>
+      <table class="data-table">
+        <tr><th>パターン</th><th>概要</th><th>メリット</th><th>難易度</th></tr>
+        <tr>
+          <td><strong>真目キープ型</strong></td>
+          <td>村人を正確に占い、人狼の仲間だけ巧みに囲う</td>
+          <td>長期間信頼を維持でき、吊り先を誘導しやすい</td>
+          <td>上級</td>
+        </tr>
+        <tr>
+          <td><strong>速攻かく乱型</strong></td>
+          <td>3日目頃に自ら正体を明かし、混乱を作る</td>
+          <td>場をカオスにして人狼の時間を稼ぐ</td>
+          <td>初級</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="strat-card">
+      <h3>&#x26A0; 番犬に関する重要な注意点</h3>
+      <div class="tip-box danger">
+        <strong>初日に番犬の結果を出せるのは妖術師だけ</strong><br>
+        番犬は初日の夜にのみ行動するため、初日の占い結果で「番犬」と結果を出した場合、それは賢者ではなく妖術師であることが確定します。妖術師はこの点に注意し、番犬を占った場合でもそのまま結果を出してはいけません。
+      </div>
+    </div>
+
+    <div class="strat-card">
+      <h3>&#x1F4E2; 占い結果の活用テクニック</h3>
+      <p>妖術師は占い結果を操作し、戦況を有利に動かすことが求められます。</p>
+
+      <h4>状況別の結果操作</h4>
+      <ul>
+        <li><strong>狩人・罠師を占った場合</strong> &#x2192; 人狼と偽報告し、護衛役を処刑に追い込む</li>
+        <li><strong>猫又を占った場合</strong> &#x2192; 慎重に対応。猫又を処刑すると道連れが発生するため安易に黒出ししない</li>
+        <li><strong>黒猫を占った場合</strong> &#x2192; 黒出しして処刑に持ち込めば、村側が道連れで減る</li>
+        <li><strong>呪われし者を占った場合</strong> &#x2192; 市民位置を伝えることで人狼の噛み先選定に貢献</li>
+      </ul>
+
+      <h4>正体がバレた後の動き方</h4>
+      <p>妖術師だとバレた後も仕事は残っています。積極的に発言してノイズを撒き、村の議論を混乱させましょう。猫又やプリンセスの位置を連呼して誤認を誘ったり、吊り先を護衛役に誘導するなど、最後まで人狼陣営に貢献できます。</p>
+
+      <div class="do-dont">
+        <div class="do-box">
+          <h5>&#x2705; やるべきこと</h5>
+          <ul>
+            <li>女王・プリンセスの位置を早期に特定する</li>
+            <li>人狼チャットで情報を的確に共有する</li>
+            <li>対抗のゾーンを確認してから自分のゾーンを出す</li>
+            <li>バレた後も発言量を維持して混乱を作る</li>
+          </ul>
+        </div>
+        <div class="dont-box">
+          <h5>&#x274C; やってはいけないこと</h5>
+          <ul>
+            <li>初日に番犬の結果をそのまま報告する</li>
+            <li>女王をゾーンに入れてしまう（偽確定の原因）</li>
+            <li>ずっと白出しだけ続ける（猫又との区別がつかなくなる）</li>
+            <li>バレた後に黙り込む</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 護衛職の立ち回り ===== -->
+  <div class="strat-section">
+    <h2 class="section-title"><span class="role-badge village">市民陣営</span> 護衛職の立ち回り</h2>
+
+    <div class="strat-card">
+      <h3>&#x1F6E1; 狩人・番犬・罠師の連携</h3>
+      <p>この構成では護衛職が複数存在するため、役割分担が重要です。全員が同じ人を護衛すると他が手薄になり、バラけすぎると女王が無防備になります。</p>
+
+      <h4>護衛の優先順位</h4>
+      <div class="flowchart">
+        <div class="step"><div class="step-num village">1</div><div><strong>女王を最優先で守る</strong><br>女王の死亡は即敗北。狩人は原則として女王護衛を継続する。</div></div>
+        <div class="arrow">&#x25BC;</div>
+        <div class="step"><div class="step-num village">2</div><div><strong>賢者を守る</strong><br>罠師や番犬が賢者の護衛を担当。賢者が生存し続ければ情報量で優位に立てる。</div></div>
+        <div class="arrow">&#x25BC;</div>
+        <div class="step"><div class="step-num village">3</div><div><strong>プリンセスを守る</strong><br>余力があればプリンセスの護衛も。女王の保険として重要。</div></div>
+      </div>
+
+      <div class="tip-box">
+        <strong>番犬の特殊性</strong><br>
+        番犬は初日の夜しか護衛ができませんが、その1回の護衛が試合を左右することがあります。女王が初日に噛まれる展開を防ぐ、まさに最初の砦です。
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 人狼陣営の噛み戦略 ===== -->
+  <div class="strat-section">
+    <h2 class="section-title"><span class="role-badge werewolf">人狼陣営</span> 噛み戦略</h2>
+
+    <div class="strat-card">
+      <h3>&#x1F5E1; 噛み先選定のセオリー</h3>
+      <p>人狼陣営は護衛職を排除してから女王への特攻を狙うのが王道の勝ち筋です。賢狼が噛み役を担当することで、噛んだ相手の役職を確認できます。</p>
+
+      <div class="flowchart">
+        <div class="step"><div class="step-num wolf">1</div><div><strong>護衛職を落とす</strong><br>狩人・罠師・番犬の排除が最優先。護衛が生きている限り女王は噛めない。</div></div>
+        <div class="arrow">&#x25BC;</div>
+        <div class="step"><div class="step-num wolf">2</div><div><strong>女王の位置を特定する</strong><br>妖術師の占い結果や、賢狼が噛んだ結果の役職名から消去法で女王を絞り込む。</div></div>
+        <div class="arrow">&#x25BC;</div>
+        <div class="step"><div class="step-num wolf">3</div><div><strong>一途な人狼で特攻</strong><br>女王の位置が判明し、護衛が排除されたら一途な人狼で護衛貫通噛みを実行。決まれば即勝利。</div></div>
+      </div>
+
+      <div class="tip-box warning">
+        <strong>強欲な人狼の使いどころ</strong><br>
+        強欲な人狼の二人同時襲撃は一度きりのため、タイミングが極めて重要です。護衛職を2人同時に噛む、または終盤の詰めで使うのが効果的です。安易に序盤で切らないようにしましょう。
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== その他の重要役職 ===== -->
+  <div class="strat-section">
+    <h2 class="section-title">&#x2699; その他の重要役職</h2>
+
+    <div class="strat-card">
+      <h3>&#x1F431; 猫又 &#x2014; 処刑抑止力</h3>
+      <p>処刑された場合はランダムで一人を道連れにし、人狼に襲撃された場合は噛んだ人狼を道連れにします。人狼側は猫又を噛みたくないため、噛まれにくい位置に自然と収まります。COのタイミングを見極め、村に有利な形で情報を出しましょう。</p>
+    </div>
+
+    <div class="strat-card">
+      <h3>&#x1F5E1; 暗殺者 &#x2014; ここぞの一撃</h3>
+      <p>ゲーム中に一度だけ指定した人を暗殺できます。確実に人狼だと判明した相手に使うのが理想です。使いどころを誤ると村に大きな損害を与えるため、確信が持てるまで温存しましょう。</p>
+    </div>
+
+    <div class="strat-card">
+      <h3>&#x1F408; 黒猫 &#x2014; 人狼陣営の自爆兵</h3>
+      <p>処刑された場合、ランダムで市民陣営から一人を道連れにします。わざと怪しい振る舞いをして処刑されに行くことで、村の人数を削れます。猫又COして処刑を誘発する戦術も有効です。</p>
+    </div>
+
+    <div class="strat-card">
+      <h3>&#x1F5E3; ささやく狂人 &#x2014; 最強の狂人</h3>
+      <p>人狼の夜チャットに参加できる狂人です。人狼と直接連携が取れるため、騙りの整合性を取りやすく、占い結果や情報の操作がスムーズに行えます。占い結果は白と出るため、処刑されにくいのも強みです。</p>
+    </div>
+
+    <div class="strat-card">
+      <h3>&#x1F52E; サイコ &#x2014; どちらの味方でもない</h3>
+      <p>占い師に占われると、占い師が死亡する特殊な役職です。陣営に関わらず混乱を引き起こす存在で、賢者がサイコを占ってしまうと村にとって大きな痛手となります。</p>
+    </div>
+  </div>
+
+  <!-- ===== 全体のゲーム進行 ===== -->
+  <div class="strat-section">
+    <h2 class="section-title">&#x1F4C8; ゲーム進行の流れ</h2>
+
+    <div class="strat-card">
+      <h3>&#x1F305; 序盤（1〜3日目）</h3>
+      <ul>
+        <li>賢者と妖術師による占いCO合戦が始まる</li>
+        <li>番犬が初日の護衛を実行（女王を守れるかが最初の分岐点）</li>
+        <li>霊能者がCOし、処刑結果の検証体制を整える</li>
+        <li>グレーの中から怪しい位置を議論で絞り込む</li>
+      </ul>
+    </div>
+
+    <div class="strat-card">
+      <h3>&#x2600; 中盤（4〜6日目）</h3>
+      <ul>
+        <li>賢者vs妖術師の真偽判定が進む</li>
+        <li>護衛職の生存状況が勝敗を左右し始める</li>
+        <li>人狼側は消去法で女王の候補を絞り込む</li>
+        <li>猫又・暗殺者のCOタイミングが重要になる</li>
+      </ul>
+    </div>
+
+    <div class="strat-card">
+      <h3>&#x1F319; 終盤（7日目以降）</h3>
+      <ul>
+        <li>人狼側が女王を特定できれば一途な人狼で特攻</li>
+        <li>村側は残りの人狼を確実に処刑する必要がある</li>
+        <li>強欲な人狼の二人噛みが決まると一気に状況が変わる</li>
+        <li>縄計算（残り処刑回数）を常に意識することが重要</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== まとめ ===== -->
+  <div class="strat-section">
+    <h2 class="section-title">&#x1F4DD; まとめ</h2>
+
+    <div class="strat-card">
+      <h3>この構成を楽しむためのポイント</h3>
+      <ul>
+        <li><strong>女王の位置管理が全て</strong> &#x2014; 市民側は守り、人狼側は見つける。この攻防がゲームの中心</li>
+        <li><strong>賢者vs妖術師の読み合い</strong> &#x2014; 占い対決の真偽判定が議論の主軸。ゾーンの出し方一つで展開が変わる</li>
+        <li><strong>護衛職の生存</strong> &#x2014; 狩人・罠師・番犬の生死がゲームの勝敗を直接左右する</li>
+        <li><strong>特殊役職の使いどころ</strong> &#x2014; 暗殺者・強欲な人狼など一度きりの能力は、タイミングが命</li>
+        <li><strong>情報整理が勝敗を分ける</strong> &#x2014; 20人の大人数だからこそ、占い結果・投票先・死亡者の役職を常に整理する習慣が大切</li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。</p>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>

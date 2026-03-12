@@ -41,22 +41,16 @@
 <header class="site-header">
   <div class="header-inner">
     <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
-    <div class="theme-switcher">
-      <button class="theme-btn" data-theme="day" aria-label="昼間テーマ">&#9728;&#65039;<span class="theme-label">昼間</span></button>
-      <button class="theme-btn" data-theme="evening" aria-label="夕方テーマ">&#127749;<span class="theme-label">夕方</span></button>
-      <button class="theme-btn" data-theme="night" aria-label="夜テーマ">&#127769;<span class="theme-label">夜</span></button>
-    </div>
     <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
     <nav class="main-nav">
       <ul>
         <li><a href="index.html">ホーム</a></li>
         <li><a href="roles.html">役職一覧</a></li>
-        <li><a href="characters.html">キャラクター</a></li>
+        <li><a href="character.html">キャラクター一覧</a></li>
         <li><a href="guide.html">初心者ガイド</a></li>
         <li><a href="strategy.html">立ち回り</a></li>
         <li><a href="composition.html">編成考察</a></li>
         <li><a href="glossary.html">用語集</a></li>
-        <li><a href="copipe.html">コピペ集</a></li>
       </ul>
     </nav>
   </div>
@@ -130,6 +124,8 @@
 <script src="js/common.js"></script>
 <script>
 const TEMPLATES = [
+  { name: '20人 女王村', desc: '女王部屋の定番構成（村12/人外8）', roles: { '女王': 1, '占い師': 1, '霊能者': 1, '狩人': 1, '賢者': 1, '番犬': 1, '猫又': 1, '罠師': 1, '暗殺者': 1, '呪われし者': 1, '市民': 2, '大狼': 1, '賢狼': 1, '強欲な人狼': 1, '人狼': 1, 'ささやく狂人': 1, 'サイコ': 1, '妖術師': 1, '黒猫': 1 }},
+  { name: '20人 闇鍋風', desc: '全陣営入り乱れる大人数カオス編成', roles: { '市民': 2, '占い師': 1, '霊能者': 1, '狩人': 1, '猫又': 1, '賢者': 1, '罠師': 1, '魔女': 1, '番犬': 1, '暗殺者': 1, '人狼キラー': 1, '人狼': 2, '大狼': 1, '賢狼': 1, '狂信者': 1, '黒猫': 1, '妖狐': 1, '背徳者': 1, 'てるてる坊主': 1 }},
   { name: '9人村スタンダード', desc: '初心者向け基本構成', roles: { '市民': 3, '占い師': 1, '霊能者': 1, '狩人': 1, '人狼': 2, '狂人': 1 }},
   { name: '9人村 猫又入り', desc: '猫又で村を強化', roles: { '市民': 2, '占い師': 1, '霊能者': 1, '狩人': 1, '猫又': 1, '人狼': 2, '狂人': 1 }},
   { name: '12人村 妖狐入り', desc: '第三勢力ありの中級編成', roles: { '市民': 4, '占い師': 1, '霊能者': 1, '狩人': 1, '猫又': 1, '人狼': 2, '狂信者': 1, '妖狐': 1 }},
