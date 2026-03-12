@@ -30,7 +30,9 @@
       {"@type": "Question", "name": "初心者におすすめの編成は？", "acceptedAnswer": {"@type": "Answer", "text": "9人編成の「占い師・霊能者・狩人・狂人・人狼2・市民3」が基本的でバランスが良いです。全ての基本役職が揃い、各陣営の動き方を学べます。"}},
       {"@type": "Question", "name": "縄計算とは？", "acceptedAnswer": {"@type": "Answer", "text": "残りの処刑回数（吊り余裕）を計算することです。計算式は（生存人数-1）÷2（切り捨て）- 残り人狼数 + 1 です。"}},
       {"@type": "Question", "name": "鉄の女はどんな役職ですか？", "acceptedAnswer": {"@type": "Answer", "text": "人狼に襲撃されても即死せず翌日の深夜に死亡する市民陣営の役職です。襲撃された翌日は生存しているため議論に参加できます。"}},
-      {"@type": "Question", "name": "新種の人狼の気配通知とは？", "acceptedAnswer": {"@type": "Answer", "text": "新種の人狼は占い師に白判定が出る代わりに、生存中は毎朝「新種の人狼の気配がする」という通知が全体に表示されます。"}}
+      {"@type": "Question", "name": "新種の人狼の気配通知とは？", "acceptedAnswer": {"@type": "Answer", "text": "新種の人狼は占い師に白判定が出る代わりに、生存中は毎朝「新種の人狼の気配がする」という通知が全体に表示されます。"}},
+      {"@type": "Question", "name": "2-1進行と2-2進行の違いは？", "acceptedAnswer": {"@type": "Answer", "text": "2-1進行は占い師2人・霊能者1人COの状態で霊能確定のため村有利。2-2進行は占い師2人・霊能者2人COで確定なしのため難易度が高い進行です。"}},
+      {"@type": "Question", "name": "縄余裕とは何ですか？", "acceptedAnswer": {"@type": "Answer", "text": "村人を間違って処刑してもまだ負けない回数のことです。計算式は吊り回数−残り人狼数です。縄余裕が0のときに村人を処刑するとPPで負ける可能性があります。"}}
     ]
   }
   </script>
@@ -371,6 +373,38 @@
         <button class="faq-question">「幸運の梟」の祝福はどう使えばいい？</button>
         <div class="faq-answer"><div class="faq-answer-inner">
           毎夜1人を選んで祝福し、翌日の投票を二票分にできます。確定白（共有者や確定占い師）に祝福すれば安全に投票力を強化できます。人狼に祝福してしまうと逆効果になるため、信頼できる相手を選びましょう。
+        </div></div>
+      </div>
+    </div>
+
+    <div class="faq-category" data-category="shinko">
+      <h2 class="faq-category-title">&#x1F4CA; 進行論・戦術</h2>
+
+      <div class="faq-item">
+        <button class="faq-question">2-1進行と2-2進行の違いは？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <strong>2-1進行</strong>は占い師2人・霊能者1人がCOした状態で、霊能者が確定しているため村有利です。<strong>2-2進行</strong>は占い師2人・霊能者2人がCOした状態で、確定役職がなく難易度が上がります。詳しくは<a href="strategy.html">戦術ガイド</a>の上級テクニック集をご覧ください。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">グレランで吊られないようにするには？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <strong>適度な発言量</strong>を保つことが最重要です。寡黙は最も吊られやすく、逆に多弁すぎても疑われます。占い結果への反応、投票理由の明確化、他プレイヤーの考察への反応を心がけましょう。「なんとなく怪しい」ではなく具体的な根拠を示すことで白アピになります。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">占いロラと霊能ロラ、どちらを先にすべき？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          縄余裕がある場合は<strong>ロラより先にグレー精査</strong>が基本です。ロラする場合、占いロラは確実に偽占いを排除できますが情報源を失います。霊能ロラは占い情報を活かせますが、偽霊能の結果に惑わされるリスクがあります。状況に応じて判断しましょう。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">縄余裕とは何ですか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          縄余裕とは「村人を間違って処刑してもまだ負けない回数」のことです。計算式は「吊り回数 − 残り人狼数」です。例えば吊り回数5回・人狼2匹なら縄余裕は3です。縄余裕が0のときに村人を処刑するとPP（パワープレイ）で負ける可能性があります。詳しくは<a href="strategy.html">戦術ガイド</a>や<a href="rope-calc.html">縄計算ツール</a>をご覧ください。
         </div></div>
       </div>
     </div>
