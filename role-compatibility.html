@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0e17">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JGDB">
+  <title>役職相性表 - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントの役職同士の相性・シナジーを一覧で確認。">
+  <meta property="og:title" content="役職相性表 - 人狼ジャッジメント攻略">
+  <meta property="og:description" content="人狼ジャッジメントの役職同士の相性・シナジーを一覧で確認。">
+  <meta property="og:url" content="https://toukanno.github.io/jinro-judgment-fansite/role-compatibility.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    /* Legend */
+    .legend-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      font-size: .88rem;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .legend-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-dot.synergy { background: #7ee787; }
+    .legend-dot.enemy { background: #f85149; }
+    .legend-dot.situational { background: #d29922; }
+
+    /* Filter */
+    .filter-section {
+      margin-bottom: 2rem;
+    }
+    .filter-section label {
+      display: block;
+      font-size: .9rem;
+      color: #8b949e;
+      margin-bottom: .5rem;
+    }
+    .role-filter-select {
+      background: #161b22;
+      color: #c9d1d9;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: .6rem 1rem;
+      font-size: .95rem;
+      width: 100%;
+      max-width: 320px;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238b949e' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+    }
+    .role-filter-select:focus {
+      outline: none;
+      border-color: #58a6ff;
+    }
+
+    /* Compatibility cards */
+    .compat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .compat-card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1.3rem 1.5rem;
+      transition: border-color .2s, transform .15s;
+    }
+    .compat-card:hover {
+      transform: translateY(-2px);
+    }
+    .compat-card.synergy { border-left: 4px solid #7ee787; }
+    .compat-card.synergy:hover { border-color: #7ee787; }
+    .compat-card.enemy { border-left: 4px solid #f85149; }
+    .compat-card.enemy:hover { border-color: #f85149; }
+    .compat-card.situational { border-left: 4px solid #d29922; }
+    .compat-card.situational:hover { border-color: #d29922; }
+
+    .compat-card .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: .7rem;
+    }
+    .compat-card .pair-roles {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      flex-wrap: wrap;
+    }
+    .compat-card .pair-role {
+      display: inline-block;
+      padding: .25rem .7rem;
+      border-radius: 8px;
+      font-size: .85rem;
+      font-weight: 600;
+    }
+    .compat-card.synergy .pair-role {
+      background: rgba(126,231,135,.08);
+      color: #7ee787;
+      border: 1px solid rgba(126,231,135,.2);
+    }
+    .compat-card.enemy .pair-role {
+      background: rgba(248,81,73,.08);
+      color: #f85149;
+      border: 1px solid rgba(248,81,73,.2);
+    }
+    .compat-card.situational .pair-role {
+      background: rgba(210,153,34,.08);
+      color: #d29922;
+      border: 1px solid rgba(210,153,34,.2);
+    }
+    .compat-card .pair-connector {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #484f58;
+    }
+    .compat-card .rating {
+      font-size: 1.1rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .compat-card .type-badge {
+      display: inline-block;
+      padding: .15rem .5rem;
+      border-radius: 4px;
+      font-size: .72rem;
+      font-weight: 600;
+      margin-bottom: .5rem;
+    }
+    .type-badge.good { background: rgba(126,231,135,.12); color: #7ee787; }
+    .type-badge.bad { background: rgba(248,81,73,.12); color: #f85149; }
+    .type-badge.neutral { background: rgba(210,153,34,.12); color: #d29922; }
+
+    .compat-card .card-desc {
+      color: #c9d1d9;
+      font-size: .88rem;
+      line-height: 1.7;
+    }
+
+    /* Summary box */
+    .summary-box {
+      background: rgba(88,166,255,.06);
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 2rem;
+      font-size: .9rem;
+      color: #c9d1d9;
+      line-height: 1.7;
+    }
+    .summary-box strong { color: #58a6ff; }
+
+    .category-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin: 2rem 0 1rem;
+      padding-bottom: .5rem;
+      border-bottom: 2px solid #30363d;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .tip-box {
+      background: rgba(126,231,135,.06);
+      border-left: 3px solid #7ee787;
+      padding: 1rem 1.2rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.5rem 0;
+      font-size: .9rem;
+      color: #c9d1d9;
+    }
+    .tip-box strong { color: #7ee787; }
+    .tip-box a { color: #7ee787; }
+
+    .no-results {
+      text-align: center;
+      color: #484f58;
+      padding: 3rem 1rem;
+      font-size: .95rem;
+      display: none;
+    }
+
+    /* Matrix table */
+    .matrix-section { margin-bottom: 2rem; }
+    .matrix-table {
+      font-size: .72rem;
+      white-space: nowrap;
+      border-collapse: collapse;
+      width: auto;
+    }
+    .matrix-table th,
+    .matrix-table td {
+      padding: .4rem .5rem;
+      text-align: center;
+      border: 1px solid #30363d;
+    }
+    .matrix-table th {
+      background: #161b22;
+      color: #c9d1d9;
+      font-weight: 700;
+      position: sticky;
+    }
+    .matrix-table thead th { top: 0; z-index: 2; }
+    .matrix-table th:first-child { left: 0; z-index: 3; background: #161b22; }
+    .matrix-table td:first-child {
+      font-weight: 700;
+      text-align: left;
+      position: sticky;
+      left: 0;
+      background: #0d1117;
+      z-index: 1;
+    }
+    .matrix-table .cell-good { background: rgba(126,231,135,.12); color: #7ee787; }
+    .matrix-table .cell-bad { background: rgba(248,81,73,.10); color: #f85149; }
+    .matrix-table .cell-neutral { background: rgba(210,153,34,.08); color: #d29922; }
+    .matrix-table .cell-self { background: #161b22; color: #30363d; }
+
+    @media (max-width: 768px) {
+      .compat-grid { grid-template-columns: 1fr; }
+      .compat-card { padding: 1.1rem 1.2rem; }
+      .compat-card .pair-role { font-size: .82rem; padding: .2rem .6rem; }
+      .compat-card .card-desc { font-size: .86rem; }
+      .legend-box { padding: .8rem 1rem; gap: .7rem; font-size: .82rem; }
+      .summary-box { padding: 1rem 1.2rem; font-size: .88rem; }
+      .category-title { font-size: 1.1rem; }
+    }
+    @media (max-width: 600px) {
+      .compat-grid { gap: .8rem; }
+      .compat-card { padding: .9rem 1rem; }
+      .compat-card .card-header { flex-direction: column; align-items: flex-start; gap: .3rem; }
+      .compat-card .pair-role { font-size: .78rem; padding: .18rem .5rem; }
+      .compat-card .rating { font-size: 1rem; }
+      .compat-card .card-desc { font-size: .84rem; line-height: 1.65; }
+      .legend-box { flex-direction: column; gap: .5rem; font-size: .8rem; }
+      .summary-box { padding: .8rem 1rem; font-size: .85rem; }
+      .category-title { font-size: 1rem; }
+      .role-filter-select { font-size: .9rem; }
+    }
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5638346660274603"
+     crossorigin="anonymous"></script>
+<!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-XXXXXXXXXX");</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="character.html">キャラクター</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+        <li><a href="templates.html">部屋テンプレ</a></li>
+        <li><a href="copipe.html">コピペ集</a></li>
+        <li><a href="v3roles.html">V3新役職</a></li>
+        <li><a href="queen-wise.html">女王部屋</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="timer.html">タイマー</a></li>
+        <li><a href="exclusion.html">同村制限</a></li>
+        <li><a href="rope-calc.html">縄計算</a></li>
+        <li><a href="synergy.html">役職相性</a></li>
+        <li><a href="quiz.html">クイズ</a></li>
+        <li><a href="notepad.html">メモ帳</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> <a href="roles.html">役職一覧</a> <span>&gt;</span> 役職相性表</div>
+
+  <h1 class="section-title">&#x1F91D; 役職相性表</h1>
+
+  <div class="summary-box">
+    <strong>役職相性とは？</strong><br>
+    人狼ジャッジメントでは、役職同士の組み合わせによって強力なシナジーが生まれたり、逆に天敵関係（カウンター）が存在します。
+    編成を組む際やゲーム中の立ち回りを考える際に、<strong>味方の相性と敵の天敵関係</strong>を把握しておくことが勝率アップの鍵です。
+  </div>
+
+  <!-- Legend -->
+  <div class="legend-box" role="legend" aria-label="相性評価の凡例">
+    <div class="legend-item"><span class="legend-dot synergy"></span> <span style="color:#7ee787;font-weight:600;">シナジー（好相性）</span></div>
+    <div class="legend-item"><span class="legend-dot enemy"></span> <span style="color:#f85149;font-weight:600;">天敵（カウンター）</span></div>
+    <div class="legend-item"><span class="legend-dot situational"></span> <span style="color:#d29922;font-weight:600;">状況次第</span></div>
+    <div class="legend-item" style="margin-left:auto;color:#8b949e;">評価: &#9733;&#9733;&#9733; 最高 / &#9733;&#9733;&#9734; 良い / &#9733;&#9734;&#9734; 限定的</div>
+  </div>
+
+  <!-- Filter -->
+  <div class="filter-section">
+    <label for="roleFilter">役職で絞り込み：</label>
+    <select id="roleFilter" class="role-filter-select" aria-label="役職で絞り込む">
+      <option value="all">すべての相性を表示</option>
+      <option value="占い師">占い師</option>
+      <option value="霊能者">霊能者</option>
+      <option value="狩人">狩人</option>
+      <option value="猫又">猫又</option>
+      <option value="人狼">人狼</option>
+      <option value="狂人">狂人</option>
+      <option value="狂信者">狂信者</option>
+      <option value="妖狐">妖狐</option>
+      <option value="市長">市長</option>
+      <option value="魔女">魔女</option>
+      <option value="女王">女王</option>
+      <option value="罠師">罠師</option>
+      <option value="パン屋">パン屋</option>
+      <option value="賢者">賢者</option>
+    </select>
+  </div>
+
+  <!-- Matrix -->
+  <h2 class="category-title">&#x1F4CA; 相性マトリクス</h2>
+  <p style="color:#8b949e;font-size:.88rem;margin-bottom:1rem;">主要役職同士の相性を一覧で確認。横スクロールで全体を見られます。</p>
+  <div class="table-scroll matrix-section">
+    <table class="data-table matrix-table" aria-label="役職相性マトリクス">
+      <thead>
+        <tr>
+          <th></th>
+          <th>占い師</th><th>霊能者</th><th>狩人</th><th>猫又</th><th>人狼</th><th>狂人</th><th>狂信者</th><th>妖狐</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>占い師</td>
+          <td class="cell-self">-</td>
+          <td class="cell-good">&#9733;&#9733;&#9733;</td>
+          <td class="cell-good">&#9733;&#9733;&#9733;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-bad">天敵</td>
+          <td class="cell-bad">天敵</td>
+          <td class="cell-bad">天敵</td>
+          <td class="cell-good">&#9733;&#9733;&#9733;</td>
+        </tr>
+        <tr>
+          <td>霊能者</td>
+          <td class="cell-good">&#9733;&#9733;&#9733;</td>
+          <td class="cell-self">-</td>
+          <td class="cell-good">&#9733;&#9733;&#9734;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-bad">天敵</td>
+          <td class="cell-bad">天敵</td>
+          <td class="cell-bad">天敵</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+        </tr>
+        <tr>
+          <td>狩人</td>
+          <td class="cell-good">&#9733;&#9733;&#9733;</td>
+          <td class="cell-good">&#9733;&#9733;&#9734;</td>
+          <td class="cell-self">-</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-bad">天敵</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+        </tr>
+        <tr>
+          <td>猫又</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-self">-</td>
+          <td class="cell-bad">天敵</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+        </tr>
+        <tr>
+          <td>人狼</td>
+          <td class="cell-bad">天敵</td>
+          <td class="cell-bad">天敵</td>
+          <td class="cell-bad">天敵</td>
+          <td class="cell-bad">天敵</td>
+          <td class="cell-self">-</td>
+          <td class="cell-good">&#9733;&#9733;&#9733;</td>
+          <td class="cell-good">&#9733;&#9733;&#9733;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+        </tr>
+        <tr>
+          <td>狂人</td>
+          <td class="cell-bad">天敵</td>
+          <td class="cell-bad">天敵</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-good">&#9733;&#9733;&#9733;</td>
+          <td class="cell-self">-</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+        </tr>
+        <tr>
+          <td>狂信者</td>
+          <td class="cell-bad">天敵</td>
+          <td class="cell-bad">天敵</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-good">&#9733;&#9733;&#9733;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-self">-</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+        </tr>
+        <tr>
+          <td>妖狐</td>
+          <td class="cell-bad">天敵</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-neutral">&#9733;&#9734;&#9734;</td>
+          <td class="cell-self">-</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Synergy cards -->
+  <h2 class="category-title">&#x1F91D; シナジー（好相性）</h2>
+  <p style="color:#8b949e;font-size:.88rem;margin-bottom:1rem;">味方同士で強力な連携が生まれる組み合わせ。</p>
+
+  <div class="compat-grid" id="compatCards">
+
+    <!-- Synergy: 占い師 + 狩人 -->
+    <div class="compat-card synergy" data-roles="占い師,狩人" data-type="synergy">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">占い師</span>
+          <span class="pair-connector">+</span>
+          <span class="pair-role">狩人</span>
+        </div>
+        <span class="rating">&#9733;&#9733;&#9733;</span>
+      </div>
+      <span class="type-badge good">最高相性</span>
+      <div class="card-desc">
+        護衛で占い師を守ることで、占い結果を安全に蓄積できる。占い師が長く生存するほど村の情報量が増え、人狼を追い詰められる。狩人は占い師護衛を最優先とするのが定石。
+      </div>
+    </div>
+
+    <!-- Synergy: 占い師 + 霊能者 -->
+    <div class="compat-card synergy" data-roles="占い師,霊能者" data-type="synergy">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">占い師</span>
+          <span class="pair-connector">+</span>
+          <span class="pair-role">霊能者</span>
+        </div>
+        <span class="rating">&#9733;&#9733;&#9733;</span>
+      </div>
+      <span class="type-badge good">情報照合</span>
+      <div class="card-desc">
+        占い師の占い結果と霊能者の霊能結果を照合することで、占い師の真偽を判定できる。占い師が「黒」を出した人物を処刑し、霊能結果と一致すれば真占い師の信頼度が上がる。村の推理の基盤となる最重要コンビ。
+      </div>
+    </div>
+
+    <!-- Synergy: 人狼 + 狂人 -->
+    <div class="compat-card synergy" data-roles="人狼,狂人" data-type="synergy">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">人狼</span>
+          <span class="pair-connector">+</span>
+          <span class="pair-role">狂人</span>
+        </div>
+        <span class="rating">&#9733;&#9733;&#9733;</span>
+      </div>
+      <span class="type-badge good">騙りサポート</span>
+      <div class="card-desc">
+        狂人が占い師や霊能者を騙ることで、真の役職者の信頼を落とし、人狼の生存を助ける。人狼陣営の基本戦略であり、狂人の騙りが成功するかどうかが勝敗を大きく左右する。
+      </div>
+    </div>
+
+    <!-- Synergy: 人狼 + 狂信者 -->
+    <div class="compat-card synergy" data-roles="人狼,狂信者" data-type="synergy">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">人狼</span>
+          <span class="pair-connector">+</span>
+          <span class="pair-role">狂信者</span>
+        </div>
+        <span class="rating">&#9733;&#9733;&#9733;</span>
+      </div>
+      <span class="type-badge good">位置把握サポート</span>
+      <div class="card-desc">
+        狂信者は人狼の正体を知った上でサポートできる。狂人と違い、誤って人狼に黒を出すミスがなく、的確に人狼を庇いつつ村を混乱させられる。人狼陣営の最強サポーター。
+      </div>
+    </div>
+
+    <!-- Synergy: 占い師 + 賢者 -->
+    <div class="compat-card synergy" data-roles="占い師,賢者" data-type="synergy">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">占い師</span>
+          <span class="pair-connector">+</span>
+          <span class="pair-role">賢者</span>
+        </div>
+        <span class="rating">&#9733;&#9733;&#9734;</span>
+      </div>
+      <span class="type-badge good">情報補完</span>
+      <div class="card-desc">
+        賢者は占い先の具体的な役職を知ることができる。占い師の白黒判定に加え、賢者の詳細情報で村の推理精度が大幅に向上する。
+      </div>
+    </div>
+
+    <!-- Synergy: 狩人 + 霊能者 -->
+    <div class="compat-card synergy" data-roles="狩人,霊能者" data-type="synergy">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">狩人</span>
+          <span class="pair-connector">+</span>
+          <span class="pair-role">霊能者</span>
+        </div>
+        <span class="rating">&#9733;&#9733;&#9734;</span>
+      </div>
+      <span class="type-badge good">護衛対象</span>
+      <div class="card-desc">
+        占い師亡き後、霊能者が次の護衛対象となる。霊能結果は処刑先の真偽判定に不可欠であり、狩人が霊能者を守ることで情報ラインを維持できる。
+      </div>
+    </div>
+
+    <!-- Synergy: 女王 + 狩人 -->
+    <div class="compat-card synergy" data-roles="女王,狩人" data-type="synergy">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">女王</span>
+          <span class="pair-connector">+</span>
+          <span class="pair-role">狩人</span>
+        </div>
+        <span class="rating">&#9733;&#9733;&#9733;</span>
+      </div>
+      <span class="type-badge good">必須護衛</span>
+      <div class="card-desc">
+        女王が死亡すると村陣営が即敗北するため、狩人の護衛が生命線。女王部屋では狩人の存在が勝敗を左右する最重要要素となる。
+      </div>
+    </div>
+
+    <!-- Synergy: 罠師 + 占い師 -->
+    <div class="compat-card synergy" data-roles="罠師,占い師" data-type="synergy">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">罠師</span>
+          <span class="pair-connector">+</span>
+          <span class="pair-role">占い師</span>
+        </div>
+        <span class="rating">&#9733;&#9733;&#9734;</span>
+      </div>
+      <span class="type-badge good">罠護衛</span>
+      <div class="card-desc">
+        罠師が占い師に罠を仕掛けることで、襲撃してきた人狼を罠で倒せる。狩人のGJと違い、人狼を直接排除できるため攻防一体の強力なシナジー。
+      </div>
+    </div>
+
+    <!-- Situational: 猫又 + 村陣営 -->
+    <div class="compat-card situational" data-roles="猫又,村陣営" data-type="situational">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">猫又</span>
+          <span class="pair-connector">+</span>
+          <span class="pair-role">村陣営</span>
+        </div>
+        <span class="rating">&#9733;&#9733;&#9734;</span>
+      </div>
+      <span class="type-badge neutral">噛まれれば有利</span>
+      <div class="card-desc">
+        猫又が人狼に襲撃されると、人狼の中からランダムで1体を道連れにする。村陣営にとっては噛まれるだけで人狼を減らせる強力な抑止力。ただし処刑されると村人を道連れにするリスクもある。
+      </div>
+    </div>
+
+    <!-- Situational: 魔女 + 村陣営 -->
+    <div class="compat-card situational" data-roles="魔女,村陣営" data-type="situational">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">魔女</span>
+          <span class="pair-connector">+</span>
+          <span class="pair-role">村陣営</span>
+        </div>
+        <span class="rating">&#9733;&#9733;&#9734;</span>
+      </div>
+      <span class="type-badge neutral">蘇生・毒の使い所</span>
+      <div class="card-desc">
+        魔女の蘇生薬は重要役職の復活に、毒薬は人狼の排除に使える。ただし使用タイミングを誤ると逆効果になるため、状況判断が問われる。
+      </div>
+    </div>
+
+    <!-- Situational: 市長 + 村陣営 -->
+    <div class="compat-card situational" data-roles="市長,村陣営" data-type="situational">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">市長</span>
+          <span class="pair-connector">+</span>
+          <span class="pair-role">村陣営</span>
+        </div>
+        <span class="rating">&#9733;&#9733;&#9734;</span>
+      </div>
+      <span class="type-badge neutral">投票力</span>
+      <div class="card-desc">
+        市長の投票は2票分の効力がある。終盤の投票勝負で人狼を処刑に追い込む決定力を持つ。ただし正体がバレると襲撃対象になりやすいため、COのタイミングが重要。
+      </div>
+    </div>
+
+    <!-- Situational: パン屋 + 村陣営 -->
+    <div class="compat-card situational" data-roles="パン屋,村陣営" data-type="situational">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">パン屋</span>
+          <span class="pair-connector">+</span>
+          <span class="pair-role">村陣営</span>
+        </div>
+        <span class="rating">&#9733;&#9734;&#9734;</span>
+      </div>
+      <span class="type-badge neutral">生存確認</span>
+      <div class="card-desc">
+        パン屋が生存していると毎朝メッセージが表示される。パン屋の死亡は即座に全員に伝わるため、噛み先の推理材料になる。間接的な情報源として機能する。
+      </div>
+    </div>
+
+    <!-- Enemy: 妖狐 vs 占い師 -->
+    <div class="compat-card enemy" data-roles="妖狐,占い師" data-type="enemy">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">妖狐</span>
+          <span class="pair-connector">vs</span>
+          <span class="pair-role">占い師</span>
+        </div>
+        <span class="rating">天敵</span>
+      </div>
+      <span class="type-badge bad">呪殺</span>
+      <div class="card-desc">
+        占い師が妖狐を占うと呪殺が発生し、妖狐は即死する。妖狐にとって占い師は最大の脅威であり、占われないよう立ち回る必要がある。逆に占い師にとっては妖狐の呪殺は大きな成果。
+      </div>
+    </div>
+
+    <!-- Enemy: 狩人 vs 人狼 -->
+    <div class="compat-card enemy" data-roles="狩人,人狼" data-type="enemy">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">狩人</span>
+          <span class="pair-connector">vs</span>
+          <span class="pair-role">人狼</span>
+        </div>
+        <span class="rating">天敵</span>
+      </div>
+      <span class="type-badge bad">GJ（グッジョブ）</span>
+      <div class="card-desc">
+        狩人が護衛先と人狼の襲撃先が一致するとGJ（グッジョブ）が発生し、襲撃が無効化される。人狼にとって狩人は計画を狂わせる最大の障害であり、早期排除が求められる。
+      </div>
+    </div>
+
+    <!-- Enemy: 猫又 vs 人狼 -->
+    <div class="compat-card enemy" data-roles="猫又,人狼" data-type="enemy">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">猫又</span>
+          <span class="pair-connector">vs</span>
+          <span class="pair-role">人狼</span>
+        </div>
+        <span class="rating">天敵</span>
+      </div>
+      <span class="type-badge bad">道連れ</span>
+      <div class="card-desc">
+        人狼が猫又を襲撃すると、人狼の中からランダムで1体が道連れにされる。噛むだけで人狼側に被害が出るため、人狼は猫又を絶対に噛めない。処刑に追い込むしかない厄介な存在。
+      </div>
+    </div>
+
+    <!-- Enemy: 占い師 vs 狂人 -->
+    <div class="compat-card enemy" data-roles="占い師,狂人" data-type="enemy">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">占い師</span>
+          <span class="pair-connector">vs</span>
+          <span class="pair-role">狂人</span>
+        </div>
+        <span class="rating">天敵</span>
+      </div>
+      <span class="type-badge bad">騙りで混乱</span>
+      <div class="card-desc">
+        狂人が占い師を騙ることで、村は真占い師の特定に時間を浪費させられる。占い師にとって狂人は、自身の信用を落とす最大の敵。占い結果で狂人は「白」と出るため、占いでの排除もできない。
+      </div>
+    </div>
+
+    <!-- Enemy: 占い師 vs 狂信者 -->
+    <div class="compat-card enemy" data-roles="占い師,狂信者" data-type="enemy">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">占い師</span>
+          <span class="pair-connector">vs</span>
+          <span class="pair-role">狂信者</span>
+        </div>
+        <span class="rating">天敵</span>
+      </div>
+      <span class="type-badge bad">確信犯の騙り</span>
+      <div class="card-desc">
+        狂信者は人狼の位置を知っているため、狂人より精度の高い騙りが可能。真占い師の結果と矛盾しにくい嘘をつけるため、占い師にとってはより危険な天敵。
+      </div>
+    </div>
+
+    <!-- Enemy: 霊能者 vs 狂人 -->
+    <div class="compat-card enemy" data-roles="霊能者,狂人" data-type="enemy">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">霊能者</span>
+          <span class="pair-connector">vs</span>
+          <span class="pair-role">狂人</span>
+        </div>
+        <span class="rating">天敵</span>
+      </div>
+      <span class="type-badge bad">霊能騙り</span>
+      <div class="card-desc">
+        狂人が霊能者を騙ると、処刑結果の真偽が不明になり村の推理ラインが崩壊する。霊能ローラー（霊能者候補を全員処刑）に持ち込まれると、村の貴重な縄が消費される。
+      </div>
+    </div>
+
+    <!-- Enemy: 女王 vs 人狼 -->
+    <div class="compat-card enemy" data-roles="女王,人狼" data-type="enemy">
+      <div class="card-header">
+        <div class="pair-roles">
+          <span class="pair-role">女王</span>
+          <span class="pair-connector">vs</span>
+          <span class="pair-role">人狼</span>
+        </div>
+        <span class="rating">天敵</span>
+      </div>
+      <span class="type-badge bad">即敗北</span>
+      <div class="card-desc">
+        女王が死亡すると市民陣営が即座に敗北する。人狼にとって女王は最優先の襲撃ターゲットであり、正体を特定すれば一撃で勝利できる。
+      </div>
+    </div>
+
+  </div>
+
+  <div class="no-results" id="noResults">
+    該当する相性データが見つかりません。
+  </div>
+
+  <div class="tip-box">
+    <strong>相性を活かすポイント</strong><br>
+    - 占い師・霊能者の情報ラインを護衛で守り、確実に情報を蓄積する<br>
+    - 人狼側は狂人・狂信者の騙りで村の情報を混乱させる<br>
+    - 猫又・罠師などの「噛めない役職」を活用して人狼の行動を制限する<br>
+    - 妖狐がいる編成では、占い師の呪殺を狙いつつ人狼と村の両方を警戒する
+  </div>
+
+  <div class="summary-box">
+    <strong>関連コンテンツ</strong><br>
+    <a href="exclusion.html" style="color:#58a6ff;">同村制限</a>で同村できない役職を確認 /
+    <a href="composition.html" style="color:#58a6ff;">編成考察</a>で相性を活かした編成を検討 /
+    <a href="roles.html" style="color:#58a6ff;">役職一覧</a>で各役職の詳細を確認 /
+    <a href="strategy.html" style="color:#58a6ff;">立ち回り</a>で実戦での動き方を学ぶ
+  </div>
+
+</main>
+
+<div class="affiliate-banner" style="text-align:center;padding:1.5rem 1rem;background:rgba(22,27,34,.5);border-top:1px solid rgba(48,54,61,.4);">
+  <span class="af-pc"><a href="//af.moshimo.com/af/c/click?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=620" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc><img src="//image.moshimo.com/af-img/0032/000000000620.gif" width="468" height="60" style="border:none;" alt="楽天市場" loading="lazy"></a><img src="//i.moshimo.com/af/i/impression?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=620" width="1" height="1" style="border:none;" alt="" loading="lazy"></span>
+  <span class="af-sp"><a href="//af.moshimo.com/af/c/click?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=617" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc><img src="//image.moshimo.com/af-img/0032/000000000617.gif" width="100" height="60" style="border:none;" alt="楽天市場" loading="lazy"></a><img src="//i.moshimo.com/af/i/impression?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=617" width="1" height="1" style="border:none;" alt="" loading="lazy"></span>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="index.html">ホーム</a>
+    <a href="roles.html">役職一覧</a>
+    <a href="guide.html">初心者ガイド</a>
+    <a href="strategy.html">立ち回り</a>
+    <a href="glossary.html">用語集</a>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <a href="contact.html">お問い合わせ</a>
+  </div>
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
+</footer>
+
+<script src="js/common.js"></script>
+<script>
+(function() {
+  var filter = document.getElementById('roleFilter');
+  var cards = document.querySelectorAll('.compat-card');
+  var noResults = document.getElementById('noResults');
+
+  filter.addEventListener('change', function() {
+    var val = this.value;
+    var visibleCount = 0;
+
+    cards.forEach(function(card) {
+      if (val === 'all') {
+        card.style.display = '';
+        visibleCount++;
+      } else {
+        var roles = card.getAttribute('data-roles');
+        if (roles && roles.indexOf(val) !== -1) {
+          card.style.display = '';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      }
+    });
+
+    noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+  });
+})();
+</script>
+</body>
+</html>

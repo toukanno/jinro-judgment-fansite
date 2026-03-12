@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1a0e08">
+  <title>メモ帳 - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="ゲーム中に使えるメモ帳。各プレイヤーの発言や行動を記録。">
+  <meta property="og:title" content="メモ帳 - 人狼ジャッジメント攻略">
+  <meta property="og:description" content="ゲーム中に使えるメモ帳。各プレイヤーの発言や行動を記録。">
+  <meta property="og:url" content="https://toukanno.github.io/jinro-judgment-fansite/memo.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ===== Memo Page Styles ===== */
+    body.memo-page {
+      background: #1a0e08;
+      background-image:
+        radial-gradient(ellipse at 50% 0%, rgba(120, 60, 10, 0.3) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 100%, rgba(80, 30, 5, 0.2) 0%, transparent 50%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body.memo-page .site-header,
+    body.memo-page .site-footer {
+      flex-shrink: 0;
+    }
+
+    .memo-container {
+      flex: 1;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .memo-page-title {
+      text-align: center;
+      font-size: 1.3rem;
+      color: #d4af37;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      margin: 1rem 0 0.5rem;
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+
+    .memo-page-desc {
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(212, 175, 55, 0.5);
+      margin-bottom: 1.2rem;
+    }
+
+    /* ===== Game State Tracker ===== */
+    .game-state {
+      background: linear-gradient(180deg, #2a1a0c 0%, #1c0f06 100%);
+      border: 2px solid #8b6914;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 20px rgba(180, 120, 30, 0.1), inset 0 0 40px rgba(0,0,0,0.4);
+    }
+
+    .game-state-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .state-group {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .state-label {
+      font-size: 0.75rem;
+      color: rgba(212, 175, 55, 0.6);
+      white-space: nowrap;
+    }
+
+    .state-control {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .state-btn {
+      background: linear-gradient(180deg, #3a2a18 0%, #2a1c0e 100%);
+      color: #d4af37;
+      border: 1.5px solid #8b6914;
+      border-radius: 4px;
+      width: 32px;
+      height: 32px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      min-width: 44px;
+      min-height: 44px;
+    }
+
+    .state-btn:hover {
+      background: linear-gradient(180deg, #4a3620 0%, #362212 100%);
+      border-color: #c4a030;
+    }
+
+    .state-btn:active {
+      transform: scale(0.95);
+    }
+
+    .state-value {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #ffd700;
+      min-width: 2.5rem;
+      text-align: center;
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+    }
+
+    .co-note {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .co-note-input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(139, 105, 20, 0.4);
+      border-radius: 4px;
+      color: #e8d5b0;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      font-family: 'Noto Sans JP', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+      min-height: 44px;
+    }
+
+    .co-note-input:focus {
+      border-color: #d4af37;
+    }
+
+    .co-note-input::placeholder {
+      color: rgba(232, 213, 176, 0.3);
+    }
+
+    /* ===== Player Slots ===== */
+    .player-slots {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .player-slot {
+      background: linear-gradient(180deg, #2a1a0c 0%, #1c0f06 100%);
+      border: 1.5px solid rgba(139, 105, 20, 0.4);
+      border-radius: 8px;
+      padding: 0.7rem 0.8rem;
+      display: grid;
+      grid-template-columns: 44px 1fr auto auto;
+      grid-template-rows: auto auto;
+      gap: 0.4rem 0.6rem;
+      align-items: center;
+      transition: border-color 0.2s;
+    }
+
+    .player-slot:hover {
+      border-color: rgba(139, 105, 20, 0.7);
+    }
+
+    .player-slot[data-trust="white"] {
+      border-left: 3px solid #4da6ff;
+    }
+
+    .player-slot[data-trust="gray"] {
+      border-left: 3px solid #888;
+    }
+
+    .player-slot[data-trust="black"] {
+      border-left: 3px solid #ff4444;
+    }
+
+    /* Player number */
+    .player-num {
+      grid-row: 1 / 3;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #d4af37;
+      text-align: center;
+      text-shadow: 0 0 6px rgba(212, 175, 55, 0.3);
+      line-height: 1;
+    }
+
+    .player-num span {
+      display: block;
+      font-size: 0.6rem;
+      font-weight: 400;
+      color: rgba(212, 175, 55, 0.5);
+      margin-top: 2px;
+    }
+
+    /* Name input */
+    .player-name {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(139, 105, 20, 0.3);
+      border-radius: 4px;
+      color: #e8d5b0;
+      padding: 4px 8px;
+      font-size: 0.8rem;
+      font-family: 'Noto Sans JP', sans-serif;
+      outline: none;
+      min-width: 0;
+      min-height: 36px;
+      transition: border-color 0.2s;
+    }
+
+    .player-name:focus {
+      border-color: #d4af37;
+    }
+
+    .player-name::placeholder {
+      color: rgba(232, 213, 176, 0.25);
+    }
+
+    /* Role dropdown */
+    .player-role {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(139, 105, 20, 0.4);
+      border-radius: 4px;
+      color: #e8d5b0;
+      padding: 4px 6px;
+      font-size: 0.75rem;
+      font-family: 'Noto Sans JP', sans-serif;
+      outline: none;
+      min-height: 36px;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23d4af37'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 6px center;
+      padding-right: 20px;
+    }
+
+    .player-role:focus {
+      border-color: #d4af37;
+    }
+
+    .player-role option {
+      background: #1c0f06;
+      color: #e8d5b0;
+    }
+
+    /* Trust buttons */
+    .trust-group {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .trust-btn {
+      border: 1.5px solid rgba(139, 105, 20, 0.3);
+      border-radius: 4px;
+      padding: 3px 8px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      font-family: 'Noto Sans JP', sans-serif;
+      cursor: pointer;
+      transition: all 0.15s;
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.3);
+      color: rgba(232, 213, 176, 0.5);
+    }
+
+    .trust-btn:active {
+      transform: scale(0.95);
+    }
+
+    .trust-btn[data-trust="white"].active {
+      background: linear-gradient(180deg, #1a3a6b 0%, #122a50 100%);
+      border-color: #4da6ff;
+      color: #a8d4ff;
+      box-shadow: 0 0 8px rgba(77, 166, 255, 0.3);
+    }
+
+    .trust-btn[data-trust="gray"].active {
+      background: linear-gradient(180deg, #3a3a3a 0%, #2a2a2a 100%);
+      border-color: #888;
+      color: #ccc;
+      box-shadow: 0 0 8px rgba(136, 136, 136, 0.3);
+    }
+
+    .trust-btn[data-trust="black"].active {
+      background: linear-gradient(180deg, #6b1a1a 0%, #501212 100%);
+      border-color: #ff4444;
+      color: #ffaaaa;
+      box-shadow: 0 0 8px rgba(255, 68, 68, 0.3);
+    }
+
+    /* Memo textarea */
+    .player-memo {
+      grid-column: 2 / -1;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(139, 105, 20, 0.25);
+      border-radius: 4px;
+      color: #e8d5b0;
+      padding: 6px 8px;
+      font-size: 0.75rem;
+      font-family: 'Noto Sans JP', sans-serif;
+      outline: none;
+      resize: none;
+      line-height: 1.5;
+      height: 2.8em;
+      transition: border-color 0.2s;
+    }
+
+    .player-memo:focus {
+      border-color: #d4af37;
+    }
+
+    .player-memo::placeholder {
+      color: rgba(232, 213, 176, 0.2);
+    }
+
+    /* ===== Action Bar ===== */
+    .memo-actions {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      margin: 1.2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .memo-action-btn {
+      background: linear-gradient(180deg, #3a2a18 0%, #2a1c0e 100%);
+      color: #d4af37;
+      border: 1.5px solid #8b6914;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      font-family: 'Noto Sans JP', sans-serif;
+      cursor: pointer;
+      transition: all 0.15s;
+      min-height: 44px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(212, 175, 55, 0.1);
+    }
+
+    .memo-action-btn:hover {
+      background: linear-gradient(180deg, #4a3620 0%, #362212 100%);
+      border-color: #c4a030;
+    }
+
+    .memo-action-btn:active {
+      transform: scale(0.95);
+    }
+
+    .memo-action-btn.danger {
+      border-color: #8b2020;
+      color: #ff8888;
+    }
+
+    .memo-action-btn.danger:hover {
+      border-color: #b03030;
+      background: linear-gradient(180deg, #3a1818 0%, #2a1010 100%);
+    }
+
+    .save-indicator {
+      text-align: center;
+      font-size: 0.7rem;
+      color: rgba(212, 175, 55, 0.4);
+      margin-bottom: 0.5rem;
+      min-height: 1em;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 600px) {
+      .memo-container {
+        padding: 0.5rem;
+      }
+
+      .memo-page-title {
+        font-size: 1.1rem;
+      }
+
+      .game-state {
+        padding: 0.8rem;
+      }
+
+      .game-state-row {
+        gap: 0.6rem;
+      }
+
+      .co-note {
+        min-width: 100%;
+        margin-top: 0.3rem;
+      }
+
+      .player-slot {
+        grid-template-columns: 36px 1fr;
+        grid-template-rows: auto auto auto auto;
+        padding: 0.6rem;
+        gap: 0.3rem 0.5rem;
+      }
+
+      .player-num {
+        grid-row: 1 / 2;
+      }
+
+      .player-name {
+        grid-column: 2;
+      }
+
+      .player-role {
+        grid-column: 1 / 3;
+      }
+
+      .trust-group {
+        grid-column: 1 / 3;
+        justify-content: flex-start;
+      }
+
+      .player-memo {
+        grid-column: 1 / 3;
+      }
+
+      .trust-btn {
+        flex: 1;
+        max-width: 100px;
+      }
+    }
+
+    @media (max-width: 374px) {
+      .memo-page-title {
+        font-size: 0.95rem;
+      }
+
+      .player-slot {
+        padding: 0.5rem;
+      }
+
+      .trust-btn {
+        font-size: 0.6rem;
+        padding: 3px 4px;
+        min-width: 44px;
+      }
+    }
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5638346660274603"
+     crossorigin="anonymous"></script>
+<!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-XXXXXXXXXX");</script>
+</head>
+<body class="memo-page">
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="character.html">キャラクター</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+        <li><a href="templates.html">部屋テンプレ</a></li>
+        <li><a href="copipe.html">コピペ集</a></li>
+        <li><a href="v3roles.html">V3新役職</a></li>
+        <li><a href="queen-wise.html">女王部屋</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="timer.html">タイマー</a></li>
+        <li><a href="exclusion.html">同村制限</a></li>
+        <li><a href="rope-calc.html">縄計算</a></li>
+        <li><a href="synergy.html">役職相性</a></li>
+        <li><a href="quiz.html">クイズ</a></li>
+        <li><a href="notepad.html">メモ帳</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="memo-container">
+  <h1 class="memo-page-title">メモ帳</h1>
+  <p class="memo-page-desc">ゲーム中に使えるメモ帳。各プレイヤーの発言や行動を記録。</p>
+
+  <!-- Game State Tracker -->
+  <div class="game-state">
+    <div class="game-state-row">
+      <div class="state-group">
+        <span class="state-label">日数</span>
+        <div class="state-control">
+          <button class="state-btn" id="dayMinus" aria-label="日数を減らす">-</button>
+          <span class="state-value" id="dayCount">1日目</span>
+          <button class="state-btn" id="dayPlus" aria-label="日数を増やす">+</button>
+        </div>
+      </div>
+      <div class="state-group">
+        <span class="state-label">生存</span>
+        <div class="state-control">
+          <button class="state-btn" id="aliveMinus" aria-label="生存数を減らす">-</button>
+          <span class="state-value" id="aliveCount">13人</span>
+          <button class="state-btn" id="alivePlus" aria-label="生存数を増やす">+</button>
+        </div>
+      </div>
+      <div class="co-note">
+        <input type="text" class="co-note-input" id="coNote" placeholder="CO状況メモ（例: 占い3CO 霊能1CO）" aria-label="CO状況メモ">
+      </div>
+    </div>
+  </div>
+
+  <div class="save-indicator" id="saveIndicator"></div>
+
+  <!-- Player Slots -->
+  <div class="player-slots" id="playerSlots">
+    <!-- Generated by JS -->
+  </div>
+
+  <!-- Actions -->
+  <div class="memo-actions">
+    <button class="memo-action-btn danger" id="clearAll">全消去</button>
+  </div>
+</main>
+
+<div class="affiliate-banner" style="text-align:center;padding:1.5rem 1rem;background:rgba(22,27,34,.5);border-top:1px solid rgba(48,54,61,.4);">
+  <span class="af-pc"><a href="//af.moshimo.com/af/c/click?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=620" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc><img src="//image.moshimo.com/af-img/0032/000000000620.gif" width="468" height="60" style="border:none;" alt="楽天市場" loading="lazy"></a><img src="//i.moshimo.com/af/i/impression?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=620" width="1" height="1" style="border:none;" alt="" loading="lazy"></span>
+  <span class="af-sp"><a href="//af.moshimo.com/af/c/click?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=617" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc><img src="//image.moshimo.com/af-img/0032/000000000617.gif" width="100" height="60" style="border:none;" alt="楽天市場" loading="lazy"></a><img src="//i.moshimo.com/af/i/impression?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=617" width="1" height="1" style="border:none;" alt="" loading="lazy"></span>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="index.html">ホーム</a>
+    <a href="roles.html">役職一覧</a>
+    <a href="guide.html">初心者ガイド</a>
+    <a href="strategy.html">立ち回り</a>
+    <a href="glossary.html">用語集</a>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <a href="contact.html">お問い合わせ</a>
+    <a href="faq.html">FAQ</a>
+  </div>
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
+</footer>
+
+<script src="js/common.js"></script>
+<script>
+(function() {
+  'use strict';
+
+  var STORAGE_KEY = 'jinro_memo_data';
+  var PLAYER_COUNT = 13;
+  var ROLES = ['不明', '市民', '占い師', '霊能者', '狩人', '人狼', '狂人', '妖狐'];
+  var saveTimer = null;
+
+  // State
+  var state = {
+    day: 1,
+    alive: 13,
+    coNote: '',
+    players: []
+  };
+
+  // Init default player data
+  function defaultPlayers() {
+    var players = [];
+    for (var i = 0; i < PLAYER_COUNT; i++) {
+      players.push({
+        name: '',
+        role: '不明',
+        trust: '',
+        memo: ''
+      });
+    }
+    return players;
+  }
+
+  // DOM refs
+  var dayCountEl = document.getElementById('dayCount');
+  var aliveCountEl = document.getElementById('aliveCount');
+  var coNoteEl = document.getElementById('coNote');
+  var slotsEl = document.getElementById('playerSlots');
+  var saveIndicatorEl = document.getElementById('saveIndicator');
+
+  // Load from localStorage
+  function loadState() {
+    try {
+      var saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        var parsed = JSON.parse(saved);
+        state.day = parsed.day || 1;
+        state.alive = parsed.alive || 13;
+        state.coNote = parsed.coNote || '';
+        if (parsed.players && parsed.players.length === PLAYER_COUNT) {
+          state.players = parsed.players;
+        } else {
+          state.players = defaultPlayers();
+        }
+      } else {
+        state.players = defaultPlayers();
+      }
+    } catch (e) {
+      state.players = defaultPlayers();
+    }
+  }
+
+  // Save to localStorage with debounce
+  function saveState() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        showSaveIndicator();
+      } catch (e) {
+        // Storage full or unavailable
+      }
+    }, 300);
+  }
+
+  function showSaveIndicator() {
+    saveIndicatorEl.textContent = '自動保存しました';
+    setTimeout(function() {
+      saveIndicatorEl.textContent = '';
+    }, 1500);
+  }
+
+  // Render game state
+  function renderGameState() {
+    dayCountEl.textContent = state.day + '日目';
+    aliveCountEl.textContent = state.alive + '人';
+    coNoteEl.value = state.coNote;
+  }
+
+  // Build player slots HTML
+  function buildSlots() {
+    var html = '';
+    for (var i = 0; i < PLAYER_COUNT; i++) {
+      var p = state.players[i];
+      var trustAttr = p.trust ? ' data-trust="' + p.trust + '"' : '';
+
+      html += '<div class="player-slot" data-index="' + i + '"' + trustAttr + '>';
+      html += '  <div class="player-num">' + (i + 1) + '<span>P</span></div>';
+      html += '  <input type="text" class="player-name" data-field="name" placeholder="名前" value="' + escapeHtml(p.name) + '" aria-label="プレイヤー' + (i + 1) + 'の名前">';
+
+      // Role select
+      html += '  <select class="player-role" data-field="role" aria-label="プレイヤー' + (i + 1) + 'の役職予想">';
+      for (var r = 0; r < ROLES.length; r++) {
+        var selected = p.role === ROLES[r] ? ' selected' : '';
+        html += '    <option value="' + ROLES[r] + '"' + selected + '>' + ROLES[r] + '</option>';
+      }
+      html += '  </select>';
+
+      // Trust buttons
+      html += '  <div class="trust-group">';
+      html += '    <button class="trust-btn' + (p.trust === 'white' ? ' active' : '') + '" data-trust="white" aria-label="白寄り" title="白寄り">白寄り</button>';
+      html += '    <button class="trust-btn' + (p.trust === 'gray' ? ' active' : '') + '" data-trust="gray" aria-label="グレー" title="グレー">グレー</button>';
+      html += '    <button class="trust-btn' + (p.trust === 'black' ? ' active' : '') + '" data-trust="black" aria-label="黒寄り" title="黒寄り">黒寄り</button>';
+      html += '  </div>';
+
+      // Memo textarea
+      html += '  <textarea class="player-memo" data-field="memo" placeholder="メモ..." rows="2" aria-label="プレイヤー' + (i + 1) + 'のメモ">' + escapeHtml(p.memo) + '</textarea>';
+      html += '</div>';
+    }
+    slotsEl.innerHTML = html;
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  // Get slot index from an element inside a .player-slot
+  function getSlotIndex(el) {
+    var slot = el.closest('.player-slot');
+    return slot ? parseInt(slot.dataset.index, 10) : -1;
+  }
+
+  // Event delegation for player slots
+  slotsEl.addEventListener('input', function(e) {
+    var target = e.target;
+    var idx = getSlotIndex(target);
+    if (idx < 0) return;
+
+    var field = target.dataset.field;
+    if (field === 'name') {
+      state.players[idx].name = target.value;
+    } else if (field === 'memo') {
+      state.players[idx].memo = target.value;
+    }
+    saveState();
+  });
+
+  slotsEl.addEventListener('change', function(e) {
+    var target = e.target;
+    var idx = getSlotIndex(target);
+    if (idx < 0) return;
+
+    if (target.dataset.field === 'role') {
+      state.players[idx].role = target.value;
+      saveState();
+    }
+  });
+
+  slotsEl.addEventListener('click', function(e) {
+    var btn = e.target.closest('.trust-btn');
+    if (!btn) return;
+
+    var idx = getSlotIndex(btn);
+    if (idx < 0) return;
+
+    var trust = btn.dataset.trust;
+    var slot = btn.closest('.player-slot');
+
+    // Toggle: if same trust clicked, clear it
+    if (state.players[idx].trust === trust) {
+      state.players[idx].trust = '';
+      slot.removeAttribute('data-trust');
+    } else {
+      state.players[idx].trust = trust;
+      slot.setAttribute('data-trust', trust);
+    }
+
+    // Update button active states
+    var buttons = slot.querySelectorAll('.trust-btn');
+    for (var i = 0; i < buttons.length; i++) {
+      if (buttons[i].dataset.trust === state.players[idx].trust) {
+        buttons[i].classList.add('active');
+      } else {
+        buttons[i].classList.remove('active');
+      }
+    }
+
+    saveState();
+  });
+
+  // Game state controls
+  document.getElementById('dayPlus').addEventListener('click', function() {
+    state.day = Math.min(state.day + 1, 20);
+    renderGameState();
+    saveState();
+  });
+
+  document.getElementById('dayMinus').addEventListener('click', function() {
+    state.day = Math.max(state.day - 1, 1);
+    renderGameState();
+    saveState();
+  });
+
+  document.getElementById('alivePlus').addEventListener('click', function() {
+    state.alive = Math.min(state.alive + 1, 20);
+    renderGameState();
+    saveState();
+  });
+
+  document.getElementById('aliveMinus').addEventListener('click', function() {
+    state.alive = Math.max(state.alive - 1, 0);
+    renderGameState();
+    saveState();
+  });
+
+  coNoteEl.addEventListener('input', function() {
+    state.coNote = coNoteEl.value;
+    saveState();
+  });
+
+  // Clear all
+  document.getElementById('clearAll').addEventListener('click', function() {
+    if (!confirm('全てのメモを消去しますか？')) return;
+    state.day = 1;
+    state.alive = 13;
+    state.coNote = '';
+    state.players = defaultPlayers();
+    localStorage.removeItem(STORAGE_KEY);
+    renderGameState();
+    buildSlots();
+  });
+
+  // Init
+  loadState();
+  renderGameState();
+  buildSlots();
+})();
+</script>
+</body>
+</html>

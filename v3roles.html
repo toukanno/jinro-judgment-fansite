@@ -307,7 +307,8 @@
 </main>
 
 <div class="affiliate-banner" style="text-align:center;padding:1.5rem 1rem;background:rgba(22,27,34,.5);border-top:1px solid rgba(48,54,61,.4);">
-  <a href="//af.moshimo.com/af/c/click?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=617" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc><img src="//image.moshimo.com/af-img/0032/000000000617.gif" width="100" height="60" style="border:none;" alt="楽天市場" loading="lazy"></a><img src="//i.moshimo.com/af/i/impression?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=617" width="1" height="1" style="border:none;" alt="" loading="lazy">
+  <span class="af-pc"><a href="//af.moshimo.com/af/c/click?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=620" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc><img src="//image.moshimo.com/af-img/0032/000000000620.gif" width="468" height="60" style="border:none;" alt="楽天市場" loading="lazy"></a><img src="//i.moshimo.com/af/i/impression?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=620" width="1" height="1" style="border:none;" alt="" loading="lazy"></span>
+  <span class="af-sp"><a href="//af.moshimo.com/af/c/click?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=617" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc><img src="//image.moshimo.com/af-img/0032/000000000617.gif" width="100" height="60" style="border:none;" alt="楽天市場" loading="lazy"></a><img src="//i.moshimo.com/af/i/impression?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=617" width="1" height="1" style="border:none;" alt="" loading="lazy"></span>
 </div>
 
 <footer class="site-footer">
@@ -392,6 +393,43 @@ const V3_ROLES = [
     name: 'ギャンブラー', team: 'village', icon: '&#x1F3B0;', ability: '票蓄積',
     desc: '投票時に「投票する」か「票をためる」を選択できる。票をためた場合ストック（最大9票）され、投票時にストック分がすべて投票に使われる。',
     strategy: 'ここぞという場面で大量票を投じることで、確実に吊り先をコントロールできる。序盤はためて、終盤に一気に使おう。'
+  },
+
+  // ===== 大型アプデ追加・市民陣営 =====
+  {
+    name: 'ささやく双子', team: 'village', icon: '&#x1F46F;', ability: '双子チャット',
+    desc: '双子同士で秘密の会話ができる市民陣営の役職。夜に双子チャットで情報交換が可能。共有者に似た確定白ペア。',
+    strategy: '双子同士で情報を共有し確定白として進行の軸になる。片方が噛まれた場合の対処法を事前に決めておこう。'
+  },
+  {
+    name: '鉄の女', team: 'village', icon: '&#x1F6E1;', ability: '襲撃耐性',
+    desc: '人狼に襲撃されても即死せず、翌日の深夜に死亡する。襲撃された翌日は生存しているため議論に参加できる。',
+    strategy: '襲撃された翌日に重要な情報を伝えられる。遺言代わりに推理結果を公表し、村に最大限の貢献をしよう。'
+  },
+  {
+    name: '幸運の梟', team: 'village', icon: '&#x1F989;', ability: '祝福',
+    desc: '夜に一人を選んで祝福を与える。祝福された対象は翌日の投票で二票分の効果を持つ。',
+    strategy: '確定白や信頼できる進行役に祝福を与えて投票力を倍増させる。人狼への祝福を避けるため、見極めが重要。'
+  },
+  {
+    name: '狼憑きの狩人', team: 'village', icon: '&#x1F6E1;', ability: '護衛（黒判定）',
+    desc: '占い師に占われると人狼と判定されてしまう狩人。護衛能力は通常の狩人と同じ。',
+    strategy: '占われると黒が出るため、早めのCOか占い師への根回しが重要。真狩人と証明する方法を考えておこう。'
+  },
+  {
+    name: '迷惑な狩人', team: 'village', icon: '&#x1F52B;', ability: '道連れ護衛',
+    desc: '自身が人狼に襲撃された時、守っていた対象を道連れにしてしまう狩人。護衛能力は持つが副作用がある。',
+    strategy: '自分が噛まれるリスクがある時は護衛先を慎重に選ぶ。重要役職を守る際は自分の生存も考慮すること。'
+  },
+  {
+    name: '二丁拳銃', team: 'village', icon: '&#x1F52B;', ability: '二重護衛',
+    desc: '毎夜一人を守ることができ、ゲーム中一度だけ二人を同時に守ることができるガンマン型の護衛役職。',
+    strategy: '一度きりの二重護衛は最重要局面で使う。占い師と霊能者を同時に守るなど、決定的な場面を見極めよう。'
+  },
+  {
+    name: '貴族の息子', team: 'village', icon: '&#x1F934;', ability: '身代わり処刑',
+    desc: '処刑される際、一度だけ他の人を代わりに処刑することができる。設定により指定方法が変わる。',
+    strategy: '人狼と確信した相手を身代わりに指定できれば非常に強力。確定情報がない時の使用は村に損害を与えるリスクがある。'
   },
 
   // ===== 人狼陣営 =====

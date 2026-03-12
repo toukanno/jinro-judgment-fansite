@@ -893,3 +893,11 @@ img { max-width: 100%; height: auto; }
   background: rgba(88,166,255,.25);
   color: #e6edf3;
 }
+
+/* ===== Affiliate Banner Responsive ===== */
+.af-pc { display: none; }
+.af-sp { display: inline; }
+@media (min-width: 768px) {
+  .af-pc { display: inline; }
+  .af-sp { display: none; }
+}
