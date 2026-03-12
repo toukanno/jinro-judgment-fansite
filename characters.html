@@ -626,7 +626,7 @@
       desc: '狩人（騎士）をモチーフにしたVIPキャラクター。勇敢で頼もしい雰囲気を持ち、護衛役にふさわしい風格がある。',
       motif: '狩人' },
     { name: 'セリーヌ', ruby: 'Celine', gender: 'female', category: 'cat3', color: '#f9a8d4',
-      icon: '\u{1F478}',
+      icon: '\u{1F478}', img: 'images/キャラセリーヌ.jpg',
       summary: 'プリンセスモチーフのVIPキャラ',
       appearance: ['高貴な雰囲気', '美しい装い', '気品のある容姿', 'プリンセスらしい佇まい'],
       desc: 'プリンセスをモチーフにしたVIPキャラクター。高貴で美しい雰囲気が特徴。女王部屋のプリンセス役で使用するプレイヤーも多い。',
@@ -638,13 +638,13 @@
       desc: '双子をモチーフにしたVIPキャラクター。双子の役職と合わせて使用されることが多い。個性的で神秘的な雰囲気を持つ。',
       motif: '双子' },
     { name: 'モーガン', ruby: 'Morgan', gender: 'male', category: 'cat3', color: '#f87171',
-      icon: '\u{1F921}',
+      icon: '\u{1F921}', img: 'images/キャラモーガン.jpg',
       summary: '狂人モチーフのVIPキャラ',
       appearance: ['不気味な笑み', '狂気を感じさせる装い', '独特の雰囲気', 'カオスな佇まい'],
       desc: '狂人をモチーフにしたVIPキャラクター。狂気を感じさせる独特の雰囲気が特徴。人狼陣営の騙り役職で映えるビジュアル。',
       motif: '狂人' },
     { name: 'ペネロペ', ruby: 'Penelope', gender: 'female', category: 'cat3', color: '#818cf8',
-      icon: '\u{1F43A}',
+      icon: '\u{1F43A}', img: 'images/キャラペネロペ.jpg',
       summary: '一途な人狼モチーフのVIPキャラ',
       appearance: ['妖艶な雰囲気', '狼を思わせる鋭い目', 'ダークな装い', 'ミステリアスな佇まい'],
       desc: '一途な人狼をモチーフにしたVIPキャラクター。妖艶でミステリアスな雰囲気が特徴。人狼陣営のプレイにふさわしいダークな魅力を持つ。',
@@ -679,7 +679,7 @@
       var genderClass = c.gender === 'male' ? 't-male' : 't-female';
       return '<div class="char-card" data-idx="' + CHARACTERS.indexOf(c) + '" style="--accent:' + c.color + '">' +
         '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:' + c.color + ';"></div>' +
-        '<div class="char-card-avatar" style="background:linear-gradient(135deg,' + c.color + '22,' + c.color + '08);border-color:' + c.color + '44;">' + c.icon + '</div>' +
+        '<div class="char-card-avatar" style="background:linear-gradient(135deg,' + c.color + '22,' + c.color + '08);border-color:' + c.color + '44;">' + (c.img ? '<img src="' + c.img + '" alt="' + c.name + '" loading="lazy">' : c.icon) + '</div>' +
         '<div class="char-card-name">' + c.name + '</div>' +
         '<div class="char-card-ruby">' + c.ruby + '</div>' +
         '<div class="char-card-tags">' +
@@ -699,7 +699,7 @@
     var motifHtml = c.motif ? '<div class="char-detail-section"><h3>\u{1F3AD} モチーフ役職</h3><p>' + c.motif + '</p></div>' : '';
     detailEl.innerHTML =
       '<button class="char-detail-close" aria-label="閉じる">\u2715</button>' +
-      '<div class="char-detail-avatar" style="background:linear-gradient(135deg,' + c.color + '33,' + c.color + '11);border-color:' + c.color + '66;">' + c.icon + '</div>' +
+      '<div class="char-detail-avatar" style="background:linear-gradient(135deg,' + c.color + '33,' + c.color + '11);border-color:' + c.color + '66;">' + (c.img ? '<img src="' + c.img + '" alt="' + c.name + '">' : c.icon) + '</div>' +
       '<div class="char-detail-name">' + c.name + '</div>' +
       '<div class="char-detail-ruby">' + c.ruby + '</div>' +
       '<div class="char-detail-tags">' +
