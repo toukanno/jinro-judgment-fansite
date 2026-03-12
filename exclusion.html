@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0e17">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JGDB">
+  <title>同村しない役職 詳細解説 - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントで同村できない役職の組み合わせを詳しく解説。なぜ同村不可なのか、その理由と編成への影響を徹底解説。">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .reason-card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.2rem;
+      transition: border-color .2s;
+    }
+    .reason-card:hover { border-color: #f85149; }
+    .reason-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: .6rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .reason-card .pair-roles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-bottom: .8rem;
+    }
+    .reason-card .pair-role {
+      display: inline-block;
+      padding: .25rem .7rem;
+      border-radius: 8px;
+      font-size: .85rem;
+      font-weight: 600;
+      background: rgba(248,81,73,.08);
+      color: #f85149;
+      border: 1px solid rgba(248,81,73,.2);
+    }
+    .reason-card .pair-x {
+      color: #484f58;
+      font-weight: 700;
+      font-size: 1.1rem;
+      align-self: center;
+    }
+    .reason-card .reason-text {
+      color: #c9d1d9;
+      font-size: .9rem;
+      line-height: 1.7;
+    }
+    .reason-card .reason-label {
+      display: inline-block;
+      padding: .15rem .5rem;
+      border-radius: 4px;
+      font-size: .75rem;
+      font-weight: 600;
+      margin-bottom: .5rem;
+    }
+    .reason-label.balance { background: rgba(210,153,34,.15); color: #d29922; }
+    .reason-label.paradox { background: rgba(248,81,73,.12); color: #f85149; }
+    .reason-label.system { background: rgba(88,166,255,.12); color: #58a6ff; }
+
+    .summary-box {
+      background: rgba(88,166,255,.06);
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 2rem;
+      font-size: .9rem;
+      color: #c9d1d9;
+      line-height: 1.7;
+    }
+    .summary-box strong { color: #58a6ff; }
+
+    .category-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin: 2rem 0 1rem;
+      padding-bottom: .5rem;
+      border-bottom: 2px solid #30363d;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .tip-highlight {
+      background: rgba(126,231,135,.06);
+      border-left: 3px solid #7ee787;
+      padding: 1rem 1.2rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.5rem 0;
+      font-size: .9rem;
+      color: #c9d1d9;
+    }
+    .tip-highlight strong { color: #7ee787; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="character.html">キャラクター</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+        <li><a href="templates.html">部屋テンプレ</a></li>
+        <li><a href="copipe.html">コピペ集</a></li>
+        <li><a href="v3roles.html">V3新役職</a></li>
+        <li><a href="queen-wise.html">女王部屋</a></li>
+        <li><a href="timer.html">タイマー</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> <a href="roles.html">役職一覧</a> <span>&gt;</span> 同村しない役職 詳細解説</div>
+
+  <h1 class="section-title">&#x1F6AB; 同村しない役職 詳細解説</h1>
+
+  <div class="summary-box">
+    <strong>「同村しない」とは？</strong><br>
+    人狼ジャッジメントでは、特定の役職の組み合わせが同じ屋敷に配置されないように制限がかけられています。
+    これは<strong>ゲームバランスの崩壊を防ぐ</strong>ため、または<strong>ルール上の矛盾（パラドックス）</strong>が生じるのを回避するための仕様です。
+    編成を考える際は、この制限を理解しておくことが重要です。<br><br>
+    <a href="roles.html#exclusion" style="color:#58a6ff;">→ 役職一覧ページの早見表マトリクスも参照</a>
+  </div>
+
+  <h2 class="category-title">&#x1F495; 恋人関連の制限</h2>
+  <p style="color:#8b949e;font-size:.88rem;margin-bottom:1rem;">恋人・キューピット・悪女は「ペア」を作る役職のため、復活系・入れ替え系との矛盾が多い。</p>
+
+  <div class="reason-card">
+    <h3>&#x1F6AB; 恋人 × 赤ずきん</h3>
+    <div class="pair-roles">
+      <span class="pair-role">恋人</span>
+      <span class="pair-x">×</span>
+      <span class="pair-role">赤ずきん</span>
+    </div>
+    <span class="reason-label paradox">パラドックス</span>
+    <div class="reason-text">
+      赤ずきんは人狼に襲撃されると死亡するが、人狼が処刑されると復活する。もし赤ずきんが恋人に選ばれた場合、襲撃で死亡 → 相方が後追い死 → 人狼処刑で赤ずきん復活、という矛盾が発生するため同村不可。
+    </div>
+  </div>
+
+  <div class="reason-card">
+    <h3>&#x1F6AB; 恋人 × 魔女</h3>
+    <div class="pair-roles">
+      <span class="pair-role">恋人</span>
+      <span class="pair-x">×</span>
+      <span class="pair-role">魔女</span>
+    </div>
+    <span class="reason-label paradox">パラドックス</span>
+    <div class="reason-text">
+      魔女は蘇生薬で死者を復活させることができる。恋人の片方が死亡して後追い死が発生した後に蘇生すると、恋人関係の整合性が取れなくなるため同村不可。
+    </div>
+  </div>
+
+  <div class="reason-card">
+    <h3>&#x1F6AB; 恋人 × 蘇る人狼</h3>
+    <div class="pair-roles">
+      <span class="pair-role">恋人</span>
+      <span class="pair-x">×</span>
+      <span class="pair-role">蘇る人狼</span>
+    </div>
+    <span class="reason-label paradox">パラドックス</span>
+    <div class="reason-text">
+      蘇る人狼は一度死亡しても復活できる。恋人の相方として蘇る人狼が処刑された場合、後追い死が発生してから復活するという矛盾が起きるため同村不可。
+    </div>
+  </div>
+
+  <div class="reason-card">
+    <h3>&#x1F6AB; キューピット × 赤ずきん / 魔女 / 蘇る人狼</h3>
+    <div class="pair-roles">
+      <span class="pair-role">キューピット</span>
+      <span class="pair-x">×</span>
+      <span class="pair-role">赤ずきん / 魔女 / 蘇る人狼</span>
+    </div>
+    <span class="reason-label paradox">パラドックス</span>
+    <div class="reason-text">
+      キューピットは2人を恋人にする役職。恋人と同じ理由で、復活系の役職とは矛盾が生じるため同村不可。
+    </div>
+  </div>
+
+  <div class="reason-card">
+    <h3>&#x1F6AB; 悪女 × 赤ずきん / 魔女 / 蘇る人狼</h3>
+    <div class="pair-roles">
+      <span class="pair-role">悪女</span>
+      <span class="pair-x">×</span>
+      <span class="pair-role">赤ずきん / 魔女 / 蘇る人狼</span>
+    </div>
+    <span class="reason-label paradox">パラドックス</span>
+    <div class="reason-text">
+      悪女もペアを作る役職のため、恋人・キューピットと同様に復活系との矛盾が発生する。
+    </div>
+  </div>
+
+  <h2 class="category-title">&#x1F3AD; 怪盗関連の制限</h2>
+  <p style="color:#8b949e;font-size:.88rem;margin-bottom:1rem;">怪盗は他人と役職を交換する。交換するとシステム的に破綻する役職とは同村できない。</p>
+
+  <div class="reason-card">
+    <h3>&#x1F6AB; 怪盗 × 魔女</h3>
+    <div class="pair-roles">
+      <span class="pair-role">怪盗</span>
+      <span class="pair-x">×</span>
+      <span class="pair-role">魔女</span>
+    </div>
+    <span class="reason-label system">システム制限</span>
+    <div class="reason-text">
+      怪盗が魔女と役職交換した場合、薬の使用状態の引き継ぎに問題が生じるため同村不可。
+    </div>
+  </div>
+
+  <div class="reason-card">
+    <h3>&#x1F6AB; 怪盗 × 生霊</h3>
+    <div class="pair-roles">
+      <span class="pair-role">怪盗</span>
+      <span class="pair-x">×</span>
+      <span class="pair-role">生霊</span>
+    </div>
+    <span class="reason-label system">システム制限</span>
+    <div class="reason-text">
+      生霊は指定した相手が死亡するとその役職をコピーする。怪盗との交換が絡むと、コピー先の判定が破綻するため同村不可。
+    </div>
+  </div>
+
+  <div class="reason-card">
+    <h3>&#x1F6AB; 怪盗 × 饒舌な狩人</h3>
+    <div class="pair-roles">
+      <span class="pair-role">怪盗</span>
+      <span class="pair-x">×</span>
+      <span class="pair-role">饒舌な狩人</span>
+    </div>
+    <span class="reason-label system">システム制限</span>
+    <div class="reason-text">
+      饒舌な狩人は毎日ワードを発言しなければならない。怪盗と交換した場合、ワード制約の引き継ぎに問題が起きるため同村不可。
+    </div>
+  </div>
+
+  <div class="reason-card">
+    <h3>&#x1F6AB; 怪盗 × 純愛者 / 復讐者 / テレパシスト</h3>
+    <div class="pair-roles">
+      <span class="pair-role">怪盗</span>
+      <span class="pair-x">×</span>
+      <span class="pair-role">純愛者 / 復讐者 / テレパシスト</span>
+    </div>
+    <span class="reason-label system">システム制限</span>
+    <div class="reason-text">
+      これらの役職はゲーム開始時に特定の対象を選ぶ。怪盗との交換で対象選択の状態が不整合になるため同村不可。
+    </div>
+  </div>
+
+  <h2 class="category-title">&#x1F451; 女王・プリンセス関連</h2>
+
+  <div class="reason-card">
+    <h3>&#x1F6AB; 女王 × キューピット / 悪女</h3>
+    <div class="pair-roles">
+      <span class="pair-role">女王</span>
+      <span class="pair-x">×</span>
+      <span class="pair-role">キューピット / 悪女</span>
+    </div>
+    <span class="reason-label balance">バランス調整</span>
+    <div class="reason-text">
+      女王が死亡すると市民陣営が全滅する。恋人ペアの後追い死で女王が死ぬと、ゲームバランスが著しく崩壊するため同村不可。
+    </div>
+  </div>
+
+  <div class="reason-card">
+    <h3>&#x1F6AB; 女王 × 酔っぱらい</h3>
+    <div class="pair-roles">
+      <span class="pair-role">女王</span>
+      <span class="pair-x">×</span>
+      <span class="pair-role">酔っぱらい</span>
+    </div>
+    <span class="reason-label balance">バランス調整</span>
+    <div class="reason-text">
+      酔っぱらいの能力で予期せず女王の正体が露呈したり、意図しない形で女王が危険にさらされるため同村不可。
+    </div>
+  </div>
+
+  <div class="reason-card">
+    <h3>&#x1F6AB; プリンセス × 魔女 / キューピット / 悪女 / 酔っぱらい</h3>
+    <div class="pair-roles">
+      <span class="pair-role">プリンセス</span>
+      <span class="pair-x">×</span>
+      <span class="pair-role">魔女 / キューピット / 悪女 / 酔っぱらい</span>
+    </div>
+    <span class="reason-label balance">バランス調整</span>
+    <div class="reason-text">
+      プリンセスの特殊な死亡条件と他の役職の能力が組み合わさると、バランスが大きく崩れるため同村不可。
+    </div>
+  </div>
+
+  <h2 class="category-title">&#x2696;&#xFE0F; その他の制限</h2>
+
+  <div class="reason-card">
+    <h3>&#x1F6AB; 独裁者 × 疫病神</h3>
+    <div class="pair-roles">
+      <span class="pair-role">独裁者</span>
+      <span class="pair-x">×</span>
+      <span class="pair-role">疫病神</span>
+    </div>
+    <span class="reason-label balance">バランス調整</span>
+    <div class="reason-text">
+      独裁者は処刑先を一人で決定できる。疫病神は処刑時に隣を道連れにする。この組み合わせは一度に大量の犠牲者を出す可能性があり、バランスブレイカーとなるため同村不可。
+    </div>
+  </div>
+
+  <div class="reason-card">
+    <h3>&#x1F6AB; 狼少年 × 狼少女</h3>
+    <div class="pair-roles">
+      <span class="pair-role">狼少年</span>
+      <span class="pair-x">×</span>
+      <span class="pair-role">狼少女</span>
+    </div>
+    <span class="reason-label system">システム制限</span>
+    <div class="reason-text">
+      両者とも類似の能力を持ち、同時に存在するとシステム上の処理が競合するため同村不可。
+    </div>
+  </div>
+
+  <div class="reason-card">
+    <h3>&#x1F6AB; ゾンビマニア × 魔女</h3>
+    <div class="pair-roles">
+      <span class="pair-role">ゾンビマニア</span>
+      <span class="pair-x">×</span>
+      <span class="pair-role">魔女</span>
+    </div>
+    <span class="reason-label paradox">パラドックス</span>
+    <div class="reason-text">
+      ゾンビマニアは対象が死亡するとその役職をコピーする。魔女の蘇生と組み合わさると復活・コピーの処理順序に矛盾が生じるため同村不可。
+    </div>
+  </div>
+
+  <div class="tip-highlight">
+    <strong>編成を組む時のポイント</strong><br>
+    同村制限は編成シミュレーターでは自動的にチェックされることが多いですが、
+    カスタム編成を手動で組む際は注意が必要です。制限に引っかかると部屋が立たないため、
+    <a href="roles.html" style="color:#7ee787;">役職一覧の早見表</a>で事前に確認しましょう。
+  </div>
+
+  <div class="summary-box">
+    <strong>まとめ：同村制限のパターン</strong><br>
+    <br>
+    1. <strong style="color:#f85149;">パラドックス型</strong>：復活系（赤ずきん・魔女・蘇る人狼）× ペア系（恋人・キューピット・悪女）<br>
+    2. <strong style="color:#58a6ff;">システム制限型</strong>：怪盗の役職交換でシステムが破綻する組み合わせ<br>
+    3. <strong style="color:#d29922;">バランス調整型</strong>：強すぎる相乗効果を防ぐための制限（独裁者×疫病神、女王×ペア系）<br>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="index.html">ホーム</a>
+    <a href="roles.html">役職一覧</a>
+    <a href="guide.html">初心者ガイド</a>
+    <a href="strategy.html">立ち回り</a>
+    <a href="glossary.html">用語集</a>
+  </div>
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>
