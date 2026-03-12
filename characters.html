@@ -129,6 +129,11 @@
       font-size: 1.8rem;
       margin: 0 auto .8rem;
       border: 2px solid #30363d;
+      overflow: hidden;
+    }
+    .char-card-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
     }
     .char-card-name {
       font-size: 1.1rem;
@@ -221,6 +226,11 @@
       font-size: 2.8rem;
       margin: 0 auto 1rem;
       border: 3px solid #30363d;
+      overflow: hidden;
+    }
+    .char-detail-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
     }
     .char-detail-name {
       font-size: 1.6rem;
@@ -403,14 +413,41 @@
 </div>
 
 <footer class="site-footer">
-  <div class="footer-links">
-    <a href="index.html">ホーム</a>
-    <a href="roles.html">役職一覧</a>
-    <a href="guide.html">初心者ガイド</a>
-    <a href="strategy.html">立ち回り</a>
-    <a href="glossary.html">用語集</a>
-    <a href="privacy.html">プライバシーポリシー</a>
-    <a href="contact.html">お問い合わせ</a>
+  <div class="footer-columns">
+    <div>
+      <h4>攻略コンテンツ</h4>
+      <a href="roles.html">役職一覧</a>
+      <a href="guide.html">初心者ガイド</a>
+      <a href="strategy.html">立ち回りガイド</a>
+      <a href="queen-wise.html">女王部屋攻略</a>
+      <a href="v3roles.html">V3新役職</a>
+    </div>
+    <div>
+      <h4>データ・資料</h4>
+      <a href="glossary.html">用語集</a>
+      <a href="composition.html">編成シミュレーター</a>
+      <a href="characters.html">キャラクター</a>
+      <a href="synergy.html">役職相性</a>
+      <a href="exclusion.html">同村制限</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div>
+      <h4>ツール</h4>
+      <a href="timer.html">議論タイマー</a>
+      <a href="rope-calc.html">縄計算</a>
+      <a href="notepad.html">メモ帳</a>
+      <a href="memo.html">ゲームメモ</a>
+      <a href="copipe.html">コピペ集</a>
+      <a href="templates.html">部屋テンプレ</a>
+      <a href="quiz.html">クイズ</a>
+    </div>
+    <div>
+      <h4>サイト情報</h4>
+      <a href="index.html">ホーム</a>
+      <a href="settings.html">設定</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+    </div>
   </div>
   <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
   <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
@@ -423,67 +460,67 @@
   var CHARACTERS = [
     // ===== 初期キャラクター (23) =====
     { name: 'アンナ', ruby: 'Anna', gender: 'female', category: 'cat1', color: '#f9a8d4',
-      icon: '\u{1F338}',
+      icon: '\u{1F338}', img: 'images/アンナ1-9.png',
       summary: '幼い顔立ちとみつあみが特徴の少女',
       appearance: ['みつあみの髪型', '幼い顔立ち', '小柄な体格', '純朴な雰囲気'],
       desc: '幼い顔立ちとみつあみが特徴の少女。純粋で大人しそうな見た目のため、初心者プレイヤーにも人気が高い。控えめながらも芯の強さを感じさせる瞳が印象的。' },
     { name: 'マイク', ruby: 'Mike', gender: 'male', category: 'cat1', color: '#60a5fa',
-      icon: '\u{26BD}',
+      icon: '\u{26BD}', img: 'images/マイク1-9.png',
       summary: '金髪スポーツ刈りの爽やかな青年',
       appearance: ['金髪のスポーツ刈り', '爽やかな笑顔', 'スポーティな服装', 'がっしりした体格'],
       desc: '金髪でスポーツ刈りの頭が特徴の青年。爽やかで活発な印象を与える。スポーティな見た目から男性プレイヤーに人気。' },
     { name: 'エリック', ruby: 'Eric', gender: 'male', category: 'cat1', color: '#a1a1aa',
-      icon: '\u{1F9D0}',
+      icon: '\u{1F9D0}', img: 'images/エリック1-9.png',
       summary: '白髪にニヒルな笑みの老紳士',
       appearance: ['外にハネた白髪', 'ニヒルな笑み', '老紳士の風格', '鋭い眼光'],
       desc: '外にハネた白髪とニヒルな笑みが印象的な老紳士。知的で落ち着いた雰囲気を持ち、経験豊富な大人のプレイヤーに好まれる。' },
     { name: 'バニラ', ruby: 'Vanilla', gender: 'female', category: 'cat1', color: '#fbbf24',
-      icon: '\u{1F9D3}',
+      icon: '\u{1F9D3}', img: 'images/バニラ1-9.png',
       summary: '小さな眼鏡の優しいおばあちゃん',
       appearance: ['小さな眼鏡', '優しい表情', '白い髪', '温かみのある雰囲気'],
       desc: '小さな眼鏡をかけ優しい表情をしているおばあちゃん。穏やかで温かみのある雰囲気が特徴。親しみやすい見た目から幅広い層に人気。' },
     { name: 'メアリー', ruby: 'Mary', gender: 'female', category: 'cat1', color: '#f472b6',
-      icon: '\u{1F33A}',
+      icon: '\u{1F33A}', img: 'images/メアリー1-9.png',
       summary: '巻髪と白い花飾りの女性',
       appearance: ['左に流した巻髪', '白い花の髪飾り', '上品な雰囲気', '落ち着いた表情'],
       desc: '左に流した巻髪と頭に付けている白い花の飾りが特徴的な女性。上品で落ち着いた雰囲気を持ち、包容力を感じさせる。' },
     { name: 'ジェイ', ruby: 'Jay', gender: 'male', category: 'cat1', color: '#c084fc',
-      icon: '\u{1F9D0}',
+      icon: '\u{1F9D0}', img: 'images/ジェイ1-9.png',
       summary: 'モノクルにカイゼル髭の紳士',
       appearance: ['モノクル（片眼鏡）', '鋭いカイゼル髭', '紳士的な服装', '威厳のある佇まい'],
       desc: 'モノクルに鋭いカイゼル髭が特徴的な男性。クラシカルな紳士の装いで、知的で威厳のある雰囲気を漂わせる。推理力の高いプレイに似合うキャラクター。' },
     { name: 'ショーン', ruby: 'Sean', gender: 'male', category: 'cat1', color: '#34d399',
-      icon: '\u{1F468}',
+      icon: '\u{1F468}', img: 'images/ショーン1-9.png',
       summary: '真ん中分けの外ハネ短髪の男性',
       appearance: ['真ん中分けの前髪', '外にハネた短髪', '穏やかな表情', 'カジュアルな装い'],
       desc: '真ん中分けの前髪に外にハネた短髪が特徴の男性。親しみやすい見た目で、バランスの良い印象を与える。初心者から上級者まで幅広く使用される。' },
     { name: 'ローラ', ruby: 'Laura', gender: 'female', category: 'cat1', color: '#fb923c',
-      icon: '\u{1F31F}',
+      icon: '\u{1F31F}', img: 'images/ローラ1-9.png',
       summary: '三つ編みハーフアップの栗色髪の女性',
       appearance: ['三つ編みハーフアップ', 'ウェーブがかった栗色の髪', '活発な表情', '行動的な雰囲気'],
       desc: '三つ編みハーフアップにウェーブがかった栗色の髪が特徴的な女性。自由奔放で活発な印象を与え、行動力のあるプレイスタイルにマッチする。' },
     { name: 'ビル', ruby: 'Bill', gender: 'male', category: 'cat1', color: '#78716c',
-      icon: '\u{1F474}',
+      icon: '\u{1F474}', img: 'images/ビル1-9.png',
       summary: '白髪に固い表情のおじいさん',
       appearance: ['白髪', '固い表情', 'がっしりした体格', '厳格な雰囲気'],
       desc: '白髪に固い表情が特徴的なおじいさん。厳格で頑固そうな見た目だが、頼りがいのある存在感がある。ベテランプレイヤーの渋いプレイに人気。' },
     { name: 'ミカ', ruby: 'Mika', gender: 'female', category: 'cat1', color: '#6366f1',
-      icon: '\u{1F5A4}',
+      icon: '\u{1F5A4}', img: 'images/ミカ1-9.png',
       summary: '鋭い目つきと黒い唇の女性',
       appearance: ['鋭い目つき', '目の下のクマ', '黒い唇', 'ダークな雰囲気'],
       desc: '鋭い目つきと目の下のクマに黒い唇が特徴的な女性。ゴシックでダークな雰囲気を持ち、人狼陣営のプレイに映えるビジュアル。独特の存在感がある。' },
     { name: 'リリアン', ruby: 'Lillian', gender: 'male', category: 'cat1', color: '#d946ef',
-      icon: '\u{1F338}',
+      icon: '\u{1F338}', img: 'images/リリアン1-9.png',
       summary: '紫色の短髪に花飾りのオネエ',
       appearance: ['紫色の短髪', '花飾りなどのアクセサリー', '華やかなメイク', '個性的なファッション'],
       desc: '紫色の短髪に花飾りなどアクセサリーが特徴的なオネエキャラ。華やかで個性的な見た目はゲーム内でも目立つ存在。ユニークなプレイスタイルに合う。' },
     { name: 'メリル', ruby: 'Meryl', gender: 'female', category: 'cat1', color: '#f59e0b',
-      icon: '\u{1F451}',
+      icon: '\u{1F451}', img: 'images/メリル1-9.png',
       summary: '豪華な盛り髪のふくよかな女性',
       appearance: ['豪華に盛り上げた髪', '大きな顔', 'ふくよかな体型', '堂々とした佇まい'],
       desc: '豪華に盛り上げた髪に大きな顔が特徴的なふくよかな女性。堂々とした存在感があり、貫禄のある見た目は議論をリードする役どころに似合う。' },
     { name: 'ゲイル', ruby: 'Gale', gender: 'male', category: 'cat1', color: '#22c55e',
-      icon: '\u{1F9DF}',
+      icon: '\u{1F9DF}', img: 'images/ゲイル1-9.png',
       summary: '緑色の肌に切り込みの耳を持つ男性',
       appearance: ['緑色の肌', '切り込みが入った耳', '異形の風貌', '独特の存在感'],
       desc: '緑色の肌に切り込みが入った耳が特徴的な男性。人間離れした風貌で強い個性を放つ。そのユニークな見た目からファンも多い人気キャラクター。' },
