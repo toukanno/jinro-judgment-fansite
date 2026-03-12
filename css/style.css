@@ -758,13 +758,35 @@ img { max-width: 100%; height: auto; }
   .main-nav a { padding: .55rem .8rem; font-size: .85rem; }
 }
 
-/* ===== Very small phones ===== */
+/* ===== iPhone 14 / modern phones (390px) ===== */
+@media (max-width: 414px) {
+  .card-grid { gap: .7rem; }
+  .card { padding: .9rem; }
+  .card h3 { font-size: .95rem; }
+  .hero h1 { font-size: 1.4rem; }
+  .hero p { font-size: .88rem; }
+  .section-title { font-size: 1.05rem; }
+  .accordion-header { font-size: .85rem; }
+  .tab-btn { font-size: .72rem; padding: .3rem .5rem; }
+  .role-badge { font-size: .68rem; }
+}
+
+/* ===== iPhone SE / Very small phones (375px-) ===== */
 @media (max-width: 374px) {
   body { font-size: 14px; }
-  .hero h1 { font-size: 1.3rem; }
-  .container { padding: 1rem .6rem; }
-  .card { padding: .8rem; }
+  .hero h1 { font-size: 1.2rem; }
+  .hero p { font-size: .82rem; }
+  .hero { padding: 2rem .6rem 1.5rem; }
+  .container { padding: .8rem .6rem; }
+  .card { padding: .7rem; }
+  .card h3 { font-size: .9rem; }
+  .card p { font-size: .8rem; }
+  .section-title { font-size: 1rem; }
   .timer-display { font-size: 3rem !important; }
+  .site-logo { font-size: 1rem; }
+  .data-table { font-size: .72rem; }
+  .data-table th, .data-table td { padding: .3rem .4rem; }
+  .footer-links { grid-template-columns: 1fr; }
 }
 
 /* ===== SP Touch Targets ===== */
