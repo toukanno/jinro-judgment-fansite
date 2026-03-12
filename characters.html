@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#161b22">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JGDB">
+  <title>キャラクター一覧 - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントの登場キャラクター一覧。初期キャラ23人＋追加キャラ7人の全30人を紹介。">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .char-hero-section {
+      background: linear-gradient(135deg, #1a1025 0%, #0d1117 50%, #0a1628 100%);
+      padding: 3rem 1.5rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid #30363d;
+    }
+    .char-hero-section h1 {
+      font-size: 2.2rem;
+      font-weight: 900;
+      background: linear-gradient(90deg, #a78bfa, #58a6ff, #7ee787);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: .5rem;
+    }
+    .char-hero-section p {
+      color: #8b949e;
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .char-filter {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .char-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+
+    .char-card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .char-card:hover {
+      transform: translateY(-3px);
+      border-color: #58a6ff;
+      box-shadow: 0 4px 20px rgba(88, 166, 255, .1);
+    }
+    .char-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+    .char-card.male::before { background: linear-gradient(90deg, #58a6ff, #388bfd); }
+    .char-card.female::before { background: linear-gradient(90deg, #f778ba, #db61a2); }
+    .char-card.unknown::before { background: linear-gradient(90deg, #8b949e, #6e7681); }
+
+    .char-card-header {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-bottom: .75rem;
+    }
+    .char-card-icon {
+      font-size: 2.5rem;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0d1117;
+      border-radius: 50%;
+      border: 2px solid #30363d;
+      flex-shrink: 0;
+    }
+    .char-card-name {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #e6edf3;
+    }
+    .char-card-meta {
+      display: flex;
+      gap: .4rem;
+      margin-top: .25rem;
+      flex-wrap: wrap;
+    }
+    .char-tag {
+      display: inline-block;
+      padding: .1rem .5rem;
+      border-radius: 12px;
+      font-size: .72rem;
+      font-weight: 700;
+    }
+    .char-tag.male { background: rgba(88, 166, 255, .15); color: #58a6ff; border: 1px solid rgba(88, 166, 255, .3); }
+    .char-tag.female { background: rgba(247, 120, 186, .15); color: #f778ba; border: 1px solid rgba(247, 120, 186, .3); }
+    .char-tag.initial { background: rgba(126, 231, 135, .15); color: #7ee787; border: 1px solid rgba(126, 231, 135, .3); }
+    .char-tag.added { background: rgba(210, 153, 34, .15); color: #d29922; border: 1px solid rgba(210, 153, 34, .3); }
+
+    .char-card-desc {
+      color: #8b949e;
+      font-size: .88rem;
+      line-height: 1.7;
+      margin-bottom: .75rem;
+    }
+
+    .char-card-traits {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .3rem;
+    }
+    .trait-chip {
+      display: inline-block;
+      padding: .15rem .55rem;
+      border-radius: 6px;
+      font-size: .72rem;
+      font-weight: 600;
+      background: rgba(88, 166, 255, .08);
+      color: #79c0ff;
+      border: 1px solid rgba(88, 166, 255, .15);
+    }
+
+    .char-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .stat-card .stat-number {
+      font-size: 2rem;
+      font-weight: 900;
+      background: linear-gradient(90deg, #a78bfa, #58a6ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-card .stat-label {
+      font-size: .82rem;
+      color: #8b949e;
+      margin-top: .2rem;
+    }
+
+    .char-note {
+      background: rgba(88, 166, 255, .08);
+      border-left: 3px solid #58a6ff;
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.2rem;
+      margin-bottom: 2rem;
+      font-size: .9rem;
+      color: #c9d1d9;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 600px) {
+      .char-hero-section h1 { font-size: 1.6rem; }
+      .char-hero-section { padding: 2.5rem 1rem 2rem; }
+      .char-card-grid { grid-template-columns: 1fr; }
+      .char-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="characters.html" class="active">キャラクター</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="char-hero-section">
+  <h1>&#x1F3AD; キャラクター一覧</h1>
+  <p>人狼ジャッジメントに登場する全30人のキャラクターを紹介。初期キャラ23人＋追加キャラ7人。</p>
+</section>
+
+<main class="container">
+
+  <div class="breadcrumb">
+    <a href="index.html">ホーム</a> <span>&gt;</span> キャラクター一覧
+  </div>
+
+  <div class="char-stats">
+    <div class="stat-card">
+      <div class="stat-number">30</div>
+      <div class="stat-label">総キャラクター数</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">23</div>
+      <div class="stat-label">初期キャラクター</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">7</div>
+      <div class="stat-label">追加キャラクター</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">3</div>
+      <div class="stat-label">スキン種類</div>
+    </div>
+  </div>
+
+  <div class="char-note">
+    <strong>&#x1F4A1; キャラクター設定について：</strong>
+    公式のそらいろ株式会社は「キャラクターの設定に関しては、遊んで頂く皆様で自由に演じて頂けるよう、公式からは何もお答えしておりません」と回答しており、キャラクターに明確な公式設定はありません。以下の説明はプレイヤーコミュニティの印象に基づくものです。
+  </div>
+
+  <h2 class="section-title">&#x1F50D; キャラクター検索</h2>
+  <div class="search-bar">
+    <input type="text" class="search-input" id="charSearch" placeholder="キャラクター名で検索...">
+  </div>
+  <div class="char-filter" id="charFilter">
+    <button class="filter-btn active" data-filter="all">全て (30)</button>
+    <button class="filter-btn" data-filter="initial">初期キャラ (23)</button>
+    <button class="filter-btn" data-filter="added">追加キャラ (7)</button>
+    <button class="filter-btn" data-filter="male">男性</button>
+    <button class="filter-btn" data-filter="female">女性</button>
+  </div>
+
+  <h2 class="section-title">&#x1F464; 初期キャラクター（23人）</h2>
+  <div class="char-card-grid" id="initialChars">
+
+    <div class="char-card female" data-name="エマ" data-type="initial" data-gender="female">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F467;</div>
+        <div>
+          <div class="char-card-name">エマ</div>
+          <div class="char-card-meta">
+            <span class="char-tag female">女性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">芯の強そうな目付きをした健康的な美少女。キャラ選択時に最初に表示されるため初心者に選ばれやすい。ジャッジメントを代表するヒロイン的存在。人気投票では1位を獲得。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">人気No.1</span>
+        <span class="trait-chip">初心者向け</span>
+        <span class="trait-chip">ヒロイン</span>
+      </div>
+    </div>
+
+    <div class="char-card female" data-name="ジェシカ" data-type="initial" data-gender="female">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F380;</div>
+        <div>
+          <div class="char-card-name">ジェシカ</div>
+          <div class="char-card-meta">
+            <span class="char-tag female">女性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">黒リボンがトレードマークの女の子。妹属性が強く、男女問わず絶大な人気がある。おそらくキャラクターの中で最も使用率が高いとされる。二次創作でも大人気。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">使用率トップクラス</span>
+        <span class="trait-chip">黒リボン</span>
+        <span class="trait-chip">妹系</span>
+      </div>
+    </div>
+
+    <div class="char-card female" data-name="サンドラ" data-type="initial" data-gender="female">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F451;</div>
+        <div>
+          <div class="char-card-name">サンドラ</div>
+          <div class="char-card-meta">
+            <span class="char-tag female">女性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">ジェシカと白と黒のリボン違いで構図も同じことから、姉妹・双子説が多数派。お嬢様っぽい雰囲気があり、人気投票では2位を獲得した実力派。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">人気No.2</span>
+        <span class="trait-chip">お嬢様系</span>
+        <span class="trait-chip">ジェシカの姉妹説</span>
+      </div>
+    </div>
+
+    <div class="char-card male" data-name="ゲイル" data-type="initial" data-gender="male">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F920;</div>
+        <div>
+          <div class="char-card-name">ゲイル</div>
+          <div class="char-card-meta">
+            <span class="char-tag male">男性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">最もクセのあるキャラクター。「〜でゲス」の口調でなりきるプレイヤーも多い。「顔吊り」というワードはゲイルから生まれたとされる。ネタ枠として圧倒的人気。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">ネタ枠</span>
+        <span class="trait-chip">顔吊り元祖</span>
+        <span class="trait-chip">なりきり人気</span>
+      </div>
+    </div>
+
+    <div class="char-card male" data-name="ロディ" data-type="initial" data-gender="male">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F60E;</div>
+        <div>
+          <div class="char-card-name">ロディ</div>
+          <div class="char-card-meta">
+            <span class="char-tag male">男性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">人狼ジャッジメント随一のイケメンキャラ。女性人気が圧倒的に高い。有名プレイヤー「ゆるロディさん」が愛用することでも知られる。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">イケメン</span>
+        <span class="trait-chip">女性人気</span>
+      </div>
+    </div>
+
+    <div class="char-card female" data-name="メリル" data-type="initial" data-gender="female">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F475;</div>
+        <div>
+          <div class="char-card-name">メリル</div>
+          <div class="char-card-meta">
+            <span class="char-tag female">女性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">キャラクター中唯一のおばあちゃん系キャラ。優しそうな見た目とは裏腹に、ゲイルやリリアンと並んで顔吊りされやすいキャラの一人。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">おばあちゃん</span>
+        <span class="trait-chip">唯一の高齢キャラ</span>
+      </div>
+    </div>
+
+    <div class="char-card female" data-name="マリアンヌ" data-type="initial" data-gender="female">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F484;</div>
+        <div>
+          <div class="char-card-name">マリアンヌ</div>
+          <div class="char-card-meta">
+            <span class="char-tag female">女性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">ブルジョワジーな雰囲気が漂うお姉さん系キャラ。男性のみならず女性プレイヤーからも人気が高い。大人の余裕を感じさせるデザイン。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">お姉さん系</span>
+        <span class="trait-chip">ブルジョワ</span>
+        <span class="trait-chip">男女人気</span>
+      </div>
+    </div>
+
+    <div class="char-card male" data-name="リリアン" data-type="initial" data-gender="male">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F338;</div>
+        <div>
+          <div class="char-card-name">リリアン</div>
+          <div class="char-card-meta">
+            <span class="char-tag male">男性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">オカマキャラとして確立されており、初期の頃はロールプレイする人が非常に多かった。「リリアンを使うプレイヤーは80%ガチ勢」と言われるほど上級者に愛される。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">ガチ勢愛用</span>
+        <span class="trait-chip">RP人気</span>
+        <span class="trait-chip">個性派</span>
+      </div>
+    </div>
+
+    <div class="char-card female" data-name="ローラ" data-type="initial" data-gender="female">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F469;</div>
+        <div>
+          <div class="char-card-name">ローラ</div>
+          <div class="char-card-meta">
+            <span class="char-tag female">女性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">落ち着いた雰囲気の大人っぽい女性キャラ。しっかりした印象があり、考察を丁寧に書くプレイヤーに好まれる傾向がある。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">大人系</span>
+        <span class="trait-chip">考察派向き</span>
+      </div>
+    </div>
+
+    <div class="char-card female" data-name="メアリー" data-type="initial" data-gender="female">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F470;</div>
+        <div>
+          <div class="char-card-name">メアリー</div>
+          <div class="char-card-meta">
+            <span class="char-tag female">女性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">見た目はキツイ印象の女性だが、実は優しい雰囲気を持つ。SP2ではかわいい路線に変化して話題に。ギャップのあるキャラクター。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">ギャップ萌え</span>
+        <span class="trait-chip">SP2で変化</span>
+      </div>
+    </div>
+
+    <div class="char-card male" data-name="トーマス" data-type="initial" data-gender="male">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F468;</div>
+        <div>
+          <div class="char-card-name">トーマス</div>
+          <div class="char-card-meta">
+            <span class="char-tag male">男性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">真面目で誠実そうな外見の男性キャラ。「考察を落とし続けると見た目のハロー効果からかよく信じてもらえる」と言われ、信頼を得やすいキャラクター。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">信頼感</span>
+        <span class="trait-chip">真面目系</span>
+        <span class="trait-chip">考察向き</span>
+      </div>
+    </div>
+
+    <div class="char-card male" data-name="ニック" data-type="initial" data-gender="male">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F9D2;</div>
+        <div>
+          <div class="char-card-name">ニック</div>
+          <div class="char-card-meta">
+            <span class="char-tag male">男性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">真面目なキャラクターで、基本的に村目が取りやすい印象。穏やかな見た目で信頼されやすく、堅実なプレイスタイルに合う。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">村目取りやすい</span>
+        <span class="trait-chip">真面目系</span>
+      </div>
+    </div>
+
+    <div class="char-card male" data-name="ビル" data-type="initial" data-gender="male">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F474;</div>
+        <div>
+          <div class="char-card-name">ビル</div>
+          <div class="char-card-meta">
+            <span class="char-tag male">男性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">年配の男性キャラクター。渋い雰囲気を持ち、落ち着いたプレイスタイルのプレイヤーに好まれる。威厳のある見た目が特徴。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">年配</span>
+        <span class="trait-chip">渋い</span>
+      </div>
+    </div>
+
+    <div class="char-card male" data-name="ヒュー" data-type="initial" data-gender="male">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F9D4;</div>
+        <div>
+          <div class="char-card-name">ヒュー</div>
+          <div class="char-card-meta">
+            <span class="char-tag male">男性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">渋いおじさまキャラ。若いキャラが好まれる傾向があるため人気ランキングでは低めだが、根強いファンがいる。独特の存在感がある。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">おじさま</span>
+        <span class="trait-chip">渋い</span>
+        <span class="trait-chip">根強い人気</span>
+      </div>
+    </div>
+
+    <div class="char-card female" data-name="ソフィア" data-type="initial" data-gender="female">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F478;</div>
+        <div>
+          <div class="char-card-name">ソフィア</div>
+          <div class="char-card-meta">
+            <span class="char-tag female">女性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">気品のある見た目の女性キャラ。上品な雰囲気を持ち、クールな印象。きちんとした考察をするプレイヤーに使われることが多い。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">気品</span>
+        <span class="trait-chip">クール系</span>
+      </div>
+    </div>
+
+    <div class="char-card male" data-name="クリス" data-type="initial" data-gender="male">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F466;</div>
+        <div>
+          <div class="char-card-name">クリス</div>
+          <div class="char-card-meta">
+            <span class="char-tag male">男性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">さわやかな青年キャラ。クセが少なく使いやすい見た目のため、幅広い層に選ばれる。バランスの取れたデザインが特徴。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">さわやか</span>
+        <span class="trait-chip">使いやすい</span>
+      </div>
+    </div>
+
+    <div class="char-card male" data-name="ショーン" data-type="initial" data-gender="male">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F9D1;</div>
+        <div>
+          <div class="char-card-name">ショーン</div>
+          <div class="char-card-meta">
+            <span class="char-tag male">男性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">落ち着いた雰囲気の男性キャラ。穏やかそうな見た目で、堅実なプレイを好むプレイヤーに人気がある。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">穏やか</span>
+        <span class="trait-chip">堅実派</span>
+      </div>
+    </div>
+
+    <div class="char-card male" data-name="ジェイ" data-type="initial" data-gender="male">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F3A4;</div>
+        <div>
+          <div class="char-card-name">ジェイ</div>
+          <div class="char-card-meta">
+            <span class="char-tag male">男性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">スタイリッシュな雰囲気の男性キャラ。かっこいい系のデザインで、個性的なプレイスタイルのプレイヤーに選ばれることが多い。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">スタイリッシュ</span>
+        <span class="trait-chip">個性派</span>
+      </div>
+    </div>
+
+    <div class="char-card female" data-name="フェイ" data-type="initial" data-gender="female">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F31F;</div>
+        <div>
+          <div class="char-card-name">フェイ</div>
+          <div class="char-card-meta">
+            <span class="char-tag female">女性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">ミステリアスな雰囲気の女性キャラ。人気投票では3位を獲得しており、実力派プレイヤーに好まれる。独特の魅力がある。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">人気No.3</span>
+        <span class="trait-chip">ミステリアス</span>
+      </div>
+    </div>
+
+    <div class="char-card female" data-name="バニラ" data-type="initial" data-gender="female">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F36E;</div>
+        <div>
+          <div class="char-card-name">バニラ</div>
+          <div class="char-card-meta">
+            <span class="char-tag female">女性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">かわいらしい見た目の女性キャラ。名前もキャラデザインも甘い雰囲気で統一されている。SPバージョンでも人気が高い。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">かわいい系</span>
+        <span class="trait-chip">SP人気</span>
+      </div>
+    </div>
+
+    <div class="char-card male" data-name="フランク" data-type="initial" data-gender="male">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F3A9;</div>
+        <div>
+          <div class="char-card-name">フランク</div>
+          <div class="char-card-meta">
+            <span class="char-tag male">男性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">紳士的な雰囲気の男性キャラ。どこか怪しげな魅力があり、人狼陣営をプレイする時に好んで使うプレイヤーもいる。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">紳士的</span>
+        <span class="trait-chip">怪しい魅力</span>
+      </div>
+    </div>
+
+    <div class="char-card female" data-name="スーザン" data-type="initial" data-gender="female">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F9D5;</div>
+        <div>
+          <div class="char-card-name">スーザン</div>
+          <div class="char-card-meta">
+            <span class="char-tag female">女性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">落ち着いた印象の女性キャラ。穏やかで母性的な雰囲気を持つ。派手さはないが、安定感のあるデザインで根強い人気がある。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">母性的</span>
+        <span class="trait-chip">安定感</span>
+      </div>
+    </div>
+
+    <div class="char-card female" data-name="ミカ" data-type="initial" data-gender="female">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F30A;</div>
+        <div>
+          <div class="char-card-name">ミカ</div>
+          <div class="char-card-meta">
+            <span class="char-tag female">女性</span>
+            <span class="char-tag initial">初期キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">清楚な印象の女性キャラ。おとなしそうな見た目で、真面目にプレイするプレイヤーに好まれる。清潔感のあるデザインが特徴。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">清楚系</span>
+        <span class="trait-chip">おとなしい</span>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 class="section-title">&#x2728; 追加キャラクター（7人）<span style="font-size:.8rem;font-weight:400;color:#8b949e;margin-left:.5rem;">2018年7月アップデート</span></h2>
+  <div class="char-card-grid" id="addedChars">
+
+    <div class="char-card female" data-name="カミラ" data-type="added" data-gender="female">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F393;</div>
+        <div>
+          <div class="char-card-name">カミラ</div>
+          <div class="char-card-meta">
+            <span class="char-tag female">女性</span>
+            <span class="char-tag added">追加キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">若草物語に出てきそうな、教師か女医といった印象の女性。気が強そうなイメージがあり、しっかりとした考察を行うプレイヤーに人気。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">知的</span>
+        <span class="trait-chip">気が強い</span>
+        <span class="trait-chip">教師風</span>
+      </div>
+    </div>
+
+    <div class="char-card male" data-name="フレディ" data-type="added" data-gender="male">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F3B2;</div>
+        <div>
+          <div class="char-card-name">フレディ</div>
+          <div class="char-card-meta">
+            <span class="char-tag male">男性</span>
+            <span class="char-tag added">追加キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">色白で不健康そうな、やや軽薄な印象の男性。ミステリアスな雰囲気があり、人狼陣営のロールプレイに使われることが多い。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">ミステリアス</span>
+        <span class="trait-chip">軽薄系</span>
+        <span class="trait-chip">色白</span>
+      </div>
+    </div>
+
+    <div class="char-card male" data-name="アーニー" data-type="added" data-gender="male">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F31E;</div>
+        <div>
+          <div class="char-card-name">アーニー</div>
+          <div class="char-card-meta">
+            <span class="char-tag male">男性</span>
+            <span class="char-tag added">追加キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">全キャラ中唯一の褐色肌キャラで、最年少を意識したデザイン。人気投票では4位を獲得しており、元気で明るいイメージ。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">人気No.4</span>
+        <span class="trait-chip">最年少風</span>
+        <span class="trait-chip">元気系</span>
+      </div>
+    </div>
+
+    <div class="char-card female" data-name="アンナ" data-type="added" data-gender="female">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F339;</div>
+        <div>
+          <div class="char-card-name">アンナ</div>
+          <div class="char-card-meta">
+            <span class="char-tag female">女性</span>
+            <span class="char-tag added">追加キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">おさげ髪の女の子キャラ。エマと同じく初心者に選ばれやすく、可愛らしい見た目でSPバージョンも含めて人気が高い。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">おさげ</span>
+        <span class="trait-chip">初心者向け</span>
+        <span class="trait-chip">かわいい</span>
+      </div>
+    </div>
+
+    <div class="char-card male" data-name="エリック" data-type="added" data-gender="male">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x2694;</div>
+        <div>
+          <div class="char-card-name">エリック</div>
+          <div class="char-card-meta">
+            <span class="char-tag male">男性</span>
+            <span class="char-tag added">追加キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">クールで精悍な印象の男性キャラ。強そうな見た目が特徴で、しっかりした発言をするプレイヤーに好まれる傾向がある。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">クール</span>
+        <span class="trait-chip">精悍</span>
+      </div>
+    </div>
+
+    <div class="char-card male" data-name="マイク" data-type="added" data-gender="male">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F525;</div>
+        <div>
+          <div class="char-card-name">マイク</div>
+          <div class="char-card-meta">
+            <span class="char-tag male">男性</span>
+            <span class="char-tag added">追加キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">ワイルドな印象の男性キャラ。力強い見た目で、積極的にゲームに参加するプレイヤーに選ばれやすい。SPバージョンも人気。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">ワイルド</span>
+        <span class="trait-chip">力強い</span>
+      </div>
+    </div>
+
+    <div class="char-card male" data-name="チャン" data-type="added" data-gender="male">
+      <div class="char-card-header">
+        <div class="char-card-icon">&#x1F94B;</div>
+        <div>
+          <div class="char-card-name">チャン</div>
+          <div class="char-card-meta">
+            <span class="char-tag male">男性</span>
+            <span class="char-tag added">追加キャラ</span>
+          </div>
+        </div>
+      </div>
+      <div class="char-card-desc">東洋系の雰囲気を持つ男性キャラ。独特の存在感があり、他のキャラとは一味違った個性を持つ。使いこなすと注目を集める。</div>
+      <div class="char-card-traits">
+        <span class="trait-chip">東洋系</span>
+        <span class="trait-chip">個性的</span>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 class="section-title">&#x1F3A8; スキンについて</h2>
+  <div class="char-note">
+    全30キャラクターには<strong>ノーマルスキン</strong>、<strong>SP1スキン</strong>、<strong>SP2スキン</strong>、<strong>SP3スキン</strong>の4種類が存在します（SP1〜SP3は別途課金が必要）。SPスキンではキャラクターの印象が大きく変わるものが多く、特にSP2やSP3は高い人気を誇ります。また、VIP専用キャラクターやSP4ifなどの限定スキンも追加されています。
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
+</footer>
+
+<script src="js/common.js"></script>
+<script>
+(function() {
+  var searchInput = document.getElementById('charSearch');
+  var filterBtns = document.querySelectorAll('.char-filter .filter-btn');
+  var allCards = document.querySelectorAll('.char-card');
+  var activeFilter = 'all';
+
+  searchInput.addEventListener('input', applyFilters);
+
+  filterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      filterBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeFilter = btn.getAttribute('data-filter');
+      applyFilters();
+    });
+  });
+
+  function applyFilters() {
+    var query = searchInput.value.trim().toLowerCase();
+
+    allCards.forEach(function(card) {
+      var name = card.getAttribute('data-name').toLowerCase();
+      var type = card.getAttribute('data-type');
+      var gender = card.getAttribute('data-gender');
+
+      var matchSearch = !query || name.indexOf(query) !== -1;
+      var matchFilter = activeFilter === 'all' ||
+        (activeFilter === 'initial' && type === 'initial') ||
+        (activeFilter === 'added' && type === 'added') ||
+        (activeFilter === 'male' && gender === 'male') ||
+        (activeFilter === 'female' && gender === 'female');
+
+      card.style.display = (matchSearch && matchFilter) ? '' : 'none';
+    });
+  }
+})();
+</script>
+</body>
+</html>
