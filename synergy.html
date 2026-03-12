@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0e17">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JGDB">
+  <title>役職相性表 - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントの役職同士の相性・シナジーを解説。編成を組む際に役立つ組み合わせ情報。">
+  <meta property="og:title" content="役職相性表 - 人狼ジャッジメント攻略">
+  <meta property="og:description" content="人狼ジャッジメントの役職同士の相性・シナジーを解説。編成を組む際に役立つ組み合わせ情報。">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .synergy-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.25rem; margin-bottom: 2rem; }
+    .synergy-card {
+      background: rgba(22,27,34,.7); border: 1px solid rgba(48,54,61,.6);
+      border-radius: 14px; padding: 1.5rem; transition: transform .2s, border-color .2s;
+    }
+    .synergy-card:hover { transform: translateY(-3px); border-color: rgba(126,231,135,.4); }
+    .synergy-card h3 { font-size: 1.05rem; margin-bottom: .8rem; display: flex; align-items: center; gap: .5rem; }
+    .synergy-card .roles { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: .8rem; }
+    .synergy-card .desc { color: #c9d1d9; font-size: .9rem; line-height: 1.7; }
+    .synergy-rating { display: inline-flex; gap: 2px; margin-left: auto; }
+    .synergy-star { color: #d29922; font-size: .8rem; }
+    .synergy-star.empty { color: #30363d; }
+    .synergy-category { margin-bottom: 2.5rem; }
+    .synergy-category-title {
+      font-size: 1.1rem; font-weight: 700; padding: .5rem 0;
+      border-bottom: 1px solid rgba(48,54,61,.5); margin-bottom: 1rem;
+    }
+    .synergy-tag {
+      display: inline-block; padding: .2rem .5rem; border-radius: 6px;
+      font-size: .72rem; font-weight: 600; margin-left: .5rem;
+    }
+    .synergy-tag.offense { background: rgba(248,81,73,.12); color: #f85149; }
+    .synergy-tag.defense { background: rgba(126,231,135,.12); color: #7ee787; }
+    .synergy-tag.info { background: rgba(88,166,255,.12); color: #58a6ff; }
+    .synergy-tag.chaos { background: rgba(167,139,250,.12); color: #a78bfa; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="character.html">キャラクター</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+        <li><a href="templates.html">部屋テンプレ</a></li>
+        <li><a href="copipe.html">コピペ集</a></li>
+        <li><a href="v3roles.html">V3新役職</a></li>
+        <li><a href="queen-wise.html">女王部屋</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="timer.html">タイマー</a></li>
+        <li><a href="exclusion.html">同村制限</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> 役職相性表</div>
+
+  <h1 class="section-title">&#x1F91D; 役職相性・シナジー表</h1>
+
+  <div class="tip-box">
+    <strong>このページについて</strong><br>
+    役職の「良い組み合わせ」を紹介します。<a href="exclusion.html">同村しない役職</a>が「NG組み合わせ」なら、こちらは「好相性の組み合わせ」です。編成を組む際の参考にどうぞ。
+  </div>
+
+  <div class="search-bar" style="margin-bottom:1.5rem;">
+    <input type="text" class="search-input" id="synergySearch" placeholder="役職名やキーワードで検索...">
+    <button class="filter-btn active" data-syn="all">全て</button>
+    <button class="filter-btn" data-syn="defense">防御系</button>
+    <button class="filter-btn" data-syn="offense">攻撃系</button>
+    <button class="filter-btn" data-syn="info">情報系</button>
+    <button class="filter-btn" data-syn="chaos">混沌系</button>
+  </div>
+
+  <div id="synergyContainer"></div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="index.html">ホーム</a>
+    <a href="roles.html">役職一覧</a>
+    <a href="guide.html">初心者ガイド</a>
+    <a href="strategy.html">立ち回り</a>
+    <a href="glossary.html">用語集</a>
+  </div>
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
+</footer>
+
+<script src="js/common.js"></script>
+<script>
+const SYNERGY_DATA = [
+  // ===== 市民陣営 防御系 =====
+  { category: 'village-defense', tag: 'defense', tagName: '防御',
+    title: '占い師 + 狩人', roles: ['占い師','狩人'], rating: 5,
+    desc: '最も基本的で強力なシナジー。狩人が占い師を護衛し続けることで、占い師が安全に情報を出し続けられる。連続ガードありの場合はさらに強力。' },
+  { category: 'village-defense', tag: 'defense', tagName: '防御',
+    title: '女王 + 狩人 + 番犬', roles: ['女王','狩人','番犬'], rating: 5,
+    desc: '女王部屋の鉄板防御布陣。番犬が女王を初日に指定し、狩人は占い師を護衛。二重の護衛網で重要役職を守る。' },
+  { category: 'village-defense', tag: 'defense', tagName: '防御',
+    title: '猫又 + 狩人', roles: ['猫又','狩人'], rating: 4,
+    desc: '猫又がCOすると人狼は噛めなくなり、狩人が他の重要役職を護衛に回れる。猫又が「噛めない確白」として機能する。' },
+  { category: 'village-defense', tag: 'defense', tagName: '防御',
+    title: '赤ずきん + 狩人', roles: ['赤ずきん','狩人'], rating: 3,
+    desc: '狩人生存中は赤ずきんも襲撃耐性を持つ。狩人が生きている限り2人が噛まれにくくなり、村の生存力が上がる。' },
+  { category: 'village-defense', tag: 'defense', tagName: '防御',
+    title: '聖職者 + 長老', roles: ['聖職者','長老'], rating: 3,
+    desc: 'どちらも襲撃耐性を持つ。人狼が噛みを通すのに複数ターンかかるため、時間を稼げる。' },
+  { category: 'village-defense', tag: 'defense', tagName: '防御',
+    title: '貴族 + 奴隷', roles: ['貴族','奴隷'], rating: 4,
+    desc: 'セット役職。奴隷が生存している限り貴族は噛まれても死なない。潜伏奴隷が鍵。' },
+
+  // ===== 市民陣営 情報系 =====
+  { category: 'village-info', tag: 'info', tagName: '情報',
+    title: '占い師 + 霊能者', roles: ['占い師','霊能者'], rating: 5,
+    desc: '基本中の基本のシナジー。占い結果と霊能結果を照合することで、占い師の真偽判定が可能になる。全編成に必須。' },
+  { category: 'village-info', tag: 'info', tagName: '情報',
+    title: '賢者 + 罠師', roles: ['賢者','罠師'], rating: 4,
+    desc: '賢者が役職まで特定できるため、罠師が確実に人狼の噛み先を予測して罠を仕掛けやすくなる。情報と罠の連携。' },
+  { category: 'village-info', tag: 'info', tagName: '情報',
+    title: '双子（2人）', roles: ['双子','双子'], rating: 4,
+    desc: '双子同士で互いを認知でき、確定白が2人できる。片方がCOしてもう片方が確認することで強力な白確定を作れる。' },
+  { category: 'village-info', tag: 'info', tagName: '情報',
+    title: '占い師の弟子 + 占い師', roles: ['占い師の弟子','占い師'], rating: 3,
+    desc: '占い師が死亡しても弟子が能力を引き継ぐ。占い能力が途切れないため、情報ソースの継続性が保たれる。' },
+  { category: 'village-info', tag: 'info', tagName: '情報',
+    title: '風来坊 + 占い師', roles: ['風来坊','占い師'], rating: 3,
+    desc: '風来坊が夜の能力使用を探知できるため、占い師の真偽判定の補助として機能する。偽占いが能力を使っていないことを暴ける可能性。' },
+
+  // ===== 市民陣営 攻撃系 =====
+  { category: 'village-offense', tag: 'offense', tagName: '攻撃',
+    title: '猫又 + 暗殺者', roles: ['猫又','暗殺者'], rating: 4,
+    desc: '猫又の道連れと暗殺者の暗殺で、人狼を効率的に排除できる二段構え。情報が揃えば一気に人狼を減らせる。' },
+  { category: 'village-offense', tag: 'offense', tagName: '攻撃',
+    title: '独裁者 + 占い師', roles: ['独裁者','占い師'], rating: 5,
+    desc: '占い師が黒を出した相手を独裁者が即処刑。確定情報があれば1ターンで人狼を確実に排除できる最強の攻撃コンボ。' },
+  { category: 'village-offense', tag: 'offense', tagName: '攻撃',
+    title: '罠師 + パン屋', roles: ['罠師','パン屋'], rating: 3,
+    desc: 'パン屋の生存確認で噛み先を予測し、罠師が的確に罠を張れる。パン屋が噛まれそうなら罠を仕掛けて人狼を返り討ちに。' },
+  { category: 'village-offense', tag: 'offense', tagName: '攻撃',
+    title: '人狼キラー + 病人', roles: ['人狼キラー','病人'], rating: 3,
+    desc: 'どちらも噛まれた時に人狼にダメージを与える。人狼は誰を噛んでもリスクがあるため、襲撃の選択肢が大幅に狭まる。' },
+
+  // ===== 人狼陣営 =====
+  { category: 'wolf', tag: 'chaos', tagName: '人狼側',
+    title: '大狼 + 狂信者', roles: ['大狼','狂信者'], rating: 5,
+    desc: '大狼は占いで白が出るため潜伏に強く、狂信者は人狼を知っているため的確に援護できる。偽占いで大狼に白を出すことで鉄壁の潜伏体制に。' },
+  { category: 'wolf', tag: 'chaos', tagName: '人狼側',
+    title: 'ささやく狂人 + 賢狼', roles: ['ささやく狂人','賢狼'], rating: 5,
+    desc: '狂人が人狼チャットに参加でき、賢狼は噛んだ相手の役職がわかる。情報共有がスムーズで、偽占い結果の精度が格段に上がる。' },
+  { category: 'wolf', tag: 'chaos', tagName: '人狼側',
+    title: 'サイコ + 強欲な人狼', roles: ['サイコ','強欲な人狼'], rating: 4,
+    desc: 'サイコは狩人の護衛を無視し、強欲な人狼は一度だけ2人噛める。護衛を突破しつつ一気に村を減らせる攻撃的な布陣。' },
+  { category: 'wolf', tag: 'chaos', tagName: '人狼側',
+    title: '黒猫 + 猫又（対抗）', roles: ['黒猫','猫又'], rating: 4,
+    desc: '黒猫は処刑時に村人を道連れにする。猫又COの対抗として黒猫がCOすることで、村は猫又ローラーを躊躇する。' },
+  { category: 'wolf', tag: 'chaos', tagName: '人狼側',
+    title: '妖術師 + 人狼', roles: ['妖術師','人狼'], rating: 4,
+    desc: '妖術師が村の役職を把握し、人狼に情報を伝えることで効率的な噛み先選定が可能。偽占い師としても強力。' },
+
+  // ===== 妖狐陣営 =====
+  { category: 'fox', tag: 'chaos', tagName: '第三勢力',
+    title: '妖狐 + 背徳者', roles: ['妖狐','背徳者'], rating: 4,
+    desc: '背徳者が妖狐を知っているため援護できる。偽占いで妖狐に白を出したり、呪殺されそうな時にフォローできる。' },
+  { category: 'fox', tag: 'chaos', tagName: '第三勢力',
+    title: '妖狐 + 子狐', roles: ['妖狐','子狐'], rating: 3,
+    desc: '子狐の曖昧占い能力で情報収集しつつ、妖狐陣営の生存率を上げる。ただし子狐も占われると死ぬリスクあり。' },
+];
+
+function renderStars(n) {
+  return Array.from({length: 5}, (_, i) =>
+    `<span class="synergy-star ${i < n ? '' : 'empty'}">${i < n ? '\u2605' : '\u2606'}</span>`
+  ).join('');
+}
+
+let activeSynFilter = 'all';
+
+function renderSynergy(filter, tagFilter) {
+  const filtered = SYNERGY_DATA.filter(s => {
+    const matchText = !filter || s.title.includes(filter) || s.desc.includes(filter) || s.roles.some(r => r.includes(filter));
+    const matchTag = tagFilter === 'all' || s.tag === tagFilter;
+    return matchText && matchTag;
+  });
+
+  const categories = {
+    'village-defense': { icon: '\u{1F6E1}', name: '市民陣営 - 防御系シナジー' },
+    'village-info': { icon: '\u{1F50D}', name: '市民陣営 - 情報系シナジー' },
+    'village-offense': { icon: '\u{2694}', name: '市民陣営 - 攻撃系シナジー' },
+    'wolf': { icon: '\u{1F43A}', name: '人狼陣営シナジー' },
+    'fox': { icon: '\u{1F98A}', name: '妖狐陣営シナジー' }
+  };
+
+  const groups = {};
+  filtered.forEach(s => {
+    if (!groups[s.category]) groups[s.category] = [];
+    groups[s.category].push(s);
+  });
+
+  const container = document.getElementById('synergyContainer');
+  container.innerHTML = Object.entries(groups).map(([cat, items]) => {
+    const info = categories[cat] || { icon: '', name: cat };
+    return `
+      <div class="synergy-category">
+        <h2 class="synergy-category-title">${info.icon} ${info.name}</h2>
+        <div class="synergy-grid">
+          ${items.map(s => `
+            <div class="synergy-card">
+              <h3>${s.title} <span class="synergy-tag ${s.tag}">${s.tagName}</span>
+                <span class="synergy-rating">${renderStars(s.rating)}</span>
+              </h3>
+              <div class="roles">${s.roles.map(r => `<span class="role-badge village">${r}</span>`).join('')}</div>
+              <div class="desc">${s.desc}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="tip-box warning">該当する相性情報が見つかりませんでした。</div>';
+  }
+}
+
+document.getElementById('synergySearch').addEventListener('input', function() {
+  renderSynergy(this.value, activeSynFilter);
+});
+
+document.querySelectorAll('[data-syn]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-syn]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeSynFilter = btn.dataset.syn;
+    renderSynergy(document.getElementById('synergySearch').value, activeSynFilter);
+  });
+});
+
+renderSynergy('', 'all');
+</script>
+</body>
+</html>
