@@ -65,6 +65,43 @@
   <div id="roleList" class="card-grid"></div>
   <div id="roleDetail" class="role-detail"></div>
 
+  <h2 class="section-title" style="margin-top:2rem;">&#x1F6AB; 同村しない役職 早見表</h2>
+  <p style="color:#8b949e;font-size:.9rem;margin-bottom:1rem;">特定の役職の組み合わせは同じ屋敷に配置できません。<span style="color:#f85149;">&#x2716;</span> が付いている組み合わせは同村不可です。</p>
+
+  <div class="exclusion-controls" style="display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap;">
+    <input type="text" id="exclusionSearch" class="search-input" placeholder="役職名で絞り込み..." style="flex:1;min-width:180px;">
+    <button class="filter-btn active" data-ex-mode="matrix" onclick="switchExMode('matrix',this)">マトリクス表</button>
+    <button class="filter-btn" data-ex-mode="list" onclick="switchExMode('list',this)">リスト表示</button>
+  </div>
+
+  <div id="exclusionMatrix" style="overflow-x:auto;margin-bottom:2rem;">
+    <table class="data-table exclusion-table" id="exTable">
+    </table>
+  </div>
+
+  <div id="exclusionList" style="display:none;margin-bottom:2rem;">
+    <div class="card-grid" id="exListCards"></div>
+  </div>
+
+  <style>
+    .exclusion-table { font-size:.75rem; border-collapse:separate; border-spacing:0; }
+    .exclusion-table th, .exclusion-table td { padding:.4rem .35rem; text-align:center; min-width:36px; position:relative; }
+    .exclusion-table thead th { background:rgba(22,27,34,.95); position:sticky; top:0; z-index:2; }
+    .exclusion-table thead th:first-child { z-index:3; left:0; }
+    .exclusion-table tbody th { background:rgba(22,27,34,.95); position:sticky; left:0; z-index:1; text-align:right; padding-right:.6rem; white-space:nowrap; font-size:.78rem; }
+    .exclusion-table thead th span { writing-mode:vertical-rl; text-orientation:mixed; display:inline-block; max-height:90px; font-size:.78rem; }
+    .exclusion-table td.ex-no { background:rgba(248,81,73,.12); color:#f85149; font-weight:700; cursor:help; transition:background .15s; }
+    .exclusion-table td.ex-no:hover { background:rgba(248,81,73,.25); }
+    .exclusion-table td.ex-self { background:rgba(48,54,61,.15); }
+    .exclusion-table td.ex-ok { color:rgba(48,54,61,.4); }
+    .exclusion-table tr:hover th { color:#58a6ff; }
+    .ex-card { background:rgba(22,27,34,.7); border:1px solid rgba(48,54,61,.6); border-radius:12px; padding:1.2rem; }
+    .ex-card h4 { font-size:1rem; margin-bottom:.6rem; color:#e6edf3; }
+    .ex-card .ex-partner { display:inline-block; padding:.25rem .6rem; margin:.2rem; border-radius:8px; font-size:.82rem; font-weight:600; background:rgba(248,81,73,.1); color:#f85149; border:1px solid rgba(248,81,73,.2); }
+    .ex-highlight { animation: exPulse .6s ease; }
+    @keyframes exPulse { 0%{background:rgba(88,166,255,.3)} 100%{background:rgba(248,81,73,.12)} }
+  </style>
+
   <h2 class="section-title" style="margin-top:2rem;">&#x1F4CA; 役職比較表</h2>
   <div style="overflow-x:auto;">
     <table class="data-table" id="roleTable">
@@ -96,6 +133,85 @@
 
 <script src="js/roles-data.js"></script>
 <script src="js/common.js"></script>
+<script>
+// ===== 同村しない役職データ =====
+const EXCLUSION_DATA = {
+  '女王': ['キューピット','悪女','酔っぱらい'],
+  '恋人': ['赤ずきん','魔女','蘇る人狼','キューピット','悪女'],
+  '独裁者': ['疫病神'],
+  '生霊': ['赤ずきん','魔女','蘇る人狼','怪盗','純愛者','復讐者','テレパシスト'],
+  '赤ずきん': ['恋人','生霊','キューピット','悪女'],
+  '魔女': ['怪盗','恋人','生霊','プリンセス','ゾンビマニア','キューピット','悪女'],
+  '蘇る人狼': ['恋人','生霊','キューピット','悪女'],
+  '怪盗': ['魔女','生霊','饒舌な狩人','酔っぱらい','悪女','純愛者','復讐者','テレパシスト'],
+  '饒舌な狩人': ['怪盗'],
+  'プリンセス': ['魔女','キューピット','悪女','酔っぱらい'],
+  'キューピット': ['赤ずきん','魔女','蘇る人狼','恋人','女王','プリンセス','悪女','酔っぱらい','疫病神'],
+  '悪女': ['赤ずきん','魔女','怪盗','蘇る人狼','恋人','女王','プリンセス','キューピット','酔っぱらい','疫病神'],
+  '酔っぱらい': ['怪盗','女王','プリンセス','キューピット','悪女'],
+  '疫病神': ['独裁者','キューピット','悪女'],
+  'ゾンビマニア': ['魔女'],
+  '純愛者': ['怪盗','生霊','テレパシスト'],
+  '復讐者': ['怪盗','生霊'],
+  '狼少年': ['狼少女'],
+  '狼少女': ['狼少年'],
+  'テレパシスト': ['怪盗','生霊','純愛者']
+};
+
+// Build symmetric lookup
+const exRoles = [...new Set(Object.keys(EXCLUSION_DATA).concat(...Object.values(EXCLUSION_DATA)))].sort();
+const exSet = new Set();
+for (const [r, partners] of Object.entries(EXCLUSION_DATA)) {
+  for (const p of partners) {
+    exSet.add([r, p].sort().join('|'));
+  }
+}
+function isExcluded(a, b) { return exSet.has([a, b].sort().join('|')); }
+
+function renderExMatrix(filter) {
+  const roles = filter ? exRoles.filter(r => r.includes(filter)) : exRoles;
+  let html = '<thead><tr><th></th>';
+  roles.forEach(r => { html += `<th><span>${r}</span></th>`; });
+  html += '</tr></thead><tbody>';
+  roles.forEach(r => {
+    html += `<tr><th>${r}</th>`;
+    roles.forEach(c => {
+      if (r === c) html += '<td class="ex-self">-</td>';
+      else if (isExcluded(r, c)) html += `<td class="ex-no" title="${r} ✕ ${c}">✕</td>`;
+      else html += '<td class="ex-ok">○</td>';
+    });
+    html += '</tr>';
+  });
+  html += '</tbody>';
+  document.getElementById('exTable').innerHTML = html;
+}
+
+function renderExList(filter) {
+  const entries = Object.entries(EXCLUSION_DATA).filter(([r]) => !filter || r.includes(filter));
+  document.getElementById('exListCards').innerHTML = entries.map(([role, partners]) => {
+    const pFiltered = filter ? partners.filter(p => p.includes(filter) || role.includes(filter)) : partners;
+    return `<div class="ex-card">
+      <h4>🚫 ${role}</h4>
+      <div>${pFiltered.map(p => `<span class="ex-partner">${p}</span>`).join('')}</div>
+    </div>`;
+  }).join('');
+}
+
+function switchExMode(mode, btn) {
+  document.querySelectorAll('[data-ex-mode]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('exclusionMatrix').style.display = mode === 'matrix' ? 'block' : 'none';
+  document.getElementById('exclusionList').style.display = mode === 'list' ? 'block' : 'none';
+}
+
+document.getElementById('exclusionSearch').addEventListener('input', function() {
+  renderExMatrix(this.value);
+  renderExList(this.value);
+});
+
+renderExMatrix('');
+renderExList('');
+</script>
 <script>
 (function() {
   const list = document.getElementById('roleList');
