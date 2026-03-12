@@ -272,10 +272,6 @@ const ROLES_DATA = [
     description: '「占い」「霊能」「護衛」の能力をそれぞれ一度ずつ使用できる万能型の役職。',
     strategy: '3つの能力を適切なタイミングで使い分ける。序盤は占い、中盤は護衛、終盤は霊能など状況判断が重要。',
     nightAction: true, icon: '\u{1FA84}', color: '#a78bfa' },
-  { name: 'チキン', team: 'village', rarity: 'V3', ability: '逃走',
-    description: '投票で最多票を得た場合、処刑を回避して翌日に持ち越すことがある。',
-    strategy: '処刑回避能力があるが確実ではない。グレランで吊り位置にいても生き延びられることがある。',
-    nightAction: false, icon: '\u{1F414}', color: '#7ee787' },
   { name: '偽女王', team: 'village', rarity: 'V3', ability: '偽りの女王',
     description: '自分を女王だと思い込んでいる市民。役職欄には「女王」と表示されるが偽物のため、死亡しても後追い死は発生しない。',
     strategy: '自分が偽女王とは知らされない。死んでも村に被害がなく、人狼が噛みを躊躇するブラフにもなる。',
@@ -371,10 +367,7 @@ const ROLES_DATA = [
     description: '死亡した人の遺言（最後の発言）を読むことができる。',
     strategy: '死者の遺言から有力な情報を得られる。重要な推理材料になることも。',
     nightAction: false, icon: '\u{1F575}', color: '#79c0ff' },
-  { name: '罠師', team: 'village', rarity: '特殊', ability: '罠設置',
-    description: '毎晩一人に罠を仕掛け、その人を訪れた人狼を殺す。ただし味方の能力者も罠にかかる。',
-    strategy: '人狼が噛みそうな位置に罠を張る。占い師護衛先と被らないよう注意。',
-    nightAction: true, icon: '\u{1FAA4}', color: '#da3633' },
+  /* 罠師は既に登録済み（line 44付近） */
   { name: '天文学者', team: 'village', rarity: '特殊', ability: '星占い',
     description: '毎晩2人を選び、その2人が同じ陣営かどうかを知ることができる。',
     strategy: '2人の関係性を調べられるため、ライン考察に非常に強い。効率的な占い先選びが鍵。',
@@ -409,14 +402,8 @@ const ROLES_DATA = [
     nightAction: false, icon: '\u{1F43A}', color: '#7ee787' },
 
   // ===== 追加・人狼陣営 =====
-  { name: '妖術師', team: 'werewolf', rarity: '特殊', ability: '役職占い',
-    description: '人狼陣営の占い師。毎晩一人を選んで役職を知ることができる。人狼が誰かも知っている。',
-    strategy: '対抗占い師として偽結果を出しつつ、人狼に役職情報を伝える。狩人や猫又の位置を把握が重要。',
-    nightAction: true, icon: '\u{1F9D9}', color: '#f85149' },
-  { name: '偽占い師', team: 'werewolf', rarity: '特殊', ability: '偽占い',
-    description: '占い結果が常に「人間」と出る偽の占い師。人狼が誰かは知らない。',
-    strategy: '真占い師を騙って村を混乱させる。ただし人狼を白判定してしまうリスクもある。',
-    nightAction: true, icon: '\u{1F52E}', color: '#da3633' },
+  /* 妖術師は既に登録済み（line 170付近） */
+  /* 偽占い師は既に登録済み（line 121付近 - 市民陣営版） */
   { name: '殺し屋', team: 'werewolf', rarity: '特殊', ability: '暗殺',
     description: '人狼の襲撃とは別に、単独で暗殺を行える人狼陣営の役職。人狼ではないが人狼を知っている。',
     strategy: '人狼の噛みとは別に暗殺できるため、1ターンで2人減らせる。強力だが目立つ。',
@@ -431,7 +418,7 @@ const ROLES_DATA = [
     nightAction: false, icon: '\u{2753}', color: '#f47067' },
 
   // ===== 追加・第三陣営 =====
-  { name: '呪狼', team: 'fox', rarity: '特殊', ability: '呪殺無効',
+  { name: '耐呪の狐', team: 'fox', rarity: '特殊', ability: '呪殺無効',
     description: '妖狐の亜種。占い師に占われても呪殺されない特殊な妖狐。',
     strategy: '占われても死なないため、大胆な行動が可能。ただし処刑は有効。',
     nightAction: false, icon: '\u{1F98A}', color: '#e3b341' },
