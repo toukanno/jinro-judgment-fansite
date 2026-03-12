@@ -8,18 +8,18 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="人狼JGDB">
   <meta property="og:title" content="キャラクター紹介 - 人狼ジャッジメント攻略">
-  <meta property="og:description" content="人狼ジャッジメントに登場するアバターキャラクターの紹介。">
+  <meta property="og:description" content="人狼ジャッジメントに登場する全36キャラクター（アバター）の紹介。見た目・特徴の詳細情報。">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ja_JP">
   <title>キャラクター紹介 - 人狼ジャッジメント攻略</title>
-  <meta name="description" content="人狼ジャッジメントに登場する全キャラクター（アバター）の紹介。性格・特徴・見た目の詳細情報。">
+  <meta name="description" content="人狼ジャッジメントに登場する全キャラクター（アバター）の紹介。初期・追加・VIPキャラの見た目・特徴を完全網羅。">
   <meta property="og:url" content="https://toukanno.github.io/jinro-judgment-fansite/characters.html">
-  <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/style.css">
   <link rel="manifest" href="manifest.json">
   <style>
+    /* ===== Hero ===== */
     .char-hero-section {
       background: linear-gradient(135deg, #1a1025 0%, #0d1117 50%, #0a1628 100%);
       padding: 3rem 1.5rem 2rem;
@@ -41,162 +41,284 @@
       max-width: 600px;
       margin: 0 auto;
     }
-
-    .char-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 2rem;
+    .char-stats {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .char-stat {
+      background: rgba(22,27,34,.6);
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: .5rem 1rem;
+      text-align: center;
+    }
+    .char-stat-num {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #58a6ff;
+    }
+    .char-stat-label {
+      font-size: .75rem;
+      color: #8b949e;
     }
 
+    /* ===== Filters ===== */
+    .char-filter {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .char-filter .search-input {
+      flex: 1;
+      min-width: 180px;
+    }
+    .char-filter-group {
+      display: flex;
+      gap: .35rem;
+      flex-wrap: wrap;
+    }
+    .char-count {
+      color: #8b949e;
+      font-size: .88rem;
+      margin-bottom: 1rem;
+    }
+
+    /* ===== Card Grid ===== */
+    .char-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
     .char-card {
-      background: #161b22;
+      background: var(--bg-card);
       border: 1px solid #30363d;
       border-radius: 12px;
-      padding: 1.5rem;
+      padding: 1.2rem;
+      cursor: pointer;
       transition: transform .2s, border-color .2s, box-shadow .2s;
       position: relative;
       overflow: hidden;
+      text-align: center;
     }
     .char-card:hover {
       transform: translateY(-3px);
-      border-color: #58a6ff;
-      box-shadow: 0 4px 20px rgba(88,166,255,.1);
+      box-shadow: 0 6px 24px rgba(0,0,0,.3);
     }
     .char-card::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
+      top: 0; left: 0; right: 0;
+      height: 3px;
     }
-    .char-card.male::before { background: linear-gradient(90deg, #58a6ff, #79c0ff); }
-    .char-card.female::before { background: linear-gradient(90deg, #f778ba, #db7ff7); }
+    .char-card:hover::before { opacity: .9; }
 
     .char-card-avatar {
-      width: 72px;
-      height: 72px;
+      width: 64px; height: 64px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
-      margin: 0 auto 1rem;
+      font-size: 1.8rem;
+      margin: 0 auto .8rem;
       border: 2px solid #30363d;
     }
-    .char-card.male .char-card-avatar {
-      background: linear-gradient(135deg, #0a1628, #162447);
-      border-color: rgba(88,166,255,.3);
-    }
-    .char-card.female .char-card-avatar {
-      background: linear-gradient(135deg, #1a0f20, #2d1b3d);
-      border-color: rgba(219,127,247,.3);
-    }
-
     .char-card-name {
-      font-size: 1.25rem;
+      font-size: 1.1rem;
       font-weight: 800;
-      text-align: center;
-      margin-bottom: .3rem;
       color: #e6edf3;
+      margin-bottom: .2rem;
     }
     .char-card-ruby {
-      font-size: .78rem;
+      font-size: .72rem;
       color: #8b949e;
-      text-align: center;
-      margin-bottom: .8rem;
+      margin-bottom: .6rem;
     }
-
     .char-card-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: .4rem;
+      gap: .3rem;
       justify-content: center;
-      margin-bottom: .8rem;
+      margin-bottom: .6rem;
     }
     .char-tag {
       display: inline-block;
-      padding: .15rem .55rem;
+      padding: .12rem .5rem;
       border-radius: 20px;
-      font-size: .72rem;
+      font-size: .68rem;
       font-weight: 600;
     }
-    .char-tag.gender-male {
-      background: rgba(88,166,255,.12);
-      color: #58a6ff;
-      border: 1px solid rgba(88,166,255,.25);
-    }
-    .char-tag.gender-female {
-      background: rgba(247,120,186,.12);
-      color: #f778ba;
-      border: 1px solid rgba(247,120,186,.25);
-    }
-    .char-tag.age {
-      background: rgba(126,231,135,.1);
-      color: #7ee787;
-      border: 1px solid rgba(126,231,135,.25);
-    }
-
+    .char-tag.t-male { background: rgba(88,166,255,.12); color: #58a6ff; border: 1px solid rgba(88,166,255,.25); }
+    .char-tag.t-female { background: rgba(247,120,186,.12); color: #f778ba; border: 1px solid rgba(247,120,186,.25); }
+    .char-tag.t-cat1 { background: rgba(126,231,135,.1); color: #7ee787; border: 1px solid rgba(126,231,135,.2); }
+    .char-tag.t-cat2 { background: rgba(210,153,34,.1); color: #d29922; border: 1px solid rgba(210,153,34,.2); }
+    .char-tag.t-cat3 { background: rgba(167,139,250,.1); color: #a78bfa; border: 1px solid rgba(167,139,250,.2); }
     .char-card-desc {
       color: #c9d1d9;
-      font-size: .88rem;
-      line-height: 1.7;
-      text-align: center;
-    }
-
-    .char-card-personality {
-      margin-top: .8rem;
-      padding-top: .8rem;
-      border-top: 1px solid #21262d;
       font-size: .82rem;
-      color: #8b949e;
-      text-align: center;
-    }
-    .char-card-personality strong {
-      color: #c9d1d9;
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
-    .char-filter {
-      display: flex;
-      gap: .5rem;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-      align-items: center;
+    /* ===== Detail Modal ===== */
+    .char-detail-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.7);
+      z-index: 1000;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
-    .char-count {
+    .char-detail-overlay.active { display: flex; justify-content: center; align-items: flex-start; padding: 2rem 1rem; }
+    .char-detail {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 16px;
+      max-width: 560px;
+      width: 100%;
+      padding: 2rem;
+      position: relative;
+      animation: modalIn .25s ease;
+      margin: auto;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(20px) scale(.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .char-detail-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: rgba(110,118,129,.2);
+      border: 1px solid #30363d;
+      color: #e6edf3;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s;
+    }
+    .char-detail-close:hover { background: rgba(248,81,73,.3); }
+    .char-detail-avatar {
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      margin: 0 auto 1rem;
+      border: 3px solid #30363d;
+    }
+    .char-detail-name {
+      font-size: 1.6rem;
+      font-weight: 900;
+      text-align: center;
+      color: #e6edf3;
+      margin-bottom: .2rem;
+    }
+    .char-detail-ruby {
+      font-size: .85rem;
       color: #8b949e;
-      font-size: .9rem;
+      text-align: center;
       margin-bottom: 1rem;
     }
+    .char-detail-tags {
+      display: flex;
+      gap: .4rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+    }
+    .char-detail-section {
+      margin-bottom: 1.2rem;
+    }
+    .char-detail-section h3 {
+      font-size: .85rem;
+      font-weight: 700;
+      color: #58a6ff;
+      margin-bottom: .5rem;
+      padding-bottom: .3rem;
+      border-bottom: 1px solid #21262d;
+    }
+    .char-detail-section p,
+    .char-detail-section ul {
+      color: #c9d1d9;
+      font-size: .9rem;
+      line-height: 1.7;
+    }
+    .char-detail-section ul {
+      padding-left: 1.2rem;
+      margin: 0;
+    }
+    .char-detail-section li {
+      margin-bottom: .3rem;
+    }
+    .char-detail-back {
+      display: block;
+      width: 100%;
+      padding: .7rem;
+      margin-top: 1.5rem;
+      background: rgba(88,166,255,.1);
+      border: 1px solid rgba(88,166,255,.3);
+      color: #58a6ff;
+      border-radius: 8px;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background .2s;
+    }
+    .char-detail-back:hover { background: rgba(88,166,255,.2); }
 
+    .char-note {
+      background: rgba(210,153,34,.08);
+      border: 1px solid rgba(210,153,34,.2);
+      border-radius: 8px;
+      padding: .8rem 1rem;
+      margin-bottom: 1.5rem;
+      font-size: .82rem;
+      color: #d29922;
+      line-height: 1.6;
+    }
+
+    /* ===== Responsive ===== */
     @media (max-width: 768px) {
       .char-hero-section h1 { font-size: 1.8rem; }
       .char-hero-section { padding: 2.5rem 1.2rem 1.5rem; }
-      .char-hero-section p { font-size: .95rem; }
-      .char-cards { grid-template-columns: repeat(2, 1fr); }
+      .char-hero-section p { font-size: .92rem; }
+      .char-cards { grid-template-columns: repeat(2, 1fr); gap: .8rem; }
+      .char-card { padding: 1rem; }
+      .char-card-avatar { width: 52px; height: 52px; font-size: 1.5rem; }
+      .char-card-name { font-size: 1rem; }
       .char-filter { gap: .4rem; }
-      .filter-btn { min-height: 44px; padding: .5rem 1rem; }
+      .filter-btn { min-height: 44px; padding: .45rem .8rem; font-size: .78rem; }
+      .char-detail { padding: 1.5rem; }
+      .char-detail-avatar { width: 80px; height: 80px; font-size: 2.2rem; }
+      .char-detail-name { font-size: 1.3rem; }
     }
-
-    @media (max-width: 600px) {
-      .char-hero-section h1 { font-size: 1.6rem; }
-      .char-hero-section { padding: 2rem 1rem 1.5rem; }
-      .char-hero-section p { font-size: .9rem; }
-      .char-cards { grid-template-columns: 1fr; }
-      .char-card { padding: 1.2rem; }
-      .char-card-name { font-size: 1.15rem; }
-      .char-card-desc { font-size: .85rem; }
-      .char-card-personality { font-size: .8rem; }
-      .char-card-avatar { width: 60px; height: 60px; font-size: 1.7rem; }
-      .char-filter { flex-direction: column; }
-      .char-filter .search-input { width: 100%; }
-      .filter-btn { min-height: 44px; flex: 1; text-align: center; }
+    @media (max-width: 414px) {
+      .char-cards { grid-template-columns: repeat(2, 1fr); gap: .6rem; }
+      .char-card { padding: .8rem; }
+      .char-card-avatar { width: 48px; height: 48px; font-size: 1.3rem; }
+      .char-card-name { font-size: .92rem; }
+      .char-card-desc { font-size: .78rem; -webkit-line-clamp: 1; }
+      .char-card-ruby { font-size: .68rem; }
+      .char-detail-overlay.active { padding: 1rem .5rem; }
     }
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5638346660274603"
      crossorigin="anonymous"></script>
-<!-- Google Analytics (GA4) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-XXXXXXXXXX");</script>
 </head>
@@ -210,7 +332,7 @@
       <ul>
         <li><a href="index.html">ホーム</a></li>
         <li><a href="roles.html">役職一覧</a></li>
-        <li><a href="character.html">キャラクター</a></li>
+        <li><a href="characters.html" class="active">キャラクター</a></li>
         <li><a href="guide.html">初心者ガイド</a></li>
         <li><a href="strategy.html">立ち回り</a></li>
         <li><a href="composition.html">編成考察</a></li>
@@ -233,22 +355,41 @@
 
 <section class="char-hero-section">
   <h1>&#x1F3AD; キャラクター紹介</h1>
-  <p>人狼ジャッジメントに登場するキャラクター（アバター）の一覧。個性豊かなキャラクターたちを紹介します。</p>
+  <p>人狼ジャッジメントに登場する全キャラクター（アバター）一覧。プレイヤーが「なりきる」個性豊かなキャラクターたちを紹介します。</p>
+  <div class="char-stats">
+    <div class="char-stat"><div class="char-stat-num">23</div><div class="char-stat-label">初期キャラ</div></div>
+    <div class="char-stat"><div class="char-stat-num">7</div><div class="char-stat-label">追加キャラ</div></div>
+    <div class="char-stat"><div class="char-stat-num">6</div><div class="char-stat-label">VIPキャラ</div></div>
+  </div>
 </section>
 
 <main class="container">
   <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> キャラクター紹介</div>
 
+  <div class="char-note">
+    &#x1F4CC; 公式（そらいろ株式会社）は「キャラクターの設定に関しては、遊んで頂く皆様で自由に演じて頂けるよう、公式からは何もお答えしておりません」と公表しています。以下の説明はゲーム内の見た目やファンコミュニティの共通認識に基づいた非公式の紹介です。
+  </div>
+
   <div class="char-filter">
-    <input type="text" class="search-input" id="charSearch" placeholder="キャラクター名で検索...">
-    <button class="filter-btn active" data-gender="all">全て</button>
-    <button class="filter-btn" data-gender="male">男性</button>
-    <button class="filter-btn" data-gender="female">女性</button>
+    <input type="text" class="search-input" id="charSearch" placeholder="&#x1F50D; キャラクター名で検索...">
+    <div class="char-filter-group">
+      <button class="filter-btn active" data-filter="all">全て</button>
+      <button class="filter-btn" data-filter="male">&#x2642; 男性</button>
+      <button class="filter-btn" data-filter="female">&#x2640; 女性</button>
+      <button class="filter-btn" data-filter="cat1">初期</button>
+      <button class="filter-btn" data-filter="cat2">追加</button>
+      <button class="filter-btn" data-filter="cat3">VIP</button>
+    </div>
   </div>
   <div class="char-count" id="charCount"></div>
 
   <div class="char-cards" id="charCards"></div>
 </main>
+
+<!-- Detail Modal -->
+<div class="char-detail-overlay" id="charDetailOverlay">
+  <div class="char-detail" id="charDetail"></div>
+</div>
 
 <div class="affiliate-banner" style="text-align:center;padding:1.5rem 1rem;background:rgba(22,27,34,.5);border-top:1px solid rgba(48,54,61,.4);">
   <span class="af-pc"><a href="//af.moshimo.com/af/c/click?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=620" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc><img src="//image.moshimo.com/af-img/0032/000000000620.gif" width="468" height="60" style="border:none;" alt="楽天市場" loading="lazy"></a><img src="//i.moshimo.com/af/i/impression?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=620" width="1" height="1" style="border:none;" alt="" loading="lazy"></span>
@@ -272,114 +413,303 @@
 <script src="js/common.js"></script>
 <script>
 (function() {
+  /* ========== Character Data ========== */
   var CHARACTERS = [
-    { name: 'ゲイル', ruby: 'Gale', gender: 'male', age: '青年',
-      icon: '&#x1F9D1;', personality: '正義感・熱血',
-      desc: '正義感が強く、曲がったことが大嫌いな熱血青年。リーダーシップがあり、議論を引っ張る存在。金髪が特徴的。' },
-    { name: 'リリアン', ruby: 'Lillian', gender: 'female', age: '少女',
-      icon: '&#x1F478;', personality: '上品・お嬢様',
-      desc: '裕福な家庭で育ったお嬢様。おしとやかで上品な物腰だが、芯の強さも持ち合わせている。' },
-    { name: 'エマ', ruby: 'Emma', gender: 'female', age: '少女',
-      icon: '&#x1F467;', personality: '活発・元気',
-      desc: '明るく元気いっぱいの少女。天真爛漫な性格で場を和ませるムードメーカー。好奇心旺盛。' },
-    { name: 'フランク', ruby: 'Frank', gender: 'male', age: '壮年',
-      icon: '&#x1F4AA;', personality: '豪快・頼れる',
-      desc: '大柄で頼れる壮年の男性。豪快な性格で面倒見が良い。力仕事はお任せ。' },
-    { name: 'ミカエル', ruby: 'Michael', gender: 'male', age: '青年',
-      icon: '&#x1F9D0;', personality: '知的・冷静',
-      desc: '冷静沈着で頭脳明晰な青年。論理的な思考で議論をリードする。感情に流されない分析力が武器。' },
-    { name: 'メアリー', ruby: 'Mary', gender: 'female', age: '成人',
-      icon: '&#x1F469;', personality: '落ち着き・包容力',
-      desc: '落ち着いた雰囲気の大人の女性。包容力があり、周囲を安心させる存在。冷静な判断力を持つ。' },
-    { name: 'ヒュー', ruby: 'Hugh', gender: 'male', age: '老年',
-      icon: '&#x1F9D3;', personality: '温厚・経験豊富',
-      desc: '穏やかで知恵のある老紳士。豊富な人生経験から的確な助言をくれる。村の長老的存在。' },
-    { name: 'サンドラ', ruby: 'Sandra', gender: 'female', age: '成人',
-      icon: '&#x1F52E;', personality: '神秘的・洞察力',
-      desc: '神秘的な雰囲気を纏う女性。鋭い洞察力を持ち、人の本質を見抜く力がある。占い師のような風貌。' },
-    { name: 'ボブ', ruby: 'Bob', gender: 'male', age: '成人',
-      icon: '&#x1F603;', personality: 'お人好し・陽気',
-      desc: 'お人好しで陽気な男性。ふくよかな体型で親しみやすい雰囲気。誰とでも仲良くなれる。' },
-    { name: 'グレース', ruby: 'Grace', gender: 'female', age: '成人',
-      icon: '&#x1F4DA;', personality: '知的・真面目',
-      desc: '知的で真面目な眼鏡の女性。几帳面な性格で情報の整理が得意。論理的に物事を考える。' },
-    { name: 'ジェシカ', ruby: 'Jessica', gender: 'female', age: '成人',
-      icon: '&#x1F483;', personality: '華やか・社交的',
-      desc: '華やかで美しい女性。社交的な性格で人脈が広い。場の空気を読む力に長けている。' },
-    { name: 'エリック', ruby: 'Eric', gender: 'male', age: '青年',
-      icon: '&#x1F60E;', personality: 'クール・寡黙',
-      desc: 'クールで寡黙な黒髪の青年。必要最低限しか話さないが、発言には重みがある。観察力が鋭い。' },
-    { name: 'アンナ', ruby: 'Anna', gender: 'female', age: '少女',
-      icon: '&#x1F338;', personality: '内気・純粋',
-      desc: '内気で大人しい少女。純粋な心の持ち主で、嘘をつくのが苦手。控えめだが芯は強い。' },
-    { name: 'ローラ', ruby: 'Laura', gender: 'female', age: '成人',
-      icon: '&#x1F31F;', personality: '活発・自由奔放',
-      desc: '自由奔放で活発な女性。行動力があり、思い立ったらすぐ動くタイプ。束縛を嫌う。' },
-    { name: 'マイク', ruby: 'Mike', gender: 'male', age: '青年',
-      icon: '&#x26BD;', personality: 'スポーティ・爽やか',
-      desc: 'スポーツ万能の爽やかな青年。体力と行動力に自信あり。明るく前向きな性格。' },
-    { name: 'ロディ', ruby: 'Roddy', gender: 'male', age: '少年',
-      icon: '&#x1F466;', personality: '元気・いたずら好き',
-      desc: '元気いっぱいの少年。いたずら好きだが憎めない性格。子供ならではの鋭い観察眼を持つ。' },
-    { name: 'リック', ruby: 'Rick', gender: 'male', age: '成人',
-      icon: '&#x1F575;', personality: '無口・ミステリアス',
-      desc: '無口でミステリアスな男性。多くを語らないが、的確な指摘で議論の流れを変えることがある。' },
-    { name: 'フェイ', ruby: 'Fay', gender: 'female', age: '少女',
-      icon: '&#x1F9DA;', personality: '不思議・天然',
-      desc: '不思議な雰囲気を持つ少女。天然でマイペースだが、時折核心を突く発言をする。' },
-    { name: 'レイチェル', ruby: 'Rachel', gender: 'female', age: '成人',
-      icon: '&#x1F451;', personality: '気品・プライド',
-      desc: '気品に満ちた女性。プライドが高く、自分の意見をしっかり持っている。リーダーシップも発揮する。' },
-    { name: 'ステラ', ruby: 'Stella', gender: 'female', age: '成人',
-      icon: '&#x2B50;', personality: 'ミステリアス・妖艶',
-      desc: 'ミステリアスで妖艶な雰囲気の女性。真意が読みにくく、味方なのか敵なのか判断がつきにくい存在。' }
+    // ===== 初期キャラクター (23) =====
+    { name: 'アンナ', ruby: 'Anna', gender: 'female', category: 'cat1', color: '#f9a8d4',
+      icon: '\u{1F338}',
+      summary: '幼い顔立ちとみつあみが特徴の少女',
+      appearance: ['みつあみの髪型', '幼い顔立ち', '小柄な体格', '純朴な雰囲気'],
+      desc: '幼い顔立ちとみつあみが特徴の少女。純粋で大人しそうな見た目のため、初心者プレイヤーにも人気が高い。控えめながらも芯の強さを感じさせる瞳が印象的。' },
+    { name: 'マイク', ruby: 'Mike', gender: 'male', category: 'cat1', color: '#60a5fa',
+      icon: '\u{26BD}',
+      summary: '金髪スポーツ刈りの爽やかな青年',
+      appearance: ['金髪のスポーツ刈り', '爽やかな笑顔', 'スポーティな服装', 'がっしりした体格'],
+      desc: '金髪でスポーツ刈りの頭が特徴の青年。爽やかで活発な印象を与える。スポーティな見た目から男性プレイヤーに人気。' },
+    { name: 'エリック', ruby: 'Eric', gender: 'male', category: 'cat1', color: '#a1a1aa',
+      icon: '\u{1F9D0}',
+      summary: '白髪にニヒルな笑みの老紳士',
+      appearance: ['外にハネた白髪', 'ニヒルな笑み', '老紳士の風格', '鋭い眼光'],
+      desc: '外にハネた白髪とニヒルな笑みが印象的な老紳士。知的で落ち着いた雰囲気を持ち、経験豊富な大人のプレイヤーに好まれる。' },
+    { name: 'バニラ', ruby: 'Vanilla', gender: 'female', category: 'cat1', color: '#fbbf24',
+      icon: '\u{1F9D3}',
+      summary: '小さな眼鏡の優しいおばあちゃん',
+      appearance: ['小さな眼鏡', '優しい表情', '白い髪', '温かみのある雰囲気'],
+      desc: '小さな眼鏡をかけ優しい表情をしているおばあちゃん。穏やかで温かみのある雰囲気が特徴。親しみやすい見た目から幅広い層に人気。' },
+    { name: 'メアリー', ruby: 'Mary', gender: 'female', category: 'cat1', color: '#f472b6',
+      icon: '\u{1F33A}',
+      summary: '巻髪と白い花飾りの女性',
+      appearance: ['左に流した巻髪', '白い花の髪飾り', '上品な雰囲気', '落ち着いた表情'],
+      desc: '左に流した巻髪と頭に付けている白い花の飾りが特徴的な女性。上品で落ち着いた雰囲気を持ち、包容力を感じさせる。' },
+    { name: 'ジェイ', ruby: 'Jay', gender: 'male', category: 'cat1', color: '#c084fc',
+      icon: '\u{1F9D0}',
+      summary: 'モノクルにカイゼル髭の紳士',
+      appearance: ['モノクル（片眼鏡）', '鋭いカイゼル髭', '紳士的な服装', '威厳のある佇まい'],
+      desc: 'モノクルに鋭いカイゼル髭が特徴的な男性。クラシカルな紳士の装いで、知的で威厳のある雰囲気を漂わせる。推理力の高いプレイに似合うキャラクター。' },
+    { name: 'ショーン', ruby: 'Sean', gender: 'male', category: 'cat1', color: '#34d399',
+      icon: '\u{1F468}',
+      summary: '真ん中分けの外ハネ短髪の男性',
+      appearance: ['真ん中分けの前髪', '外にハネた短髪', '穏やかな表情', 'カジュアルな装い'],
+      desc: '真ん中分けの前髪に外にハネた短髪が特徴の男性。親しみやすい見た目で、バランスの良い印象を与える。初心者から上級者まで幅広く使用される。' },
+    { name: 'ローラ', ruby: 'Laura', gender: 'female', category: 'cat1', color: '#fb923c',
+      icon: '\u{1F31F}',
+      summary: '三つ編みハーフアップの栗色髪の女性',
+      appearance: ['三つ編みハーフアップ', 'ウェーブがかった栗色の髪', '活発な表情', '行動的な雰囲気'],
+      desc: '三つ編みハーフアップにウェーブがかった栗色の髪が特徴的な女性。自由奔放で活発な印象を与え、行動力のあるプレイスタイルにマッチする。' },
+    { name: 'ビル', ruby: 'Bill', gender: 'male', category: 'cat1', color: '#78716c',
+      icon: '\u{1F474}',
+      summary: '白髪に固い表情のおじいさん',
+      appearance: ['白髪', '固い表情', 'がっしりした体格', '厳格な雰囲気'],
+      desc: '白髪に固い表情が特徴的なおじいさん。厳格で頑固そうな見た目だが、頼りがいのある存在感がある。ベテランプレイヤーの渋いプレイに人気。' },
+    { name: 'ミカ', ruby: 'Mika', gender: 'female', category: 'cat1', color: '#6366f1',
+      icon: '\u{1F5A4}',
+      summary: '鋭い目つきと黒い唇の女性',
+      appearance: ['鋭い目つき', '目の下のクマ', '黒い唇', 'ダークな雰囲気'],
+      desc: '鋭い目つきと目の下のクマに黒い唇が特徴的な女性。ゴシックでダークな雰囲気を持ち、人狼陣営のプレイに映えるビジュアル。独特の存在感がある。' },
+    { name: 'リリアン', ruby: 'Lillian', gender: 'male', category: 'cat1', color: '#d946ef',
+      icon: '\u{1F338}',
+      summary: '紫色の短髪に花飾りのオネエ',
+      appearance: ['紫色の短髪', '花飾りなどのアクセサリー', '華やかなメイク', '個性的なファッション'],
+      desc: '紫色の短髪に花飾りなどアクセサリーが特徴的なオネエキャラ。華やかで個性的な見た目はゲーム内でも目立つ存在。ユニークなプレイスタイルに合う。' },
+    { name: 'メリル', ruby: 'Meryl', gender: 'female', category: 'cat1', color: '#f59e0b',
+      icon: '\u{1F451}',
+      summary: '豪華な盛り髪のふくよかな女性',
+      appearance: ['豪華に盛り上げた髪', '大きな顔', 'ふくよかな体型', '堂々とした佇まい'],
+      desc: '豪華に盛り上げた髪に大きな顔が特徴的なふくよかな女性。堂々とした存在感があり、貫禄のある見た目は議論をリードする役どころに似合う。' },
+    { name: 'ゲイル', ruby: 'Gale', gender: 'male', category: 'cat1', color: '#22c55e',
+      icon: '\u{1F9DF}',
+      summary: '緑色の肌に切り込みの耳を持つ男性',
+      appearance: ['緑色の肌', '切り込みが入った耳', '異形の風貌', '独特の存在感'],
+      desc: '緑色の肌に切り込みが入った耳が特徴的な男性。人間離れした風貌で強い個性を放つ。そのユニークな見た目からファンも多い人気キャラクター。' },
+    { name: 'スーザン', ruby: 'Susan', gender: 'female', category: 'cat1', color: '#94a3b8',
+      icon: '\u{2728}',
+      summary: '銀髪に褐色肌の女性',
+      appearance: ['銀髪', '褐色肌', 'クールな表情', 'エキゾチックな雰囲気'],
+      desc: '銀髪に褐色肌が特徴的な女性。エキゾチックでクールな雰囲気を持ち、ミステリアスな魅力がある。スタイリッシュな見た目から人気が高い。' },
+    { name: 'ロディ', ruby: 'Roddy', gender: 'male', category: 'cat1', color: '#a78bfa',
+      icon: '\u{1F9D1}',
+      summary: '整った顔立ちの茶髪ウェーブの男性',
+      appearance: ['整った顔立ち', '茶髪のウェーブヘアー', '端正な容姿', '落ち着いた佇まい'],
+      desc: '整った顔立ちと茶髪にウェーブがかった髪が特徴的な男性。端正な容姿でイケメンキャラとして人気。落ち着いた雰囲気が知的なプレイに似合う。' },
+    { name: 'エマ', ruby: 'Emma', gender: 'female', category: 'cat1', color: '#fb7185',
+      icon: '\u{1F467}',
+      summary: '栗色の結び髪の少女',
+      appearance: ['一つに結んだ栗色の髪', '少女のような顔立ち', '可愛らしい雰囲気', '明るい表情'],
+      desc: '少女のような顔立ちと一つに結んだ栗色の髪が特徴的な少女。可愛らしい雰囲気で全キャラクター中トップクラスの人気を誇る。使用率も非常に高い。' },
+    { name: 'フランク', ruby: 'Frank', gender: 'male', category: 'cat1', color: '#ef4444',
+      icon: '\u{1F4AA}',
+      summary: '赤茶色の髪と通った鼻筋の男性',
+      appearance: ['赤茶色の髪', '通った鼻筋', '男らしい風貌', 'たくましい体格'],
+      desc: '通った鼻筋に赤茶色の髪が特徴的な男性。たくましく男らしい風貌で、頼れる存在感がある。力強いプレイスタイルに似合うキャラクター。' },
+    { name: 'トーマス', ruby: 'Thomas', gender: 'male', category: 'cat1', color: '#e2e8f0',
+      icon: '\u{1F9D4}',
+      summary: '肩まで伸びる白髪に立派な髭のおじいさん',
+      appearance: ['肩まで伸びる白髪', '立派な髭', '穏やかな表情', '長老の風格'],
+      desc: '肩まで伸びる白髪に立派な髭が特徴的なおじいさん。長老のような風格があり、落ち着いた知的な雰囲気を持つ。村の賢者的な役どころに人気。' },
+    { name: 'クリス', ruby: 'Chris', gender: 'male', category: 'cat1', color: '#475569',
+      icon: '\u{1F6AC}',
+      summary: '黒髪跳ね髪で煙草が特徴的な男性',
+      appearance: ['黒髪で全体的に跳ねた髪型', 'ほぼ全アイコンで喫煙', 'クールな佇まい', '7種類のアイコンバリエーション'],
+      desc: '黒髪で全体的に跳ねた髪型が特徴的な男性。ほとんどのアイコンで煙草を咥えており、クールでワイルドな雰囲気を持つ。男性プレイヤーに根強い人気がある。' },
+    { name: 'ジェシカ', ruby: 'Jessica', gender: 'female', category: 'cat1', color: '#ec4899',
+      icon: '\u{1F483}',
+      summary: '華やかで美しい女性',
+      appearance: ['華やかな容姿', '美しいロングヘア', 'セクシーな雰囲気', '洗練された装い'],
+      desc: '華やかで美しい女性キャラクター。社交的でゴージャスな雰囲気を持ち、場の注目を集める存在。女性プレイヤーにも男性プレイヤーにも人気が高い。' },
+    { name: 'サンドラ', ruby: 'Sandra', gender: 'female', category: 'cat1', color: '#fbbf24',
+      icon: '\u{1F380}',
+      summary: '金髪に黒いリボンの女性',
+      appearance: ['金髪', '黒いリボンのヘアアクセサリー', '可愛らしい雰囲気', '親しみやすい表情'],
+      desc: '金髪に黒いリボンが特徴的な女性。「ドラ」の愛称でも親しまれている。可愛らしい雰囲気で人気投票でも常に上位に入る人気キャラクター。' },
+    { name: 'フェイ', ruby: 'Fay', gender: 'female', category: 'cat1', color: '#a78bfa',
+      icon: '\u{1F9DA}',
+      summary: '不思議な雰囲気の少女',
+      appearance: ['神秘的な雰囲気', '独特の髪型', '幻想的な佇まい', 'ミステリアスな表情'],
+      desc: '不思議で神秘的な雰囲気を持つ少女。ファンタジー感のある見た目が特徴で、占い師や妖狐などの神秘的な役職でよく選ばれる。人気投票でも上位。' },
+    { name: 'ヒュー', ruby: 'Hugh', gender: 'male', category: 'cat1', color: '#a1a1aa',
+      icon: '\u{1F9D3}',
+      summary: '穏やかな老紳士',
+      appearance: ['白髪交じりの髪', '穏やかな表情', '紳士的な装い', '温かみのある雰囲気'],
+      desc: '穏やかで知的な雰囲気の老紳士。エリックとは異なる温かみのある老年キャラクターで、村の知恵袋的な役どころに似合う。' },
+
+    // ===== 追加キャラクター (7) =====
+    { name: 'マリアンヌ', ruby: 'Marianne', gender: 'female', category: 'cat2', color: '#f472b6',
+      icon: '\u{1F940}',
+      summary: '優雅で気品のある女性',
+      appearance: ['優雅な立ち振る舞い', '気品のある容姿', '上品な装い', '洗練された雰囲気'],
+      desc: '優雅で気品のある女性。追加キャラクターとして登場し、上品で洗練された雰囲気が特徴。落ち着いた議論スタイルのプレイヤーに人気。' },
+    { name: 'ニック', ruby: 'Nick', gender: 'male', category: 'cat2', color: '#38bdf8',
+      icon: '\u{1F60E}',
+      summary: 'カジュアルでクールな青年',
+      appearance: ['カジュアルなスタイル', 'クールな表情', '若々しい雰囲気', 'スタイリッシュな装い'],
+      desc: 'カジュアルでクールな印象の青年。追加キャラクターの中でも使いやすい雰囲気で、幅広いプレイスタイルに合う。' },
+    { name: 'ソフィア', ruby: 'Sophia', gender: 'female', category: 'cat2', color: '#c084fc',
+      icon: '\u{1F3B5}',
+      summary: '華やかで魅力的な女性',
+      appearance: ['華やかな容姿', '魅力的な笑顔', 'エレガントな装い', '明るい雰囲気'],
+      desc: '華やかで魅力的な女性キャラクター。明るくエレガントな雰囲気を持ち、場を華やかにする存在感がある。' },
+    { name: 'チャン', ruby: 'Chan', gender: 'male', category: 'cat2', color: '#f59e0b',
+      icon: '\u{1F94B}',
+      summary: '力強い雰囲気の男性',
+      appearance: ['力強い体格', '東洋的な風貌', '堂々とした佇まい', '威圧感のある雰囲気'],
+      desc: '力強い雰囲気を持つ男性キャラクター。堂々とした佇まいと東洋的な風貌が特徴。存在感のあるプレイに似合う。' },
+    { name: 'カミラ', ruby: 'Camilla', gender: 'female', category: 'cat2', color: '#fb7185',
+      icon: '\u{1F339}',
+      summary: '妖艶で大人の魅力を持つ女性',
+      appearance: ['妖艶な雰囲気', '大人の色気', 'セクシーな装い', 'ミステリアスな表情'],
+      desc: '妖艶で大人の魅力を持つ女性。ミステリアスな雰囲気があり、人狼や狂人などの騙り役職でよく使用される。' },
+    { name: 'フレディ', ruby: 'Freddy', gender: 'male', category: 'cat2', color: '#4ade80',
+      icon: '\u{1F3A9}',
+      summary: '陽気で個性的な男性',
+      appearance: ['個性的なファッション', '陽気な表情', 'ユニークな雰囲気', '目立つ外見'],
+      desc: '陽気で個性的な男性キャラクター。ユニークな雰囲気を持ち、明るいプレイスタイルにぴったり。個性派プレイヤーに人気。' },
+    { name: 'アーニー', ruby: 'Arnie', gender: 'male', category: 'cat2', color: '#f97316',
+      icon: '\u{1F525}',
+      summary: '熱血で情熱的な男性',
+      appearance: ['情熱的な表情', '力強い雰囲気', '熱血漢の風貌', '活力に満ちた佇まい'],
+      desc: '熱血で情熱的な男性キャラクター。人気投票では上位にランクインする人気の高さ。熱い議論を展開するプレイヤーに愛用されている。' },
+
+    // ===== VIPキャラクター (6) =====
+    { name: 'ケイト', ruby: 'Kate', gender: 'female', category: 'cat3', color: '#93c5fd',
+      icon: '\u{1F64B}',
+      summary: '市民モチーフのVIPキャラ',
+      appearance: ['清楚な雰囲気', '明るい表情', '親しみやすい容姿', '市民をイメージした装い'],
+      desc: '市民（村人）をモチーフにしたVIPキャラクター。清楚で親しみやすい雰囲気を持つ。月額VIP会員限定で使用可能。',
+      motif: '市民' },
+    { name: 'ウィル', ruby: 'Will', gender: 'male', category: 'cat3', color: '#34d399',
+      icon: '\u{1F6E1}',
+      summary: '狩人モチーフのVIPキャラ',
+      appearance: ['勇敢な表情', '騎士的な装い', '頼もしい体格', '守護者の雰囲気'],
+      desc: '狩人（騎士）をモチーフにしたVIPキャラクター。勇敢で頼もしい雰囲気を持ち、護衛役にふさわしい風格がある。',
+      motif: '狩人' },
+    { name: 'セリーヌ', ruby: 'Celine', gender: 'female', category: 'cat3', color: '#f9a8d4',
+      icon: '\u{1F478}',
+      summary: 'プリンセスモチーフのVIPキャラ',
+      appearance: ['高貴な雰囲気', '美しい装い', '気品のある容姿', 'プリンセスらしい佇まい'],
+      desc: 'プリンセスをモチーフにしたVIPキャラクター。高貴で美しい雰囲気が特徴。女王部屋のプリンセス役で使用するプレイヤーも多い。',
+      motif: 'プリンセス' },
+    { name: 'ポール', ruby: 'Paul', gender: 'male', category: 'cat3', color: '#a78bfa',
+      icon: '\u{1F46C}',
+      summary: '双子モチーフのVIPキャラ',
+      appearance: ['対称的なデザイン', '双子を思わせる装飾', '個性的な容姿', '神秘的な雰囲気'],
+      desc: '双子をモチーフにしたVIPキャラクター。双子の役職と合わせて使用されることが多い。個性的で神秘的な雰囲気を持つ。',
+      motif: '双子' },
+    { name: 'モーガン', ruby: 'Morgan', gender: 'male', category: 'cat3', color: '#f87171',
+      icon: '\u{1F921}',
+      summary: '狂人モチーフのVIPキャラ',
+      appearance: ['不気味な笑み', '狂気を感じさせる装い', '独特の雰囲気', 'カオスな佇まい'],
+      desc: '狂人をモチーフにしたVIPキャラクター。狂気を感じさせる独特の雰囲気が特徴。人狼陣営の騙り役職で映えるビジュアル。',
+      motif: '狂人' },
+    { name: 'ペネロペ', ruby: 'Penelope', gender: 'female', category: 'cat3', color: '#818cf8',
+      icon: '\u{1F43A}',
+      summary: '一途な人狼モチーフのVIPキャラ',
+      appearance: ['妖艶な雰囲気', '狼を思わせる鋭い目', 'ダークな装い', 'ミステリアスな佇まい'],
+      desc: '一途な人狼をモチーフにしたVIPキャラクター。妖艶でミステリアスな雰囲気が特徴。人狼陣営のプレイにふさわしいダークな魅力を持つ。',
+      motif: '一途な人狼' }
   ];
 
-  var cards = document.getElementById('charCards');
+  var CATEGORY_LABELS = { cat1: '初期', cat2: '追加', cat3: 'VIP' };
+  var CATEGORY_TAG = { cat1: 't-cat1', cat2: 't-cat2', cat3: 't-cat3' };
+
+  var cardsEl = document.getElementById('charCards');
   var searchInput = document.getElementById('charSearch');
   var countEl = document.getElementById('charCount');
-  var activeGender = 'all';
+  var overlay = document.getElementById('charDetailOverlay');
+  var detailEl = document.getElementById('charDetail');
+  var activeFilter = 'all';
 
-  function render(filter, gender) {
-    filter = filter || '';
-    gender = gender || 'all';
-    var filtered = CHARACTERS.filter(function(c) {
-      var matchName = c.name.indexOf(filter) !== -1 || c.ruby.toLowerCase().indexOf(filter.toLowerCase()) !== -1 || c.desc.indexOf(filter) !== -1;
-      var matchGender = gender === 'all' || c.gender === gender;
-      return matchName && matchGender;
+  function filterChars(query, filter) {
+    query = (query || '').toLowerCase();
+    return CHARACTERS.filter(function(c) {
+      var matchText = !query || c.name.indexOf(query) !== -1 ||
+        c.ruby.toLowerCase().indexOf(query) !== -1 ||
+        c.desc.indexOf(query) !== -1;
+      var matchFilter = filter === 'all' || c.gender === filter || c.category === filter;
+      return matchText && matchFilter;
     });
+  }
 
-    countEl.textContent = filtered.length + ' 人のキャラクターが見つかりました';
-
-    cards.innerHTML = filtered.map(function(c) {
-      return '<div class="char-card ' + c.gender + '">' +
-        '<div class="char-card-avatar">' + c.icon + '</div>' +
+  function renderCards(list) {
+    countEl.textContent = list.length + ' 人のキャラクターが見つかりました';
+    cardsEl.innerHTML = list.map(function(c, i) {
+      var genderTag = c.gender === 'male' ? '\u2642 男性' : '\u2640 女性';
+      var genderClass = c.gender === 'male' ? 't-male' : 't-female';
+      return '<div class="char-card" data-idx="' + CHARACTERS.indexOf(c) + '" style="--accent:' + c.color + '">' +
+        '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:' + c.color + ';"></div>' +
+        '<div class="char-card-avatar" style="background:linear-gradient(135deg,' + c.color + '22,' + c.color + '08);border-color:' + c.color + '44;">' + c.icon + '</div>' +
         '<div class="char-card-name">' + c.name + '</div>' +
         '<div class="char-card-ruby">' + c.ruby + '</div>' +
         '<div class="char-card-tags">' +
-          '<span class="char-tag gender-' + c.gender + '">' + (c.gender === 'male' ? '男性' : '女性') + '</span>' +
-          '<span class="char-tag age">' + c.age + '</span>' +
+          '<span class="char-tag ' + genderClass + '">' + genderTag + '</span>' +
+          '<span class="char-tag ' + CATEGORY_TAG[c.category] + '">' + CATEGORY_LABELS[c.category] + '</span>' +
         '</div>' +
-        '<div class="char-card-desc">' + c.desc + '</div>' +
-        '<div class="char-card-personality"><strong>性格:</strong> ' + c.personality + '</div>' +
+        '<div class="char-card-desc">' + c.summary + '</div>' +
       '</div>';
     }).join('');
   }
+
+  function showDetail(idx) {
+    var c = CHARACTERS[idx];
+    if (!c) return;
+    var genderTag = c.gender === 'male' ? '\u2642 男性' : '\u2640 女性';
+    var genderClass = c.gender === 'male' ? 't-male' : 't-female';
+    var motifHtml = c.motif ? '<div class="char-detail-section"><h3>\u{1F3AD} モチーフ役職</h3><p>' + c.motif + '</p></div>' : '';
+    detailEl.innerHTML =
+      '<button class="char-detail-close" aria-label="閉じる">\u2715</button>' +
+      '<div class="char-detail-avatar" style="background:linear-gradient(135deg,' + c.color + '33,' + c.color + '11);border-color:' + c.color + '66;">' + c.icon + '</div>' +
+      '<div class="char-detail-name">' + c.name + '</div>' +
+      '<div class="char-detail-ruby">' + c.ruby + '</div>' +
+      '<div class="char-detail-tags">' +
+        '<span class="char-tag ' + genderClass + '">' + genderTag + '</span>' +
+        '<span class="char-tag ' + CATEGORY_TAG[c.category] + '">' + CATEGORY_LABELS[c.category] + 'キャラ</span>' +
+      '</div>' +
+      '<div class="char-detail-section"><h3>\u{1F4DD} キャラクター紹介</h3><p>' + c.desc + '</p></div>' +
+      '<div class="char-detail-section"><h3>\u{1F441} 外見の特徴</h3><ul>' +
+        c.appearance.map(function(a) { return '<li>' + a + '</li>'; }).join('') +
+      '</ul></div>' +
+      motifHtml +
+      '<button class="char-detail-back">\u2190 一覧に戻る</button>';
+
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    detailEl.querySelector('.char-detail-close').addEventListener('click', closeDetail);
+    detailEl.querySelector('.char-detail-back').addEventListener('click', closeDetail);
+  }
+
+  function closeDetail() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeDetail();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) closeDetail();
+  });
+
+  cardsEl.addEventListener('click', function(e) {
+    var card = e.target.closest('.char-card');
+    if (!card) return;
+    showDetail(parseInt(card.dataset.idx, 10));
+  });
 
   document.querySelectorAll('.filter-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
       btn.classList.add('active');
-      activeGender = btn.dataset.gender;
-      render(searchInput.value, activeGender);
+      activeFilter = btn.dataset.filter;
+      renderCards(filterChars(searchInput.value, activeFilter));
     });
   });
 
   searchInput.addEventListener('input', function() {
-    render(searchInput.value, activeGender);
+    renderCards(filterChars(searchInput.value, activeFilter));
   });
 
-  render();
+  renderCards(CHARACTERS);
 })();
 </script>
 </body>

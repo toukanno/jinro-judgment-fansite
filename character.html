@@ -513,7 +513,7 @@
       <ul>
         <li><a href="index.html">ホーム</a></li>
         <li><a href="roles.html">役職一覧</a></li>
-        <li><a href="character.html">キャラクター</a></li>
+        <li><a href="characters.html">キャラクター</a></li>
         <li><a href="guide.html">初心者ガイド</a></li>
         <li><a href="strategy.html">立ち回り</a></li>
         <li><a href="composition.html">編成考察</a></li>
@@ -697,7 +697,7 @@
         '<div class="not-found">' +
         '<h2>&#x1F50D; 役職が見つかりませんでした</h2>' +
         '<p>指定された役職は存在しないか、URLが間違っている可能性があります。</p>' +
-        '<a href="character.html" class="btn btn-primary">人物紹介へ戻る</a>' +
+        '<a href="characters.html" class="btn btn-primary">人物紹介へ戻る</a>' +
         '</div>';
       return;
     }
@@ -723,8 +723,8 @@
     var nextRole = idx < ROLES_DATA.length - 1 ? ROLES_DATA[idx + 1] : null;
 
     var html = '';
-    html += '<a href="character.html" class="back-link">&#x2190; 人物紹介に戻る</a>';
-    html += '<div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> <a href="character.html">人物紹介</a> <span>&gt;</span> ' + role.name + '</div>';
+    html += '<a href="characters.html" class="back-link">&#x2190; 人物紹介に戻る</a>';
+    html += '<div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> <a href="characters.html">人物紹介</a> <span>&gt;</span> ' + role.name + '</div>';
 
     // Info cards
     html += '<div class="info-grid">';
