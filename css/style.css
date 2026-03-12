@@ -92,6 +92,19 @@ a:hover { color: var(--accent-hover); }
 }
 .theme-toggle:hover { border-color: var(--accent); background: var(--accent-bg); }
 
+/* ===== Scroll Progress Bar ===== */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  z-index: 9999;
+  transition: width .1s linear;
+  pointer-events: none;
+}
+
 /* ===== Animations ===== */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(24px); }

@@ -66,6 +66,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Scroll progress bar (auto-inject)
+  if (!document.querySelector('.scroll-progress')) {
+    const bar = document.createElement('div');
+    bar.className = 'scroll-progress';
+    document.body.prepend(bar);
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = docHeight > 0 ? (scrollTop / docHeight * 100) + '%' : '0%';
+    }, { passive: true });
+  }
+
   // Header scroll effect
   const header = document.querySelector('.site-header');
   if (header) {
