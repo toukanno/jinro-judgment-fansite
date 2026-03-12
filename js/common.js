@@ -58,6 +58,21 @@ document.addEventListener('DOMContentLoaded', () => {
       header.classList.toggle('scrolled', window.scrollY > 10);
     }, { passive: true });
   }
+
+  // Scroll reveal animation for cards and sections
+  if ('IntersectionObserver' in window) {
+    const revealTargets = document.querySelectorAll('.card, .accordion-item, .tip-box, .strat-card, .strat-section');
+    revealTargets.forEach(el => el.classList.add('reveal'));
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealTargets.forEach(el => observer.observe(el));
+  }
 });
 
 // ===== Theme Color System =====
