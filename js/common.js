@@ -86,6 +86,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   }
 
+  // Breadcrumb JSON-LD auto-generation
+  const breadcrumbEl = document.querySelector('.breadcrumb');
+  if (breadcrumbEl && !document.querySelector('script[type="application/ld+json"][data-bc]')) {
+    const links = breadcrumbEl.querySelectorAll('a');
+    const items = [];
+    const base = 'https://toukanno.github.io/jinro-judgment-fansite/';
+    links.forEach((a, i) => {
+      items.push({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: a.textContent.trim(),
+        item: base + a.getAttribute('href')
+      });
+    });
+    // Add current page as last item
+    const pageTitle = breadcrumbEl.lastChild.textContent.trim();
+    if (pageTitle) {
+      items.push({
+        '@type': 'ListItem',
+        position: items.length + 1,
+        name: pageTitle
+      });
+    }
+    if (items.length > 0) {
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.setAttribute('data-bc', '');
+      script.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: items
+      });
+      document.head.appendChild(script);
+    }
+  }
+
   // Scroll reveal animation for cards and sections
   if ('IntersectionObserver' in window) {
     const revealTargets = document.querySelectorAll('.card, .accordion-item, .tip-box, .strat-card, .strat-section');
