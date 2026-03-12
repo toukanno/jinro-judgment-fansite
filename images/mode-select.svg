@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="710" viewBox="0 0 400 710">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a5568"/>
+      <stop offset="50%" stop-color="#6b7fa8"/>
+      <stop offset="100%" stop-color="#2d3748"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d4a017"/>
+      <stop offset="50%" stop-color="#f0d060"/>
+      <stop offset="100%" stop-color="#b8860b"/>
+    </linearGradient>
+    <radialGradient id="shield" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#dc2626"/>
+      <stop offset="100%" stop-color="#991b1b"/>
+    </radialGradient>
+    <filter id="snow">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" seed="2"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.3 0"/>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="400" height="710" fill="url(#bg)"/>
+  <!-- Snow overlay -->
+  <rect width="400" height="710" filter="url(#snow)" opacity="0.15"/>
+  <!-- Mode Select text -->
+  <text x="200" y="120" text-anchor="middle" font-family="serif" font-size="36" fill="url(#gold)" font-style="italic" font-weight="bold">Mode Select</text>
+  <!-- Shield/emblem -->
+  <ellipse cx="200" cy="280" rx="90" ry="95" fill="url(#gold)" stroke="#8B6914" stroke-width="3"/>
+  <ellipse cx="200" cy="280" rx="78" ry="83" fill="url(#shield)"/>
+  <!-- Wolf silhouette in shield -->
+  <text x="200" y="300" text-anchor="middle" font-size="60" fill="rgba(0,0,0,0.3)">&#x1F43A;</text>
+  <!-- Japan map hint -->
+  <text x="200" y="290" text-anchor="middle" font-size="50" fill="rgba(255,255,255,0.2)">&#x1F5FE;</text>
+  <!-- 全国対戦 text -->
+  <text x="200" y="420" text-anchor="middle" font-family="serif" font-size="40" fill="#f0d060" font-weight="bold">全国対戦</text>
+  <!-- Description -->
+  <text x="200" y="460" text-anchor="middle" font-size="16" fill="#e2e8f0">・汎用アイコン使用可能</text>
+  <!-- Player card area -->
+  <rect x="50" y="500" width="300" height="90" rx="8" fill="rgba(0,0,0,0.5)" stroke="#d4a017" stroke-width="2"/>
+  <rect x="60" y="510" width="70" height="70" rx="4" fill="#4a1942"/>
+  <text x="95" y="555" text-anchor="middle" font-size="12" fill="#f9a8d4">Avatar</text>
+  <text x="220" y="535" text-anchor="middle" font-size="14" fill="#e2e8f0">名前　　ロシ</text>
+  <rect x="155" y="550" width="170" height="22" rx="4" fill="#4dc9f6" opacity="0.7"/>
+  <text x="310" y="567" text-anchor="middle" font-size="16" fill="white" font-weight="bold">339</text>
+  <!-- Bottom bar -->
+  <rect x="0" y="650" width="400" height="60" fill="rgba(0,0,0,0.7)"/>
+  <text x="35" y="685" text-anchor="middle" font-size="12" fill="#e2e8f0">ショップ</text>
+  <text x="105" y="685" text-anchor="middle" font-size="12" fill="#e2e8f0">友達</text>
+  <text x="175" y="685" text-anchor="middle" font-size="12" fill="#e2e8f0">戦績</text>
+  <text x="245" y="685" text-anchor="middle" font-size="12" fill="#e2e8f0">対戦ログ</text>
+  <text x="315" y="685" text-anchor="middle" font-size="12" fill="#e2e8f0">ランキング</text>
+  <text x="375" y="685" text-anchor="middle" font-size="12" fill="#e2e8f0">設定</text>
+  <!-- Copyright -->
+  <text x="150" y="640" text-anchor="middle" font-size="11" fill="#a0aec0">© sorairo</text>
+  <text x="340" y="640" text-anchor="middle" font-size="11" fill="#a0aec0">0.9.151</text>
+</svg>
