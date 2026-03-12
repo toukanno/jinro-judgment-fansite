@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#161b22">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JGDB">
+  <title>V3新役職一覧 - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメント大型バージョンアップV3で追加された新役職24種の能力・陣営・立ち回りを解説。">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .update-hero {
+      background: linear-gradient(135deg, #1a1025 0%, #0d1117 40%, #0a1628 100%);
+      padding: 3.5rem 1.5rem 2.5rem;
+      text-align: center;
+      border-bottom: 1px solid #30363d;
+      position: relative;
+      overflow: hidden;
+    }
+    .update-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 100%, rgba(167,139,250,.12), transparent 60%);
+    }
+    .update-hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+    .update-hero h1 {
+      font-size: 2rem;
+      font-weight: 900;
+      background: linear-gradient(90deg, #f85149, #d29922, #7ee787, #58a6ff, #db7ff7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: .5rem;
+    }
+    .update-hero .subtitle { color: #8b949e; font-size: 1rem; }
+    .update-hero .update-date {
+      display: inline-block;
+      margin-top: .8rem;
+      padding: .3rem .8rem;
+      border: 1px solid #30363d;
+      border-radius: 20px;
+      font-size: .82rem;
+      color: #8b949e;
+    }
+
+    .team-section { margin-bottom: 3rem; }
+    .team-header {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 1.2rem;
+      padding-bottom: .5rem;
+      border-bottom: 2px solid #30363d;
+    }
+    .team-header .team-icon { font-size: 1.5rem; }
+
+    .role-card-v3 {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+      margin-bottom: .8rem;
+      transition: border-color .2s, box-shadow .2s;
+      cursor: pointer;
+    }
+    .role-card-v3:hover { border-color: #58a6ff; box-shadow: 0 2px 12px rgba(88,166,255,.08); }
+    .role-card-v3 .role-header {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      margin-bottom: .5rem;
+    }
+    .role-card-v3 .role-icon { font-size: 1.5rem; }
+    .role-card-v3 .role-name { font-size: 1.05rem; font-weight: 700; color: #e6edf3; }
+    .role-card-v3 .role-ability-tag {
+      margin-left: auto;
+      font-size: .78rem;
+      padding: .15rem .5rem;
+      border-radius: 4px;
+      background: rgba(88,166,255,.12);
+      color: #58a6ff;
+      font-weight: 600;
+    }
+    .role-card-v3 .role-desc { color: #c9d1d9; font-size: .9rem; line-height: 1.7; }
+    .role-card-v3 .role-strategy {
+      margin-top: .6rem;
+      padding: .6rem .8rem;
+      background: rgba(88,166,255,.05);
+      border-radius: 6px;
+      font-size: .85rem;
+      color: #8b949e;
+      display: none;
+    }
+    .role-card-v3 .role-strategy strong { color: #58a6ff; }
+    .role-card-v3.open .role-strategy { display: block; }
+    .role-card-v3 .expand-hint {
+      font-size: .75rem;
+      color: #484f58;
+      margin-top: .4rem;
+    }
+    .role-card-v3.open .expand-hint { display: none; }
+
+    .role-card-v3.village { border-left: 3px solid #7ee787; }
+    .role-card-v3.werewolf { border-left: 3px solid #f85149; }
+    .role-card-v3.fox { border-left: 3px solid #d29922; }
+    .role-card-v3.lovers { border-left: 3px solid #db7ff7; }
+    .role-card-v3.zombie { border-left: 3px solid #6e7681; }
+    .role-card-v3.other { border-left: 3px solid #8b949e; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .stat-card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .stat-card .stat-num { font-size: 2rem; font-weight: 900; }
+    .stat-card .stat-label { font-size: .82rem; color: #8b949e; margin-top: .2rem; }
+
+    .source-note {
+      background: rgba(88,166,255,.06);
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      font-size: .85rem;
+      color: #8b949e;
+      margin-bottom: 2rem;
+    }
+    .source-note a { color: #58a6ff; }
+
+    .filter-bar {
+      display: flex;
+      gap: .3rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .update-hero h1 { font-size: 1.4rem; }
+      .update-hero { padding: 2.5rem 1rem 2rem; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+        <li><a href="copipe.html">コピペ集</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="update-hero">
+  <div class="update-hero-inner">
+    <h1>&#x1F195; 大型バージョンアップV3 新役職</h1>
+    <p class="subtitle">新役職24種が追加！より奥深い人狼体験を楽しもう</p>
+    <span class="update-date">&#x1F4C5; 2025年12月15日 更新</span>
+  </div>
+</div>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> <a href="roles.html">役職一覧</a> <span>&gt;</span> V3新役職</div>
+
+  <div class="source-note">
+    &#x2139;&#xFE0F; このページは<a href="https://help.sorairo.jp/werewolf-judgment/100.html" target="_blank" rel="noopener">公式ヘルプ「大型バージョンアップV3更新内容」</a>を参考に作成しています。最新の正確な情報は公式ページをご確認ください。
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num" style="color:#e6edf3">24</div>
+      <div class="stat-label">新役職数</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" style="color:#7ee787">13</div>
+      <div class="stat-label">市民陣営</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" style="color:#f85149">8</div>
+      <div class="stat-label">人狼陣営</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" style="color:#d29922">2</div>
+      <div class="stat-label">妖狐陣営</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" style="color:#db7ff7">1</div>
+      <div class="stat-label">その他陣営</div>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-team="all">全て (24)</button>
+    <button class="filter-btn" data-team="village">市民陣営</button>
+    <button class="filter-btn" data-team="werewolf">人狼陣営</button>
+    <button class="filter-btn" data-team="fox">妖狐陣営</button>
+    <button class="filter-btn" data-team="other">その他</button>
+  </div>
+
+  <div id="rolesList"></div>
+
+</main>
+
+<footer class="site-footer">
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
+</footer>
+
+<script src="js/common.js"></script>
+<script>
+const V3_ROLES = [
+  // ===== 市民陣営 =====
+  {
+    name: '聖騎士', team: 'village', icon: '&#x1F6E1;', ability: '決闘',
+    desc: '一度だけ、指定した人物と決闘を行い、相手が人狼陣営であれば処刑する能力を持つ。ただし相手が市民陣営だった場合、自分が死亡する。',
+    strategy: '確実に人狼陣営だと分かっている相手に使うのが安全。推理が外れると自滅するため、情報が十分に揃ってから使おう。'
+  },
+  {
+    name: '指導者', team: 'village', icon: '&#x1F451;', ability: '指定処刑',
+    desc: '「指導者CO」をすることで昼の議論を強制終了させ、処刑したい人物を直接選択できる。ただし選択した人物が市民陣営だった場合は自分が処刑される。',
+    strategy: '強力だがハイリスク。確定情報がある場合に使うのが理想的。安易な使用は村を崩壊させるので慎重に。'
+  },
+  {
+    name: '墓場の司祭', team: 'village', icon: '&#x26B0;', ability: '墓場投票',
+    desc: '人狼の襲撃で死亡した場合、墓場から投票に参加できる。ただし処刑や道連れなど、襲撃以外の理由で死亡した場合は投票できない。',
+    strategy: '噛まれた後も村に貢献できる珍しい役職。生前の推理をしっかり行い、墓場からの投票で最後の一押しを狙おう。'
+  },
+  {
+    name: '魔法少女', team: 'village', icon: '&#x1FA84;', ability: '三種の魔法',
+    desc: '「占い」「霊能」「護衛」の能力をそれぞれ一度ずつ使用できる万能型の役職。使い方次第で村に大きく貢献できる。',
+    strategy: '3つの能力を適切なタイミングで使い分けることが重要。序盤は占い、中盤は護衛、終盤は霊能など状況に応じて判断しよう。'
+  },
+  {
+    name: 'チキン', team: 'village', icon: '&#x1F414;', ability: '逃走',
+    desc: '自分に投票が集まると怖くなって逃走してしまう。投票で最多票を得た場合、処刑を回避して翌日に持ち越すことがある。',
+    strategy: '処刑回避能力があるため、グレランで吊り位置にいても生き延びられることがある。ただし確実ではないので過信は禁物。'
+  },
+  {
+    name: '偽女王', team: 'village', icon: '&#x1F478;', ability: '偽りの女王',
+    desc: '自分を女王だと思い込んでいる市民。役職欄には「女王」と表示されるが、実際は偽物のため、死亡しても後追い死は発生しない。',
+    strategy: '自分が偽女王だとは知らされないため、女王として振る舞う。死んでも村に被害がないのが強み。逆に人狼が噛みを躊躇するブラフにもなる。'
+  },
+  {
+    name: 'マッチ売り', team: 'village', icon: '&#x1F525;', ability: 'マッチの幻覚',
+    desc: '毎夜、指定した相手にマッチを使い、相手が人狼だった場合に幻覚を見せて襲撃を失敗させる。マッチは本数制限があり、使い切ると死亡する。',
+    strategy: '人狼だと疑わしい相手にマッチを使う。成功すれば襲撃を防げるが、マッチ切れで死亡するリスクもある。計画的に使おう。'
+  },
+  {
+    name: '風来坊', team: 'village', icon: '&#x1F4A8;', ability: '気配探知',
+    desc: '毎夜一人を選んで気配を探り、その人が夜に能力を使用したかどうかを知ることができる。誰に対して使ったかまでは分からない。',
+    strategy: '怪しい相手の夜の行動有無を確認できる。能力未使用の人狼や、能力を使ったはずの役職者の真偽判定に使える。'
+  },
+  {
+    name: '光の使徒', team: 'village', icon: '&#x2728;', ability: '役職変化',
+    desc: '役職確認後、その屋敷に含まれていない市民陣営の役職にランダムで変化する。全ての役職の能力を把握している上級者向けの役職。',
+    strategy: '変化先の役職を正しく運用する知識が必要。どの役職に変化するかはランダムなので、全役職の立ち回りを習得しておこう。'
+  },
+  {
+    name: '詩人', team: 'village', icon: '&#x1F3B6;', ability: '歌の啓示',
+    desc: '毎朝、前夜に能力を使用した役職からランダムで一人について、誰に能力を使用したかを全体に歌で知らせる。',
+    strategy: '自動的に情報が公開されるため、全体の推理を助ける。ただし狩人の護衛先なども公開される可能性があるため、注意が必要。'
+  },
+  {
+    name: 'イタコ', team: 'village', icon: '&#x1F47B;', ability: '降霊',
+    desc: 'ゲーム中に一度だけ、死亡しているプレイヤーを一人選び、その人の役職を知ることができる。',
+    strategy: '処刑された人の役職を確認し、占い師の真偽判定や残りの人狼数の特定に活用しよう。タイミングが重要。'
+  },
+  {
+    name: '家政婦', team: 'village', icon: '&#x1F9F9;', ability: '目撃',
+    desc: '毎夜一人を選んでその人のもとを訪れる。訪れた先の人が人狼に襲撃されて死亡した場合、襲撃した人狼のうち一人の正体を目撃する。',
+    strategy: '噛まれそうな位置（占い師など）を訪問すると、人狼を特定できるチャンスがある。リスクもあるが情報量は絶大。'
+  },
+  {
+    name: 'ギャンブラー', team: 'village', icon: '&#x1F3B0;', ability: '票蓄積',
+    desc: '投票時に「投票する」か「票をためる」を選択できる。票をためた場合ストック（最大9票）され、投票時にストック分がすべて投票に使われる。',
+    strategy: 'ここぞという場面で大量票を投じることで、確実に吊り先をコントロールできる。序盤はためて、終盤に一気に使おう。'
+  },
+
+  // ===== 人狼陣営 =====
+  {
+    name: '心眼の人狼', team: 'werewolf', icon: '&#x1F440;', ability: '心眼',
+    desc: '特殊な感覚を持つ人狼。投票先の役職を感じ取ることができるなど、通常の人狼にはない情報収集能力を持つ。',
+    strategy: '得られた情報を仲間の人狼と共有し、効率的に村の重要役職を排除していこう。'
+  },
+  {
+    name: 'ギャンブル狼', team: 'werewolf', icon: '&#x1F3B2;', ability: 'ギャンブル襲撃',
+    desc: '襲撃時にギャンブル要素が加わる人狼。襲撃の成否や追加効果がランダムで変わるハイリスクハイリターンな役職。',
+    strategy: '運に左右されるため安定しないが、当たれば通常の人狼以上の効果が得られる。重要な場面ではリスク計算を慎重に。'
+  },
+  {
+    name: '人狼王', team: 'werewolf', icon: '&#x1F451;', ability: '王の威厳',
+    desc: '人狼のリーダー格。処刑されても一度だけ耐えることができるなど、通常の人狼より生存能力が高い特殊な人狼。',
+    strategy: '処刑耐性を活かして大胆に騙りに出ることも可能。ただし能力がバレると集中的に狙われるので注意。'
+  },
+  {
+    name: '窮地の人狼', team: 'werewolf', icon: '&#x1F630;', ability: '窮地の力',
+    desc: '追い詰められた状況で真の力を発揮する人狼。仲間の人狼が減るほど強化される能力を持つ。',
+    strategy: '序盤は通常の人狼として立ち回り、仲間が減った終盤で強化能力を活かして逆転を狙おう。'
+  },
+  {
+    name: '黒い占い師', team: 'werewolf', icon: '&#x1F52E;', ability: '偽占い',
+    desc: '人狼陣営の占い師。毎夜一人を占い、相手の役職を知ることができるが、村に嘘の占い結果を報告して混乱させる。',
+    strategy: '真の占い師と同じ能力を持つため信用を取りやすい。得られた情報を使って効果的に偽結果を作り出そう。'
+  },
+  {
+    name: '誘惑の狼信者', team: 'werewolf', icon: '&#x1F48B;', ability: '誘惑',
+    desc: '人狼を知っている狂人系の役職。特定の条件下で市民陣営のプレイヤーを誘惑し、一時的に判断を狂わせる能力を持つ。',
+    strategy: '人狼を知っているため的確に援護できる。誘惑能力で重要役職の行動を妨害し、人狼の勝利に貢献しよう。'
+  },
+  {
+    name: '封魔の狼信者', team: 'werewolf', icon: '&#x1F512;', ability: '封印',
+    desc: '人狼を知っている狂人系の役職。対象の能力を一時的に封印する力を持ち、市民陣営の能力者を無力化できる。',
+    strategy: '占い師や狩人の能力を封印すれば、人狼の襲撃成功率が大幅に上がる。封印対象の選択が勝敗を分ける。'
+  },
+  {
+    name: '女王騙り', team: 'werewolf', icon: '&#x1F3AD;', ability: '女王偽装',
+    desc: '女王のふりをする人狼陣営の役職。女王が存在する屋敷で効果を発揮し、村の混乱を引き起こす。',
+    strategy: '偽女王との関係性を利用して村を混乱させよう。本物の女王がいる屋敷では強力な騙りが可能。'
+  },
+  {
+    name: '人狼の末裔', team: 'werewolf', icon: '&#x1F43A;', ability: '継承',
+    desc: '人狼の血を引く者。最初は人狼ではないが、特定の条件（人狼の死亡など）で人狼に覚醒する可能性がある。',
+    strategy: '序盤は市民のように振る舞い、覚醒後に人狼として活動する。覚醒前の信用を活かした立ち回りが可能。'
+  },
+
+  // ===== 妖狐陣営 =====
+  {
+    name: '饒舌な妖狐', team: 'fox', icon: '&#x1F98A;', ability: '饒舌＋襲撃耐性',
+    desc: '妖狐の能力を持ちつつ、毎日指定されたワードを発言に含めなければならない。ワードを含めずに発言すると翌朝死亡する。',
+    strategy: '人狼に襲撃されても死なないが、ワード制約がある。自然にワードを会話に織り込む技術が求められる上級者向け。'
+  },
+  {
+    name: 'ささやく背教者', team: 'fox', icon: '&#x1F5E3;', ability: '狐チャット',
+    desc: '背徳者の上位互換。妖狐が誰かを知り、さらに妖狐と夜にチャットで会話ができる。妖狐全滅で後追い死する。',
+    strategy: '妖狐と直接連携できるため、戦略を合わせやすい。妖狐を守りつつ、ささやく狂人のように振る舞うのが基本。'
+  },
+
+  // ===== その他陣営 =====
+  {
+    name: '悪魔', team: 'other', icon: '&#x1F608;', ability: '契約',
+    desc: '恋人陣営に属する新役職。特定のプレイヤーと契約を結び、独自の勝利条件を目指す第三勢力。',
+    strategy: '恋人陣営として、契約相手と共に生存することが目標。村にも人狼にもバレないよう慎重に立ち回ろう。'
+  },
+];
+
+let activeTeam = 'all';
+
+function renderRoles(team) {
+  const listEl = document.getElementById('rolesList');
+  const teamGroups = {
+    village: { name: '市民陣営', icon: '&#x1F33F;', color: '#7ee787' },
+    werewolf: { name: '人狼陣営', icon: '&#x1F43A;', color: '#f85149' },
+    fox: { name: '妖狐陣営', icon: '&#x1F98A;', color: '#d29922' },
+    other: { name: 'その他陣営', icon: '&#x2753;', color: '#8b949e' }
+  };
+
+  const filtered = team === 'all' ? V3_ROLES : V3_ROLES.filter(r => r.team === team);
+
+  // Group by team
+  const groups = {};
+  filtered.forEach(r => {
+    if (!groups[r.team]) groups[r.team] = [];
+    groups[r.team].push(r);
+  });
+
+  const order = ['village', 'werewolf', 'fox', 'other'];
+  let html = '';
+
+  order.forEach(t => {
+    if (!groups[t]) return;
+    const info = teamGroups[t];
+    html += `<div class="team-section">`;
+    html += `<div class="team-header"><span class="team-icon">${info.icon}</span> ${info.name}（${groups[t].length}種）</div>`;
+    groups[t].forEach(role => {
+      html += `
+        <div class="role-card-v3 ${role.team}" onclick="this.classList.toggle('open')">
+          <div class="role-header">
+            <span class="role-icon">${role.icon}</span>
+            <span class="role-name">${role.name}</span>
+            <span class="role-badge ${role.team}" style="margin-left:.5rem">${info.name}</span>
+            <span class="role-ability-tag">${role.ability}</span>
+          </div>
+          <div class="role-desc">${role.desc}</div>
+          <div class="role-strategy"><strong>&#x1F4A1; 立ち回り：</strong>${role.strategy}</div>
+          <div class="expand-hint">&#x25BC; クリックで立ち回りを表示</div>
+        </div>
+      `;
+    });
+    html += `</div>`;
+  });
+
+  listEl.innerHTML = html;
+}
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeTeam = btn.dataset.team;
+    renderRoles(activeTeam);
+  });
+});
+
+renderRoles('all');
+</script>
+</body>
+</html>
