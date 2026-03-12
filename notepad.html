@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0e17">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JGDB">
+  <title>人狼メモ帳 - 人狼ジャッジメント攻略データベース</title>
+  <meta name="description" content="人狼ジャッジメントのゲーム中に使えるメモ帳ツール。CO情報・投票・占い結果・霊能結果をプレイヤーごとに記録。">
+  <meta property="og:title" content="人狼メモ帳 - 人狼ジャッジメント攻略データベース">
+  <meta property="og:description" content="ゲーム中のCO・投票・結果をプレイヤーごとに記録できるメモ帳ツール。">
+  <meta property="og:url" content="https://toukanno.github.io/jinro-judgment-fansite/notepad.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .notepad-setup { max-width: 500px; margin: 0 auto 2rem; }
+    .setup-row { display: flex; gap: .8rem; align-items: end; margin-bottom: 1rem; }
+    .setup-row label { display: block; font-size: .85rem; color: #8b949e; margin-bottom: .3rem; }
+    .setup-row input[type="number"] {
+      width: 80px; padding: .5rem .7rem; background: #161b22; border: 1px solid #30363d;
+      border-radius: 8px; color: #e6edf3; font-size: 1rem; text-align: center;
+    }
+    .setup-row input:focus { border-color: #58a6ff; outline: none; }
+
+    .notepad-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem; margin-bottom: 2rem;
+    }
+    .player-card {
+      background: #161b22; border: 1px solid #30363d; border-radius: 10px;
+      padding: .8rem; transition: border-color .2s;
+    }
+    .player-card:hover { border-color: rgba(88,166,255,.3); }
+    .player-card.dead { opacity: .5; }
+    .player-card.dead .player-name { text-decoration: line-through; }
+
+    .player-header { display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem; }
+    .player-num {
+      width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: .75rem; font-weight: 800; background: rgba(88,166,255,.15); color: #58a6ff; flex-shrink: 0;
+    }
+    .player-name {
+      flex: 1; padding: .3rem .5rem; background: transparent; border: 1px solid transparent;
+      border-radius: 6px; color: #e6edf3; font-size: .9rem; font-weight: 700;
+    }
+    .player-name:focus { border-color: #30363d; background: #0d1117; outline: none; }
+    .player-name::placeholder { color: #484f58; }
+
+    .status-btns { display: flex; gap: .3rem; margin-bottom: .5rem; flex-wrap: wrap; }
+    .status-btn {
+      padding: .2rem .5rem; border-radius: 6px; font-size: .7rem; font-weight: 700;
+      border: 1px solid #30363d; background: transparent; color: #8b949e; cursor: pointer;
+      transition: all .15s;
+    }
+    .status-btn:hover { border-color: #58a6ff; }
+    .status-btn.active-village { background: rgba(35,134,54,.2); color: #3fb950; border-color: #238636; }
+    .status-btn.active-wolf { background: rgba(248,81,73,.2); color: #f85149; border-color: #f85149; }
+    .status-btn.active-fox { background: rgba(210,153,34,.2); color: #d29922; border-color: #d29922; }
+    .status-btn.active-dead { background: rgba(139,148,158,.2); color: #8b949e; border-color: #484f58; }
+    .status-btn.active-suspect { background: rgba(167,139,250,.2); color: #a78bfa; border-color: #a78bfa; }
+
+    .co-row { display: flex; gap: .3rem; margin-bottom: .4rem; flex-wrap: wrap; }
+    .co-btn {
+      padding: .15rem .4rem; border-radius: 5px; font-size: .65rem; font-weight: 700;
+      border: 1px solid #30363d; background: transparent; color: #8b949e; cursor: pointer;
+      transition: all .15s;
+    }
+    .co-btn:hover { border-color: #58a6ff; }
+    .co-btn.active { background: rgba(88,166,255,.15); color: #58a6ff; border-color: #58a6ff; }
+
+    .player-memo {
+      width: 100%; min-height: 50px; padding: .4rem .5rem; background: #0d1117; border: 1px solid #21262d;
+      border-radius: 6px; color: #c9d1d9; font-size: .8rem; line-height: 1.5; resize: vertical;
+      font-family: inherit;
+    }
+    .player-memo:focus { border-color: #30363d; outline: none; }
+    .player-memo::placeholder { color: #484f58; }
+
+    .day-tracker { margin-bottom: 1.5rem; }
+    .day-nav { display: flex; gap: .5rem; align-items: center; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+    .day-btn {
+      padding: .4rem .9rem; border-radius: 8px; border: 1px solid #30363d; background: #161b22;
+      color: #8b949e; font-size: .85rem; font-weight: 700; cursor: pointer; transition: all .15s;
+    }
+    .day-btn:hover { border-color: #58a6ff; }
+    .day-btn.active { background: rgba(88,166,255,.15); color: #58a6ff; border-color: #58a6ff; }
+
+    .vote-section { margin-top: 1rem; }
+    .vote-row { display: flex; gap: .5rem; align-items: center; margin-bottom: .3rem; font-size: .82rem; }
+    .vote-row select {
+      padding: .3rem .5rem; background: #161b22; border: 1px solid #30363d; border-radius: 6px;
+      color: #e6edf3; font-size: .8rem;
+    }
+    .vote-row select:focus { border-color: #58a6ff; outline: none; }
+    .vote-arrow { color: #484f58; }
+
+    .action-bar { display: flex; gap: .8rem; justify-content: center; margin-bottom: 2rem; flex-wrap: wrap; }
+    .action-btn {
+      padding: .6rem 1.2rem; border-radius: 8px; font-weight: 700; font-size: .85rem; cursor: pointer;
+      transition: all .2s; border: 1px solid #30363d; background: #161b22; color: #e6edf3;
+    }
+    .action-btn:hover { border-color: #58a6ff; transform: translateY(-1px); }
+    .action-btn.primary { background: linear-gradient(135deg, #238636, #2ea043); color: #fff; border: none; }
+    .action-btn.primary:hover { box-shadow: 0 4px 15px rgba(35,134,54,.3); }
+    .action-btn.danger { border-color: #f85149; color: #f85149; }
+    .action-btn.danger:hover { background: rgba(248,81,73,.1); }
+
+    .result-log { margin-bottom: 2rem; }
+    .log-entry {
+      padding: .5rem .8rem; border-left: 3px solid #30363d; margin-bottom: .4rem;
+      font-size: .82rem; color: #c9d1d9; background: rgba(22,27,34,.5); border-radius: 0 6px 6px 0;
+    }
+    .log-entry.seer { border-left-color: #58a6ff; }
+    .log-entry.medium { border-left-color: #a78bfa; }
+    .log-entry.guard { border-left-color: #3fb950; }
+    .log-entry.kill { border-left-color: #f85149; }
+
+    .summary-box {
+      background: #161b22; border: 1px solid #30363d; border-radius: 10px;
+      padding: 1rem; margin-bottom: 1.5rem;
+    }
+    .summary-box h4 { font-size: .9rem; color: #58a6ff; margin-bottom: .5rem; }
+    .summary-table { width: 100%; border-collapse: collapse; font-size: .78rem; }
+    .summary-table th { text-align: left; padding: .3rem .5rem; color: #8b949e; border-bottom: 1px solid #21262d; font-weight: 600; }
+    .summary-table td { padding: .3rem .5rem; border-bottom: 1px solid #21262d; color: #c9d1d9; }
+
+    @media (max-width: 600px) {
+      .notepad-grid { grid-template-columns: 1fr; }
+      .setup-row { flex-direction: column; align-items: stretch; }
+      .status-btns { gap: .2rem; }
+      .status-btn { padding: .25rem .4rem; font-size: .68rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="character.html">キャラクター</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+        <li><a href="templates.html">部屋テンプレ</a></li>
+        <li><a href="copipe.html">コピペ集</a></li>
+        <li><a href="v3roles.html">V3新役職</a></li>
+        <li><a href="queen-wise.html">女王部屋</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="timer.html">タイマー</a></li>
+        <li><a href="exclusion.html">同村制限</a></li>
+        <li><a href="rope-calc.html">縄計算</a></li>
+        <li><a href="synergy.html">役職相性</a></li>
+        <li><a href="quiz.html">クイズ</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>&#x1F4DD; 人狼メモ帳</h1>
+  <p>ゲーム中のCO・投票・占い結果をプレイヤーごとに記録。議論の整理に役立つツールです。</p>
+</section>
+
+<main class="container">
+
+  <div class="notepad-setup">
+    <h2 class="section-title">&#x2699; セットアップ</h2>
+    <div class="setup-row">
+      <div>
+        <label for="player-count">プレイヤー人数</label>
+        <input type="number" id="player-count" min="5" max="20" value="9">
+      </div>
+      <button class="action-btn primary" id="start-btn">ゲーム開始</button>
+    </div>
+  </div>
+
+  <div id="game-area" style="display:none;">
+
+    <div class="action-bar">
+      <button class="action-btn" id="add-day-btn">&#x2795; 日を進める</button>
+      <button class="action-btn" id="export-btn">&#x1F4CB; メモをコピー</button>
+      <button class="action-btn danger" id="reset-btn">&#x1F5D1; リセット</button>
+    </div>
+
+    <div class="day-tracker">
+      <div class="day-nav" id="day-nav"></div>
+    </div>
+
+    <h2 class="section-title">&#x1F464; プレイヤーメモ</h2>
+    <div class="notepad-grid" id="player-grid"></div>
+
+    <div class="summary-box">
+      <h4>&#x1F4CA; CO状況まとめ</h4>
+      <table class="summary-table" id="co-summary">
+        <thead><tr><th>No.</th><th>名前</th><th>CO</th><th>状態</th><th>メモ</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="summary-box">
+      <h4>&#x1F4DC; 結果ログ</h4>
+      <div id="result-log"><p style="color:#484f58;font-size:.85rem;">結果を追加するとここに表示されます。</p></div>
+    </div>
+
+    <div class="summary-box">
+      <h4>&#x2795; 結果を追加</h4>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:end;">
+        <div>
+          <label style="display:block;font-size:.75rem;color:#8b949e;margin-bottom:.2rem;">種類</label>
+          <select id="log-type" style="padding:.4rem;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#e6edf3;font-size:.8rem;">
+            <option value="seer">占い結果</option>
+            <option value="medium">霊能結果</option>
+            <option value="guard">護衛先</option>
+            <option value="kill">襲撃</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-size:.75rem;color:#8b949e;margin-bottom:.2rem;">対象</label>
+          <select id="log-target" style="padding:.4rem;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#e6edf3;font-size:.8rem;"></select>
+        </div>
+        <div>
+          <label style="display:block;font-size:.75rem;color:#8b949e;margin-bottom:.2rem;">結果</label>
+          <select id="log-result" style="padding:.4rem;background:#0d1117;border:1px solid #30363d;border-radius:6px;color:#e6edf3;font-size:.8rem;">
+            <option value="white">白(人間)</option>
+            <option value="black">黒(人狼)</option>
+            <option value="success">成功</option>
+            <option value="fail">失敗</option>
+          </select>
+        </div>
+        <button class="action-btn" id="add-log-btn" style="padding:.4rem .8rem;font-size:.8rem;">追加</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="tip-box" style="margin-top:2rem;">
+    <strong>使い方のヒント</strong><br>
+    ・プレイヤー名をクリックして名前を入力できます<br>
+    ・陣営ボタンで予想を色分けできます（村/狼/狐/死亡/怪しい）<br>
+    ・COボタンでカミングアウト情報を記録<br>
+    ・メモ欄に自由にメモを残せます<br>
+    ・「メモをコピー」で全情報をテキストとしてコピーできます
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="index.html">ホーム</a>
+    <a href="roles.html">役職一覧</a>
+    <a href="guide.html">初心者ガイド</a>
+    <a href="strategy.html">立ち回り</a>
+    <a href="glossary.html">用語集</a>
+  </div>
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
+</footer>
+
+<script src="js/common.js"></script>
+<script>
+(function() {
+  const CO_ROLES = ['占い師','霊能者','狩人','共有者','猫又','パン屋','市民'];
+  const STATUS_TYPES = [
+    { key: 'village', label: '村', cls: 'active-village' },
+    { key: 'wolf', label: '狼', cls: 'active-wolf' },
+    { key: 'fox', label: '狐', cls: 'active-fox' },
+    { key: 'dead', label: '死亡', cls: 'active-dead' },
+    { key: 'suspect', label: '怪', cls: 'active-suspect' }
+  ];
+
+  let players = [];
+  let currentDay = 1;
+  let maxDay = 1;
+  let logs = [];
+
+  function save() {
+    try {
+      localStorage.setItem('jg-notepad', JSON.stringify({ players, currentDay, maxDay, logs }));
+    } catch(e) {}
+  }
+
+  function load() {
+    try {
+      const d = JSON.parse(localStorage.getItem('jg-notepad'));
+      if (d && d.players && d.players.length) {
+        players = d.players;
+        currentDay = d.currentDay || 1;
+        maxDay = d.maxDay || 1;
+        logs = d.logs || [];
+        return true;
+      }
+    } catch(e) {}
+    return false;
+  }
+
+  function createPlayers(count) {
+    players = [];
+    for (let i = 1; i <= count; i++) {
+      players.push({ id: i, name: '', status: '', co: '', memo: '' });
+    }
+    currentDay = 1;
+    maxDay = 1;
+    logs = [];
+    save();
+  }
+
+  function renderDayNav() {
+    const nav = document.getElementById('day-nav');
+    nav.innerHTML = '';
+    for (let d = 1; d <= maxDay; d++) {
+      const btn = document.createElement('button');
+      btn.className = 'day-btn' + (d === currentDay ? ' active' : '');
+      btn.textContent = d === 1 ? '1日目(初日)' : d + '日目';
+      btn.addEventListener('click', () => { currentDay = d; renderDayNav(); });
+      nav.appendChild(btn);
+    }
+  }
+
+  function renderGrid() {
+    const grid = document.getElementById('player-grid');
+    grid.innerHTML = '';
+    players.forEach((p, i) => {
+      const card = document.createElement('div');
+      card.className = 'player-card' + (p.status === 'dead' ? ' dead' : '');
+
+      const header = document.createElement('div');
+      header.className = 'player-header';
+      const num = document.createElement('span');
+      num.className = 'player-num';
+      num.textContent = p.id;
+      const nameInput = document.createElement('input');
+      nameInput.type = 'text';
+      nameInput.className = 'player-name';
+      nameInput.placeholder = 'プレイヤー' + p.id;
+      nameInput.value = p.name;
+      nameInput.addEventListener('input', (e) => { p.name = e.target.value; save(); updateSummary(); updateLogTarget(); });
+      header.appendChild(num);
+      header.appendChild(nameInput);
+      card.appendChild(header);
+
+      // Status buttons
+      const statusDiv = document.createElement('div');
+      statusDiv.className = 'status-btns';
+      STATUS_TYPES.forEach(st => {
+        const btn = document.createElement('button');
+        btn.className = 'status-btn' + (p.status === st.key ? ' ' + st.cls : '');
+        btn.textContent = st.label;
+        btn.addEventListener('click', () => {
+          p.status = p.status === st.key ? '' : st.key;
+          save();
+          renderGrid();
+          updateSummary();
+        });
+        statusDiv.appendChild(btn);
+      });
+      card.appendChild(statusDiv);
+
+      // CO buttons
+      const coDiv = document.createElement('div');
+      coDiv.className = 'co-row';
+      const coLabel = document.createElement('span');
+      coLabel.style.cssText = 'font-size:.7rem;color:#484f58;margin-right:.2rem;';
+      coLabel.textContent = 'CO:';
+      coDiv.appendChild(coLabel);
+      CO_ROLES.forEach(role => {
+        const btn = document.createElement('button');
+        btn.className = 'co-btn' + (p.co === role ? ' active' : '');
+        btn.textContent = role;
+        btn.addEventListener('click', () => {
+          p.co = p.co === role ? '' : role;
+          save();
+          renderGrid();
+          updateSummary();
+        });
+        coDiv.appendChild(btn);
+      });
+      card.appendChild(coDiv);
+
+      // Memo textarea
+      const memo = document.createElement('textarea');
+      memo.className = 'player-memo';
+      memo.placeholder = 'メモを入力...';
+      memo.value = p.memo;
+      memo.addEventListener('input', (e) => { p.memo = e.target.value; save(); updateSummary(); });
+      card.appendChild(memo);
+
+      grid.appendChild(card);
+    });
+  }
+
+  function updateSummary() {
+    const tbody = document.querySelector('#co-summary tbody');
+    tbody.innerHTML = '';
+    players.forEach(p => {
+      const tr = document.createElement('tr');
+      const statusText = STATUS_TYPES.find(s => s.key === p.status);
+      tr.innerHTML = '<td>' + p.id + '</td><td>' + (p.name || 'PL' + p.id) + '</td><td>' +
+        (p.co || '-') + '</td><td>' + (statusText ? statusText.label : '-') + '</td><td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' +
+        (p.memo ? p.memo.substring(0, 30) : '-') + '</td>';
+      tbody.appendChild(tr);
+    });
+  }
+
+  function updateLogTarget() {
+    const sel = document.getElementById('log-target');
+    const cur = sel.value;
+    sel.innerHTML = '';
+    players.forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p.id;
+      opt.textContent = p.name || 'PL' + p.id;
+      sel.appendChild(opt);
+    });
+    if (cur) sel.value = cur;
+  }
+
+  function renderLogs() {
+    const div = document.getElementById('result-log');
+    if (!logs.length) {
+      div.innerHTML = '<p style="color:#484f58;font-size:.85rem;">結果を追加するとここに表示されます。</p>';
+      return;
+    }
+    div.innerHTML = '';
+    logs.forEach((log, i) => {
+      const entry = document.createElement('div');
+      entry.className = 'log-entry ' + log.type;
+      const typeLabel = { seer: '占い', medium: '霊能', guard: '護衛', kill: '襲撃' }[log.type] || log.type;
+      const resultLabel = { white: '白', black: '黒', success: '成功', fail: '失敗' }[log.result] || log.result;
+      const target = players.find(p => p.id === log.targetId);
+      entry.textContent = log.day + '日目 ' + typeLabel + ': ' + (target ? (target.name || 'PL' + target.id) : '?') + ' → ' + resultLabel;
+      div.appendChild(entry);
+    });
+  }
+
+  function exportMemo() {
+    let text = '=== 人狼メモ帳 ===\n\n';
+    text += '【プレイヤー情報】\n';
+    players.forEach(p => {
+      const statusText = STATUS_TYPES.find(s => s.key === p.status);
+      text += p.id + '. ' + (p.name || 'PL' + p.id);
+      if (p.co) text += ' [CO: ' + p.co + ']';
+      if (statusText) text += ' (' + statusText.label + ')';
+      text += '\n';
+      if (p.memo) text += '   メモ: ' + p.memo + '\n';
+    });
+    text += '\n【結果ログ】\n';
+    if (logs.length) {
+      logs.forEach(log => {
+        const typeLabel = { seer: '占い', medium: '霊能', guard: '護衛', kill: '襲撃' }[log.type] || log.type;
+        const resultLabel = { white: '白', black: '黒', success: '成功', fail: '失敗' }[log.result] || log.result;
+        const target = players.find(p => p.id === log.targetId);
+        text += log.day + '日目 ' + typeLabel + ': ' + (target ? (target.name || 'PL' + target.id) : '?') + ' → ' + resultLabel + '\n';
+      });
+    } else {
+      text += 'なし\n';
+    }
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('export-btn');
+      const orig = btn.textContent;
+      btn.textContent = '\u2705 コピーしました！';
+      setTimeout(() => { btn.textContent = orig; }, 2000);
+    }).catch(() => {});
+  }
+
+  function init() {
+    document.getElementById('start-btn').addEventListener('click', () => {
+      const count = parseInt(document.getElementById('player-count').value) || 9;
+      createPlayers(Math.max(5, Math.min(20, count)));
+      showGame();
+    });
+
+    document.getElementById('add-day-btn').addEventListener('click', () => {
+      maxDay++;
+      currentDay = maxDay;
+      save();
+      renderDayNav();
+    });
+
+    document.getElementById('export-btn').addEventListener('click', exportMemo);
+
+    document.getElementById('reset-btn').addEventListener('click', () => {
+      localStorage.removeItem('jg-notepad');
+      players = [];
+      logs = [];
+      currentDay = 1;
+      maxDay = 1;
+      document.getElementById('game-area').style.display = 'none';
+      document.querySelector('.notepad-setup').style.display = '';
+    });
+
+    document.getElementById('add-log-btn').addEventListener('click', () => {
+      const type = document.getElementById('log-type').value;
+      const targetId = parseInt(document.getElementById('log-target').value);
+      const result = document.getElementById('log-result').value;
+      if (!targetId) return;
+      logs.push({ day: currentDay, type, targetId, result });
+      save();
+      renderLogs();
+    });
+
+    if (load()) {
+      showGame();
+    }
+  }
+
+  function showGame() {
+    document.querySelector('.notepad-setup').style.display = 'none';
+    document.getElementById('game-area').style.display = '';
+    renderDayNav();
+    renderGrid();
+    updateSummary();
+    updateLogTarget();
+    renderLogs();
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
