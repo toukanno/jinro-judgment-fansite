@@ -77,6 +77,7 @@
         <li><a href="rope-calc.html">縄計算</a></li>
         <li><a href="synergy.html">役職相性</a></li>
         <li><a href="quiz.html">クイズ</a></li>
+        <li><a href="notepad.html">メモ帳</a></li>
       </ul>
     </nav>
   </div>
@@ -172,6 +173,11 @@
       <h3>理解度クイズ</h3>
       <p>人狼ジャッジメントの知識をテスト！初級・中級・上級の3段階で腕試し。</p>
     </a>
+    <a href="notepad.html" class="card" style="text-decoration:none;">
+      <div class="card-icon">&#x1F4DD;</div>
+      <h3>人狼メモ帳</h3>
+      <p>ゲーム中のCO・投票・占い結果をプレイヤーごとに記録。議論の整理に。</p>
+    </a>
   </div>
 
   <h2 class="section-title">&#x2B50; 人気の役職</h2>
@@ -206,14 +212,29 @@
   </div>
 
   <h2 class="section-title">&#x1F4A1; 今日のワンポイント</h2>
-  <div class="tip-box">
-    <strong>初日のCO（カミングアウト）タイミング</strong><br>
-    占い師は初日朝に即COするのが安定です。遅れると信用を落としたり、真占いが噛まれるリスクが高まります。ただし、潜伏占いという戦術もあるので、部屋のルールや雰囲気に合わせましょう。
-  </div>
-  <div class="tip-box warning">
-    <strong>注意：騙りのリスク</strong><br>
-    役職を騙る（嘘のCOをする）場合は、最後まで矛盾なく演じ切る覚悟が必要です。中途半端な騙りは村に迷惑がかかるので、慣れるまでは素直にプレイしましょう。
-  </div>
+  <div id="dailyTip"></div>
+
+  <script>
+  (function() {
+    const tips = [
+      { title: '初日のCOタイミング', text: '占い師は初日朝に即COするのが安定です。遅れると信用を落としたり、真占いが噛まれるリスクが高まります。ただし、潜伏占いという戦術もあるので、部屋のルールに合わせましょう。', type: '' },
+      { title: '騙りのリスク', text: '役職を騙る（嘘のCOをする）場合は、最後まで矛盾なく演じ切る覚悟が必要です。中途半端な騙りは村に迷惑がかかるので、慣れるまでは素直にプレイしましょう。', type: 'warning' },
+      { title: '投票先は早めに決める', text: '議論だけして投票をギリギリまで迷うと突然死のリスクがあります。議論中に常に「自分なら誰に投票するか」を考えておきましょう。', type: '' },
+      { title: '狩人は絶対にCOしない', text: '狩人は最も潜伏が重要な役職です。COすると人狼に護衛先がバレてしまい、護衛の意味がなくなります。吊り指定された時だけCOしましょう。', type: 'warning' },
+      { title: '縄計算を覚えよう', text: '残り吊り回数 = (生存人数-1) / 2（切り捨て）。縄計算ができると「あと何回ミスできるか」が分かり、議論の優先順位が明確になります。', type: '' },
+      { title: 'ライン考察のコツ', text: '投票先・発言の庇い合い・反応の関係性を見て人狼のラインを推理しましょう。人狼同士は身内切りしないことが多いので、投票パターンは重要な手がかりです。', type: '' },
+      { title: 'グレランの重要性', text: 'グレラン（グレーからランダム投票）は情報が少ない初日に有効です。各自が怪しいと思う人に投票し、票の集まり方から新たな情報を得られます。', type: '' },
+      { title: '漂白噛みに注意', text: '偽占い師が白を出した相手を人狼が噛む「漂白噛み」は上級テクニック。噛まれた人が必ず村側とは限りません。占い師の真偽判定と合わせて考えましょう。', type: 'warning' },
+      { title: 'メモを取る習慣を', text: '占い結果・霊能結果・投票先・死亡者の役職を毎日メモする習慣をつけましょう。情報整理ができる人は推理の精度が格段に上がります。', type: '' },
+      { title: '発言は量より質', text: '多弁でも中身がない発言は村目に見えません。「誰が怪しいか」「なぜそう思うか」を具体的に述べることで、村側からの信頼を得られます。', type: '' },
+    ];
+    const today = new Date();
+    const idx = (today.getFullYear() * 366 + today.getMonth() * 31 + today.getDate()) % tips.length;
+    const tip = tips[idx];
+    document.getElementById('dailyTip').innerHTML =
+      '<div class="tip-box' + (tip.type ? ' ' + tip.type : '') + '"><strong>' + tip.title + '</strong><br>' + tip.text + '</div>';
+  })();
+  </script>
 
 </main>
 
