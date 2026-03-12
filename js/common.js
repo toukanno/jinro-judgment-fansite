@@ -60,6 +60,49 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// ===== Theme Color System =====
+(function() {
+  const THEMES = {
+    'dark-blue': { accent: '#58a6ff', accentHover: '#79c0ff', label: 'ダークブルー' },
+    'dark-purple': { accent: '#a78bfa', accentHover: '#c4b5fd', label: 'ダークパープル' },
+    'dark-red': { accent: '#f85149', accentHover: '#ff6b6b', label: 'ダークレッド' },
+    'dark-green': { accent: '#7ee787', accentHover: '#a5f0b0', label: 'ダークグリーン' },
+    'dark-orange': { accent: '#f0883e', accentHover: '#f4a261', label: 'ダークオレンジ' },
+    'black': { accent: '#8b949e', accentHover: '#b1bac4', label: 'ブラック' },
+    'navy': { accent: '#388bfd', accentHover: '#58a6ff', label: 'ネイビー' },
+    'dark-teal': { accent: '#2dd4bf', accentHover: '#5eead4', label: 'ダークティール' },
+    'dark-brown': { accent: '#d2a679', accentHover: '#e8c9a0', label: 'ダークブラウン' },
+    'dark-pink': { accent: '#f778ba', accentHover: '#ff9ed2', label: 'ダークピンク' },
+  };
+
+  function applyThemeColor(themeId) {
+    const theme = THEMES[themeId];
+    if (!theme) return;
+    document.documentElement.style.setProperty('--accent', theme.accent);
+    document.documentElement.style.setProperty('--accent-hover', theme.accentHover);
+    document.documentElement.style.setProperty('--accent-bg', hexToRgba(theme.accent, 0.1));
+    document.documentElement.style.setProperty('--accent-bg-strong', hexToRgba(theme.accent, 0.15));
+    localStorage.setItem('theme-color', themeId);
+  }
+
+  function hexToRgba(hex, alpha) {
+    const r = parseInt(hex.slice(1,3), 16);
+    const g = parseInt(hex.slice(3,5), 16);
+    const b = parseInt(hex.slice(5,7), 16);
+    return `rgba(${r},${g},${b},${alpha})`;
+  }
+
+  // Apply saved theme on load
+  const saved = localStorage.getItem('theme-color');
+  if (saved && THEMES[saved]) {
+    applyThemeColor(saved);
+  }
+
+  // Expose for settings page
+  window.THEME_COLORS = THEMES;
+  window.applyThemeColor = applyThemeColor;
+})();
+
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js').catch(() => {

@@ -366,10 +366,7 @@ const ROLES_DATA = [
     description: '狩人と同じく毎晩一人を護衛できるが、連続して同じ人を護衛できる。',
     strategy: '占い師を連続護衛できるのが最大のメリット。狩人より安定した護衛が可能。',
     nightAction: true, icon: '\u{1F6E1}', color: '#3fb950' },
-  { name: '巫女', team: 'village', rarity: '特殊', ability: '護衛＋死因判定',
-    description: '護衛能力に加え、処刑された人の死因（呪殺か通常か）を判別できる。',
-    strategy: '狩人の護衛能力に加え、死因判定で妖狐の存在を推理できる。',
-    nightAction: true, icon: '\u{26E9}', color: '#f0e68c' },
+  /* 巫女は既に登録済み（line 85付近） */
   { name: '探偵', team: 'village', rarity: '特殊', ability: '遺言読み',
     description: '死亡した人の遺言（最後の発言）を読むことができる。',
     strategy: '死者の遺言から有力な情報を得られる。重要な推理材料になることも。',
@@ -512,6 +509,21 @@ const ROLES_DATA = [
     description: 'V3新役職。妖狐陣営で夜に一人を選んで陣営を知ることができる。',
     strategy: '占い能力を持つ妖狐。人狼の位置を把握して生存戦略に活かす。',
     nightAction: true, icon: '\u{1F319}', color: '#e3b341' },
+  // ===== 悪魔陣営 =====
+  { name: '悪魔', team: 'devil', rarity: '特殊', ability: '契約',
+    description: '悪魔陣営の首領。毎晩一人と「契約」を結び、契約者を悪魔陣営に引き込む。人狼とも市民とも異なる第三勢力。',
+    strategy: '序盤は潜伏して信頼を得つつ、要所で契約を結んで陣営を拡大する。占い師に見つかると致命的なため、怪しまれない立ち回りが重要。人狼との共倒れも狙える。',
+    nightAction: true, icon: '\u{1F608}', color: '#9333ea' },
+  // ===== チキン陣営 =====
+  { name: 'チキン', team: 'chicken', rarity: 'V3', ability: '逃走',
+    description: 'チキン陣営の唯一の役職。処刑されそうになると「逃走」を試みる。生存していればチキン陣営の勝利。投票で最多票を受けると逃走判定が発生する。',
+    strategy: '目立たず生き残ることが目標。積極的に発言して村に貢献しているように見せつつ、吊り先にならないよう立ち回る。最終日まで生存できれば勝利。',
+    nightAction: false, icon: '\u{1F414}', color: '#f59e0b' },
+  // ===== ネタ枠 =====
+  { name: 'グール', team: 'other', rarity: 'ネタ', ability: '死者蘇生',
+    description: 'ネタ役職。処刑された翌日に一度だけ蘇生できる。蘇生後は能力を失い普通の村人として行動する。',
+    strategy: 'あえて処刑されてから蘇生するという斬新な戦法が可能。蘇生後は情報アドバンテージを活かして推理に貢献する。ネタ枠だが使いこなせれば強力。',
+    nightAction: false, icon: '\u{1F9DF}', color: '#6b7280' },
 ];
 
 // Team display info
@@ -521,4 +533,6 @@ const TEAM_INFO = {
   fox:      { name: '妖狐陣営', color: '#d29922', icon: '&#x1F98A;' },
   lovers:   { name: '恋人陣営', color: '#db7ff7', icon: '&#x1F495;' },
   other:    { name: 'その他', color: '#8b949e', icon: '&#x2753;' },
+  devil:    { name: '悪魔陣営', color: '#9333ea', icon: '&#x1F608;' },
+  chicken:  { name: 'チキン陣営', color: '#f59e0b', icon: '&#x1F414;' },
 };
