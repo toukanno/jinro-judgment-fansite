@@ -74,6 +74,19 @@
     .quiz-restart:hover { border-color: #58a6ff; color: #58a6ff; }
     .quiz-diff { display: flex; gap: .5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    @media (max-width: 768px) {
+      .quiz-container { padding: 0 .5rem; }
+      .quiz-card { padding: 1.2rem; }
+      .quiz-question { font-size: 1rem; }
+      .quiz-option { padding: .8rem 1rem; font-size: .9rem; min-height: 44px; }
+      .quiz-next { min-height: 44px; padding: .7rem 1.5rem; }
+      .quiz-restart { min-height: 44px; padding: .7rem 2rem; }
+      .quiz-diff { gap: .4rem; }
+      .quiz-diff .filter-btn { min-height: 44px; padding: .5rem .8rem; font-size: .85rem; }
+      .quiz-score { font-size: 2.2rem; }
+      .quiz-rank { font-size: 1rem; }
+    }
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5638346660274603"
      crossorigin="anonymous"></script>

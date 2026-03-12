@@ -8,9 +8,9 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="人狼JGDB">
   <title>V3新役職一覧 - 人狼ジャッジメント攻略</title>
-  <meta name="description" content="人狼ジャッジメント大型バージョンアップV3で追加された新役職24種の能力・陣営・立ち回りを解説。">
+  <meta name="description" content="人狼ジャッジメント大型バージョンアップV3で追加された新役職40種以上の能力・陣営・立ち回りを解説。">
   <meta property="og:title" content="V3新役職一覧 - 人狼ジャッジメント攻略">
-  <meta property="og:description" content="人狼ジャッジメント大型バージョンアップV3で追加された新役職24種の能力・陣営・立ち回りを解説。">
+  <meta property="og:description" content="人狼ジャッジメント大型バージョンアップV3で追加された新役職40種以上の能力・陣営・立ち回りを解説。">
   <meta property="og:url" content="https://toukanno.github.io/jinro-judgment-fansite/v3roles.html">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ja_JP">
@@ -219,7 +219,7 @@
 <div class="update-hero">
   <div class="update-hero-inner">
     <h1>&#x1F195; 大型バージョンアップV3 新役職</h1>
-    <p class="subtitle">新役職24種が追加！より奥深い人狼体験を楽しもう</p>
+    <p class="subtitle">新役職40種以上が追加！より奥深い人狼体験を楽しもう</p>
     <span class="update-date">&#x1F4C5; 2025年12月15日 更新</span>
   </div>
 </div>
@@ -479,6 +479,33 @@ const V3_ROLES = [
     strategy: '序盤は市民のように振る舞い、覚醒後に人狼として活動する。覚醒前の信用を活かした立ち回りが可能。'
   },
 
+  // ===== 大型アプデ追加・人狼陣営 =====
+  {
+    name: '爆弾狂', team: 'werewolf', icon: '&#x1F4A3;', ability: '爆弾設置',
+    desc: '人狼の味方。夜に一度だけ一人を選んで爆弾を仕掛けることができる。爆弾が設置された対象は条件を満たすと爆死する。',
+    strategy: '占い師や狩人など重要役職に爆弾を仕掛けて排除する。一度きりの能力なのでタイミングの見極めが重要。'
+  },
+  {
+    name: '狼少女', team: 'werewolf', icon: '&#x1F43A;', ability: '人間塗り',
+    desc: '人狼の味方。毎晩誰かを人間塗りし、塗られた人は占い師に「人狼でない」と判定される。賢者には「市民」と出る。',
+    strategy: '人狼を人間塗りして占い結果を偽装する。占い先を予測して先回りすることが勝利の鍵。'
+  },
+  {
+    name: '新種の人狼', team: 'werewolf', icon: '&#x1F43A;', ability: '気配通知',
+    desc: '占い師に占われると「人狼でない」と判定される人狼。ただし生存中は毎朝その気配が全体に通知されるデメリットがある。',
+    strategy: '占い結果で白が出るのは強力だが、気配通知で存在がバレる。気配を逆手に取った偽COなどの工夫が必要。'
+  },
+  {
+    name: 'ギャンブル狂', team: 'werewolf', icon: '&#x1F3B0;', ability: 'ギャンブル',
+    desc: '人狼の味方。能力使用時にランダムで効果が変わるギャンブル性の高い狂人系役職。',
+    strategy: '運要素が強いが当たれば強力。リスクとリターンを天秤にかけ、勝負所で能力を使おう。'
+  },
+  {
+    name: '闇の化身', team: 'werewolf', icon: '&#x1F311;', ability: '役職変化',
+    desc: '屋敷の設定で選ばれていない人狼陣営の役職の中からランダムで変化する。何になるか分からない上級者向けの役職。',
+    strategy: '変化先の役職を正しく運用する知識が必須。全ての人狼陣営役職の立ち回りを習得しておこう。'
+  },
+
   // ===== 妖狐陣営 =====
   {
     name: '饒舌な妖狐', team: 'fox', icon: '&#x1F98A;', ability: '饒舌＋襲撃耐性',
@@ -491,11 +518,39 @@ const V3_ROLES = [
     strategy: '妖狐と直接連携できるため、戦略を合わせやすい。妖狐を守りつつ、ささやく狂人のように振る舞うのが基本。'
   },
 
+  // ===== 大型アプデ追加・妖狐陣営 =====
+  {
+    name: '九尾の狐', team: 'fox', icon: '&#x1F98A;', ability: '呪殺耐性',
+    desc: '妖狐陣営の上位種。通常の妖狐より強力な能力を持ち、特定の呪殺に耐性がある。生存力が高い妖狐。',
+    strategy: '呪殺耐性を活かして大胆に行動できる。ただし完全に無敵ではないため、油断は禁物。'
+  },
+
   // ===== その他陣営 =====
   {
     name: '悪魔', team: 'other', icon: '&#x1F608;', ability: '契約',
     desc: '恋人陣営に属する新役職。特定のプレイヤーと契約を結び、独自の勝利条件を目指す第三勢力。',
     strategy: '恋人陣営として、契約相手と共に生存することが目標。村にも人狼にもバレないよう慎重に立ち回ろう。'
+  },
+  // ===== 大型アプデ追加・その他陣営 =====
+  {
+    name: '囁くゾンビ博士', team: 'other', icon: '&#x1F9DF;', ability: 'ゾンビチャット',
+    desc: 'ゾンビ陣営の上位種。ゾンビ同士で秘密のチャットができる能力を持ち、連携した戦略的プレイが可能。',
+    strategy: 'ゾンビ仲間と情報共有しながら独自の勝利条件を目指す。チャットを活かした連携が強み。'
+  },
+  {
+    name: 'テレパシスト', team: 'other', icon: '&#x1F52E;', ability: 'テレパシー',
+    desc: '独自の勝利条件を持つ第三陣営。テレパシーで他のプレイヤーの情報を読み取る能力を持つ。',
+    strategy: '情報収集能力を活かして生存しつつ、独自の勝利条件達成を目指す。どの陣営にも属さない立場を利用しよう。'
+  },
+  {
+    name: 'ジキルとハイド', team: 'other', icon: '&#x1F3AD;', ability: '二重人格',
+    desc: '昼と夜で人格が変わる二重人格の役職。昼は市民陣営的に、夜は人狼陣営的に行動する。独自の勝利条件を持つ。',
+    strategy: '二面性を活かした独特の立ち回りが必要。両方の陣営の動きを理解した上級者向けの役職。'
+  },
+  {
+    name: 'ねずみ娘', team: 'other', icon: '&#x1F42D;', ability: '感染',
+    desc: '独自の勝利条件を持つ第三陣営。他のプレイヤーに感染させる能力を持ち、感染者を増やすことで勝利に近づく。',
+    strategy: '感染を広げつつ目立たず潜伏する。バレると即排除されるため、怪しまれない立ち回りが重要。'
   },
 ];
 

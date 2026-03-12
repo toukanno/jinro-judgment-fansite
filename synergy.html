@@ -42,6 +42,17 @@
     .synergy-tag.defense { background: rgba(126,231,135,.12); color: #7ee787; }
     .synergy-tag.info { background: rgba(88,166,255,.12); color: #58a6ff; }
     .synergy-tag.chaos { background: rgba(167,139,250,.12); color: #a78bfa; }
+
+    @media (max-width: 768px) {
+      .synergy-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .synergy-card { padding: 1.2rem; }
+      .synergy-card h3 { font-size: .95rem; flex-wrap: wrap; }
+      .synergy-card .desc { font-size: .85rem; }
+      .synergy-category-title { font-size: 1rem; }
+      .search-bar { flex-direction: column; gap: .5rem; }
+      .search-bar .filter-btn { min-height: 44px; padding: .5rem .8rem; }
+      .search-bar .search-input { font-size: 16px; }
+    }
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5638346660274603"
      crossorigin="anonymous"></script>

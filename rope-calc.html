@@ -371,8 +371,8 @@
   <div class="formula-box">
     <h3>&#x1F4D0; 計算式</h3>
     <code>吊り回数 = floor((生存人数 - 1) / 2)</code>
-    <code>吊り余裕 = 吊り回数 - 残り人狼数 - 妖狐数</code>
-    <p>吊り余裕が0以下の場合、1回も間違えられない状況です。マイナスの場合は、通常の吊りだけでは人狼を全員処刑できません。</p>
+    <code>吊り余裕 = 吊り回数 - 人狼数 - 妖狐数 - 悪魔数 - チキン数 - グール数</code>
+    <p>吊り余裕が0以下の場合、1回も間違えられない状況です。マイナスの場合は、通常の吊りだけでは人狼を全員処刑できません。悪魔・チキンも人外として処理が必要で、グールは蘇生能力により追加の縄を消費します。</p>
   </div>
 
   <h2 class="section-title">&#x1F4CA; よくある状況の縄計算</h2>
@@ -434,6 +434,9 @@
   const aliveEl = document.getElementById('alive');
   const wolvesEl = document.getElementById('wolves');
   const foxesEl = document.getElementById('foxes');
+  const devilsEl = document.getElementById('devils');
+  const chickensEl = document.getElementById('chickens');
+  const ghoulsEl = document.getElementById('ghouls');
   const resultEl = document.getElementById('calcResult');
   const timelineEl = document.getElementById('timeline');
 
@@ -453,9 +456,13 @@
     const alive = parseInt(aliveEl.value) || 3;
     const wolves = parseInt(wolvesEl.value) || 1;
     const foxes = parseInt(foxesEl.value) || 0;
+    const devils = parseInt(devilsEl.value) || 0;
+    const chickens = parseInt(chickensEl.value) || 0;
+    const ghouls = parseInt(ghoulsEl.value) || 0;
 
     const totalHangs = Math.floor((alive - 1) / 2);
-    const margin = totalHangs - wolves - foxes;
+    // 悪魔・チキンも人外としてカウント、グールは蘇生で1縄追加消費
+    const margin = totalHangs - wolves - foxes - devils - chickens - ghouls;
 
     let statusClass, statusMsg;
     if (margin >= 2) {
@@ -484,7 +491,7 @@
           <div class="label">総吊り回数</div>
         </div>
         <div class="detail-item">
-          <div class="num">${wolves + foxes}</div>
+          <div class="num">${wolves + foxes + devils + chickens + ghouls}</div>
           <div class="label">処理必要人外</div>
         </div>
       </div>
@@ -514,9 +521,12 @@
   aliveEl.addEventListener('input', calculate);
   wolvesEl.addEventListener('input', calculate);
   foxesEl.addEventListener('input', calculate);
+  devilsEl.addEventListener('input', calculate);
+  chickensEl.addEventListener('input', calculate);
+  ghoulsEl.addEventListener('input', calculate);
 
   // Sync sliders
-  ['alive', 'wolves', 'foxes'].forEach(id => {
+  ['alive', 'wolves', 'foxes', 'devils', 'chickens', 'ghouls'].forEach(id => {
     const num = document.getElementById(id);
     const slider = document.getElementById(id + '-slider');
     if (slider) {
