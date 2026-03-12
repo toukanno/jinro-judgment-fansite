@@ -1015,6 +1015,32 @@ img { max-width: 100%; height: auto; }
   border-top: 1px solid rgba(48,54,61,.4);
 }
 
+/* ===== Auto Table of Contents ===== */
+.auto-toc {
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 2rem;
+}
+.auto-toc summary {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  list-style: none;
+}
+.auto-toc summary::-webkit-details-marker { display: none; }
+.auto-toc summary::before { content: '\25B6'; margin-right: .5rem; font-size: .7rem; transition: transform .2s; display: inline-block; }
+.auto-toc[open] summary::before { transform: rotate(90deg); }
+.auto-toc ol {
+  margin: .75rem 0 0;
+  padding-left: 1.5rem;
+}
+.auto-toc li { line-height: 2; font-size: .9rem; }
+.auto-toc a { color: var(--text-secondary); }
+.auto-toc a:hover { color: var(--accent); }
+
 /* ===== Video Embed ===== */
 .video-embed { position: relative; padding-bottom: 56.25%; height: 0; }
 .video-embed iframe {

@@ -132,6 +132,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Auto Table of Contents for long pages (3+ h2 headings)
+  const mainEl = document.querySelector('main');
+  if (mainEl && !document.querySelector('.auto-toc')) {
+    const headings = mainEl.querySelectorAll('h2.section-title, h2');
+    if (headings.length >= 3) {
+      const toc = document.createElement('details');
+      toc.className = 'auto-toc';
+      toc.innerHTML = '<summary>&#x1F4D1; 目次</summary>';
+      const list = document.createElement('ol');
+      headings.forEach((h, i) => {
+        if (!h.id) h.id = 'toc-' + i;
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = '#' + h.id;
+        a.textContent = h.textContent.replace(/^[\s\S]{0,2}/, '').trim() || h.textContent.trim();
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+      toc.appendChild(list);
+      const firstH2 = headings[0];
+      firstH2.parentNode.insertBefore(toc, firstH2);
+    }
+  }
+
   // Scroll reveal animation for cards and sections
   if ('IntersectionObserver' in window) {
     const revealTargets = document.querySelectorAll('.card, .accordion-item, .tip-box, .strat-card, .strat-section');
