@@ -481,7 +481,7 @@ a.card { text-decoration: none; color: inherit; }
 /* ===== Tips Box ===== */
 .tip-box {
   background: rgba(88,166,255,.06);
-  border-left: 3px solid #58a6ff;
+  border-left: 3px solid var(--accent);
   border-radius: 0 12px 12px 0;
   padding: 1rem 1.2rem;
   margin-bottom: 1rem;
