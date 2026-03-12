@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jinro-judgment-fansite-v1';
+const CACHE_NAME = 'jinro-judgment-fansite-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -11,6 +11,17 @@ const ASSETS = [
   './characters.html',
   './copipe.html',
   './queen-wise.html',
+  './v3roles.html',
+  './templates.html',
+  './faq.html',
+  './timer.html',
+  './exclusion.html',
+  './rope-calc.html',
+  './synergy.html',
+  './quiz.html',
+  './404.html',
+  './privacy.html',
+  './contact.html',
   './css/style.css',
   './js/common.js',
   './js/roles-data.js',
