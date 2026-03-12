@@ -16,6 +16,18 @@
   <meta property="og:locale" content="ja_JP">
   <link rel="stylesheet" href="css/style.css">
   <link rel="manifest" href="manifest.json">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "人狼ジャッジメントの基本ルールは？", "acceptedAnswer": {"@type": "Answer", "text": "プレイヤーは市民チームと人狼チームに分かれます。昼のターンで議論し投票で1人を処刑、夜のターンで人狼が1人を襲撃します。市民側は人狼を全て処刑すれば勝利、人狼側は市民と同数になれば勝利です。"}},
+      {"@type": "Question", "name": "COとは何ですか？", "acceptedAnswer": {"@type": "Answer", "text": "CO（カミングアウト）は自分の役職を宣言することです。例えば占い師が「占いCO ○○白」と言うことで、自分が占い師であることと占い結果を同時に伝えます。"}},
+      {"@type": "Question", "name": "初心者におすすめの編成は？", "acceptedAnswer": {"@type": "Answer", "text": "9人編成の「占い師・霊能者・狩人・狂人・人狼2・市民3」が基本的でバランスが良いです。全ての基本役職が揃い、各陣営の動き方を学べます。"}},
+      {"@type": "Question", "name": "縄計算とは？", "acceptedAnswer": {"@type": "Answer", "text": "残りの処刑回数（吊り余裕）を計算することです。計算式は（生存人数-1）÷2（切り捨て）- 残り人狼数 + 1 です。"}}
+    ]
+  }
+  </script>
   <style>
     .faq-category { margin-bottom: 2.5rem; }
     .faq-category-title {
@@ -378,6 +390,66 @@
         <button class="faq-question">V3アップデートの新役職はどこで確認できますか？</button>
         <div class="faq-answer"><div class="faq-answer-inner">
           V3大型アップデートで追加された24種の新役職については<a href="v3roles.html">V3新役職一覧</a>で能力と立ち回りを解説しています。聖騎士、暴君、天文学者など多彩な役職が追加されました。
+        </div></div>
+      </div>
+    </div>
+
+    <div class="faq-category" data-category="mistakes">
+      <h2 class="faq-category-title">&#x26A0; 初心者がやりがちなミス</h2>
+
+      <div class="faq-item">
+        <button class="faq-question">占い師なのにCOが遅れてしまいました。どうなりますか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          COが遅れると「本当に占い師なのか？」と疑われ、信用を大きく失います。また、先にCOした偽占い師の方が信頼されやすくなります。朝一番の即COが基本です。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">寡黙（あまり発言しない）だと何がまずいですか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          発言が少ない人は「何を考えているか分からない」ため、村にとって判断材料がなく、吊り候補にされやすくなります。また、突然死（タイムアウト）はマナー違反であり、繰り返すとBAN対象にもなります。たとえ推理に自信がなくても、考えを発言しましょう。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">市民なのに占い師を騙ってしまいました。これは有効な戦術ですか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          基本的にNGです。市民が役職を騙ると、本物の占い師のCOを妨害し、村全体が混乱します。騙りは人狼陣営や狂人の仕事です。初心者のうちは素直に自分の役職通りにプレイしましょう。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">狩人なのに占い師以外を護衛してしまいました。</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          占い師が生存している限り、護衛は占い師が最優先です。占い師が噛まれると村の情報源が大幅に減ります。他の人を護衛するのは、占い師がすでに死亡している場合や、確白の重要位置を守る特殊な状況だけです。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">人狼なのに仲間の人狼に投票してしまいました。</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          実はこれは「身内切り」という高等テクニックの場合もありますが、初心者が意図せずやると仲間が減って不利になります。人狼チャットで投票先を相談し、仲間に票が集まらないようにしましょう。意図的な身内切りは上級者になってからで十分です。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">感情的になって暴言を吐いてしまいました。</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          暴言・煽りはマナー違反であり、通報対象です。疑われて腹が立つこともありますが、冷静に根拠を持って反論しましょう。人狼ゲームは推理ゲームであり、感情的な発言は信用を失うだけです。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">縄計算をしないで適当に投票してしまいがちです。</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          縄計算は勝率を大きく左右します。「あと何回吊れるか」を把握しないと、無駄な吊りをしたりPPに持ち込まれたりします。<a href="rope-calc.html">縄計算ツール</a>を使って練習し、感覚を身につけましょう。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">メモを取らずにプレイしています。メモは必要ですか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          メモは必須レベルで重要です。占い結果、CO情報、投票先、怪しい発言など、覚えきれない情報を整理することで推理の精度が格段に上がります。<a href="notepad.html">人狼メモ帳ツール</a>を活用してみてください。
         </div></div>
       </div>
     </div>
