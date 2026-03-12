@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jinro-judgment-fansite-v5';
+const CACHE_NAME = 'jinro-judgment-fansite-v6';
 const ASSETS = [
   './',
   './index.html',
