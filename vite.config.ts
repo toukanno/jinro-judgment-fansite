@@ -24,6 +24,8 @@ export default defineConfig({
         templates: resolve(__dirname, 'templates.html'),
         timer: resolve(__dirname, 'timer.html'),
         v3roles: resolve(__dirname, 'v3roles.html'),
+        privacy: resolve(__dirname, 'privacy.html'),
+        contact: resolve(__dirname, 'contact.html'),
       },
     },
   },

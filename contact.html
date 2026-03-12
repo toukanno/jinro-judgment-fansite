@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0e17">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JGDB">
+  <title>お問い合わせ - 人狼ジャッジメント攻略データベース</title>
+  <meta name="description" content="人狼ジャッジメント攻略データベースへのお問い合わせフォーム。ご質問・ご意見・修正依頼等はこちらから。">
+  <meta property="og:title" content="お問い合わせ - 人狼ジャッジメント攻略データベース">
+  <meta property="og:description" content="当サイトへのお問い合わせはこちらから。">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .contact-form {
+      background: rgba(22,27,34,.7);
+      border: 1px solid rgba(48,54,61,.6);
+      border-radius: 14px;
+      padding: 2rem;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: .88rem;
+      font-weight: 600;
+      color: #c9d1d9;
+      margin-bottom: .4rem;
+    }
+    .form-group label .required {
+      color: #f85149;
+      font-size: .78rem;
+      margin-left: .3rem;
+    }
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: .7rem 1rem;
+      border: 1px solid rgba(48,54,61,.6);
+      border-radius: 10px;
+      background: rgba(10,14,23,.6);
+      color: #e6edf3;
+      font-size: .95rem;
+      font-family: inherit;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: #58a6ff;
+      box-shadow: 0 0 0 3px rgba(88,166,255,.12);
+    }
+    .form-textarea {
+      min-height: 180px;
+      resize: vertical;
+    }
+    .form-submit {
+      display: block;
+      width: 100%;
+      padding: .8rem;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #238636, #2ea043);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: inherit;
+      min-height: 48px;
+    }
+    .form-submit:hover {
+      background: linear-gradient(135deg, #2ea043, #3fb950);
+      box-shadow: 0 4px 20px rgba(35,134,54,.3);
+      transform: translateY(-1px);
+    }
+    .form-submit:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .form-note {
+      font-size: .82rem;
+      color: #8b949e;
+      margin-top: .3rem;
+    }
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+    }
+    .success-msg h2 {
+      font-size: 1.3rem;
+      color: #7ee787;
+      margin-bottom: .8rem;
+    }
+    .success-msg p {
+      color: #8b949e;
+      font-size: .95rem;
+    }
+    .contact-info {
+      max-width: 640px;
+      margin: 1.5rem auto 0;
+    }
+    .contact-info-card {
+      background: rgba(22,27,34,.5);
+      border: 1px solid rgba(48,54,61,.5);
+      border-radius: 10px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .contact-info-card h3 {
+      font-size: .95rem;
+      font-weight: 700;
+      color: #e6edf3;
+      margin-bottom: .5rem;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .contact-info-card p {
+      font-size: .88rem;
+      color: #8b949e;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 600px) {
+      .contact-form { padding: 1.2rem; }
+      .form-input, .form-textarea, .form-select { font-size: 16px; padding: .65rem .8rem; }
+      .form-textarea { min-height: 150px; }
+      .form-submit { font-size: .95rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="character.html">キャラクター</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+        <li><a href="templates.html">部屋テンプレ</a></li>
+        <li><a href="copipe.html">コピペ集</a></li>
+        <li><a href="v3roles.html">V3新役職</a></li>
+        <li><a href="queen-wise.html">女王部屋</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="timer.html">タイマー</a></li>
+        <li><a href="exclusion.html">同村制限</a></li>
+        <li><a href="rope-calc.html">縄計算</a></li>
+        <li><a href="synergy.html">役職相性</a></li>
+        <li><a href="quiz.html">クイズ</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> お問い合わせ</div>
+
+  <h1 class="section-title">&#x1F4E9; お問い合わせ</h1>
+
+  <div class="tip-box">
+    当サイトに関するご質問・ご意見・誤情報の報告・修正依頼などがございましたら、以下のフォームよりお気軽にお問い合わせください。
+  </div>
+
+  <div class="contact-form" id="contactForm">
+    <form id="form" action="https://formspree.io/f/placeholder" method="POST">
+      <div class="form-group">
+        <label for="name">お名前<span class="required">*必須</span></label>
+        <input type="text" class="form-input" id="name" name="name" required placeholder="お名前またはハンドルネーム">
+      </div>
+
+      <div class="form-group">
+        <label for="email">メールアドレス<span class="required">*必須</span></label>
+        <input type="email" class="form-input" id="email" name="email" required placeholder="返信用メールアドレス">
+        <p class="form-note">返信が必要な場合に使用します。</p>
+      </div>
+
+      <div class="form-group">
+        <label for="category">カテゴリ</label>
+        <select class="form-select" id="category" name="category">
+          <option value="question">ご質問</option>
+          <option value="feedback">ご意見・ご感想</option>
+          <option value="correction">誤情報の報告・修正依頼</option>
+          <option value="request">機能リクエスト</option>
+          <option value="copyright">著作権に関するお問い合わせ</option>
+          <option value="other">その他</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="message">お問い合わせ内容<span class="required">*必須</span></label>
+        <textarea class="form-textarea" id="message" name="message" required placeholder="お問い合わせ内容を入力してください"></textarea>
+      </div>
+
+      <button type="submit" class="form-submit" id="submitBtn">送信する</button>
+    </form>
+  </div>
+
+  <div class="success-msg" id="successMsg">
+    <h2>&#x2705; 送信完了</h2>
+    <p>お問い合わせありがとうございます。<br>内容を確認の上、必要に応じてご返信いたします。</p>
+    <br>
+    <a href="index.html" class="btn btn-primary">ホームに戻る</a>
+  </div>
+
+  <div class="contact-info">
+    <div class="contact-info-card">
+      <h3>&#x23F0; 返信について</h3>
+      <p>お問い合わせへの返信には数日お時間をいただく場合がございます。全てのお問い合わせに返信できるとは限りませんが、頂いたご意見は今後のサイト運営の参考にさせていただきます。</p>
+    </div>
+    <div class="contact-info-card">
+      <h3>&#x26A0; ご注意</h3>
+      <p>当サイトは「人狼ジャッジメント」の非公式ファンサイトです。ゲーム本体に関するお問い合わせ（アカウント問題・バグ報告・課金問題等）は、開発元のそらいろ株式会社へ直接お問い合わせください。</p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="index.html">ホーム</a>
+    <a href="roles.html">役職一覧</a>
+    <a href="guide.html">初心者ガイド</a>
+    <a href="strategy.html">立ち回り</a>
+    <a href="glossary.html">用語集</a>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <a href="contact.html">お問い合わせ</a>
+  </div>
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
+</footer>
+
+<script src="js/common.js"></script>
+<script>
+(function() {
+  var form = document.getElementById('form');
+  var submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = '送信中...';
+
+    var formData = new FormData(form);
+
+    fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    }).then(function(response) {
+      if (response.ok) {
+        document.getElementById('contactForm').style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+      } else {
+        alert('送信に失敗しました。時間をおいて再度お試しください。');
+        submitBtn.disabled = false;
+        submitBtn.textContent = '送信する';
+      }
+    }).catch(function() {
+      alert('送信に失敗しました。ネットワーク接続をご確認ください。');
+      submitBtn.disabled = false;
+      submitBtn.textContent = '送信する';
+    });
+  });
+})();
+</script>
+</body>
+</html>
