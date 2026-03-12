@@ -85,6 +85,22 @@
       transition: all .2s;
     }
     .category-nav a:hover { border-color: #58a6ff; color: #58a6ff; }
+
+    @media (max-width: 768px) {
+      .copipe-item { gap: .6rem; padding: .7rem .8rem; }
+      .copipe-text { font-size: .88rem; }
+      .copy-btn { padding: .45rem .7rem; font-size: .78rem; min-height: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; }
+      .copipe-category-title { font-size: 1.05rem; padding: .5rem .8rem; }
+      .category-nav a { padding: .45rem .7rem; font-size: .78rem; min-height: 44px; display: flex; align-items: center; }
+    }
+
+    @media (max-width: 600px) {
+      .copipe-item { flex-direction: column; align-items: stretch; gap: .5rem; }
+      .copipe-text { font-size: .85rem; }
+      .copy-btn { align-self: flex-end; min-height: 44px; padding: .5rem 1.2rem; }
+      .copipe-category-title { font-size: 1rem; gap: .4rem; }
+      .copipe-note { font-size: .75rem; }
+    }
   </style>
 </head>
 <body>
@@ -293,6 +309,17 @@ const COPIPE_DATA = [
       { text: '自分は村側です。狐は別にいると思います。', note: '妖狐の偽装発言' },
       { text: '呪殺出てますね。狐はもういないと思います。', note: '呪殺後の安全アピール' },
       { text: '平和出ましたね。GJか狐噛みかどっちだと思いますか？', note: '平和時の議論誘導' },
+    ]
+  },
+  {
+    category: '推理メモテンプレート',
+    icon: '&#x1F4DD;',
+    items: [
+      { text: '【CO状況】\n占い：\n霊能：\n狩人：\nその他：\n\n【占い結果】\n占A→\n占B→\n\n【霊能結果】\n\n【グレー】', note: '盤面整理の基本テンプレ' },
+      { text: '【投票先メモ】\n1日目：\n  ○○→○○\n  ○○→○○\n  ○○→○○\n2日目：\n  ○○→○○', note: '投票先の記録テンプレ' },
+      { text: '【ライン考察】\n占い真偽：\n  占A真の場合→○○が黒\n  占B真の場合→○○が黒\n\n投票ライン：\n  ○○と○○が相互投票\n  ○○が○○を庇っている', note: 'ライン考察テンプレ' },
+      { text: '【残り人外数】\n人狼：○/○匹\n狂人系：○人\n妖狐：○匹\n\n【縄計算】\n生存○人 → 吊り○回\n余裕：○回', note: '人外カウント＋縄計算テンプレ' },
+      { text: '【各プレイヤー印象】\n○○：村目（理由：）\n○○：黒寄り（理由：）\n○○：白寄り（理由：）\n○○：判断保留', note: 'プレイヤー評価メモ' },
     ]
   },
 ];
