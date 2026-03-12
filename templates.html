@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#161b22">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JGDB">
+  <title>部屋テンプレ集 - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントの部屋ルール・処分通知・部屋説明文などのテンプレート集。コピペで使えます。">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .tpl-category { margin-bottom: 2.5rem; }
+    .tpl-category-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #e6edf3;
+      margin-bottom: 1rem;
+      padding: .6rem 1rem;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .tpl-item {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      margin-bottom: .6rem;
+      overflow: hidden;
+    }
+    .tpl-item:hover { border-color: #58a6ff; }
+    .tpl-header {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      padding: .8rem 1rem;
+    }
+    .tpl-label {
+      flex: 1;
+      font-size: .9rem;
+      font-weight: 700;
+      color: #e6edf3;
+    }
+    .tpl-tag {
+      font-size: .72rem;
+      padding: .15rem .45rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .tpl-tag.basic { background: rgba(126,231,135,.12); color: #7ee787; }
+    .tpl-tag.strict { background: rgba(248,81,73,.12); color: #f85149; }
+    .tpl-tag.host { background: rgba(210,153,34,.12); color: #d29922; }
+    .tpl-tag.ban { background: rgba(248,81,73,.12); color: #f85149; }
+    .tpl-tag.desc { background: rgba(88,166,255,.12); color: #58a6ff; }
+    .copy-btn {
+      flex-shrink: 0;
+      padding: .35rem .7rem;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      background: #21262d;
+      color: #8b949e;
+      font-size: .78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+    .copy-btn:hover { background: #30363d; color: #e6edf3; border-color: #58a6ff; }
+    .copy-btn.copied { background: rgba(126,231,135,.15); color: #7ee787; border-color: #7ee787; }
+    .tpl-body {
+      padding: 0 1rem .8rem;
+    }
+    .tpl-text {
+      background: #0d1117;
+      border: 1px solid #21262d;
+      border-radius: 6px;
+      padding: .8rem 1rem;
+      font-size: .88rem;
+      color: #c9d1d9;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-break: break-all;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+    .tpl-note {
+      font-size: .78rem;
+      color: #484f58;
+      margin-top: .4rem;
+      padding: 0 .2rem;
+    }
+    .category-nav {
+      display: flex;
+      gap: .3rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .category-nav a {
+      display: block;
+      padding: .4rem .8rem;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      font-size: .82rem;
+      color: #8b949e;
+      transition: all .2s;
+    }
+    .category-nav a:hover { border-color: #58a6ff; color: #58a6ff; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+        <li><a href="copipe.html">コピペ集</a></li>
+        <li><a href="templates.html" class="active">部屋テンプレ</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> 部屋テンプレ集</div>
+
+  <h1 class="section-title">&#x1F3E0; 部屋テンプレ集</h1>
+
+  <div class="tip-box">
+    <strong>使い方：</strong>各テンプレートの「コピー」ボタンでテキストをコピーし、部屋作成時や管理時に貼り付けてお使いください。○○の部分はご自身で書き換えてください。
+  </div>
+
+  <div class="search-bar" style="margin-bottom:1.5rem;">
+    <input type="text" class="search-input" id="tplSearch" placeholder="テンプレートを検索...">
+  </div>
+
+  <div class="category-nav" id="categoryNav"></div>
+
+  <div id="tplList"></div>
+</main>
+
+<footer class="site-footer">
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。</p>
+</footer>
+
+<script src="js/common.js"></script>
+<script>
+const TPL_DATA = [
+  {
+    category: '部屋ルール（基本）',
+    icon: '&#x1F4DC;',
+    items: [
+      {
+        label: '標準ルール（シンプル版）',
+        tag: 'basic', tagName: '初心者向け',
+        text: '【部屋ルール】\n・暴言・荒らし・煽り禁止\n・凸（突然死）禁止\n・利敵行為禁止\n・メタ発言禁止\n・楽しくプレイしましょう！',
+        note: 'シンプルな基本ルール。初心者部屋向け。'
+      },
+      {
+        label: '標準ルール（詳細版）',
+        tag: 'basic', tagName: '初心者向け',
+        text: '【部屋ルール】\n凸（突然死）禁止\n暴言・荒らし・煽り・過度な下ネタ禁止\n利敵行為禁止\nメタ発言禁止\n初日占いCO推奨\nPP・RPP時は宣言してから実行\nルール違反者はBAN対応します\nみんなで楽しく遊びましょう！',
+        note: '基本ルールの詳細版。PP宣言ルールも含む。'
+      },
+      {
+        label: 'ガチ部屋ルール（上級者向け）',
+        tag: 'strict', tagName: '上級者向け',
+        text: '1凸＝bot扱い／2凸＝廃村\n暴言・荒らし・煽り・過度な下ネタ・利敵禁止\n初日：村アイテム騙り＆告発禁止（赤視点で発覚しても廃村）\n初日：殺人犯or共犯が凸→残り100秒未満で全体報告→廃村\n初日：睡魔誘導禁止\n告発：無断禁止／警部以外のサイレント告発禁止\n判事：理由なし無差別追放禁止\nFO：7人以下 or 6日目以降のみ\n禁止：聖職・梟ヤンキー／犬サイレント噛み／村鈴語り／女王メタ\n※凸が初日3人いる場合私が勝利となる',
+        note: '上級者向けの詳細ルール。ガチ勢用部屋テンプレ。'
+      },
+      {
+        label: '凸ルールのみ',
+        tag: 'basic', tagName: '初心者向け',
+        text: '【凸ルール】\n1凸＝警告\n2凸＝BAN\n3凸以上＝廃村\n※回線落ちは仕方ないですが、故意の凸はBANします。',
+        note: '凸（突然死）に関するルールだけのテンプレ。'
+      },
+    ]
+  },
+  {
+    category: '部屋ルール（特殊編成）',
+    icon: '&#x2699;',
+    items: [
+      {
+        label: '役職限定ルール',
+        tag: 'strict', tagName: '上級者向け',
+        text: '【特殊ルール】\n・初日占いCO必須\n・霊能CO必須\n・狩人COは状況判断\n・ロラ進行推奨\n・FO（フルオープン）は○人以下から\n・PP宣言必須',
+        note: '進行方法を指定するルール。'
+      },
+      {
+        label: '恋人入り部屋ルール',
+        tag: 'strict', tagName: '上級者向け',
+        text: '【恋人入りルール】\n基本ルール＋以下追加\n・恋人の自殺特攻禁止\n・恋人のメタ発言禁止（「恋人です」等のCO禁止）\n・キューピットは相方にだけ恋人CO可\n・PPは恋人同士の合意の上で\n※恋人が1人死んだら相方も後追い死します',
+        note: '恋人陣営を含む編成向け。'
+      },
+      {
+        label: '妖狐入り部屋ルール',
+        tag: 'strict', tagName: '上級者向け',
+        text: '【妖狐入りルール】\n基本ルール＋以下追加\n・呪殺対応：死体2つの場合は状況報告\n・狐COは自由（ただし真偽は自己責任）\n・背徳者の妖狐メタCO禁止\n・妖狐の村騙り利敵は禁止',
+        note: '妖狐陣営を含む編成向け。'
+      },
+    ]
+  },
+  {
+    category: '処分・BAN通知',
+    icon: '&#x1F6AB;',
+    items: [
+      {
+        label: '利敵行為によるBAN通知',
+        tag: 'ban', tagName: 'BAN',
+        text: '以下の禁止行為を確認したため、お客様のアカウントを停止しました。\n利敵行為\n（人狼キラーで人狼カミングアウト）\nもし身に覚えがない場合は、お手数ですが「問い合わせ」よりご確認ください。',
+        note: '利敵行為（役職の自爆CO等）によるBAN通知テンプレ。'
+      },
+      {
+        label: '荒らし行為によるBAN通知',
+        tag: 'ban', tagName: 'BAN',
+        text: '以下の禁止行為を確認したため、お客様のアカウントを停止しました。\n荒らし行為\n（ゲームの進行を妨害する発言・行動）\nもし身に覚えがない場合は、お手数ですが「問い合わせ」よりご確認ください。',
+        note: '荒らし行為によるBAN通知テンプレ。'
+      },
+      {
+        label: '暴言によるBAN通知',
+        tag: 'ban', tagName: 'BAN',
+        text: '以下の禁止行為を確認したため、お客様のアカウントを停止しました。\n暴言・誹謗中傷\n（他プレイヤーへの人格攻撃・差別発言）\nもし身に覚えがない場合は、お手数ですが「問い合わせ」よりご確認ください。',
+        note: '暴言・誹謗中傷によるBAN通知テンプレ。'
+      },
+      {
+        label: '凸（突然死）によるBAN通知',
+        tag: 'ban', tagName: 'BAN',
+        text: '以下の禁止行為を確認したため、お客様のアカウントを停止しました。\n故意の突然死（凸）\n（投票時間内に投票せず強制死亡）\nもし身に覚えがない場合は、お手数ですが「問い合わせ」よりご確認ください。',
+        note: '凸によるBAN通知テンプレ。'
+      },
+      {
+        label: 'BAN通知（汎用）',
+        tag: 'ban', tagName: 'BAN',
+        text: '以下の禁止行為を確認したため、お客様のアカウントを停止しました。\n○○（違反内容を記載）\n（○○：具体的な行為を記載）\nもし身に覚えがない場合は、お手数ですが「問い合わせ」よりご確認ください。',
+        note: '汎用BAN通知テンプレ。○○を書き換えて使用。'
+      },
+      {
+        label: '警告通知（BAN前）',
+        tag: 'host', tagName: 'ホスト用',
+        text: '【警告】\n○○さんへ\n部屋ルール違反が確認されました。\n違反内容：○○\n次回同様の行為が確認された場合、BANとさせていただきます。\nご理解とご協力をお願いします。',
+        note: 'BAN前の警告通知テンプレ。'
+      },
+    ]
+  },
+  {
+    category: '部屋説明文',
+    icon: '&#x1F4DD;',
+    items: [
+      {
+        label: '初心者歓迎部屋',
+        tag: 'desc', tagName: '部屋説明',
+        text: '【初心者歓迎】\nルール分からなくてもOK！\n優しく教えます！\n暴言・煽り禁止\n凸禁止\n楽しくやりましょう～！',
+        note: '初心者を歓迎する部屋の説明文。'
+      },
+      {
+        label: '中級者向け部屋',
+        tag: 'desc', tagName: '部屋説明',
+        text: '【中級者部屋】\n基本ルール理解済みの方\n初日占いCO進行\n凸・暴言・利敵禁止\nしっかり考察して楽しみましょう！',
+        note: '中級者向け部屋の説明文。'
+      },
+      {
+        label: '上級者ガチ部屋',
+        tag: 'desc', tagName: '部屋説明',
+        text: '【ガチ部屋】上級者向け\n全役職理解必須\n考察必須・寡黙吊り有\n凸＝即BAN\n利敵＝即BAN\nガチでやりたい方のみ参加してください',
+        note: '上級者向けガチ部屋の説明文。'
+      },
+      {
+        label: 'まったり部屋',
+        tag: 'desc', tagName: '部屋説明',
+        text: '【まったり部屋】\n楽しむのが一番！\n多少のミスは許容\n暴言だけは禁止\n初心者さんも大歓迎です！',
+        note: 'カジュアルなまったり部屋の説明文。'
+      },
+      {
+        label: '特殊編成部屋',
+        tag: 'desc', tagName: '部屋説明',
+        text: '【特殊編成部屋】○○人村\n編成：○○\n特殊ルール：○○\n基本ルールは守ってください\n凸・暴言・利敵禁止',
+        note: '特殊編成部屋用。○○を編成に合わせて記入。'
+      },
+    ]
+  },
+  {
+    category: '廃村・中断通知',
+    icon: '&#x26A0;',
+    items: [
+      {
+        label: '凸による廃村宣言',
+        tag: 'host', tagName: 'ホスト用',
+        text: '【廃村】\n凸が○人発生したため廃村とします。\n申し訳ありませんが、次の部屋を建てますのでお待ちください。',
+        note: '凸が規定数に達した場合の廃村宣言。'
+      },
+      {
+        label: '初日凸による廃村宣言',
+        tag: 'host', tagName: 'ホスト用',
+        text: '【廃村】\n初日に凸が発生したため廃村とします。\nルール通り、初日凸は廃村対応です。\n次の部屋を建てますのでお待ちください。',
+        note: '初日凸による廃村宣言。'
+      },
+      {
+        label: 'ルール違反による廃村宣言',
+        tag: 'host', tagName: 'ホスト用',
+        text: '【廃村】\n重大なルール違反が発覚したため廃村とします。\n違反者はBAN対応済みです。\n申し訳ありませんが、次の部屋でお願いします。',
+        note: 'ルール違反による廃村宣言。'
+      },
+      {
+        label: '回線落ち者への案内',
+        tag: 'host', tagName: 'ホスト用',
+        text: '○○さんが回線落ちしたようです。\n復帰を待ちますが、○分以内に戻らない場合は凸扱いとなります。\nご了承ください。',
+        note: '回線落ちプレイヤーへの案内。'
+      },
+    ]
+  },
+  {
+    category: '進行・アナウンス',
+    icon: '&#x1F4E2;',
+    items: [
+      {
+        label: '部屋開始前の挨拶',
+        tag: 'host', tagName: 'ホスト用',
+        text: 'ようこそ！参加ありがとうございます。\nルールは部屋説明を確認してください。\n全員揃ったら開始します。\nよろしくお願いします！',
+        note: '部屋開始前のホスト挨拶。'
+      },
+      {
+        label: 'ゲーム終了後の挨拶',
+        tag: 'host', tagName: 'ホスト用',
+        text: 'お疲れ様でした！\nいい試合でしたね。\n次の試合も建てますので、参加したい方はお待ちください。\nありがとうございました！',
+        note: 'ゲーム終了後のホスト挨拶。'
+      },
+      {
+        label: '人数待ち案内',
+        tag: 'host', tagName: 'ホスト用',
+        text: '現在○人／○人です。\nあと○人で開始できます！\n参加お待ちしています。',
+        note: '人数待ち中の案内。'
+      },
+      {
+        label: 'ルール確認リマインド',
+        tag: 'host', tagName: 'ホスト用',
+        text: '【リマインド】\n開始前にルール確認をお願いします。\n・凸禁止（○凸で廃村）\n・暴言・利敵禁止\n・初日占いCO進行\nルールを守って楽しみましょう！',
+        note: 'ゲーム開始前のルール確認リマインド。'
+      },
+    ]
+  },
+];
+
+function copyText(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'OK!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'コピー';
+      btn.classList.remove('copied');
+    }, 1500);
+  });
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+}
+
+function escapeAttr(str) {
+  return JSON.stringify(str).replace(/</g, '\\u003c').replace(/>/g, '\\u003e');
+}
+
+function renderTemplates(filter) {
+  const listEl = document.getElementById('tplList');
+  const lowerFilter = (filter || '').toLowerCase();
+
+  const html = TPL_DATA.map((cat, catIdx) => {
+    const filteredItems = cat.items.filter(item =>
+      item.label.toLowerCase().includes(lowerFilter) ||
+      item.text.toLowerCase().includes(lowerFilter) ||
+      item.note.toLowerCase().includes(lowerFilter) ||
+      cat.category.toLowerCase().includes(lowerFilter)
+    );
+    if (filteredItems.length === 0) return '';
+
+    return `
+      <div class="tpl-category" id="cat-${catIdx}">
+        <div class="tpl-category-title">${cat.icon} ${cat.category}</div>
+        ${filteredItems.map(item => `
+          <div class="tpl-item">
+            <div class="tpl-header">
+              <span class="tpl-label">${item.label}</span>
+              <span class="tpl-tag ${item.tag}">${item.tagName}</span>
+              <button class="copy-btn" onclick="copyText(${escapeAttr(item.text)}, this)">コピー</button>
+            </div>
+            <div class="tpl-body">
+              <div class="tpl-text">${escapeHtml(item.text)}</div>
+              <div class="tpl-note">${item.note}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }).join('');
+
+  listEl.innerHTML = html || '<p style="color:#8b949e;text-align:center;padding:2rem;">該当するテンプレートが見つかりません。</p>';
+}
+
+// Category nav
+const navEl = document.getElementById('categoryNav');
+navEl.innerHTML = TPL_DATA.map((cat, i) =>
+  `<a href="#cat-${i}">${cat.icon} ${cat.category}</a>`
+).join('');
+
+// Search
+document.getElementById('tplSearch').addEventListener('input', (e) => {
+  renderTemplates(e.target.value);
+});
+
+renderTemplates('');
+</script>
+</body>
+</html>
