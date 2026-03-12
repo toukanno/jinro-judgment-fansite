@@ -442,20 +442,52 @@
       margin-top: .8rem;
     }
 
+    @media (max-width: 768px) {
+      .gallery-hero h1 { font-size: 1.8rem; }
+      .gallery-hero { padding: 2.5rem 1.25rem 1.5rem; }
+      .char-grid { grid-template-columns: repeat(2, 1fr); }
+      .char-card-banner { height: 85px; }
+      .char-card-icon { font-size: 2.8rem; }
+      .char-name { font-size: 1.8rem; }
+      .char-icon { font-size: 3.5rem; }
+      .info-grid { grid-template-columns: repeat(2, 1fr); }
+      .related-grid { grid-template-columns: repeat(2, 1fr); }
+      .char-content { padding: 1.5rem 1.2rem; }
+      .gallery-container { padding: 1.5rem 1.2rem; }
+      .gallery-controls { gap: .4rem; }
+      .team-filter { padding: .5rem .8rem; font-size: .8rem; min-height: 44px; }
+      .nav-arrow { min-height: 44px; }
+    }
+
     @media (max-width: 600px) {
       .gallery-hero h1 { font-size: 1.6rem; }
-      .char-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+      .gallery-hero { padding: 2rem 1rem 1.2rem; }
+      .gallery-hero p { font-size: .9rem; }
+      .char-grid { grid-template-columns: 1fr; }
       .char-card-banner { height: 75px; }
       .char-card-icon { font-size: 2.4rem; }
       .char-card-body { padding: .8rem 1rem 1rem; }
       .char-card-name { font-size: 1rem; }
-      .char-card-desc { -webkit-line-clamp: 2; }
+      .char-card-desc { -webkit-line-clamp: 2; font-size: .83rem; }
+      .char-card-ability { font-size: .8rem; }
       .char-name { font-size: 1.6rem; }
       .char-icon { font-size: 3rem; }
       .info-grid { grid-template-columns: repeat(2, 1fr); }
+      .info-card .value { font-size: 1rem; }
+      .info-card .label { font-size: .72rem; }
+      .related-grid { grid-template-columns: 1fr; }
       .char-content { padding: 1.5rem 1rem; }
+      .char-section { padding: 1.2rem; }
+      .char-section h2 { font-size: 1.05rem; }
+      .char-section p { font-size: .9rem; }
       .char-banner { padding: 1rem; }
       .gallery-container { padding: 1.5rem 1rem; }
+      .gallery-search { min-width: 100%; font-size: .88rem; }
+      .team-filter { flex: 1 1 calc(33% - .4rem); text-align: center; min-height: 44px; font-size: .78rem; }
+      .team-section-title { font-size: 1.15rem; }
+      .nav-arrows { flex-direction: column; gap: .8rem; }
+      .nav-arrow.next { text-align: left; margin-left: 0; }
+      .nav-arrow { min-height: 44px; }
     }
   </style>
 </head>

@@ -147,10 +147,31 @@
       margin-bottom: 1.5rem;
     }
 
+    @media (max-width: 768px) {
+      .update-hero h1 { font-size: 1.6rem; }
+      .update-hero { padding: 2.8rem 1rem 2rem; }
+      .stats-grid { grid-template-columns: repeat(3, 1fr); gap: .8rem; }
+      .stat-card { padding: 1rem; }
+      .stat-card .stat-num { font-size: 1.6rem; }
+      .role-card-v3 { padding: 1rem 1.1rem; }
+      .role-card-v3 .role-header { flex-wrap: wrap; gap: .4rem; }
+      .role-card-v3 .role-ability-tag { margin-left: 0; }
+      .filter-btn { min-height: 44px; display: flex; align-items: center; padding: .5rem .9rem; }
+      .team-header { font-size: 1.15rem; }
+    }
+
     @media (max-width: 600px) {
       .update-hero h1 { font-size: 1.4rem; }
       .update-hero { padding: 2.5rem 1rem 2rem; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: .6rem; }
+      .stat-card .stat-num { font-size: 1.4rem; }
+      .stat-card .stat-label { font-size: .78rem; }
+      .role-card-v3 { padding: .8rem .9rem; }
+      .role-card-v3 .role-name { font-size: .95rem; }
+      .role-card-v3 .role-desc { font-size: .85rem; }
+      .role-card-v3 .role-strategy { font-size: .82rem; padding: .5rem .7rem; }
+      .team-header { font-size: 1.05rem; }
+      .source-note { font-size: .82rem; padding: .8rem 1rem; }
     }
   </style>
 </head>

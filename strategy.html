@@ -31,6 +31,28 @@
     .flowchart .step-num.wolf { background: #da3633; }
     .flowchart .step-num.fox { background: #9e6a03; }
     .flowchart .arrow { text-align: center; color: #484f58; margin: .2rem 0; }
+
+    /* Responsive: 768px breakpoint */
+    @media (max-width: 768px) {
+      .do-dont { grid-template-columns: 1fr; }
+      .strat-card { padding: 1.2rem; }
+      .strat-card h3 { font-size: 1rem; }
+      .strat-card li { font-size: .88rem; }
+      .flowchart { padding: 1rem; font-size: .85rem; }
+      .flowchart .step { gap: .6rem; }
+    }
+    @media (max-width: 600px) {
+      .strat-section { margin-bottom: 2rem; }
+      .strat-card { padding: 1rem; margin-bottom: .8rem; }
+      .strat-card h3 { font-size: .95rem; flex-wrap: wrap; }
+      .strat-card h4 { font-size: .9rem; }
+      .strat-card li { font-size: .85rem; }
+      .strat-card ul { margin-left: 1.2rem; }
+      .do-dont > div { padding: .8rem; }
+      .do-box h5, .dont-box h5 { font-size: .9rem; }
+      .flowchart { padding: .8rem; font-size: .82rem; }
+      .flowchart .step-num { width: 24px; height: 24px; font-size: .75rem; }
+    }
   </style>
 </head>
 <body>
@@ -225,6 +247,7 @@
       <p>市民に紛れ込み、夜の襲撃と昼の議論で勝利を目指す。</p>
 
       <h4>基本戦術：潜伏 vs 騙り</h4>
+      <div class="table-scroll">
       <table class="data-table">
         <tr><th>戦術</th><th>メリット</th><th>デメリット</th><th>おすすめ状況</th></tr>
         <tr>
@@ -246,6 +269,7 @@
           <td>占い騙りが狂人に任せられる時</td>
         </tr>
       </table>
+      </div>
 
       <h4>噛み先の選び方</h4>
       <div class="flowchart">
@@ -441,6 +465,7 @@
       <div class="accordion-body"><div class="accordion-body-inner">
         <p>縄計算は人狼ゲームで最も重要な計算の一つです。</p>
         <p><strong>計算式：</strong>残り吊り回数 = (生存人数 - 1) &divide; 2（小数点切り捨て）- 残り人狼数 + 1</p>
+        <div class="table-scroll">
         <table class="data-table" style="margin-top:.5rem;">
           <tr><th>生存人数</th><th>残り人狼</th><th>吊り猶予</th><th>状況</th></tr>
           <tr><td>9人</td><td>2匹</td><td>2回</td><td>余裕あり</td></tr>
@@ -450,6 +475,7 @@
           <tr><td>5人</td><td>1匹</td><td>1回</td><td>最終日</td></tr>
           <tr><td>3人</td><td>1匹</td><td>0回</td><td>ラスト1回で当てる</td></tr>
         </table>
+        </div>
       </div></div>
     </div>
   </div>

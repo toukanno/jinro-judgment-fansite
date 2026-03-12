@@ -24,6 +24,27 @@
     .tag-basic { background: rgba(88,166,255,.15); color: #58a6ff; }
     .tag-advanced { background: rgba(210,153,34,.15); color: #d29922; }
     .tag-slang { background: rgba(219,127,247,.15); color: #db7ff7; }
+
+    /* Responsive: 768px breakpoint */
+    @media (max-width: 768px) {
+      .glossary-index { gap: .25rem; }
+      .glossary-index a { padding: .35rem .55rem; font-size: .8rem; min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; }
+      .glossary-item { padding: .9rem 1rem; }
+      .glossary-item h3 { font-size: .95rem; }
+      .glossary-item p { font-size: .88rem; }
+      .glossary-section-header { font-size: 1.1rem; }
+    }
+    @media (max-width: 600px) {
+      .glossary-index { gap: .2rem; }
+      .glossary-index a { padding: .3rem .45rem; font-size: .78rem; min-width: 40px; min-height: 40px; }
+      .glossary-item { padding: .8rem .9rem; margin-bottom: .5rem; }
+      .glossary-item h3 { font-size: .9rem; flex-wrap: wrap; gap: .3rem; }
+      .glossary-item h3 .reading { font-size: .75rem; }
+      .glossary-item p { font-size: .85rem; line-height: 1.6; }
+      .glossary-section-header { font-size: 1rem; margin: 1.2rem 0 .6rem; }
+      .tag { font-size: .68rem; padding: .08rem .35rem; }
+      .filter-btn { min-height: 44px; padding: .4rem .8rem; }
+    }
   </style>
 </head>
 <body>

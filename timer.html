@@ -402,25 +402,176 @@
     }
 
     /* ===== Responsive ===== */
-    @media (max-width: 480px) {
+
+    /* --- Tablet / small desktop --- */
+    @media (max-width: 768px) {
       .timer-frame {
-        padding: 1.5rem 1rem;
+        max-width: 460px;
+        padding: 1.8rem 1.8rem;
       }
       .timer-display {
-        font-size: 3.5rem;
+        font-size: 4rem;
+      }
+      .hourglass-wrapper {
+        width: 100px;
+        height: 135px;
+      }
+      .timer-main {
+        gap: 1.2rem;
+      }
+    }
+
+    /* --- Large phone --- */
+    @media (max-width: 600px) {
+      .timer-frame {
+        max-width: 100%;
+        padding: 1.5rem 1.2rem;
+      }
+      .timer-display {
+        font-size: 3rem;
+      }
+      .timer-title {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+      }
+      .game-btn {
+        min-width: 80px;
+        min-height: 44px;
+        padding: 12px 16px;
+        font-size: 1.1rem;
+      }
+      .hourglass-wrapper {
+        width: 80px;
+        height: 108px;
+      }
+      .timer-main {
+        gap: 0.8rem;
+      }
+      .ctrl-btn {
+        min-height: 44px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+      .preset-btn {
+        min-height: 36px;
+        padding: 6px 14px;
+        font-size: 0.8rem;
+      }
+      .fire-particles {
+        inset: -12px;
+      }
+      .fire-particle {
+        width: 4px;
+        height: 4px;
+      }
+      .ambient-glow {
+        width: 280px;
+        height: 280px;
+      }
+    }
+
+    /* --- Standard phone (kept for backward compat) --- */
+    @media (max-width: 480px) {
+      .timer-frame {
+        padding: 1.2rem 0.8rem;
+      }
+      .timer-display {
+        font-size: 3rem;
       }
       .game-btn {
         min-width: 72px;
+        min-height: 44px;
         padding: 12px 14px;
         font-size: 1rem;
       }
       .hourglass-wrapper {
-        width: 90px;
-        height: 120px;
+        width: 80px;
+        height: 108px;
       }
       .timer-main {
-        gap: 1rem;
+        gap: 0.8rem;
       }
+      .ctrl-btn {
+        min-height: 44px;
+        padding: 10px 16px;
+      }
+      .preset-btn {
+        min-height: 36px;
+        padding: 6px 12px;
+      }
+      .timer-controls {
+        gap: 0.6rem;
+      }
+    }
+
+    /* --- Small phone --- */
+    @media (max-width: 374px) {
+      .timer-frame {
+        padding: 1rem 0.6rem;
+        border-radius: 12px;
+      }
+      .timer-display {
+        font-size: 2.5rem;
+        letter-spacing: 0.02em;
+      }
+      .timer-title {
+        font-size: 0.9rem;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.8rem;
+      }
+      .timer-label {
+        font-size: 0.7rem;
+      }
+      .game-btn {
+        min-width: 64px;
+        min-height: 44px;
+        padding: 10px 10px;
+        font-size: 0.9rem;
+      }
+      .btn-label {
+        font-size: 0.55rem;
+      }
+      .hourglass-wrapper {
+        width: 64px;
+        height: 86px;
+      }
+      .timer-main {
+        gap: 0.5rem;
+      }
+      .ctrl-btn {
+        min-height: 44px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
+      .preset-btn {
+        min-height: 36px;
+        padding: 5px 8px;
+        font-size: 0.7rem;
+      }
+      .fire-particles {
+        inset: -8px;
+      }
+      .fire-particle {
+        width: 3px;
+        height: 3px;
+      }
+      .ambient-glow {
+        width: 200px;
+        height: 200px;
+      }
+      .timer-controls {
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+      .time-presets {
+        gap: 0.3rem;
+      }
+    }
+
+    /* Ensure site-header/site-footer don't break timer flex layout */
+    body.timer-page .site-header,
+    body.timer-page .site-footer {
+      flex-shrink: 0;
     }
 
     /* ===== Ambient glow behind frame ===== */

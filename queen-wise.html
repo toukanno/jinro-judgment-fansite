@@ -108,10 +108,39 @@
     .zone-explain h5 { color: #58a6ff; margin-bottom: .5rem; font-size: .95rem; }
     .zone-explain p { color: #c9d1d9; font-size: .88rem; line-height: 1.7; }
 
+    /* Responsive: 768px breakpoint */
+    @media (max-width: 768px) {
+      .qw-hero h1 { font-size: 1.8rem; }
+      .qw-hero { padding: 3rem 1.2rem 2rem; }
+      .comp-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+      .role-summary { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+      .do-dont { grid-template-columns: 1fr; }
+      .strat-card { padding: 1.2rem; }
+      .flowchart { padding: 1rem; }
+    }
     @media (max-width: 600px) {
       .qw-hero h1 { font-size: 1.5rem; }
       .qw-hero { padding: 2.5rem 1rem 2rem; }
       .comp-grid { grid-template-columns: repeat(2, 1fr); }
+      .comp-chip { font-size: .8rem; padding: .5rem .6rem; }
+      .role-summary { grid-template-columns: 1fr; }
+      .role-mini { padding: 1rem; }
+      .role-mini h4 { font-size: .95rem; }
+      .role-mini p { font-size: .82rem; }
+      .strat-section { margin-bottom: 2rem; }
+      .strat-card { padding: 1rem; margin-bottom: .8rem; }
+      .strat-card h3 { font-size: .95rem; flex-wrap: wrap; }
+      .strat-card h4 { font-size: .9rem; }
+      .strat-card li { font-size: .85rem; }
+      .strat-card p { font-size: .85rem; }
+      .strat-card ul { margin-left: 1.2rem; }
+      .do-dont > div { padding: .8rem; }
+      .do-box h5, .dont-box h5 { font-size: .9rem; }
+      .flowchart { padding: .8rem; font-size: .82rem; }
+      .flowchart .step-num { width: 24px; height: 24px; font-size: .75rem; }
+      .zone-explain { padding: 1rem; }
+      .zone-explain h5 { font-size: .9rem; }
+      .zone-explain p { font-size: .82rem; }
     }
   </style>
 </head>
@@ -314,6 +343,7 @@
       <p>妖術師は人狼陣営の情報役です。賢者の対抗として占いCOし、占い結果を操作しながら仲間の人狼を囲い、女王やプリンセスの位置を特定して仲間に伝えることが最大の仕事です。</p>
 
       <h4>2つのアプローチ</h4>
+      <div class="table-scroll">
       <table class="data-table">
         <tr><th>パターン</th><th>概要</th><th>メリット</th><th>難易度</th></tr>
         <tr>
@@ -329,6 +359,7 @@
           <td>初級</td>
         </tr>
       </table>
+      </div>
     </div>
 
     <div class="strat-card">

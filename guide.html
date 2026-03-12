@@ -31,6 +31,24 @@
     .modal-close { border: 1px solid #30363d; background: #161b22; color: #8b949e; border-radius: 6px; padding: .3rem .55rem; cursor: pointer; }
     .modal-close:hover { color: #e6edf3; border-color: #58a6ff; }
     .modal-body p { font-size: .92rem; color: #c9d1d9; margin-bottom: .8rem; }
+
+    @media (max-width: 768px) {
+      .modal-dialog { width: min(720px, 96%); padding: 1rem; }
+      .modal-title { font-size: 1rem; }
+      .modal-body p { font-size: .88rem; }
+      .modal-trigger { min-height: 44px; font-size: .9rem; }
+      .modal-close { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+    }
+
+    @media (max-width: 600px) {
+      .modal-overlay { padding: .5rem; }
+      .modal-dialog { width: 100%; max-height: 90vh; padding: .9rem; border-radius: 10px; }
+      .modal-title { font-size: .95rem; }
+      .modal-body p { font-size: .85rem; }
+      .modal-trigger { padding: .8rem 1rem; font-size: .88rem; min-height: 44px; }
+      .modal-trigger .label { font-size: .88rem; }
+      .modal-close { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+    }
   </style>
 </head>
 <body>
@@ -108,6 +126,7 @@
     <button class="accordion-header">勝利条件</button>
     <div class="accordion-body">
       <div class="accordion-body-inner">
+        <div class="table-scroll">
         <table class="data-table">
           <tr><th>陣営</th><th>勝利条件</th></tr>
           <tr><td><span class="role-badge village">市民陣営</span></td><td>人狼を全員処刑する</td></tr>
@@ -115,6 +134,7 @@
           <tr><td><span class="role-badge fox">妖狐陣営</span></td><td>ゲーム終了時に生存している</td></tr>
           <tr><td><span class="role-badge lovers">恋人陣営</span></td><td>恋人同士だけで生存する</td></tr>
         </table>
+        </div>
       </div>
     </div>
   </div>
@@ -173,6 +193,7 @@
   <!-- ===== Section: おすすめ初心者設定 ===== -->
   <h2 class="section-title">&#x2699; おすすめ初心者部屋設定</h2>
 
+  <div class="table-scroll">
   <table class="data-table">
     <tr><th>項目</th><th>おすすめ設定</th><th>理由</th></tr>
     <tr><td>人数</td><td>9人</td><td>バランスが良く、長すぎない</td></tr>
@@ -181,6 +202,7 @@
     <tr><td>連続ガード</td><td>なし</td><td>基本ルール</td></tr>
     <tr><td>初日占い</td><td>ランダム白</td><td>初日の議論がしやすい</td></tr>
   </table>
+  </div>
 
   <h2 class="section-title">&#x1F4CC; Wikiでよく使われる進行メモ</h2>
   <div class="modal-trigger-list">

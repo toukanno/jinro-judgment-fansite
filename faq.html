@@ -49,6 +49,21 @@
       margin-bottom: 1.5rem;
     }
     .faq-count { color: #8b949e; font-size: .88rem; margin-bottom: 1rem; }
+
+    @media (max-width: 768px) {
+      .faq-question { padding: .8rem 1rem; font-size: .9rem; min-height: 44px; }
+      .faq-answer-inner { padding: .8rem 1rem .8rem 1.8rem; font-size: .88rem; }
+      .faq-category-title { font-size: 1.05rem; }
+      #faqSearch { max-width: 100% !important; }
+    }
+
+    @media (max-width: 600px) {
+      .faq-question { padding: .75rem .8rem; font-size: .88rem; }
+      .faq-question::before { margin-right: .4rem; font-size: .88rem; }
+      .faq-answer-inner { padding: .7rem .8rem .7rem 1.5rem; font-size: .85rem; line-height: 1.7; }
+      .faq-category-title { font-size: 1rem; }
+      .faq-count { font-size: .82rem; }
+    }
   </style>
 </head>
 <body>

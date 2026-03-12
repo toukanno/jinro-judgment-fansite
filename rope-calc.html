@@ -175,6 +175,36 @@
     .day-num.future { background: rgba(48,54,61,.3); color: #484f58; }
     .timeline-day .day-info { flex: 1; color: #c9d1d9; }
     .timeline-day .day-count { font-weight: 700; color: #8b949e; font-size: .82rem; }
+
+    @media (max-width: 768px) {
+      .calc-frame { padding: 1.5rem; }
+      .calc-input-group { gap: .8rem; }
+      .calc-input-group label { font-size: .9rem; }
+      .calc-btn { width: 44px; height: 44px; font-size: 1.3rem; }
+      .calc-num { width: 50px; height: 44px; }
+      .result-main { font-size: 2.2rem; }
+      .result-detail { gap: .6rem; }
+      .detail-item .num { font-size: 1.3rem; }
+      .formula-box { padding: 1rem 1.2rem; }
+      .formula-box code { font-size: .88rem; padding: .6rem .8rem; }
+    }
+
+    @media (max-width: 600px) {
+      .calc-frame { padding: 1.2rem .9rem; }
+      .calc-input-group { flex-wrap: wrap; gap: .5rem; }
+      .calc-input-group label { flex: 1 1 100%; font-size: .88rem; margin-bottom: -.2rem; }
+      .calc-btn { width: 44px; height: 44px; }
+      .result-main { font-size: 2rem; }
+      .detail-item { padding: .6rem; }
+      .detail-item .num { font-size: 1.2rem; }
+      .detail-item .label { font-size: .75rem; }
+      .situation-msg { font-size: .85rem; padding: .7rem .8rem; }
+      .formula-box { padding: .8rem 1rem; }
+      .formula-box code { font-size: .82rem; word-break: break-all; }
+      .formula-box p { font-size: .82rem; }
+      .timeline-day { gap: .5rem; font-size: .82rem; }
+      .timeline-day .day-num { width: 28px; height: 28px; font-size: .75rem; }
+    }
   </style>
 </head>
 <body>
@@ -257,6 +287,7 @@
 
   <h2 class="section-title">&#x1F4CA; よくある状況の縄計算</h2>
   <div class="ref-table">
+    <div class="table-scroll">
     <table class="data-table">
       <thead>
         <tr>
@@ -278,6 +309,7 @@
         <tr><td>3</td><td>1</td><td>1</td><td>0</td><td style="color:#f85149">ラスト1回</td></tr>
       </tbody>
     </table>
+    </div>
   </div>
 
   <div class="tip-box warning" style="max-width:600px;margin:0 auto;">
