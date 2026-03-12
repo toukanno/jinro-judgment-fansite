@@ -56,9 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const ad = document.createElement('div');
     ad.className = 'sidebar-ad';
     ad.innerHTML = '<button class="sidebar-ad-close" aria-label="閉じる">&times;</button>'
-      + '<a href="//af.moshimo.com/af/c/click?a_id=5422316&p_id=54&pc_id=54&pl_id=1225" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc>'
-      + '<img src="//image.moshimo.com/af-img/0032/000000001225.gif" width="120" height="500" style="border:none;" alt="広告"></a>'
-      + '<img src="//i.moshimo.com/af/i/impression?a_id=5422316&p_id=54&pc_id=54&pl_id=1225" width="1" height="1" style="border:none;" loading="lazy" alt="">';
+      + '<a href="https://af.moshimo.com/af/c/click?a_id=5422316&p_id=54&pc_id=54&pl_id=1225" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc>'
+      + '<img src="https://image.moshimo.com/af-img/0032/000000001225.gif" width="120" height="500" style="border:none;" alt="広告"></a>'
+      + '<img src="https://i.moshimo.com/af/i/impression?a_id=5422316&p_id=54&pc_id=54&pl_id=1225" width="1" height="1" style="border:none;" loading="lazy" alt="">';
     document.body.appendChild(ad);
     ad.querySelector('.sidebar-ad-close').addEventListener('click', () => {
       ad.style.opacity = '0';
