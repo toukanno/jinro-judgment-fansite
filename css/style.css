@@ -697,6 +697,64 @@ img { max-width: 100%; height: auto; }
   .timer-display { font-size: 3rem !important; }
 }
 
+/* ===== Game Screenshots ===== */
+.screenshot-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.2rem;
+  margin: 1.2rem 0;
+}
+.screenshot-item {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color .3s, transform .2s;
+}
+.screenshot-item:hover {
+  border-color: #58a6ff;
+  transform: translateY(-2px);
+}
+.screenshot-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.screenshot-item .screenshot-caption {
+  padding: .7rem 1rem;
+  font-size: .85rem;
+  color: #8b949e;
+  text-align: center;
+}
+.screenshot-single {
+  max-width: 400px;
+  margin: 1.2rem auto;
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.screenshot-single img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.screenshot-single .screenshot-caption {
+  padding: .7rem 1rem;
+  font-size: .85rem;
+  color: #8b949e;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .screenshot-gallery {
+    grid-template-columns: 1fr;
+  }
+  .screenshot-single {
+    max-width: 100%;
+  }
+}
+
 /* ===== Selection ===== */
 ::selection {
   background: rgba(88,166,255,.25);
