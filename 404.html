@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0e17">
+  <title>ページが見つかりません - 人狼JGデータベース</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .error-page {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 60vh; text-align: center; padding: 2rem;
+    }
+    .error-icon { font-size: 5rem; margin-bottom: 1rem; filter: drop-shadow(0 4px 20px rgba(248,81,73,.3)); }
+    .error-code { font-size: 4rem; font-weight: 900; color: #f85149; margin-bottom: .5rem; }
+    .error-msg { font-size: 1.2rem; color: #8b949e; margin-bottom: 2rem; max-width: 500px; }
+    .error-links { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .error-links a {
+      padding: .6rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: .9rem;
+      transition: all .2s;
+    }
+    .error-links .primary {
+      background: linear-gradient(135deg, #238636, #2ea043); color: #fff;
+      box-shadow: 0 2px 12px rgba(35,134,54,.2);
+    }
+    .error-links .primary:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(35,134,54,.3); }
+    .error-links .secondary {
+      background: rgba(33,38,45,.8); color: #e6edf3; border: 1px solid rgba(48,54,61,.6);
+    }
+    .error-links .secondary:hover { border-color: rgba(88,166,255,.3); }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="character.html">キャラクター</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+        <li><a href="templates.html">部屋テンプレ</a></li>
+        <li><a href="copipe.html">コピペ集</a></li>
+        <li><a href="v3roles.html">V3新役職</a></li>
+        <li><a href="queen-wise.html">女王部屋</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="timer.html">タイマー</a></li>
+        <li><a href="exclusion.html">同村制限</a></li>
+        <li><a href="rope-calc.html">縄計算</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="error-page">
+  <div class="error-icon">&#x1F43A;</div>
+  <div class="error-code">404</div>
+  <p class="error-msg">お探しのページは見つかりませんでした。人狼に襲撃されたのかもしれません...</p>
+  <div class="error-links">
+    <a href="index.html" class="primary">ホームに戻る</a>
+    <a href="roles.html" class="secondary">役職一覧を見る</a>
+    <a href="faq.html" class="secondary">FAQを見る</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="index.html">ホーム</a>
+    <a href="roles.html">役職一覧</a>
+    <a href="guide.html">初心者ガイド</a>
+    <a href="glossary.html">用語集</a>
+  </div>
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+</footer>
+
+<script src="js/common.js"></script>
+</body>
+</html>
