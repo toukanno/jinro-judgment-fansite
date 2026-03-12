@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0e17">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JGDB">
+  <title>人狼クイズ - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントの知識をクイズで確認。初心者から上級者まで楽しめる問題集。">
+  <meta property="og:title" content="人狼クイズ - 人狼ジャッジメント攻略">
+  <meta property="og:description" content="人狼ジャッジメントの知識をクイズで確認。初心者から上級者まで楽しめる問題集。">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .quiz-container { max-width: 700px; margin: 0 auto; }
+    .quiz-progress { display: flex; align-items: center; gap: .8rem; margin-bottom: 1.5rem; }
+    .quiz-progress-bar { flex: 1; height: 8px; background: rgba(48,54,61,.6); border-radius: 4px; overflow: hidden; }
+    .quiz-progress-fill { height: 100%; background: linear-gradient(90deg, #58a6ff, #7ee787); border-radius: 4px; transition: width .4s ease; }
+    .quiz-progress-text { font-size: .85rem; color: #8b949e; white-space: nowrap; }
+    .quiz-card {
+      background: rgba(22,27,34,.7); border: 1px solid rgba(48,54,61,.6);
+      border-radius: 14px; padding: 2rem; margin-bottom: 1.5rem;
+    }
+    .quiz-question { font-size: 1.15rem; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.6; }
+    .quiz-question .q-num { color: #58a6ff; margin-right: .5rem; }
+    .quiz-options { display: flex; flex-direction: column; gap: .6rem; }
+    .quiz-option {
+      width: 100%; padding: .9rem 1.2rem; background: rgba(10,14,23,.6);
+      border: 1px solid rgba(48,54,61,.6); border-radius: 10px;
+      color: #e6edf3; font-size: .95rem; cursor: pointer; text-align: left;
+      transition: all .2s; font-family: inherit;
+    }
+    .quiz-option:hover { border-color: #58a6ff; background: rgba(88,166,255,.06); }
+    .quiz-option.correct { border-color: #7ee787; background: rgba(126,231,135,.1); color: #7ee787; }
+    .quiz-option.wrong { border-color: #f85149; background: rgba(248,81,73,.1); color: #f85149; }
+    .quiz-option.disabled { pointer-events: none; opacity: .6; }
+    .quiz-option.disabled.correct { opacity: 1; }
+    .quiz-explanation {
+      margin-top: 1rem; padding: 1rem; border-radius: 8px;
+      background: rgba(88,166,255,.06); border-left: 3px solid #58a6ff;
+      font-size: .9rem; color: #c9d1d9; display: none;
+    }
+    .quiz-explanation.show { display: block; animation: fadeIn .3s; }
+    .quiz-next {
+      display: none; margin-top: 1rem; padding: .6rem 1.5rem;
+      background: linear-gradient(135deg, #238636, #2ea043); color: #fff;
+      border: none; border-radius: 10px; font-weight: 700; font-size: .9rem;
+      cursor: pointer; font-family: inherit; transition: all .2s;
+    }
+    .quiz-next:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(35,134,54,.3); }
+    .quiz-next.show { display: inline-block; }
+    .quiz-result {
+      text-align: center; padding: 2rem;
+      background: rgba(22,27,34,.7); border: 1px solid rgba(48,54,61,.6);
+      border-radius: 14px; display: none;
+    }
+    .quiz-result.show { display: block; }
+    .quiz-score { font-size: 3rem; font-weight: 900; margin: 1rem 0; }
+    .quiz-score.great { color: #7ee787; }
+    .quiz-score.good { color: #58a6ff; }
+    .quiz-score.bad { color: #f85149; }
+    .quiz-rank { font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; }
+    .quiz-restart {
+      padding: .6rem 2rem; background: rgba(33,38,45,.8); color: #e6edf3;
+      border: 1px solid rgba(48,54,61,.6); border-radius: 10px;
+      font-weight: 700; cursor: pointer; font-family: inherit; font-size: .9rem;
+      transition: all .2s; margin-top: 1rem;
+    }
+    .quiz-restart:hover { border-color: #58a6ff; color: #58a6ff; }
+    .quiz-diff { display: flex; gap: .5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="character.html">キャラクター</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+        <li><a href="templates.html">部屋テンプレ</a></li>
+        <li><a href="copipe.html">コピペ集</a></li>
+        <li><a href="v3roles.html">V3新役職</a></li>
+        <li><a href="queen-wise.html">女王部屋</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="timer.html">タイマー</a></li>
+        <li><a href="exclusion.html">同村制限</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> 人狼クイズ</div>
+
+  <h1 class="section-title">&#x1F9E0; 人狼ジャッジメント クイズ</h1>
+
+  <p style="color:#8b949e;font-size:.9rem;margin-bottom:1rem;">知識を試そう！難易度を選んでスタート。</p>
+
+  <div class="quiz-diff">
+    <button class="filter-btn active" onclick="startQuiz('beginner',this)">初級（10問）</button>
+    <button class="filter-btn" onclick="startQuiz('intermediate',this)">中級（10問）</button>
+    <button class="filter-btn" onclick="startQuiz('advanced',this)">上級（10問）</button>
+  </div>
+
+  <div class="quiz-container" id="quizArea">
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="progressFill"></div></div>
+      <div class="quiz-progress-text" id="progressText">1 / 10</div>
+    </div>
+    <div class="quiz-card" id="quizCard"></div>
+    <div class="quiz-result" id="quizResult">
+      <div style="font-size:3rem;">&#x1F43A;</div>
+      <div class="quiz-score" id="scoreText"></div>
+      <div class="quiz-rank" id="rankText"></div>
+      <p id="rankDesc" style="color:#8b949e;margin-bottom:1rem;"></p>
+      <button class="quiz-restart" onclick="startQuiz(currentDiff)">もう一度挑戦</button>
+      <br>
+      <a href="guide.html" style="font-size:.85rem;">初心者ガイドで復習する</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="index.html">ホーム</a>
+    <a href="roles.html">役職一覧</a>
+    <a href="guide.html">初心者ガイド</a>
+    <a href="strategy.html">立ち回り</a>
+    <a href="glossary.html">用語集</a>
+  </div>
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
+</footer>
+
+<script src="js/common.js"></script>
+<script>
+const QUIZ = {
+  beginner: [
+    { q: '占い師が毎晩できることは？', opts: ['一人を占って人狼か確認', '一人を護衛する', '一人を処刑する', '人狼と会話する'], ans: 0, exp: '占い師は毎晩一人を選んで、その人が人狼かどうかを知ることができます。' },
+    { q: '人狼陣営の勝利条件は？', opts: ['人狼を全員処刑する', '人狼の数が市民と同数以上になる', 'ゲーム終了時に生存する', '全員を襲撃する'], ans: 1, exp: '人狼陣営は、人狼の数が市民の数と同数以上になれば勝利です。' },
+    { q: 'COとは何の略？', opts: ['カミングアウト', 'チェックアウト', 'カウントオーバー', 'コマンドオーダー'], ans: 0, exp: 'CO＝カミングアウト。自分の役職を公開することです。' },
+    { q: '狩人の最優先護衛先は？', opts: ['霊能者', '市民', '占い師', '自分自身'], ans: 2, exp: '占い師は村の最重要情報源なので、狩人は占い師の護衛を最優先します。' },
+    { q: '「グレー」とはどういう人？', opts: ['占いで白と出た人', '占いで黒と出た人', 'まだ占われていない人', '処刑された人'], ans: 2, exp: 'グレーとは、まだ占いで白にも黒にもなっていない人のことです。' },
+    { q: '妖狐はどうすると死亡する？', opts: ['人狼に襲撃される', '占い師に占われる', '投票で最多得票になる', '夜に行動しない'], ans: 1, exp: '妖狐は人狼の襲撃では死にませんが、占い師に占われると死亡（呪殺）します。' },
+    { q: '霊能者が知ることができるのは？', opts: ['夜に誰が襲撃されたか', '処刑された人が人狼だったか', '生存者の中に人狼が何人いるか', '占い師の結果が正しいか'], ans: 1, exp: '霊能者は、処刑された人が人狼だったかどうかを知ることができます。' },
+    { q: '初心者におすすめの人数構成は？', opts: ['5人', '9人', '15人', '20人'], ans: 1, exp: '9人はバランスが良く、ゲーム時間も適度で初心者に最適です。' },
+    { q: '「突然死」とは？', opts: ['人狼に襲撃されること', '投票時間内に投票しないこと', '占いで呪殺されること', '猫又に道連れにされること'], ans: 1, exp: '投票時間内に投票しないと突然死になります。マナー違反でペナルティ対象です。' },
+    { q: '狂人の占い結果は？', opts: ['人狼と出る', '白（人間）と出る', 'ランダムで出る', '占えない'], ans: 1, exp: '狂人は人狼陣営ですが人狼ではないので、占い結果は白（人間）と出ます。' },
+    { q: '「ロラ」とは何の略？', opts: ['ローラー', 'ロジカル', 'ロングラン', 'ロスタイム'], ans: 0, exp: 'ロラ＝ローラー。同じ役職をCOした人を全員順番に処刑する戦術です。' },
+    { q: 'パン屋が死亡するとどうなる？', opts: ['市民陣営が敗北する', '翌朝パンが届かなくなる', '人狼が特定される', '霊能結果が変わる'], ans: 1, exp: 'パン屋が生存している間は毎朝「パンが届きました」と表示されます。死亡すると届かなくなります。' },
+  ],
+  intermediate: [
+    { q: '9人村（狼2）で、初日から何回吊りのチャンスがある？', opts: ['3回', '4回', '5回', '2回'], ans: 1, exp: '(9-1)/2=4回。9人→7人→5人→3人の4回処刑のチャンスがあります。' },
+    { q: '「漂白噛み」とは？', opts: ['妖狐を噛むこと', '偽占いが白出しした村人を噛むこと', '占い師を噛むこと', '確白を噛むこと'], ans: 1, exp: '偽占い師が白を出した村人を人狼が噛むことで、「確白が噛まれた」と見せかけて偽占いの信用を上げる戦術です。' },
+    { q: '「ベグ」とは何？', opts: ['真偽不明の占い候補を噛むこと', '狂人が人狼を見つけること', '占い師が妖狐を呪殺すること', '村人が自ら吊り先に立つこと'], ans: 0, exp: 'ベグ＝ベーグルの略。どちらが真占いか分からない状態でとりあえず噛むことです。' },
+    { q: '猫又が人狼に襲撃された場合、何が起きる？', opts: ['ランダムで1人道連れ', '襲撃した人狼を道連れ', '何も起きない', '翌日の投票が無効になる'], ans: 1, exp: '猫又は人狼に襲撃された場合、襲撃してきた人狼を確定で道連れにします。' },
+    { q: '大狼の特殊能力は？', opts: ['2人同時に襲撃できる', '占い結果が白と出る', '処刑されても1回復活する', '人狼チャットに狂人を参加させる'], ans: 1, exp: '大狼は人狼ですが占い結果が白（人間）と出るため、占い師の結果を混乱させます。' },
+    { q: 'PP（パワープレイ）が成立する条件は？', opts: ['人狼が全員生存', '人狼+狂人系が過半数', '占い師が死亡', '3人最終日'], ans: 1, exp: 'PPは人狼と狂人系が生存者の過半数を占め、投票で確実に村人を処刑できる状況です。' },
+    { q: '「身内切り」とは？', opts: ['人狼が仲間の人狼に投票すること', '占い師が味方に黒出しすること', '狂人が人狼を吊ること', '妖狐が背徳者を見捨てること'], ans: 0, exp: '人狼が仲間の人狼に投票することで、自分が村人であるように見せかける戦術です。' },
+    { q: '「囲い」とは？', opts: ['村人が確白を護衛すること', '偽占いが仲間の人狼に白を出すこと', '人狼同士で投票を合わせること', '狩人が毎晩同じ人を守ること'], ans: 1, exp: '偽占い師が仲間の人狼に白結果を出して守る戦術です。' },
+    { q: '呪殺と襲撃が同時に起きるとどうなる？', opts: ['死体が0人', '死体が1人', '死体が2人', 'ゲームがエラーになる'], ans: 2, exp: '襲撃先と呪殺先が別人なら、死体が2つ出ます（2死体）。これで呪殺が起きたと推理できます。' },
+    { q: '狂信者と狂人の最大の違いは？', opts: ['占い結果が異なる', '狂信者は人狼が誰か知っている', '狂信者は夜に行動できる', '投票数が異なる'], ans: 1, exp: '狂信者は人狼が誰か知った状態でゲームが始まるため、的確に援護できます。' },
+    { q: '背徳者は妖狐が全滅するとどうなる？', opts: ['人狼陣営になる', '後追い死する', '能力が強化される', '何も起きない'], ans: 1, exp: '背徳者は妖狐が全滅すると後追い死します。妖狐を守ることが最大の使命です。' },
+    { q: '「FO」とは？', opts: ['フルオープン（全役職CO）', 'ファーストオーダー', 'フェイクアウト', 'フォックスアウト'], ans: 0, exp: 'FO＝フルオープン。全役職者が一斉にCOする進行方法です。' },
+  ],
+  advanced: [
+    { q: '7人生存・人狼2匹の場合、吊り余裕は？', opts: ['0回', '1回', '2回', '3回'], ans: 1, exp: '吊り回数=(7-1)/2=3回。人狼2匹を吊る必要があるので、余裕は3-2=1回です。' },
+    { q: '女王とキューピットは同村できない。その理由は？', opts: ['キューピットが女王を恋人にすると破綻する', '女王の能力が無効化される', 'バグが発生する', '特に理由はない'], ans: 0, exp: '女王が恋人になると、恋人の後追い死と女王死亡による市民敗北が同時に起き、ゲームバランスが崩壊します。' },
+    { q: '3-1進行（占い3・霊能1）での最適な初動は？', opts: ['最も信用できる占いを残してロラ', '占い全員をロラ完遂', 'グレランで様子見', '霊能をロラする'], ans: 1, exp: '3-1では偽物が2人いるため、ロラ完遂して確実に人外を排除するのが安定です。' },
+    { q: '「逆囲い」の目的は？', opts: ['人狼を処刑に追い込むため', '偽占い師の信用を上げるため', '妖狐を処理するため', '狩人を炙り出すため'], ans: 1, exp: '仲間の人狼にあえて黒を出すことで、「仲間に黒を出すはずがない→真占い」と思わせる高等戦術です。' },
+    { q: 'GJと妖狐噛みの違いを見分ける方法は？', opts: ['見分けられない', '襲撃先を推理する', '占い師が翌日呪殺を起こすか確認', '霊能結果で確認'], ans: 0, exp: '平和が出ただけでは、狩人GJなのか人狼が妖狐を噛んだのか区別できません。状況証拠から推理する必要があります。' },
+    { q: '饒舌な人狼のリスクとは？', opts: ['毎日指定ワードを使わないと死亡', '発言数に制限がある', '占い結果が黒確定になる', '投票先が公開される'], ans: 0, exp: '饒舌な人狼は毎日指定されたワードを発言に含めないと翌朝死亡します。不自然な発言で疑われるリスクがあります。' },
+    { q: '5人生存・人狼1匹・妖狐1匹の場合、村はどうすべき？', opts: ['人狼を先に吊る', '妖狐を先に吊る', '人狼を噛ませて妖狐を処理', '占い師に呪殺させる'], ans: 1, exp: '妖狐が生存したまま人狼を全滅させると妖狐の勝利になるため、先に妖狐を処理する必要があります。' },
+    { q: '「LWCO（ラストウルフCO）」を行う場面は？', opts: ['最後の人狼が潜伏を諦める時', '人狼+狂人でPPを狙う時', '人狼が自首して村に貢献する時', '最終日に村人が狼COする時'], ans: 1, exp: 'LWCOは最後の人狼が自らCOして、狂人と票を合わせてPPを成立させるための戦術です。' },
+    { q: '怪盗と魔女が同村できない理由は？', opts: ['怪盗が魔女の薬を奪うため', '役職入替で蘇生能力が破綻するため', '魔女の毒が怪盗に効かないため', 'バグが起きるため'], ans: 1, exp: '怪盗の役職入替と魔女の蘇生/毒殺が組み合わさると、ゲームバランスが崩壊する可能性があるためです。' },
+    { q: '20人女王部屋で最も重要な初日の動きは？', opts: ['占い師が潜伏する', '全役職がFOする', '女王がCOする', 'グレランで寡黙を吊る'], ans: 1, exp: '女王部屋では初日FOで役職者を全員出し、女王を守る護衛体制を確立するのが基本です。' },
+    { q: '「盤面」を読む際に最も重要な要素は？', opts: ['発言の多さ', '全情報の総合的な整合性', '投票先だけ', '占い結果だけ'], ans: 1, exp: '盤面は占い結果・霊能結果・投票先・発言内容・噛み先を総合的に見て判断します。1つの要素だけでは不十分です。' },
+    { q: 'サイコの特殊能力は？', opts: ['占いで白が出る', '狩人の護衛を無視して襲撃できる', '処刑を1回耐える', '襲撃した相手の役職が分かる'], ans: 1, exp: 'サイコは狩人に護衛された人を襲撃しても護衛を無視して襲撃が成功する人狼です。' },
+  ]
+};
+
+let currentDiff = 'beginner';
+let currentQ = 0;
+let score = 0;
+let questions = [];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz(diff, btn) {
+  currentDiff = diff;
+  if (btn) {
+    document.querySelectorAll('.quiz-diff .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  questions = shuffle(QUIZ[diff]).slice(0, 10);
+  currentQ = 0;
+  score = 0;
+  document.getElementById('quizResult').classList.remove('show');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[currentQ];
+  const total = questions.length;
+  document.getElementById('progressFill').style.width = ((currentQ / total) * 100) + '%';
+  document.getElementById('progressText').textContent = `${currentQ + 1} / ${total}`;
+
+  const card = document.getElementById('quizCard');
+  card.style.display = 'block';
+  card.innerHTML = `
+    <div class="quiz-question"><span class="q-num">Q${currentQ + 1}.</span> ${q.q}</div>
+    <div class="quiz-options">
+      ${q.opts.map((opt, i) => `<button class="quiz-option" onclick="answer(${i})">${opt}</button>`).join('')}
+    </div>
+    <div class="quiz-explanation" id="explanation">${q.exp}</div>
+    <button class="quiz-next" id="nextBtn" onclick="nextQuestion()">次の問題へ</button>
+  `;
+}
+
+function answer(idx) {
+  const q = questions[currentQ];
+  const options = document.querySelectorAll('.quiz-option');
+  options.forEach((opt, i) => {
+    opt.classList.add('disabled');
+    if (i === q.ans) opt.classList.add('correct');
+    if (i === idx && idx !== q.ans) opt.classList.add('wrong');
+  });
+  if (idx === q.ans) score++;
+  document.getElementById('explanation').classList.add('show');
+  if (currentQ < questions.length - 1) {
+    document.getElementById('nextBtn').classList.add('show');
+  } else {
+    setTimeout(showResult, 1200);
+  }
+}
+
+function nextQuestion() {
+  currentQ++;
+  renderQuestion();
+}
+
+function showResult() {
+  document.getElementById('quizCard').style.display = 'none';
+  document.getElementById('progressFill').style.width = '100%';
+  const pct = Math.round((score / questions.length) * 100);
+  const scoreEl = document.getElementById('scoreText');
+  scoreEl.textContent = `${score} / ${questions.length}（${pct}%）`;
+
+  let rank, desc, cls;
+  if (pct >= 90) { rank = '人狼マスター'; desc = '素晴らしい！あなたは人狼の達人です。'; cls = 'great'; }
+  else if (pct >= 70) { rank = '上級プレイヤー'; desc = 'かなりの知識量です。さらに上を目指しましょう！'; cls = 'good'; }
+  else if (pct >= 50) { rank = '中級プレイヤー'; desc = '基本は押さえています。もう少し勉強すればさらに強くなれます。'; cls = 'good'; }
+  else { rank = '初心者プレイヤー'; desc = 'まだまだこれから！ガイドを読んで知識を深めましょう。'; cls = 'bad'; }
+
+  scoreEl.className = 'quiz-score ' + cls;
+  document.getElementById('rankText').textContent = rank;
+  document.getElementById('rankDesc').textContent = desc;
+  document.getElementById('quizResult').classList.add('show');
+}
+
+startQuiz('beginner');
+</script>
+</body>
+</html>
