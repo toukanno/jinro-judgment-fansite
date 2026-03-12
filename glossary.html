@@ -9,6 +9,10 @@
   <meta name="apple-mobile-web-app-title" content="人狼JGDB">
   <title>用語集 - 人狼ジャッジメント攻略</title>
   <meta name="description" content="人狼ジャッジメントで使われる専門用語・略語を五十音順でまとめた用語集。">
+  <meta property="og:title" content="用語集 - 人狼ジャッジメント攻略">
+  <meta property="og:description" content="人狼ジャッジメントで使われる専門用語・略語を五十音順でまとめた用語集。">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
   <link rel="stylesheet" href="css/style.css">
   <link rel="manifest" href="manifest.json">
   <style>
@@ -233,6 +237,34 @@ const GLOSSARY = [
     definition: '発言が少ない人を優先的に処刑する方針。情報が少ない人を残すと推理が進まないため、初日〜2日目に行われやすい。' },
   { term: 'パッション', reading: 'ぱっしょん', category: 'slang',
     definition: '論理ではなく感情や直感で推理・投票すること。「パッション投票」は感覚で投票先を決める行為。' },
+  { term: 'ラン', reading: 'らん', category: 'basic',
+    definition: 'ランダム投票の略。明確な処刑先が決まっていない時に、各自の判断で自由に投票すること。「グレラン」はグレーの中からランダムに選ぶこと。' },
+  { term: '指定', reading: 'してい', category: 'basic',
+    definition: '進行役（主に占い師や霊能者）が投票先を指定すること。「指定展開」は進行役が吊り先を決める進行方法。' },
+  { term: '護衛', reading: 'ごえい', category: 'basic',
+    definition: '狩人が夜に選んだ対象を人狼の襲撃から守ること。護衛成功時は「GJ（グッジョブ）」と呼ばれる。' },
+  { term: '特攻', reading: 'とっこう', category: 'advanced',
+    definition: '確証なしに占い結果を黒（人狼）と偽って報告すること。または一途な人狼が護衛を無視して女王を直接噛みに行くこと。' },
+  { term: '破綻', reading: 'はたん', category: 'advanced',
+    definition: '占い師や霊能者の結果が矛盾し、偽物であることが確定すること。「結果破綻」「ロジック破綻」などと使う。' },
+  { term: '連携', reading: 'れんけい', category: 'advanced',
+    definition: '人狼同士や、占い師と狂人が協力して行動すること。人狼陣営の連携が上手いと村側は苦戦する。' },
+  { term: '狂信者', reading: 'きょうしんしゃ', category: 'basic',
+    definition: '人狼が誰かを知ることができる狂人。通常の狂人より人狼との連携が取りやすいが、人狼側からは狂信者が誰か分からない。' },
+  { term: '白確定', reading: 'しろかくてい', category: 'basic',
+    definition: '複数の占い結果や状況証拠から、確実に人狼ではないと証明された状態。「確白」とも。' },
+  { term: '黒確定', reading: 'くろかくてい', category: 'advanced',
+    definition: '占い結果や状況証拠から、確実に人狼であると判明した状態。即処刑の対象となる。' },
+  { term: '霊ロラ', reading: 'れいろら', category: 'advanced',
+    definition: '霊能者が複数COした場合に、真偽を判断せず全員を処刑すること。確実に偽を排除できるが縄を消費する。' },
+  { term: 'ゾーン', reading: 'ぞーん', category: 'advanced',
+    definition: '女王部屋で賢者が「この中に人狼はいない」と宣言する範囲のこと。妖術師との真偽判定に使われる重要な概念。' },
+  { term: '生存意欲', reading: 'せいぞんいよく', category: 'slang',
+    definition: '処刑されそうになった時に、自分が村側であることを主張して生き残ろうとする姿勢。生存意欲が高い＝村目に見られやすい。' },
+  { term: 'ステルス', reading: 'すてるす', category: 'slang',
+    definition: '目立たないように発言を控え、注目を避けるプレイスタイル。人狼がステルスすると見つかりにくいが、寡黙吊りの対象になりやすい。' },
+  { term: '噛み先考察', reading: 'かみさきこうさつ', category: 'advanced',
+    definition: '人狼が誰を襲撃したかを分析し、人狼の意図や正体を推理すること。「なぜこの人が噛まれたのか」を考えるのが重要。' },
 ];
 
 // Sort by reading
