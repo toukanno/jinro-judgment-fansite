@@ -586,21 +586,115 @@ a:hover { color: #79c0ff; }
 .breadcrumb a:hover { color: #58a6ff; }
 .breadcrumb span { margin: 0 .4rem; }
 
-/* ===== Responsive ===== */
-@media (max-width: 600px) {
-  .hero h1 { font-size: 1.7rem; }
-  .hero { padding: 3rem 1rem 2.5rem; }
-  .container { padding: 1.5rem 1rem; }
-  .card-grid { grid-template-columns: 1fr; }
-  .back-to-top { bottom: 1.2rem; right: 1.2rem; width: 40px; height: 40px; }
+/* ===== Table Scroll Wrapper ===== */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1.5rem;
+}
+.table-scroll .data-table { margin-bottom: 0; }
+
+/* ===== Responsive Images ===== */
+img { max-width: 100%; height: auto; }
+
+/* ===== Responsive: Tablet (768px) ===== */
+@media (max-width: 1024px) {
+  .hero h1 { font-size: 2.1rem; }
+  .hero { padding: 4rem 1.2rem 3rem; }
+  .container { padding: 2rem 1.2rem; }
+  .card-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  .sim-controls { gap: .75rem; }
+  .site-footer { padding: 2rem 1.2rem; }
 }
 
-/* ===== Back to Top Button Scroll ===== */
-@media (max-width: 820px) {
+/* ===== Responsive: Small Tablet / Large Phone (768px) ===== */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 1.8rem; }
+  .hero p { font-size: .95rem; }
+  .hero { padding: 3.5rem 1rem 2.5rem; }
+  .container { padding: 1.5rem 1rem; }
+
+  .card-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+  .card { padding: 1.2rem; }
+
+  .section-title { font-size: 1.2rem; }
+  .data-table { font-size: .82rem; }
+  .data-table th, .data-table td { padding: .5rem .6rem; }
+
+  .tabs { gap: .2rem; }
+  .tab-btn { padding: .4rem .7rem; font-size: .78rem; }
+
+  .search-bar { flex-direction: column; }
+  .search-input { min-width: 100%; }
+
+  .sim-controls { flex-direction: column; align-items: stretch; }
+
+  .footer-links { gap: 1rem; }
+
   .exclusion-table { font-size: .65rem; }
   .exclusion-table th, .exclusion-table td { padding: .25rem .2rem; min-width: 28px; }
   .exclusion-table thead th span { font-size: .65rem; max-height: 70px; }
   .exclusion-table tbody th { font-size: .65rem; padding-right: .4rem; }
+}
+
+/* ===== Responsive: Phone (375px~) ===== */
+@media (max-width: 600px) {
+  body { font-size: 15px; line-height: 1.65; }
+
+  .hero h1 { font-size: 1.5rem; letter-spacing: -.01em; }
+  .hero p { font-size: .9rem; line-height: 1.7; }
+  .hero { padding: 2.5rem .8rem 2rem; }
+
+  .container { padding: 1.2rem .8rem; }
+
+  .card-grid { grid-template-columns: 1fr; gap: .8rem; }
+  .card { padding: 1rem; border-radius: 10px; }
+  .card h3 { font-size: 1rem; }
+  .card p { font-size: .85rem; }
+
+  .section-title { font-size: 1.1rem; gap: .4rem; }
+
+  .data-table { font-size: .78rem; }
+  .data-table th, .data-table td { padding: .4rem .5rem; }
+
+  .tabs { gap: .15rem; }
+  .tab-btn { padding: .35rem .55rem; font-size: .75rem; }
+
+  .accordion-header { padding: .75rem 1rem; font-size: .88rem; }
+  .accordion-body-inner { padding: .8rem 1rem; }
+
+  .tip-box { padding: .8rem 1rem; font-size: .85rem; }
+
+  .filter-btn { padding: .4rem .7rem; font-size: .78rem; }
+  .btn { padding: .5rem 1rem; font-size: .85rem; }
+
+  .back-to-top { bottom: 1rem; right: 1rem; width: 40px; height: 40px; border-radius: 10px; }
+
+  .site-footer { padding: 1.5rem .8rem; margin-top: 2rem; }
+  .footer-links { gap: .8rem; font-size: .78rem; }
+  .footer-links a { font-size: .78rem; }
+
+  .breadcrumb { font-size: .78rem; }
+
+  .role-badge { font-size: .7rem; padding: .15rem .5rem; }
+
+  .sim-controls { gap: .5rem; }
+  .sim-control select, .sim-control input[type="number"] { font-size: .85rem; padding: .45rem .6rem; }
+
+  .site-logo { font-size: 1.1rem; }
+  .site-logo .wolf-icon { font-size: 1.3rem; }
+
+  /* Nav in mobile */
+  .main-nav a { padding: .55rem .8rem; font-size: .85rem; }
+}
+
+/* ===== Very small phones ===== */
+@media (max-width: 374px) {
+  body { font-size: 14px; }
+  .hero h1 { font-size: 1.3rem; }
+  .container { padding: 1rem .6rem; }
+  .card { padding: .8rem; }
+  .timer-display { font-size: 3rem !important; }
 }
 
 /* ===== Selection ===== */
