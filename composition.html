@@ -55,6 +55,8 @@
         <li><a href="copipe.html">コピペ集</a></li>
         <li><a href="v3roles.html">V3新役職</a></li>
         <li><a href="queen-wise.html">女王部屋</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="timer.html">タイマー</a></li>
       </ul>
     </nav>
   </div>
@@ -219,6 +221,40 @@ function analyze() {
 
   const hasFortuneteller = selected.some(s => s.name === '占い師' || s.name === '賢者');
   if (counts.fox > 0 && !hasFortuneteller) warnings.push({ type: 'warning', msg: '妖狐がいますが占い師がいません。呪殺できず妖狐有利になります。' });
+
+  // 同村しない役職チェック
+  const EXCLUSIONS = {
+    '女王': ['キューピット','悪女','酔っぱらい'],
+    '恋人': ['赤ずきん','魔女','蘇る人狼','キューピット','悪女'],
+    '独裁者': ['疫病神'],
+    '生霊': ['赤ずきん','魔女','蘇る人狼','怪盗','純愛者','復讐者','テレパシスト'],
+    '魔女': ['怪盗','恋人','生霊','プリンセス','ゾンビマニア','キューピット','悪女'],
+    '蘇る人狼': ['恋人','生霊','キューピット','悪女'],
+    '怪盗': ['魔女','生霊','饒舌な狩人','酔っぱらい','悪女','純愛者','復讐者','テレパシスト'],
+    'キューピット': ['赤ずきん','魔女','蘇る人狼','恋人','女王','プリンセス','悪女','酔っぱらい','疫病神'],
+    '悪女': ['赤ずきん','魔女','怪盗','蘇る人狼','恋人','女王','プリンセス','キューピット','酔っぱらい','疫病神'],
+    '酔っぱらい': ['怪盗','女王','プリンセス','キューピット','悪女'],
+    '疫病神': ['独裁者','キューピット','悪女'],
+    'ゾンビマニア': ['魔女'],
+    '純愛者': ['怪盗','生霊','テレパシスト'],
+    '復讐者': ['怪盗','生霊'],
+    '狼少年': ['狼少女'],
+    '狼少女': ['狼少年'],
+    'テレパシスト': ['怪盗','生霊','純愛者']
+  };
+  const selectedNames = selected.map(s => s.name);
+  const checked = new Set();
+  for (const [role, partners] of Object.entries(EXCLUSIONS)) {
+    if (selectedNames.includes(role)) {
+      for (const p of partners) {
+        const key = [role, p].sort().join('|');
+        if (selectedNames.includes(p) && !checked.has(key)) {
+          checked.add(key);
+          warnings.push({ type: 'danger', msg: `同村不可: 「${role}」と「${p}」は同じ屋敷に配置できません。<a href="roles.html" style="color:#58a6ff;">詳細を見る</a>` });
+        }
+      }
+    }
+  }
 
   // Turns to win calculation
   const villageTotal = counts.village + counts.fox + counts.lovers;

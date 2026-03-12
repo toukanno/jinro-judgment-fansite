@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0e17">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JGDB">
+  <title>よくある質問 - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントに関するよくある質問と回答。初心者の疑問から上級者の細かいルールまで網羅。">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .faq-category { margin-bottom: 2.5rem; }
+    .faq-category-title {
+      font-size: 1.1rem; font-weight: 700; color: #58a6ff;
+      margin-bottom: 1rem; padding: .5rem 0;
+      border-bottom: 1px solid rgba(88,166,255,.2);
+    }
+    .faq-item {
+      background: rgba(22,27,34,.7); border: 1px solid rgba(48,54,61,.6);
+      border-radius: 12px; margin-bottom: .6rem; overflow: hidden;
+      transition: border-color .3s;
+    }
+    .faq-item:hover { border-color: rgba(88,166,255,.2); }
+    .faq-item.open { border-color: rgba(88,166,255,.3); }
+    .faq-question {
+      width: 100%; padding: .9rem 1.2rem; background: transparent;
+      color: #e6edf3; border: none; text-align: left; font-size: .93rem;
+      font-weight: 600; cursor: pointer; display: flex;
+      justify-content: space-between; align-items: center;
+      transition: background .2s; font-family: inherit;
+    }
+    .faq-question:hover { background: rgba(28,33,41,.8); }
+    .faq-question::before { content: 'Q.'; color: #58a6ff; font-weight: 800; margin-right: .6rem; flex-shrink: 0; }
+    .faq-question::after { content: '\25BC'; font-size: .7rem; transition: transform .3s; color: #484f58; }
+    .faq-item.open .faq-question::after { transform: rotate(180deg); color: #58a6ff; }
+    .faq-answer {
+      max-height: 0; overflow: hidden; transition: max-height .3s ease;
+      background: rgba(10,14,23,.5);
+    }
+    .faq-answer-inner {
+      padding: 1rem 1.2rem; padding-left: 2.2rem;
+      font-size: .9rem; color: #c9d1d9; line-height: 1.8;
+    }
+    .faq-answer-inner::before { content: 'A.'; color: #7ee787; font-weight: 800; margin-right: .4rem; }
+    .faq-search {
+      margin-bottom: 1.5rem;
+    }
+    .faq-count { color: #8b949e; font-size: .88rem; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="character.html">キャラクター</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+        <li><a href="templates.html">部屋テンプレ</a></li>
+        <li><a href="copipe.html">コピペ集</a></li>
+        <li><a href="v3roles.html">V3新役職</a></li>
+        <li><a href="queen-wise.html">女王部屋</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> よくある質問</div>
+
+  <h1 class="section-title">&#x2753; よくある質問（FAQ）</h1>
+
+  <div class="faq-search">
+    <input type="text" class="search-input" id="faqSearch" placeholder="質問をキーワードで検索..." style="width:100%;max-width:500px;">
+  </div>
+  <div class="faq-count" id="faqCount"></div>
+
+  <div id="faqContainer">
+
+    <div class="faq-category" data-category="basic">
+      <h2 class="faq-category-title">&#x1F331; 基本ルール</h2>
+
+      <div class="faq-item">
+        <button class="faq-question">人狼ジャッジメントはどこでプレイできますか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          iOS（App Store）とAndroid（Google Play）で無料ダウンロードできます。基本プレイは無料で、アプリ内課金でキャラクターのスキンなどを購入できます。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">1試合はどのくらいの時間がかかりますか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          人数と設定によりますが、9人部屋で約15〜25分、15〜20人部屋だと30〜60分程度が目安です。議論時間の設定によっても大きく変わります。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">何人からプレイできますか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          最少5人から最大20人まで対応しています。初心者には9人部屋がバランスが良くおすすめです。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">「突然死」とは何ですか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          投票時間内に投票しなかった場合に発生するペナルティです。突然死するとゲームから強制退場となり、他のプレイヤーに迷惑がかかります。必ず時間内に投票しましょう。繰り返すとBANされることもあります。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">「欠け」とは何ですか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          初日の夜に、ランダムでNPCが1人死亡する仕組みです。そのNPCに割り当てられた役職が「欠け」となります。例えば狩人が欠けると、護衛役がいない状態でゲームが進行します。部屋設定で欠けなし（第一犠牲者なし）にもできます。
+        </div></div>
+      </div>
+    </div>
+
+    <div class="faq-category" data-category="role">
+      <h2 class="faq-category-title">&#x1F3AD; 役職について</h2>
+
+      <div class="faq-item">
+        <button class="faq-question">占い師と賢者の違いは何ですか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          占い師は対象が「人狼か否か」を判定しますが、賢者は対象の「具体的な役職名」まで分かります。賢者の方が情報量が多い上位互換ですが、その分偽物に騙られた時の影響も大きくなります。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">「同村しない役職」とは何ですか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          特定の役職の組み合わせは、ゲームバランスが崩壊するため同じ屋敷に配置できません。例えば「女王とキューピット」「魔女と怪盗」などです。詳しくは<a href="roles.html">役職一覧</a>の同村しない早見表をご覧ください。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">狂人と狂信者の違いは？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          どちらも人狼陣営の人間（占いで白が出る）ですが、狂人は人狼が誰か分からない状態でスタート、狂信者は人狼が誰か知った状態でスタートします。狂信者の方が的確に人狼を援護できるため上位互換です。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">妖狐はどうすれば勝てますか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          妖狐の勝利条件は「ゲーム終了時に生存していること」です。人狼に襲撃されても死にませんが、占い師に占われると死亡（呪殺）します。占われないよう目立たず立ち回り、村と人狼の争いに乗じて最後まで生き残りましょう。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">V3で追加された新役職はどこで確認できますか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <a href="v3roles.html">V3新役職一覧</a>ページで、2025年12月に追加された24種の新役職の能力・立ち回りを確認できます。
+        </div></div>
+      </div>
+    </div>
+
+    <div class="faq-category" data-category="strategy">
+      <h2 class="faq-category-title">&#x1F9E0; 戦略・立ち回り</h2>
+
+      <div class="faq-item">
+        <button class="faq-question">初日に占い師はCOすべきですか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          基本的にはYESです。初日朝に即CO（カミングアウト）して占い結果を報告するのが安定進行です。遅れると偽物に先にCOされて信用を失ったり、情報共有が遅れて村全体が不利になります。ただし、部屋ルールによっては潜伏が推奨される場合もあります。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">「ロラ（ローラー）」とは何ですか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          同じ役職をCOしている人を全員順番に処刑する戦術です。例えば占い師が3人COしていて誰が本物か分からない場合、全員吊って確実に偽物（人狼・狂人）を排除します。縄（吊り回数）に余裕がある時に有効ですが、真占い師も失うリスクがあります。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">「グレラン」とは何ですか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          「グレーランダム」の略で、まだ白黒がはっきりしていない人（グレー）の中から、各自の判断で怪しいと思う人に投票する方式です。特定の指定なしに投票するため、発言内容や行動から各自が推理する必要があります。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">「SG」とは何ですか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          「スケープゴート」の略で、最終日に人狼の身代わりとして吊られそうな村人のことです。人狼側は意図的にSGとなる村人を残して最終日に追い詰める戦術を取ります。逆に村側はSGを作らせない進行が重要です。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">「縄計算」の方法を教えてください</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          残り吊り回数 = (生存人数 - 1) / 2（切り捨て）です。例えば9人生存なら(9-1)/2=4回吊れます。そこから残り人狼数を引いた値が「吊り余裕」です。詳しくは<a href="strategy.html">立ち回りガイド</a>の縄計算セクションをご覧ください。
+        </div></div>
+      </div>
+    </div>
+
+    <div class="faq-category" data-category="manner">
+      <h2 class="faq-category-title">&#x1F91D; マナー・トラブル</h2>
+
+      <div class="faq-item">
+        <button class="faq-question">荒らしやBADマナーのプレイヤーがいたらどうすればいい？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          ゲーム終了後に通報機能を使いましょう。暴言・利敵行為・故意の突然死などは通報対象です。ゲーム中は反応せず、冷静にプレイを続けることが大切です。荒らしに反応するとゲームが崩壊しやすくなります。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">「メタ発言」とは？やってはいけない理由は？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          ゲーム外の情報（前回の試合結果、通話での声色、操作速度など）をゲーム内で使う行為です。各試合は独立しているため、メタ情報を使うとフェアなゲームが成り立ちません。多くの部屋で禁止されています。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">初心者が入るのにおすすめの部屋はありますか？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          「初心者歓迎」「初心者部屋」とタイトルに書かれた部屋を選びましょう。9人部屋で基本役職（占・霊・狩・狂・狼2・市民3）の構成がおすすめです。慣れるまでは特殊役職の多い部屋は避けた方が無難です。
+        </div></div>
+      </div>
+    </div>
+
+    <div class="faq-category" data-category="system">
+      <h2 class="faq-category-title">&#x2699; システム・仕様</h2>
+
+      <div class="faq-item">
+        <button class="faq-question">部屋を作る時のおすすめ設定は？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          初心者向けなら9人・議論5分・初日占いランダム白・連続ガードなし・欠けありが安定です。詳しいテンプレートは<a href="templates.html">部屋テンプレ集</a>をご覧ください。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">「連続ガード」とは？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          狩人が同じ人を2夜連続で護衛できるかどうかの設定です。「連続ガードあり」なら毎晩同じ人を守り続けられます。「なし」の場合は前の夜と異なる人を護衛する必要があり、より戦略性が高くなります。
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">「初日占い」の設定は何が違うの？</button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          「ランダム白」は初日に占い師がランダムで一人の白結果をもらうため、初日の議論材料が増えます。「なし」の場合は初日の占い結果がなく、よりシビアな進行になります。初心者にはランダム白がおすすめです。
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="index.html">ホーム</a>
+    <a href="roles.html">役職一覧</a>
+    <a href="guide.html">初心者ガイド</a>
+    <a href="strategy.html">立ち回り</a>
+    <a href="glossary.html">用語集</a>
+    <a href="faq.html">FAQ</a>
+  </div>
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
+</footer>
+
+<script src="js/common.js"></script>
+<script>
+(function() {
+  const items = document.querySelectorAll('.faq-item');
+  const searchInput = document.getElementById('faqSearch');
+  const countEl = document.getElementById('faqCount');
+
+  // Accordion
+  items.forEach(item => {
+    const q = item.querySelector('.faq-question');
+    const a = item.querySelector('.faq-answer');
+    q.addEventListener('click', () => {
+      if (item.classList.contains('open')) {
+        a.style.maxHeight = null;
+        item.classList.remove('open');
+      } else {
+        a.style.maxHeight = a.scrollHeight + 'px';
+        item.classList.add('open');
+      }
+    });
+  });
+
+  // Search
+  function filterFAQ(query) {
+    let visible = 0;
+    items.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      const match = !query || text.includes(query.toLowerCase());
+      item.style.display = match ? '' : 'none';
+      if (match) visible++;
+    });
+
+    // Hide empty categories
+    document.querySelectorAll('.faq-category').forEach(cat => {
+      const visibleItems = cat.querySelectorAll('.faq-item:not([style*="display: none"])');
+      cat.style.display = visibleItems.length ? '' : 'none';
+    });
+
+    countEl.textContent = query ? `${visible} 件の質問が見つかりました` : `全 ${items.length} 件の質問`;
+  }
+
+  searchInput.addEventListener('input', () => filterFAQ(searchInput.value));
+  filterFAQ('');
+})();
+</script>
+</body>
+</html>
