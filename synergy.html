@@ -210,6 +210,32 @@ const SYNERGY_DATA = [
   { category: 'fox', tag: 'chaos', tagName: '第三勢力',
     title: '妖狐 + 子狐', roles: ['妖狐','子狐'], rating: 3,
     desc: '子狐の曖昧占い能力で情報収集しつつ、妖狐陣営の生存率を上げる。ただし子狐も占われると死ぬリスクあり。' },
+
+  // ===== V3新役職シナジー =====
+  { category: 'village-defense', tag: 'defense', tagName: '防御',
+    title: '二丁拳銃 + 占い師 + 霊能者', roles: ['二丁拳銃','占い師','霊能者'], rating: 5,
+    desc: '二丁拳銃の一度きりの二重護衛で占い師と霊能者を同時に守れる。重要局面でGJを2箇所取れる可能性がある最強の護衛コンボ。' },
+  { category: 'village-defense', tag: 'defense', tagName: '防御',
+    title: '鉄の女 + 占い師', roles: ['鉄の女','占い師'], rating: 4,
+    desc: '鉄の女は噛まれても翌日生存するため、占い師に「自分が噛まれた」と伝えて占い先の参考にさせられる。情報の橋渡し役として優秀。' },
+  { category: 'village-info', tag: 'info', tagName: '情報',
+    title: 'ささやく双子（2人）', roles: ['ささやく双子','ささやく双子'], rating: 5,
+    desc: '双子チャットで秘密の情報交換が可能。確定白ペアとして進行の軸になり、共有者と同等以上の信頼度を持てる。' },
+  { category: 'village-info', tag: 'info', tagName: '情報',
+    title: '幸運の梟 + 共有者', roles: ['幸運の梟','共有者'], rating: 4,
+    desc: '幸運の梟が確定白の共有者に祝福を与えれば、安全に投票力を倍増できる。最終日の投票で決定的な差を生む。' },
+  { category: 'village-offense', tag: 'offense', tagName: '攻撃',
+    title: '貴族の息子 + 占い師', roles: ['貴族の息子','占い師'], rating: 4,
+    desc: '占い師が黒を出した相手を貴族の息子が身代わり処刑で指定。確定情報があれば2人の人狼を一気に排除できる可能性がある。' },
+  { category: 'wolf', tag: 'chaos', tagName: '人狼側',
+    title: '新種の人狼 + 狼少女', roles: ['新種の人狼','狼少女'], rating: 4,
+    desc: '新種の人狼は占いで白が出るため、さらに狼少女で人間塗りすれば二重の偽装が可能。占い結果を完全に無力化できる。' },
+  { category: 'wolf', tag: 'chaos', tagName: '人狼側',
+    title: '闇の化身 + ささやく狂人', roles: ['闇の化身','ささやく狂人'], rating: 3,
+    desc: '闇の化身がランダムに変化した役職をささやく狂人が人狼チャットで確認し、連携戦略を即座に組み立てられる。柔軟性が高い。' },
+  { category: 'fox', tag: 'chaos', tagName: '第三勢力',
+    title: '九尾の狐 + ささやく背教者', roles: ['九尾の狐','ささやく背教者'], rating: 4,
+    desc: '九尾の狐の呪殺耐性とささやく背教者の狐チャットの組み合わせ。生存力と連携力が高い最強の妖狐陣営布陣。' },
 ];
 
 function renderStars(n) {
