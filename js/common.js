@@ -122,7 +122,12 @@ document.addEventListener('DOMContentLoaded', () => {
     return `rgba(${r},${g},${b},${alpha})`;
   }
 
-  // Apply saved theme on load
+  // Apply saved theme mode (light/dark)
+  if (localStorage.getItem('theme-mode') === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+
+  // Apply saved theme color
   const saved = localStorage.getItem('theme-color');
   if (saved && THEMES[saved]) {
     applyThemeColor(saved);
