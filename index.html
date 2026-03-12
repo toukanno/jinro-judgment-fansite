@@ -20,14 +20,118 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="manifest" href="manifest.json">
   <style>
+    /* ===== Hero Animations ===== */
+    .hero { position: relative; overflow: hidden; }
+
+    /* Particle canvas (moon, stars, fog) */
+    #heroCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Title animation */
+    .hero h1 {
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      animation: heroTitleIn 1.2s cubic-bezier(.22,1,.36,1) .3s forwards;
+    }
+    @keyframes heroTitleIn {
+      0% { opacity: 0; transform: translateY(30px) scale(.95); filter: blur(8px); }
+      100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    }
+
+    .hero p {
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      animation: heroSubIn .8s ease .8s forwards;
+    }
+    @keyframes heroSubIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Floating role cards */
+    .hero-role-cards {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      gap: .8rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .hero-role-card {
+      background: rgba(22,27,34,.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(88,166,255,.2);
+      border-radius: 10px;
+      padding: .5rem .8rem;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .85rem;
+      font-weight: 600;
+      color: #e6edf3;
+      opacity: 0;
+      animation: cardFloat .6s cubic-bezier(.22,1,.36,1) forwards;
+      transition: transform .3s, border-color .3s, box-shadow .3s;
+    }
+    .hero-role-card:hover {
+      transform: translateY(-4px) !important;
+      border-color: rgba(88,166,255,.5);
+      box-shadow: 0 8px 24px rgba(88,166,255,.1);
+    }
+    .hero-role-card:nth-child(1) { animation-delay: 1.2s; border-color: rgba(126,231,135,.3); }
+    .hero-role-card:nth-child(2) { animation-delay: 1.4s; border-color: rgba(167,139,250,.3); }
+    .hero-role-card:nth-child(3) { animation-delay: 1.6s; border-color: rgba(248,81,73,.3); }
+    .hero-role-card:nth-child(4) { animation-delay: 1.8s; border-color: rgba(210,153,34,.3); }
+    .hero-role-card:nth-child(5) { animation-delay: 2.0s; border-color: rgba(219,127,247,.3); }
+    .hero-role-card .rc-icon { font-size: 1.3rem; }
+
+    @keyframes cardFloat {
+      0% { opacity: 0; transform: translateY(24px) scale(.9); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Moon glow */
+    .hero-moon {
+      position: absolute;
+      top: -20px;
+      right: 8%;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, #ffeebb 0%, #c9a84c 40%, transparent 70%);
+      box-shadow: 0 0 60px 20px rgba(255,238,187,.15), 0 0 120px 40px rgba(255,220,100,.06);
+      opacity: 0;
+      animation: moonRise 2s ease .5s forwards;
+      z-index: 0;
+    }
+    @keyframes moonRise {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: .7; transform: translateY(0); }
+    }
+
     @media (max-width: 768px) {
       .tip-box { font-size: .88rem; }
       .tip-box a { display: inline; }
+      .hero-moon { width: 70px; height: 70px; right: 5%; top: -10px; }
+      .hero-role-card { font-size: .78rem; padding: .4rem .6rem; }
     }
 
     @media (max-width: 600px) {
       .tip-box { font-size: .85rem; padding: .8rem .9rem; }
       .tip-box strong { font-size: .88rem; }
+      .hero-moon { width: 50px; height: 50px; }
+      .hero-role-cards { gap: .5rem; }
+      .hero-role-card { font-size: .75rem; }
+      .hero-role-card .rc-icon { font-size: 1rem; }
     }
   </style>
   <script type="application/ld+json">
@@ -84,9 +188,86 @@
 </header>
 
 <section class="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-moon"></div>
   <h1>人狼ジャッジメント 攻略データベース</h1>
   <p>全役職の能力・立ち回り・編成考察を網羅したファンサイト。初心者から上級者まで役立つ情報をお届けします。</p>
+  <div class="hero-role-cards">
+    <div class="hero-role-card"><span class="rc-icon">&#x1F52E;</span>占い師</div>
+    <div class="hero-role-card"><span class="rc-icon">&#x1F3AF;</span>狩人</div>
+    <div class="hero-role-card"><span class="rc-icon">&#x1F47A;</span>人狼</div>
+    <div class="hero-role-card"><span class="rc-icon">&#x1F98A;</span>妖狐</div>
+    <div class="hero-role-card"><span class="rc-icon">&#x1F495;</span>恋人</div>
+  </div>
 </section>
+
+<script>
+// Hero particle effects: stars, fog wisps
+(function() {
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, stars = [], fogs = [];
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    w = canvas.width = rect.width;
+    h = canvas.height = rect.height;
+  }
+  function initStars() {
+    stars = [];
+    for (let i = 0; i < 60; i++) {
+      stars.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 1.5 + 0.5,
+        a: Math.random(),
+        speed: Math.random() * 0.005 + 0.002,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+  }
+  function initFogs() {
+    fogs = [];
+    for (let i = 0; i < 4; i++) {
+      fogs.push({
+        x: Math.random() * w,
+        y: h * 0.5 + Math.random() * h * 0.4,
+        w: 200 + Math.random() * 300,
+        h: 40 + Math.random() * 60,
+        a: 0.02 + Math.random() * 0.03,
+        speed: 0.15 + Math.random() * 0.3
+      });
+    }
+  }
+  function draw(t) {
+    ctx.clearRect(0, 0, w, h);
+    // Stars
+    stars.forEach(s => {
+      const twinkle = 0.4 + 0.6 * Math.sin(t * s.speed + s.phase);
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,240,${s.a * twinkle})`;
+      ctx.fill();
+    });
+    // Fog wisps
+    fogs.forEach(f => {
+      f.x += f.speed;
+      if (f.x > w + f.w) f.x = -f.w;
+      const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.w / 2);
+      grad.addColorStop(0, `rgba(150,170,200,${f.a})`);
+      grad.addColorStop(1, 'rgba(150,170,200,0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(f.x - f.w / 2, f.y - f.h / 2, f.w, f.h);
+    });
+    requestAnimationFrame(draw);
+  }
+  resize();
+  initStars();
+  initFogs();
+  requestAnimationFrame(draw);
+  window.addEventListener('resize', () => { resize(); initStars(); initFogs(); });
+})();
+</script>
 
 <main class="container">
 
