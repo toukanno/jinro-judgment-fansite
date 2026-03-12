@@ -9,6 +9,10 @@
   <meta name="apple-mobile-web-app-title" content="人狼JGDB">
   <title>人物紹介 - 人狼ジャッジメント攻略</title>
   <meta name="description" content="人狼ジャッジメントの全役職キャラクター紹介。市民陣営・人狼陣営・妖狐陣営など各役職の能力・立ち回りを掲載。">
+  <meta property="og:title" content="人物紹介 - 人狼ジャッジメント攻略">
+  <meta property="og:description" content="人狼ジャッジメントの全役職キャラクター紹介。市民陣営・人狼陣営・妖狐陣営など各役職の能力・立ち回りを掲載。">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
   <link rel="stylesheet" href="css/style.css">
   <link rel="manifest" href="manifest.json">
   <style>
@@ -723,6 +727,42 @@
     html += '<h2>&#x1F4A1; 立ち回りのコツ</h2>';
     html += '<p>' + role.strategy + '</p>';
     html += '</div>';
+
+    // Compatibility
+    if (role.compatibility) {
+      html += '<div class="char-section">';
+      html += '<h2>&#x1F91D; 相性・シナジー</h2>';
+      if (role.compatibility.good.length > 0) {
+        html += '<div style="margin-bottom:.8rem;"><strong style="color:#7ee787;">&#x2705; 相性が良い役職：</strong><br>';
+        html += '<div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.4rem;">';
+        role.compatibility.good.forEach(function(name) {
+          var r = ROLES_DATA.find(function(x) { return x.name === name; });
+          if (r) {
+            html += '<a href="character.html?role=' + encodeURIComponent(name) + '" class="role-badge ' + r.team + '">' + (r.icon || '') + ' ' + name + '</a>';
+          } else {
+            html += '<span class="role-badge village">' + name + '</span>';
+          }
+        });
+        html += '</div></div>';
+      }
+      if (role.compatibility.bad.length > 0) {
+        html += '<div style="margin-bottom:.8rem;"><strong style="color:#f85149;">&#x274C; 相性が悪い（天敵）：</strong><br>';
+        html += '<div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.4rem;">';
+        role.compatibility.bad.forEach(function(name) {
+          var r = ROLES_DATA.find(function(x) { return x.name === name; });
+          if (r) {
+            html += '<a href="character.html?role=' + encodeURIComponent(name) + '" class="role-badge ' + r.team + '">' + (r.icon || '') + ' ' + name + '</a>';
+          } else {
+            html += '<span class="role-badge werewolf">' + name + '</span>';
+          }
+        });
+        html += '</div></div>';
+      }
+      if (role.compatibility.tips) {
+        html += '<div class="tip-box" style="margin-top:.8rem;">' + role.compatibility.tips + '</div>';
+      }
+      html += '</div>';
+    }
 
     // Quote
     if (role.quote) {

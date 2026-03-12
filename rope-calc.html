@@ -176,6 +176,53 @@
     .timeline-day .day-info { flex: 1; color: #c9d1d9; }
     .timeline-day .day-count { font-weight: 700; color: #8b949e; font-size: .82rem; }
 
+    .calc-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: #21262d;
+      outline: none;
+      margin: .5rem 0;
+    }
+    .calc-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #58a6ff;
+      cursor: pointer;
+      border: 2px solid #0d1117;
+      box-shadow: 0 2px 8px rgba(88,166,255,.3);
+    }
+    .calc-slider::-moz-range-thumb {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #58a6ff;
+      cursor: pointer;
+      border: 2px solid #0d1117;
+      box-shadow: 0 2px 8px rgba(88,166,255,.3);
+    }
+
+    @media (max-width: 600px) {
+      .calc-slider::-webkit-slider-thumb {
+        width: 36px;
+        height: 36px;
+      }
+      .calc-slider::-moz-range-thumb {
+        width: 36px;
+        height: 36px;
+      }
+      .calc-num {
+        font-size: 1.3rem !important;
+        width: 60px !important;
+        height: 48px !important;
+      }
+    }
+
     @media (max-width: 768px) {
       .calc-frame { padding: 1.5rem; }
       .calc-input-group { gap: .8rem; }
@@ -253,6 +300,7 @@
         <input type="number" class="calc-num" id="alive" value="9" min="3" max="20">
         <button class="calc-btn" onclick="adjust('alive', 1)">+</button>
       </div>
+      <input type="range" class="calc-slider" id="alive-slider" min="3" max="20" value="9">
     </div>
 
     <div class="calc-input-group">
@@ -262,6 +310,7 @@
         <input type="number" class="calc-num" id="wolves" value="2" min="1" max="6">
         <button class="calc-btn" onclick="adjust('wolves', 1)">+</button>
       </div>
+      <input type="range" class="calc-slider" id="wolves-slider" min="1" max="6" value="2">
     </div>
 
     <div class="calc-input-group">
@@ -271,6 +320,7 @@
         <input type="number" class="calc-num" id="foxes" value="0" min="0" max="3">
         <button class="calc-btn" onclick="adjust('foxes', 1)">+</button>
       </div>
+      <input type="range" class="calc-slider" id="foxes-slider" min="0" max="3" value="0">
     </div>
 
     <div class="calc-result" id="calcResult"></div>
@@ -346,6 +396,8 @@
     const min = parseInt(el.min);
     const max = parseInt(el.max);
     el.value = Math.max(min, Math.min(max, val));
+    const slider = document.getElementById(id + '-slider');
+    if (slider) slider.value = el.value;
     calculate();
   }
   window.adjust = adjust;
@@ -415,6 +467,22 @@
   aliveEl.addEventListener('input', calculate);
   wolvesEl.addEventListener('input', calculate);
   foxesEl.addEventListener('input', calculate);
+
+  // Sync sliders
+  ['alive', 'wolves', 'foxes'].forEach(id => {
+    const num = document.getElementById(id);
+    const slider = document.getElementById(id + '-slider');
+    if (slider) {
+      slider.addEventListener('input', () => {
+        num.value = slider.value;
+        calculate();
+      });
+      num.addEventListener('input', () => {
+        slider.value = num.value;
+        calculate();
+      });
+    }
+  });
 
   calculate();
 })();
