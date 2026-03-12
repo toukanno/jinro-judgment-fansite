@@ -894,8 +894,19 @@ img { max-width: 100%; height: auto; }
   color: #e6edf3;
 }
 
+/* ===== Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
+
 /* ===== Affiliate Banner Responsive ===== */
 .af-pc { display: none; }
+.af-pc img { max-width: 100%; height: auto; }
 .af-sp { display: inline; }
 @media (min-width: 768px) {
   .af-pc { display: inline; }
