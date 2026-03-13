@@ -11,6 +11,10 @@
   <meta property="og:description" content="人狼ジャッジメントに登場する全36キャラクター（アバター）の紹介。見た目・特徴の詳細情報。">
   <link rel="canonical" href="https://toukanno.github.io/jinro-judgment-fansite/characters.html">
   <meta property="og:image" content="https://toukanno.github.io/jinro-judgment-fansite/icons/icon-512.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="キャラクター紹介 - 人狼ジャッジメント攻略">
+  <meta name="twitter:description" content="人狼ジャッジメントに登場する全36キャラクター（アバター）の紹介。見た目・特徴の詳細情報。">
+  <meta name="twitter:image" content="https://toukanno.github.io/jinro-judgment-fansite/icons/icon-512.svg">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ja_JP">
   <title>キャラクター紹介 - 人狼ジャッジメント攻略</title>
@@ -130,10 +134,9 @@
       margin: 0 auto .8rem;
       border: 2px solid #30363d;
       overflow: hidden;
-    }
-    .char-card-avatar img {
-      width: 100%; height: 100%;
-      object-fit: cover;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
     .char-card-name {
       font-size: 1.1rem;
@@ -227,10 +230,9 @@
       margin: 0 auto 1rem;
       border: 3px solid #30363d;
       overflow: hidden;
-    }
-    .char-detail-avatar img {
-      width: 100%; height: 100%;
-      object-fit: cover;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
     .char-detail-name {
       font-size: 1.6rem;
@@ -677,9 +679,12 @@
     cardsEl.innerHTML = list.map(function(c, i) {
       var genderTag = c.gender === 'male' ? '\u2642 男性' : '\u2640 女性';
       var genderClass = c.gender === 'male' ? 't-male' : 't-female';
+      var avatarStyle = c.img
+        ? 'background-image:url(' + c.img + ');border-color:' + c.color + '44;'
+        : 'background:linear-gradient(135deg,' + c.color + '22,' + c.color + '08);border-color:' + c.color + '44;';
       return '<div class="char-card" data-idx="' + CHARACTERS.indexOf(c) + '" style="--accent:' + c.color + '">' +
         '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:' + c.color + ';"></div>' +
-        '<div class="char-card-avatar" style="background:linear-gradient(135deg,' + c.color + '22,' + c.color + '08);border-color:' + c.color + '44;">' + (c.img ? '<img src="' + c.img + '" alt="' + c.name + '" loading="lazy">' : c.icon) + '</div>' +
+        '<div class="char-card-avatar" style="' + avatarStyle + '">' + (c.img ? '' : c.icon) + '</div>' +
         '<div class="char-card-name">' + c.name + '</div>' +
         '<div class="char-card-ruby">' + c.ruby + '</div>' +
         '<div class="char-card-tags">' +
@@ -697,9 +702,12 @@
     var genderTag = c.gender === 'male' ? '\u2642 男性' : '\u2640 女性';
     var genderClass = c.gender === 'male' ? 't-male' : 't-female';
     var motifHtml = c.motif ? '<div class="char-detail-section"><h3>\u{1F3AD} モチーフ役職</h3><p>' + c.motif + '</p></div>' : '';
+    var detailAvatarStyle = c.img
+      ? 'background-image:url(' + c.img + ');border-color:' + c.color + '66;'
+      : 'background:linear-gradient(135deg,' + c.color + '33,' + c.color + '11);border-color:' + c.color + '66;';
     detailEl.innerHTML =
       '<button class="char-detail-close" aria-label="閉じる">\u2715</button>' +
-      '<div class="char-detail-avatar" style="background:linear-gradient(135deg,' + c.color + '33,' + c.color + '11);border-color:' + c.color + '66;">' + (c.img ? '<img src="' + c.img + '" alt="' + c.name + '">' : c.icon) + '</div>' +
+      '<div class="char-detail-avatar" style="' + detailAvatarStyle + '">' + (c.img ? '' : c.icon) + '</div>' +
       '<div class="char-detail-name">' + c.name + '</div>' +
       '<div class="char-detail-ruby">' + c.ruby + '</div>' +
       '<div class="char-detail-tags">' +
