@@ -1,5 +1,16 @@
 // ===== Mobile Nav Toggle =====
 document.addEventListener('DOMContentLoaded', () => {
+  // Skip to content link (accessibility)
+  const mainContent = document.querySelector('main, .container, .timer-container, .memo-container');
+  if (mainContent && !document.querySelector('.skip-link')) {
+    if (!mainContent.id) mainContent.id = 'main-content';
+    const skip = document.createElement('a');
+    skip.className = 'skip-link';
+    skip.href = '#' + mainContent.id;
+    skip.textContent = 'メインコンテンツへスキップ';
+    document.body.prepend(skip);
+  }
+
   const toggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.main-nav');
   if (toggle && nav) {

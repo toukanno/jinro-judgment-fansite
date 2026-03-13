@@ -84,6 +84,34 @@ body {
 a { color: var(--accent); text-decoration: none; transition: color .2s; }
 a:hover { color: var(--accent-hover); }
 
+/* ===== Skip Link (Accessibility) ===== */
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 1rem;
+  z-index: 10000;
+  padding: .75rem 1.5rem;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 0 0 8px 8px;
+  transition: top .2s;
+}
+.skip-link:focus {
+  top: 0;
+  outline: none;
+}
+
+/* ===== Focus Visible (Accessibility) ===== */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 /* ===== Theme Toggle ===== */
 .theme-toggle {
   background: none;
