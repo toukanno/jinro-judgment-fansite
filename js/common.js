@@ -151,6 +151,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   }
 
+  // Affiliate banner (auto-inject before footer on all pages)
+  if (!document.querySelector('.affiliate-banner')) {
+    var footer = document.querySelector('footer');
+    if (footer) {
+      var afDiv = document.createElement('div');
+      afDiv.className = 'affiliate-banner';
+      afDiv.style.cssText = 'text-align:center;margin:2rem auto;padding:1rem 0;max-width:600px;';
+      afDiv.innerHTML =
+        '<a href="//af.moshimo.com/af/c/click?a_id=5422323&p_id=54&pc_id=54&pl_id=1252" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc>'
+        + '<img src="//image.moshimo.com/af-img/0032/000000001252.gif" width="234" height="60" style="border:none;">'
+        + '</a>'
+        + '<img src="//i.moshimo.com/af/i/impression?a_id=5422323&p_id=54&pc_id=54&pl_id=1252" width="1" height="1" style="border:none;" loading="lazy">';
+      footer.parentNode.insertBefore(afDiv, footer);
+    }
+  }
+
   // PC Sticky Sidebar (auto-inject on 900px+ screens with long content)
   if (window.matchMedia('(min-width: 900px)').matches && !document.querySelector('.page-sidebar')) {
     var mainEl = document.querySelector('main.container, main');
