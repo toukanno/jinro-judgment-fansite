@@ -164,7 +164,6 @@
         <li><a href="memo.html">ゲームメモ</a></li>
         <li><a href="role-compatibility.html">相性表</a></li>
         <li><a href="gallery.html">ギャラリー</a></li>
-        <li><a href="gallery.html">ギャラリー</a></li>
         <li><a href="settings.html">設定</a></li>
       </ul>
     </nav>
@@ -224,7 +223,7 @@
   </div>
 </main>
 
-<div class="lightbox" id="lightbox">
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="画像プレビュー">
   <button class="lightbox-close" aria-label="閉じる">&times;</button>
   <img src="" alt="">
 </div>
@@ -280,6 +279,7 @@
       lightboxImg.src = img.src;
       lightboxImg.alt = img.alt;
       lightbox.classList.add('active');
+      lightboxClose.focus();
     });
   });
 
