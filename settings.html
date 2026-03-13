@@ -24,6 +24,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/style.css">
   <link rel="manifest" href="manifest.json">
+  <script src="js/theme.js"></script>
   <style>
     .settings-section {
       background: var(--bg-card);
@@ -44,13 +45,13 @@
       color: var(--text-muted);
       line-height: 1.7;
     }
-    .color-grid {
+    .theme-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 1rem;
       margin-top: 1rem;
     }
-    .color-swatch {
+    .theme-card {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -62,16 +63,26 @@
       transition: all .2s;
       min-height: 44px;
     }
-    .color-swatch:hover { background: var(--accent-bg); }
-    .color-swatch.active { border-color: var(--accent); background: var(--accent-bg); }
-    .swatch-circle {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
+    .theme-card:hover { background: var(--accent-bg); }
+    .theme-card.active { border-color: var(--accent); background: var(--accent-bg); }
+    .theme-preview {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
       position: relative;
+      overflow: hidden;
       box-shadow: 0 2px 8px rgba(0,0,0,.3);
+      display: flex;
     }
-    .swatch-circle .check {
+    .theme-preview .tp-bg { flex: 1; }
+    .theme-preview .tp-accent {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+    }
+    .theme-preview .tp-check {
       display: none;
       position: absolute;
       inset: 0;
@@ -80,63 +91,32 @@
       font-size: 1.2rem;
       color: #fff;
       text-shadow: 0 1px 3px rgba(0,0,0,.5);
+      background: rgba(0,0,0,.25);
     }
-    .color-swatch.active .check { display: flex; }
-    .swatch-label {
-      font-size: .78rem;
+    .theme-card.active .tp-check { display: flex; }
+    .theme-icon {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .theme-label {
+      font-size: .75rem;
       color: var(--text-muted);
       font-weight: 600;
       text-align: center;
     }
 
     @media (max-width: 768px) {
-      .color-grid { grid-template-columns: repeat(4, 1fr); gap: .8rem; }
-      .swatch-circle { width: 44px; height: 44px; }
-      .color-swatch { padding: .6rem; min-height: 44px; }
+      .theme-grid { grid-template-columns: repeat(4, 1fr); gap: .8rem; }
+      .theme-preview { width: 50px; height: 50px; }
+      .theme-card { padding: .6rem; }
       .settings-section { padding: 1.2rem; }
       .settings-section h2 { font-size: 1.05rem; }
     }
-
-    .theme-toggle-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 1rem;
-      padding: 1rem;
-      background: var(--accent-bg);
-      border-radius: 10px;
-    }
-    .theme-toggle-row span { font-size: .95rem; color: var(--text-secondary); font-weight: 600; }
-    .toggle-switch {
-      position: relative;
-      width: 56px;
-      height: 28px;
-      cursor: pointer;
-    }
-    .toggle-switch input { opacity: 0; width: 0; height: 0; }
-    .toggle-slider {
-      position: absolute; inset: 0;
-      background: #30363d;
-      border-radius: 28px;
-      transition: background .3s;
-    }
-    .toggle-slider::before {
-      content: '';
-      position: absolute;
-      width: 22px; height: 22px;
-      left: 3px; bottom: 3px;
-      background: #fff;
-      border-radius: 50%;
-      transition: transform .3s;
-    }
-    .toggle-switch input:checked + .toggle-slider { background: var(--accent); }
-    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(28px); }
-
     @media (max-width: 600px) {
-      .color-grid { grid-template-columns: repeat(3, 1fr); gap: .8rem; }
-      .swatch-circle { width: 44px; height: 44px; }
-      .color-swatch { padding: .6rem; }
-      .settings-section { padding: 1.2rem; }
+      .theme-grid { grid-template-columns: repeat(3, 1fr); gap: .8rem; }
+      .theme-preview { width: 48px; height: 48px; }
+      .theme-card { padding: .5rem; }
+      .settings-section { padding: 1rem; }
     }
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5638346660274603"
@@ -186,21 +166,9 @@
   <h1 class="section-title">&#x2699;&#xFE0F; サイト設定</h1>
 
   <div class="settings-section">
-    <h2>&#x1F319; 表示モード</h2>
-    <p>ダークモードとライトモードを切り替えられます。</p>
-    <div class="theme-toggle-row">
-      <span id="modeLabel">&#x1F319; ダークモード</span>
-      <label class="toggle-switch">
-        <input type="checkbox" id="lightModeToggle">
-        <span class="toggle-slider"></span>
-      </label>
-    </div>
-  </div>
-
-  <div class="settings-section">
-    <h2>&#x1F3A8; テーマカラー</h2>
-    <p>アクセントカラーを選択してください。選択した色はブラウザに保存され、次回訪問時も維持されます。</p>
-    <div class="color-grid">
+    <h2>&#x1F3A8; テーマ</h2>
+    <p>サイト全体の配色テーマを選択できます。選択はブラウザに保存され、次回訪問時も維持されます。</p>
+    <div class="theme-grid" id="themeGrid">
       <!-- generated by JS -->
     </div>
   </div>
@@ -249,47 +217,30 @@
 
 <script src="js/common.js"></script>
 <script>
-// Light/Dark mode toggle
 (function() {
-  const toggle = document.getElementById('lightModeToggle');
-  const label = document.getElementById('modeLabel');
-  const isLight = localStorage.getItem('theme-mode') === 'light';
-  if (isLight) {
-    toggle.checked = true;
-    label.textContent = '\u2600\uFE0F ライトモード';
-  }
-  toggle.addEventListener('change', () => {
-    if (toggle.checked) {
-      document.documentElement.setAttribute('data-theme', 'light');
-      localStorage.setItem('theme-mode', 'light');
-      label.textContent = '\u2600\uFE0F ライトモード';
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-      localStorage.setItem('theme-mode', 'dark');
-      label.textContent = '\uD83C\uDF19 ダークモード';
-    }
-  });
-})();
+  var grid = document.getElementById('themeGrid');
+  var saved = localStorage.getItem('jg-theme') || 'dark';
+  var themes = window.JG_THEMES;
 
-(function() {
-  const grid = document.querySelector('.color-grid');
-  const saved = localStorage.getItem('theme-color') || 'dark-blue';
-
-  Object.entries(window.THEME_COLORS).forEach(([id, theme]) => {
-    const swatch = document.createElement('div');
-    swatch.className = 'color-swatch' + (id === saved ? ' active' : '');
-    swatch.innerHTML = `
-      <div class="swatch-circle" style="background:${theme.accent}">
-        <span class="check">\u2713</span>
-      </div>
-      <span class="swatch-label">${theme.label}</span>
-    `;
-    swatch.addEventListener('click', () => {
-      grid.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
-      swatch.classList.add('active');
-      window.applyThemeColor(id);
+  Object.keys(themes).forEach(function(id) {
+    var t = themes[id];
+    var card = document.createElement('div');
+    card.className = 'theme-card' + (id === saved ? ' active' : '');
+    card.innerHTML =
+      '<div class="theme-preview">' +
+        '<div class="tp-bg" style="background:' + t.preview[0] + '"></div>' +
+        '<div class="tp-bg" style="background:' + t.preview[1] + '"></div>' +
+        '<div class="tp-accent" style="background:' + t.preview[2] + '"></div>' +
+        '<span class="tp-check">\u2713</span>' +
+      '</div>' +
+      '<span class="theme-icon">' + t.icon + '</span>' +
+      '<span class="theme-label">' + t.label + '</span>';
+    card.addEventListener('click', function() {
+      grid.querySelectorAll('.theme-card').forEach(function(c) { c.classList.remove('active'); });
+      card.classList.add('active');
+      window.applyJGTheme(id);
     });
-    grid.appendChild(swatch);
+    grid.appendChild(card);
   });
 })();
 </script>
