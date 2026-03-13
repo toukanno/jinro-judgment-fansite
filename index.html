@@ -157,11 +157,37 @@
       to { opacity: .7; transform: translateY(0); }
     }
 
+    /* Game screenshot in hero */
+    .hero-screenshot {
+      position: relative;
+      z-index: 1;
+      margin: 1.5rem auto 0;
+      display: flex;
+      justify-content: center;
+      opacity: 0;
+      animation: heroSubIn .8s ease 1s forwards;
+    }
+    .phone-frame {
+      background: #1a1a2e;
+      border-radius: 24px;
+      padding: 8px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 40px rgba(88,166,255,.1), inset 0 0 0 2px rgba(255,255,255,.1);
+      max-width: 220px;
+      overflow: hidden;
+    }
+    .phone-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+    }
+
     @media (max-width: 768px) {
       .tip-box { font-size: .88rem; }
       .tip-box a { display: inline; }
       .hero-moon { width: 70px; height: 70px; right: 5%; top: -10px; }
       .hero-role-card { font-size: .78rem; padding: .4rem .6rem; }
+      .phone-frame { max-width: 180px; }
     }
 
     @media (max-width: 600px) {
@@ -171,6 +197,7 @@
       .hero-role-cards { gap: .5rem; }
       .hero-role-card { font-size: .75rem; }
       .hero-role-card .rc-icon { font-size: 1rem; }
+      .phone-frame { max-width: 160px; }
     }
   </style>
   <script type="application/ld+json">
@@ -239,6 +266,11 @@
   <div class="hero-moon"></div>
   <h1>人狼ジャッジメント 攻略データベース</h1>
   <p>全役職の能力・立ち回り・編成考察を網羅したファンサイト。初心者から上級者まで役立つ情報をお届けします。</p>
+  <div class="hero-screenshot">
+    <div class="phone-frame">
+      <img src="images/mode-select.svg" alt="人狼ジャッジメント モード選択画面" width="280" height="497" loading="eager">
+    </div>
+  </div>
   <div class="hero-role-cards">
     <div class="hero-role-card"><span class="rc-icon">&#x1F52E;</span>占い師</div>
     <div class="hero-role-card"><span class="rc-icon">&#x1F3AF;</span>狩人</div>
@@ -563,6 +595,28 @@
   <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
   <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
 </footer>
+
+<!-- PC左右固定広告バナー -->
+<div id="pc-side-ad-left" class="pc-side-ad pc-side-ad--left">
+  <a href="//af.moshimo.com/af/c/click?a_id=5422316&p_id=54&pc_id=54&pl_id=1249" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc><img src="//image.moshimo.com/af-img/0032/000000001249.gif" width="120" height="500" style="border:none;" alt="楽天市場" loading="lazy"></a><img aria-hidden="true" src="//i.moshimo.com/af/i/impression?a_id=5422316&p_id=54&pc_id=54&pl_id=1249" width="1" height="1" style="border:none;" alt="" loading="lazy">
+</div>
+<div id="pc-side-ad-right" class="pc-side-ad pc-side-ad--right">
+  <a href="//af.moshimo.com/af/c/click?a_id=5422316&p_id=54&pc_id=54&pl_id=1249" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc><img src="//image.moshimo.com/af-img/0032/000000001249.gif" width="120" height="500" style="border:none;" alt="楽天市場" loading="lazy"></a><img aria-hidden="true" src="//i.moshimo.com/af/i/impression?a_id=5422316&p_id=54&pc_id=54&pl_id=1249" width="1" height="1" style="border:none;" alt="" loading="lazy">
+</div>
+<style>
+  .pc-side-ad { display: none; }
+  @media (min-width: 1200px) {
+    .pc-side-ad {
+      display: block;
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+    }
+    .pc-side-ad--left { left: 4px; }
+    .pc-side-ad--right { right: 4px; }
+  }
+</style>
 
 <script src="js/common.js"></script>
 </body>

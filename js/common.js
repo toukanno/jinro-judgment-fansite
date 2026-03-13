@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Rakuten side banners (PC only, fixed left & right center)
-  if (window.matchMedia('(min-width: 1024px)').matches && !document.getElementById('rakuten-banner-right')) {
+  if (window.matchMedia('(min-width: 1024px)').matches && !document.getElementById('rakuten-banner-right') && !document.getElementById('pc-side-ad-right')) {
     var bannerHTML =
       '<a href="//af.moshimo.com/af/c/click?a_id=5422316&p_id=54&pc_id=54&pl_id=1249" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc>'
       + '<img src="//image.moshimo.com/af-img/0032/000000001249.gif" width="120" height="500" style="border:none;">'
