@@ -705,12 +705,11 @@
     var genderTag = c.gender === 'male' ? '\u2642 男性' : '\u2640 女性';
     var genderClass = c.gender === 'male' ? 't-male' : 't-female';
     var motifHtml = c.motif ? '<div class="char-detail-section"><h3>\u{1F3AD} モチーフ役職</h3><p>' + c.motif + '</p></div>' : '';
-    var detailAvatarStyle = c.img
-      ? 'background-image:url(' + encodeURI(c.img) + ');border-color:' + c.color + '66;'
-      : 'background:linear-gradient(135deg,' + c.color + '33,' + c.color + '11);border-color:' + c.color + '66;';
     detailEl.innerHTML =
       '<button class="char-detail-close" aria-label="閉じる">\u2715</button>' +
-      '<div class="char-detail-avatar" style="' + detailAvatarStyle + '">' + (c.img ? '' : c.icon) + '</div>' +
+      '<div class="char-detail-avatar" style="background:linear-gradient(135deg,' + c.color + '33,' + c.color + '11);border-color:' + c.color + '66;">' +
+        (c.img ? '<img src="' + encodeURI(c.img) + '" alt="' + c.name + '" loading="lazy" onerror="this.remove();this.parentElement.textContent=\'' + c.name[0] + '\'">' : c.icon) +
+      '</div>' +
       '<div class="char-detail-name">' + c.name + '</div>' +
       '<div class="char-detail-ruby">' + c.ruby + '</div>' +
       '<div class="char-detail-tags">' +
