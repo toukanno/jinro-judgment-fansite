@@ -21,7 +21,6 @@
 @media (min-width: 1024px) {
   .page-with-sidebar {
     display: grid;
-    grid-template-columns: 1fr 180px;
     gap: 2rem;
     max-width: 1200px;
   }
