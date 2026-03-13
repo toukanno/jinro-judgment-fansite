@@ -741,7 +741,7 @@
       return '<div class="char-card" data-idx="' + CHARACTERS.indexOf(c) + '" style="--accent:' + c.color + '">' +
         '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:' + c.color + ';"></div>' +
         '<div class="char-card-avatar" style="background:linear-gradient(135deg,' + c.color + '22,' + c.color + '08);border-color:' + c.color + '44;">' +
-          (c.img ? '<img src="' + c.img + '" alt="' + c.name + '" loading="lazy" onerror="this.style.display=\'none\';this.parentElement.classList.add(\'avatar-fallback\');this.parentElement.setAttribute(\'data-initial\',\'' + c.name[0] + '\')">' : c.icon) +
+          (c.img ? '<img src="' + encodeURI(c.img) + '" alt="' + c.name + '" loading="lazy" onerror="this.style.display=&quot;none&quot;;this.parentElement.textContent=this.alt.charAt(0);">' : c.icon) +
         '</div>' +
         '<div class="char-card-name">' + c.name + '</div>' +
         '<div class="char-card-ruby">' + c.ruby + '</div>' +

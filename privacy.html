@@ -17,6 +17,7 @@
   <meta name="twitter:title" content="プライバシーポリシー - 人狼ジャッジメント攻略データベース">
   <meta name="twitter:description" content="当サイトのプライバシーポリシー。広告配信・Cookie・アクセス解析・免責事項について。">
   <meta name="twitter:image" content="https://toukanno.github.io/jinro-judgment-fansite/icons/icon-512.svg">
+  <meta property="og:url" content="https://toukanno.github.io/jinro-judgment-fansite/privacy.html">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ja_JP">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,8 +28,8 @@
   <link rel="manifest" href="manifest.json">
   <style>
     .policy-section {
-      background: rgba(22,27,34,.7);
-      border: 1px solid rgba(48,54,61,.6);
+      background: var(--bg-secondary, rgba(22,27,34,.7));
+      border: 1px solid var(--border-color, rgba(48,54,61,.6));
       border-radius: 12px;
       padding: 1.5rem;
       margin-bottom: 1.5rem;
@@ -36,14 +37,14 @@
     .policy-section h2 {
       font-size: 1.15rem;
       font-weight: 700;
-      color: #58a6ff;
+      color: var(--accent, #58a6ff);
       margin-bottom: .8rem;
       display: flex;
       align-items: center;
       gap: .5rem;
     }
     .policy-section p, .policy-section li {
-      color: #c9d1d9;
+      color: var(--text-secondary, #c9d1d9);
       font-size: .92rem;
       line-height: 1.8;
     }
@@ -55,7 +56,7 @@
     .policy-section li { margin-bottom: .3rem; }
     .last-updated {
       text-align: right;
-      color: #484f58;
+      color: var(--text-muted, #484f58);
       font-size: .82rem;
       margin-bottom: 1.5rem;
     }

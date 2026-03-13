@@ -581,7 +581,10 @@
         calculate();
       });
       num.addEventListener('input', () => {
-        slider.value = num.value;
+        var val = parseInt(num.value) || 0;
+        val = Math.max(parseInt(num.min) || 0, Math.min(parseInt(num.max) || 99, val));
+        num.value = val;
+        slider.value = val;
         calculate();
       });
     }

@@ -540,14 +540,28 @@ const COPIPE_DATA = [
 ];
 
 function copyText(text, btn) {
-  navigator.clipboard.writeText(text).then(() => {
+  function onSuccess() {
     btn.textContent = 'OK!';
     btn.classList.add('copied');
     setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 1500);
-  }).catch(() => {
+  }
+  function onFail() {
     btn.textContent = '失敗';
     setTimeout(() => { btn.textContent = 'コピー'; }, 1500);
-  });
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(onSuccess).catch(onFail);
+  } else {
+    // Fallback for older browsers
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); onSuccess(); } catch (e) { onFail(); }
+    document.body.removeChild(ta);
+  }
 }
 
 function renderCopipe(filter = '') {

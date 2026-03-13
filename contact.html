@@ -17,6 +17,7 @@
   <meta name="twitter:title" content="お問い合わせ - 人狼ジャッジメント攻略データベース">
   <meta name="twitter:description" content="当サイトへのお問い合わせはこちらから。">
   <meta name="twitter:image" content="https://toukanno.github.io/jinro-judgment-fansite/icons/icon-512.svg">
+  <meta property="og:url" content="https://toukanno.github.io/jinro-judgment-fansite/contact.html">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ja_JP">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,8 +28,8 @@
   <link rel="manifest" href="manifest.json">
   <style>
     .contact-form {
-      background: rgba(22,27,34,.7);
-      border: 1px solid rgba(48,54,61,.6);
+      background: var(--bg-secondary, rgba(22,27,34,.7));
+      border: 1px solid var(--border-color, rgba(48,54,61,.6));
       border-radius: 14px;
       padding: 2rem;
       max-width: 640px;
@@ -41,11 +42,11 @@
       display: block;
       font-size: .88rem;
       font-weight: 600;
-      color: #c9d1d9;
+      color: var(--text-secondary, #c9d1d9);
       margin-bottom: .4rem;
     }
     .form-group label .required {
-      color: #f85149;
+      color: var(--color-red, #f85149);
       font-size: .78rem;
       margin-left: .3rem;
     }
@@ -54,10 +55,10 @@
     .form-select {
       width: 100%;
       padding: .7rem 1rem;
-      border: 1px solid rgba(48,54,61,.6);
+      border: 1px solid var(--border-color, rgba(48,54,61,.6));
       border-radius: 10px;
-      background: rgba(10,14,23,.6);
-      color: #e6edf3;
+      background: var(--bg-primary, rgba(10,14,23,.6));
+      color: var(--text-primary, #e6edf3);
       font-size: .95rem;
       font-family: inherit;
       transition: border-color .2s, box-shadow .2s;
@@ -66,7 +67,7 @@
     .form-textarea:focus,
     .form-select:focus {
       outline: none;
-      border-color: #58a6ff;
+      border-color: var(--accent, #58a6ff);
       box-shadow: 0 0 0 3px rgba(88,166,255,.12);
     }
     .form-textarea {
@@ -100,7 +101,7 @@
     }
     .form-note {
       font-size: .82rem;
-      color: #8b949e;
+      color: var(--text-muted, #8b949e);
       margin-top: .3rem;
     }
     .success-msg {
@@ -110,11 +111,11 @@
     }
     .success-msg h2 {
       font-size: 1.3rem;
-      color: #7ee787;
+      color: var(--color-green, #7ee787);
       margin-bottom: .8rem;
     }
     .success-msg p {
-      color: #8b949e;
+      color: var(--text-muted, #8b949e);
       font-size: .95rem;
     }
     .contact-info {
@@ -122,8 +123,8 @@
       margin: 1.5rem auto 0;
     }
     .contact-info-card {
-      background: rgba(22,27,34,.5);
-      border: 1px solid rgba(48,54,61,.5);
+      background: var(--bg-secondary, rgba(22,27,34,.5));
+      border: 1px solid var(--border-color, rgba(48,54,61,.5));
       border-radius: 10px;
       padding: 1.2rem 1.5rem;
       margin-bottom: 1rem;
@@ -131,7 +132,7 @@
     .contact-info-card h3 {
       font-size: .95rem;
       font-weight: 700;
-      color: #e6edf3;
+      color: var(--text-primary, #e6edf3);
       margin-bottom: .5rem;
       display: flex;
       align-items: center;
@@ -139,7 +140,7 @@
     }
     .contact-info-card p {
       font-size: .88rem;
-      color: #8b949e;
+      color: var(--text-muted, #8b949e);
       line-height: 1.7;
     }
 

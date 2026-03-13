@@ -702,7 +702,8 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         showSaveIndicator();
       } catch (e) {
-        // Storage full or unavailable
+        console.warn('ゲームメモの保存に失敗しました:', e.message);
+        saveIndicatorEl.textContent = '保存に失敗しました';
       }
     }, 300);
   }

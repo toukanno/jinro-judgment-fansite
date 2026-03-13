@@ -514,17 +514,27 @@ const memoTitle = document.getElementById('wikiMemoModalTitle');
 const memoBody = document.getElementById('wikiMemoModalBody');
 const memoClose = document.getElementById('wikiMemoModalClose');
 
+var lastFocusedElement = null;
+
 function closeMemoModal() {
   memoModal.classList.remove('open');
+  document.body.style.overflow = '';
+  if (lastFocusedElement) {
+    lastFocusedElement.focus();
+    lastFocusedElement = null;
+  }
 }
 
 document.querySelectorAll('.modal-trigger').forEach((btn) => {
   btn.addEventListener('click', () => {
     const data = wikiMemoData[btn.dataset.modal];
     if (!data) return;
+    lastFocusedElement = document.activeElement;
     memoTitle.textContent = data.title;
     memoBody.innerHTML = data.body;
     memoModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    memoClose.focus();
   });
 });
 
@@ -534,6 +544,20 @@ memoModal.addEventListener('click', (e) => {
 });
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && memoModal.classList.contains('open')) closeMemoModal();
+  // Focus trap within modal
+  if (e.key === 'Tab' && memoModal.classList.contains('open')) {
+    var focusable = memoModal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (focusable.length === 0) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
 });
 </script>
 

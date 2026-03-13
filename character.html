@@ -640,7 +640,13 @@
   var roleName = params.get('role');
 
   if (roleName) {
-    showDetail(roleName);
+    // Sanitize: only allow role names that exist in ROLES_DATA
+    var validRole = ROLES_DATA.find(function(r) { return r.name === roleName; });
+    if (validRole) {
+      showDetail(validRole.name);
+    } else {
+      showDetail(roleName); // Will show "not found" message safely
+    }
   } else {
     showGallery();
   }
@@ -791,7 +797,7 @@
       html += '<div class="char-section">';
       html += '<h2>&#x1F91D; 相性・シナジー</h2>';
       if (role.compatibility.good.length > 0) {
-        html += '<div style="margin-bottom:.8rem;"><strong style="color:#7ee787;">&#x2705; 相性が良い役職：</strong><br>';
+        html += '<div style="margin-bottom:.8rem;"><strong style="color:var(--color-green, #7ee787);">&#x2705; 相性が良い役職：</strong><br>';
         html += '<div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.4rem;">';
         role.compatibility.good.forEach(function(name) {
           var r = ROLES_DATA.find(function(x) { return x.name === name; });
@@ -804,7 +810,7 @@
         html += '</div></div>';
       }
       if (role.compatibility.bad.length > 0) {
-        html += '<div style="margin-bottom:.8rem;"><strong style="color:#f85149;">&#x274C; 相性が悪い（天敵）：</strong><br>';
+        html += '<div style="margin-bottom:.8rem;"><strong style="color:var(--color-red, #f85149);">&#x274C; 相性が悪い（天敵）：</strong><br>';
         html += '<div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.4rem;">';
         role.compatibility.bad.forEach(function(name) {
           var r = ROLES_DATA.find(function(x) { return x.name === name; });
@@ -824,7 +830,7 @@
 
     // Quote
     if (role.quote) {
-      html += '<div class="char-section" style="background:linear-gradient(135deg,#161b22,#1a1525);border-color:#30363d;">';
+      html += '<div class="char-section" style="background:linear-gradient(135deg,var(--bg-secondary, #161b22),var(--bg-tertiary, #1a1525));border-color:var(--border-primary, #30363d);">';
       html += '<h2>&#x1F3AD; 名セリフ</h2>';
       html += '<blockquote style="margin:0;padding:1rem 1.2rem;border-left:3px solid #58a6ff;color:#c9d1d9;font-style:italic;white-space:pre-line;line-height:2;">' + role.quote + '</blockquote>';
       html += '</div>';

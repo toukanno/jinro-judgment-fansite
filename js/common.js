@@ -80,7 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const meta = NAV_META[href];
     if (meta) {
       a.style.borderLeftColor = meta.color;
-      a.insertAdjacentHTML('afterbegin', '<span class="nav-icon">' + meta.icon + '</span>');
+      var iconSpan = document.createElement('span');
+      iconSpan.className = 'nav-icon';
+      iconSpan.textContent = meta.icon;
+      a.insertBefore(iconSpan, a.firstChild);
     }
   });
 
