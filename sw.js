@@ -26,6 +26,7 @@ const ASSETS = [
   './404.html',
   './privacy.html',
   './contact.html',
+  './gallery.html',
   './css/style.css',
   './js/common.js',
   './js/roles-data.js',

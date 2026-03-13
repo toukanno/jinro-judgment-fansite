@@ -33,6 +33,7 @@ export default defineConfig({
         memo: resolve(__dirname, 'memo.html'),
         'role-compatibility': resolve(__dirname, 'role-compatibility.html'),
         settings: resolve(__dirname, 'settings.html'),
+        gallery: resolve(__dirname, 'gallery.html'),
       },
     },
   },
