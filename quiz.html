@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <meta name="theme-color" content="#0a0e17">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -22,6 +25,7 @@
   <meta property="og:locale" content="ja_JP">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icons/icon-192.svg">
   <link rel="stylesheet" href="css/style.css">
@@ -167,6 +171,7 @@
       <div class="quiz-rank" id="rankText"></div>
       <p id="rankDesc" style="color:var(--text-muted);margin-bottom:1rem;"></p>
       <button class="quiz-restart" onclick="startQuiz(currentDiff)">もう一度挑戦</button>
+      <div id="shareButtons" style="margin-top:1rem;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;"></div>
       <br>
       <a href="guide.html" style="font-size:.85rem;">初心者ガイドで復習する</a>
     </div>
@@ -381,6 +386,27 @@ function showResult() {
   document.getElementById('rankText').textContent = rank;
   document.getElementById('rankDesc').textContent = desc;
   document.getElementById('quizResult').classList.add('show');
+
+  // Share buttons
+  var diffName = currentDiff === 'beginner' ? '初級' : currentDiff === 'intermediate' ? '中級' : '上級';
+  var shareText = '人狼ジャッジメントクイズ（' + diffName + '）で ' + score + '/' + questions.length + '問正解（' + pct + '%）！ランク：' + rank;
+  var shareUrl = 'https://toukanno.github.io/jinro-judgment-fansite/quiz.html';
+  var shareEl = document.getElementById('shareButtons');
+  shareEl.innerHTML =
+    '<button onclick="shareResult()" style="padding:.5rem 1rem;border-radius:8px;border:1px solid var(--border-primary);background:var(--accent-bg);color:var(--accent);cursor:pointer;font-size:.85rem;font-weight:600;">結果をシェア</button>';
+
+  window._shareText = shareText;
+  window._shareUrl = shareUrl;
+}
+
+function shareResult() {
+  if (navigator.share) {
+    navigator.share({ title: '人狼クイズ結果', text: window._shareText, url: window._shareUrl }).catch(function() {});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(window._shareText + '\n' + window._shareUrl).then(function() {
+      showToast('結果をコピーしました！', 'success');
+    });
+  }
 }
 
 startQuiz('beginner');
