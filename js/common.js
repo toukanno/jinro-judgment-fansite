@@ -252,6 +252,103 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Quick Search Modal (Ctrl+K / Cmd+K)
+  const SEARCH_PAGES = [
+    { href: 'index.html', title: 'ホーム', desc: 'トップページ' },
+    { href: 'roles.html', title: '役職一覧', desc: '全役職の能力・陣営データベース' },
+    { href: 'characters.html', title: 'キャラクター', desc: 'キャラクター一覧' },
+    { href: 'guide.html', title: '初心者ガイド', desc: '基本ルール・進行の流れ' },
+    { href: 'strategy.html', title: '立ち回りガイド', desc: '陣営別の戦術・テクニック' },
+    { href: 'composition.html', title: '編成シミュレーター', desc: '役職構成のバランス確認' },
+    { href: 'glossary.html', title: '用語集', desc: '専門用語・略語を検索' },
+    { href: 'templates.html', title: '部屋テンプレ集', desc: '部屋ルール・テンプレート' },
+    { href: 'copipe.html', title: 'コピペ集', desc: 'ゲーム中の定型文' },
+    { href: 'v3roles.html', title: 'V3新役職', desc: 'V3アップデートの新役職' },
+    { href: 'queen-wise.html', title: '女王部屋攻略', desc: '20人女王部屋の立ち回り' },
+    { href: 'faq.html', title: 'FAQ', desc: 'よくある質問' },
+    { href: 'timer.html', title: '議論タイマー', desc: '議論時間管理ツール' },
+    { href: 'exclusion.html', title: '同村制限', desc: '同村できない役職の組み合わせ' },
+    { href: 'rope-calc.html', title: '縄計算', desc: '吊り余裕の自動計算' },
+    { href: 'synergy.html', title: '役職相性', desc: '役職同士のシナジー' },
+    { href: 'quiz.html', title: 'クイズ', desc: '知識テスト 初級〜上級' },
+    { href: 'notepad.html', title: 'メモ帳', desc: 'ゲーム中のメモツール' },
+    { href: 'memo.html', title: 'ゲームメモ', desc: 'プレイヤーごとの記録' },
+    { href: 'characters-gallery.html', title: 'キャラ図鑑', desc: 'キャラクター図鑑' },
+    { href: 'role-compatibility.html', title: '相性表', desc: '役職相性マトリクス' },
+    { href: 'gallery.html', title: 'ギャラリー', desc: '画像ギャラリー' },
+    { href: 'settings.html', title: '設定', desc: 'テーマ・表示設定' },
+  ];
+
+  (function initQuickSearch() {
+    const overlay = document.createElement('div');
+    overlay.className = 'qs-overlay';
+    overlay.innerHTML = '<div class="qs-modal">'
+      + '<input class="qs-input" type="text" placeholder="ページを検索... (Ctrl+K)" autocomplete="off">'
+      + '<div class="qs-results"></div>'
+      + '<div class="qs-hint">↑↓ 移動 · Enter 開く · Esc 閉じる</div>'
+      + '</div>';
+    document.body.appendChild(overlay);
+
+    const input = overlay.querySelector('.qs-input');
+    const results = overlay.querySelector('.qs-results');
+    let selectedIdx = 0;
+    let filtered = [];
+
+    function render(query) {
+      query = (query || '').toLowerCase();
+      filtered = query
+        ? SEARCH_PAGES.filter(p => p.title.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query) || p.href.includes(query))
+        : SEARCH_PAGES;
+      selectedIdx = 0;
+      results.innerHTML = filtered.map((p, i) => {
+        const meta = NAV_META[p.href];
+        const icon = meta ? meta.icon : '';
+        return '<a class="qs-item' + (i === 0 ? ' active' : '') + '" href="' + p.href + '">'
+          + '<span class="qs-icon">' + icon + '</span>'
+          + '<span class="qs-text"><span class="qs-title">' + p.title + '</span><span class="qs-desc">' + p.desc + '</span></span>'
+          + '</a>';
+      }).join('');
+    }
+
+    function updateActive() {
+      results.querySelectorAll('.qs-item').forEach((el, i) => {
+        el.classList.toggle('active', i === selectedIdx);
+        if (i === selectedIdx) el.scrollIntoView({ block: 'nearest' });
+      });
+    }
+
+    function open() {
+      overlay.classList.add('open');
+      input.value = '';
+      render('');
+      input.focus();
+    }
+
+    function close() {
+      overlay.classList.remove('open');
+    }
+
+    input.addEventListener('input', () => render(input.value));
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); selectedIdx = Math.min(selectedIdx + 1, filtered.length - 1); updateActive(); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); selectedIdx = Math.max(selectedIdx - 1, 0); updateActive(); }
+      else if (e.key === 'Enter' && filtered[selectedIdx]) { e.preventDefault(); window.location.href = filtered[selectedIdx].href; }
+      else if (e.key === 'Escape') { close(); }
+    });
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) close();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        overlay.classList.contains('open') ? close() : open();
+      }
+    });
+  })();
+
   // Scroll reveal animation for cards and sections
   if ('IntersectionObserver' in window) {
     const revealTargets = document.querySelectorAll('.card, .accordion-item, .tip-box, .strat-card, .strat-section');
