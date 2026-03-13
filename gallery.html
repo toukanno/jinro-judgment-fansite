@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0e17">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JGDB">
+  <title>ギャラリー - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントのゲーム画面スクリーンショット集。役職画面、ルール設定、議論画面、モード選択など。">
+  <meta property="og:title" content="ギャラリー - 人狼ジャッジメント攻略">
+  <meta property="og:description" content="人狼ジャッジメントのゲーム画面スクリーンショット集。">
+  <link rel="canonical" href="https://toukanno.github.io/jinro-judgment-fansite/gallery.html">
+  <meta property="og:image" content="https://toukanno.github.io/jinro-judgment-fansite/icons/icon-512.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ギャラリー - 人狼ジャッジメント攻略">
+  <meta name="twitter:description" content="人狼ジャッジメントのゲーム画面スクリーンショット集。">
+  <meta name="twitter:image" content="https://toukanno.github.io/jinro-judgment-fansite/icons/icon-512.svg">
+  <meta property="og:url" content="https://toukanno.github.io/jinro-judgment-fansite/gallery.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <script src="js/theme.js"></script>
+  <style>
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .gallery-item {
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-primary);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .gallery-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .3);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      cursor: pointer;
+    }
+    .gallery-item .caption {
+      padding: 1rem;
+    }
+    .gallery-item .caption h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: .4rem;
+    }
+    .gallery-item .caption p {
+      font-size: .85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0, 0, 0, .85);
+      backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .lightbox.active {
+      display: flex;
+    }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 10px;
+      box-shadow: 0 4px 32px rgba(0, 0, 0, .5);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      opacity: .7;
+      transition: opacity .2s;
+    }
+    .lightbox-close:hover {
+      opacity: 1;
+    }
+
+    @media (max-width: 600px) {
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .gallery-item .caption {
+        padding: .75rem;
+      }
+      .gallery-item .caption h3 {
+        font-size: .9rem;
+      }
+      .gallery-item .caption p {
+        font-size: .8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">
+      <span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース
+    </a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="characters.html">キャラクター</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+        <li><a href="templates.html">部屋テンプレ</a></li>
+        <li><a href="copipe.html">コピペ集</a></li>
+        <li><a href="v3roles.html">V3新役職</a></li>
+        <li><a href="queen-wise.html">女王部屋</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="timer.html">タイマー</a></li>
+        <li><a href="exclusion.html">同村制限</a></li>
+        <li><a href="rope-calc.html">縄計算</a></li>
+        <li><a href="synergy.html">役職相性</a></li>
+        <li><a href="quiz.html">クイズ</a></li>
+        <li><a href="notepad.html">メモ帳</a></li>
+        <li><a href="memo.html">ゲームメモ</a></li>
+        <li><a href="characters-gallery.html">キャラ図鑑</a></li>
+        <li><a href="role-compatibility.html">相性表</a></li>
+        <li><a href="gallery.html">ギャラリー</a></li>
+        <li><a href="settings.html">設定</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> ギャラリー</div>
+
+  <h1 class="section-title">&#x1F5BC;&#xFE0F; ギャラリー</h1>
+  <p style="color: var(--text-muted); margin-bottom: 1rem;">人狼ジャッジメントのゲーム画面スクリーンショット集です。画像をクリックすると拡大表示できます。</p>
+
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="images/gallery/role-detail.png" alt="鉄の女 役職詳細画面" loading="lazy">
+      <div class="caption">
+        <h3>役職詳細 — 鉄の女</h3>
+        <p>市民陣営の役職「鉄の女」の能力概要・勝利条件が表示されるゲーム内画面。人狼の襲撃を受けても一旦は生き延びる能力を持つ。</p>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="images/gallery/room-settings.png" alt="屋敷設定・ルール設定画面" loading="lazy">
+      <div class="caption">
+        <h3>屋敷設定・ルール設定</h3>
+        <p>20人村の役職構成とルール設定画面。市民陣営11人・狼陣営6人・その他3人の編成例。募集プレイヤーや言葉づかいなどの設定項目が確認できる。</p>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="images/gallery/discussion.png" alt="議論画面" loading="lazy">
+      <div class="caption">
+        <h3>議論画面</h3>
+        <p>ゲーム中の議論フェーズの様子。プレイヤー同士がチャットで会話し、人狼を推理する。画面下部には生存者一覧やCO（カミングアウト）ボタンが表示される。</p>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="images/gallery/mode-select.png" alt="モード選択画面" loading="lazy">
+      <div class="caption">
+        <h3>モード選択</h3>
+        <p>ゲーム起動時のモード選択画面。全国対戦モードが表示されており、プレイヤー名やいいね数が確認できる。</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" aria-label="閉じる">&times;</button>
+  <img src="" alt="">
+</div>
+
+<footer class="site-footer">
+  <div class="footer-columns">
+    <div>
+      <h4>攻略コンテンツ</h4>
+      <a href="roles.html">役職一覧</a>
+      <a href="guide.html">初心者ガイド</a>
+      <a href="strategy.html">立ち回りガイド</a>
+      <a href="queen-wise.html">女王部屋攻略</a>
+      <a href="v3roles.html">V3新役職</a>
+    </div>
+    <div>
+      <h4>データ・資料</h4>
+      <a href="glossary.html">用語集</a>
+      <a href="composition.html">編成シミュレーター</a>
+      <a href="characters.html">キャラクター</a>
+      <a href="synergy.html">役職相性</a>
+      <a href="exclusion.html">同村制限</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div>
+      <h4>ツール</h4>
+      <a href="timer.html">議論タイマー</a>
+      <a href="rope-calc.html">縄計算</a>
+      <a href="templates.html">部屋テンプレ</a>
+      <a href="copipe.html">コピペ集</a>
+      <a href="notepad.html">メモ帳</a>
+      <a href="quiz.html">クイズ</a>
+    </div>
+    <div>
+      <h4>その他</h4>
+      <a href="gallery.html">ギャラリー</a>
+      <a href="settings.html">設定</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+    </div>
+  </div>
+  <p class="footer-copy">&copy; 2025 人狼JGデータベース — ファンメイド非公式サイト</p>
+</footer>
+
+<script src="js/common.js"></script>
+<script>
+  // Lightbox functionality
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = lightbox.querySelector('img');
+  const lightboxClose = lightbox.querySelector('.lightbox-close');
+
+  document.querySelectorAll('.gallery-item img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('active');
+    });
+  });
+
+  lightboxClose.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+  });
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      lightbox.classList.remove('active');
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+      lightbox.classList.remove('active');
+    }
+  });
+</script>
+</body>
+</html>

@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'memo.html':               { icon: '\u{1F4D2}', color: '#f0883e' },
     'characters-gallery.html': { icon: '\u{1F5BC}', color: '#a78bfa' },
     'role-compatibility.html': { icon: '\u{1F4CA}', color: '#7ee787' },
+    'gallery.html':            { icon: '\u{1F5BC}', color: '#a78bfa' },
     'settings.html':           { icon: '\u{2699}',  color: '#8b949e' },
   };
 
