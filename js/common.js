@@ -121,6 +121,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Page Sidebar (PC only, auto-inject for long content pages)
+  if (window.matchMedia('(min-width: 900px)').matches && !document.querySelector('.page-sidebar')) {
+    const mainEl = document.querySelector('main.container, main');
+    if (mainEl && mainEl.scrollHeight > 800) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'page-layout';
+      mainEl.parentNode.insertBefore(wrapper, mainEl);
+      wrapper.appendChild(mainEl);
+      const sidebar = document.createElement('aside');
+      sidebar.className = 'page-sidebar';
+      sidebar.innerHTML = '<div class="page-sidebar-inner">'
+        + '<!-- Ad Slot 1: 300x250 バナー -->'
+        + '<div class="sidebar-ad-slot">'
+        + '<a href="//af.moshimo.com/af/c/click?a_id=5422323&p_id=54&pc_id=54&pl_id=616" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc>'
+        + '<img src="//image.moshimo.com/af-img/0032/000000000616.gif" width="300" height="250" style="border:none;" alt="広告" loading="lazy"></a>'
+        + '<img src="//i.moshimo.com/af/i/impression?a_id=5422323&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none;" loading="lazy" alt="">'
+        + '</div>'
+        + '<!-- Ad Slot 2: 300x250 バナー -->'
+        + '<div class="sidebar-ad-slot">広告スペース</div>'
+        + '</div>';
+      wrapper.appendChild(sidebar);
+    }
+  }
+
   // Scroll progress bar (auto-inject)
   if (!document.querySelector('.scroll-progress')) {
     const bar = document.createElement('div');
