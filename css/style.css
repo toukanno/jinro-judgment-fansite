@@ -1,6 +1,14 @@
 /* ===== Google Fonts ===== */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap');
 
+/* ===== iOS App Safe Area Insets ===== */
+html {
+  --sat: env(safe-area-inset-top, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+}
+
 /* ===== CSS Custom Properties (Theme) ===== */
 :root {
   --bg-primary: #0a0e17;
@@ -170,7 +178,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   backdrop-filter: blur(20px) saturate(1.4);
   -webkit-backdrop-filter: blur(20px) saturate(1.4);
   border-bottom: 1px solid var(--border-primary);
-  padding: 0;
+  padding: var(--sat) 0 0 0;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -624,7 +632,7 @@ a.card { text-decoration: none; color: inherit; }
 .site-footer {
   background: rgba(13,17,23,.8);
   border-top: 1px solid var(--border-secondary);
-  padding: 2.5rem 1.5rem;
+  padding: 2.5rem 1.5rem calc(2.5rem + var(--sab));
   text-align: center;
   color: #484f58;
   font-size: .82rem;

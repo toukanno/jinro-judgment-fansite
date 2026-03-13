@@ -22,6 +22,8 @@ jinro-judgment-fansite/
 ├── images/                       # Character images (Japanese filenames)
 ├── icons/                        # App icons
 ├── public/                       # Static assets (SW, manifest, icons)
+├── ios/                          # Capacitor iOS native project (Xcode)
+├── capacitor.config.ts           # Capacitor configuration
 ├── vite.config.ts                # Vite config with multi-page input
 ├── tailwind.config.js            # Tailwind CSS config (dark theme colors, Japanese fonts)
 ├── postcss.config.js             # PostCSS config
@@ -42,6 +44,9 @@ jinro-judgment-fansite/
 - **Build**: `npm run build` (runs `tsc -b && vite build`)
 - **Preview**: `npm run preview`
 - **Lint**: `npm run lint` (ESLint 9 with React hooks/refresh plugins)
+- **iOS build**: `npm run build:ios` (builds web + syncs to Xcode project)
+- **iOS open**: `npm run open:ios` (opens Xcode project)
+- **iOS sync**: `npm run sync:ios` (syncs web assets to iOS without full rebuild)
 
 ## Conventions
 
@@ -76,3 +81,4 @@ jinro-judgment-fansite/
 | Routing | react-router-dom 7 |
 | Linting | ESLint 9 + typescript-eslint |
 | PWA | Service Worker + Web App Manifest |
+| iOS native wrapper | Capacitor 8 |

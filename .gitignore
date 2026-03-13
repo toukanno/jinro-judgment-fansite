@@ -154,5 +154,12 @@ Desktop.ini
 *.swo
 *~
 
+# Capacitor iOS - generated/build artifacts
+ios/App/App/public/
+ios/App/Pods/
+ios/App/DerivedData/
+ios/App/App/capacitor.config.json
+ios/capacitor-cordova-ios-plugins/
+
 # Misc
 *.local
