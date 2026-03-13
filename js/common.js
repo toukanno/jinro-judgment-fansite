@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.head.appendChild(script);
       }
     }
-  } catch (e) { /* breadcrumb generation failed silently */ }
+  } catch (e) { console.warn('Breadcrumb generation failed:', e); }
 
   // Auto Table of Contents for long pages (3+ h2 headings)
   const tocMain = document.querySelector('main');
@@ -480,6 +480,6 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js').then((reg) => {
       reg.update();
-    }).catch(() => {});
+    }).catch((err) => console.warn('SW registration failed:', err));
   });
 }
