@@ -16,10 +16,42 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Mark active nav link
+  // Nav icons & colors
+  const NAV_META = {
+    'index.html':              { icon: '\u{1F3E0}', color: '#58a6ff' },
+    'roles.html':              { icon: '\u{1F4CB}', color: '#58a6ff' },
+    'characters.html':         { icon: '\u{1F3AD}', color: '#a78bfa' },
+    'guide.html':              { icon: '\u{1F4D6}', color: '#58a6ff' },
+    'strategy.html':           { icon: '\u{1F3AF}', color: '#58a6ff' },
+    'composition.html':        { icon: '\u{1F9E9}', color: '#7ee787' },
+    'glossary.html':           { icon: '\u{1F4DD}', color: '#7ee787' },
+    'templates.html':          { icon: '\u{1F4C4}', color: '#f0883e' },
+    'copipe.html':             { icon: '\u{1F4CE}', color: '#f0883e' },
+    'v3roles.html':            { icon: '\u{26A1}',  color: '#f85149' },
+    'queen-wise.html':         { icon: '\u{1F451}', color: '#fbbf24' },
+    'faq.html':                { icon: '\u{2753}',  color: '#7ee787' },
+    'timer.html':              { icon: '\u{23F1}',  color: '#f0883e' },
+    'exclusion.html':          { icon: '\u{1F6AB}', color: '#f85149' },
+    'rope-calc.html':          { icon: '\u{1F522}', color: '#f0883e' },
+    'synergy.html':            { icon: '\u{1F91D}', color: '#7ee787' },
+    'quiz.html':               { icon: '\u{1F9E0}', color: '#f0883e' },
+    'notepad.html':            { icon: '\u{1F4DD}', color: '#f0883e' },
+    'memo.html':               { icon: '\u{1F4D2}', color: '#f0883e' },
+    'characters-gallery.html': { icon: '\u{1F5BC}', color: '#a78bfa' },
+    'role-compatibility.html': { icon: '\u{1F4CA}', color: '#7ee787' },
+    'settings.html':           { icon: '\u{2699}',  color: '#8b949e' },
+  };
+
+  // Mark active nav link & inject icons/colors
   const currentPage = location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.main-nav a').forEach(a => {
-    if (a.getAttribute('href') === currentPage) a.classList.add('active');
+    const href = a.getAttribute('href');
+    if (href === currentPage) a.classList.add('active');
+    const meta = NAV_META[href];
+    if (meta) {
+      a.style.borderLeftColor = meta.color;
+      a.insertAdjacentHTML('afterbegin', '<span class="nav-icon">' + meta.icon + '</span>');
+    }
   });
 
   // Accordion

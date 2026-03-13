@@ -183,15 +183,23 @@ a:hover { color: var(--accent-hover); }
   flex-wrap: wrap;
 }
 .main-nav a {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: .35rem;
   padding: .4rem .7rem;
   border-radius: 8px;
   color: var(--text-muted);
   font-size: .8rem;
   font-weight: 600;
-  transition: background .2s, color .2s, transform .15s;
+  transition: background .2s, color .2s, transform .15s, border-color .2s;
   position: relative;
   white-space: nowrap;
+  border-left: 2px solid transparent;
+}
+.main-nav a .nav-icon {
+  font-size: .85rem;
+  flex-shrink: 0;
+  line-height: 1;
 }
 .main-nav a:hover {
   background: var(--accent-bg);
@@ -251,7 +259,10 @@ a:hover { color: var(--accent-hover); }
     min-height: 44px;
     display: flex;
     align-items: center;
+    gap: .5rem;
+    border-left-width: 3px;
   }
+  .main-nav a .nav-icon { font-size: 1rem; }
   .main-nav a:hover,
   .main-nav a:active {
     background: var(--accent-bg, rgba(88,166,255,.08));
