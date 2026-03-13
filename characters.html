@@ -680,7 +680,7 @@
       var genderTag = c.gender === 'male' ? '\u2642 男性' : '\u2640 女性';
       var genderClass = c.gender === 'male' ? 't-male' : 't-female';
       var avatarStyle = c.img
-        ? 'background-image:url(' + c.img + ');border-color:' + c.color + '44;'
+        ? 'background-image:url(' + encodeURI(c.img) + ');border-color:' + c.color + '44;'
         : 'background:linear-gradient(135deg,' + c.color + '22,' + c.color + '08);border-color:' + c.color + '44;';
       return '<div class="char-card" data-idx="' + CHARACTERS.indexOf(c) + '" style="--accent:' + c.color + '">' +
         '<div style="position:absolute;top:0;left:0;right:0;height:3px;background:' + c.color + ';"></div>' +
@@ -703,7 +703,7 @@
     var genderClass = c.gender === 'male' ? 't-male' : 't-female';
     var motifHtml = c.motif ? '<div class="char-detail-section"><h3>\u{1F3AD} モチーフ役職</h3><p>' + c.motif + '</p></div>' : '';
     var detailAvatarStyle = c.img
-      ? 'background-image:url(' + c.img + ');border-color:' + c.color + '66;'
+      ? 'background-image:url(' + encodeURI(c.img) + ');border-color:' + c.color + '66;'
       : 'background:linear-gradient(135deg,' + c.color + '33,' + c.color + '11);border-color:' + c.color + '66;';
     detailEl.innerHTML =
       '<button class="char-detail-close" aria-label="閉じる">\u2715</button>' +
