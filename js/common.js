@@ -95,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'role-compatibility.html': { icon: '\u{1F4CA}', color: '#7ee787' },
     'gallery.html':            { icon: '\u{1F5BC}', color: '#e879f9' },
     'survivor-count.html':     { icon: '\u{1F43A}', color: '#e74c3c' },
+    'ai-advisor.html':         { icon: '\u{1F916}', color: '#a78bfa' },
     'settings.html':           { icon: '\u{2699}',  color: '#8b949e' },
     'pc-app.html':             { icon: '\u{1F4BB}', color: '#58a6ff' },
   };

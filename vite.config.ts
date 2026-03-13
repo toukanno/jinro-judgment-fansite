@@ -37,6 +37,7 @@ export default defineConfig({
         'survivor-count': resolve(__dirname, 'survivor-count.html'),
         'room-id': resolve(__dirname, 'room-id.html'),
         'pc-app': resolve(__dirname, 'pc-app.html'),
+        'ai-advisor': resolve(__dirname, 'ai-advisor.html'),
       },
     },
   },
