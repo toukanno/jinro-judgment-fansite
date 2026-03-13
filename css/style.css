@@ -27,6 +27,9 @@
   --yellow-bg: rgba(210,153,34,.12);
   --purple: #a78bfa;
   --purple-bg: rgba(167,139,250,.12);
+  --bg-overlay-light: rgba(22,27,34,.3);
+  --bg-overlay: rgba(22,27,34,.5);
+  --bg-overlay-strong: rgba(22,27,34,.8);
 }
 
 [data-theme="light"] {
@@ -54,6 +57,9 @@
   --yellow-bg: rgba(154,103,0,.08);
   --purple: #8250df;
   --purple-bg: rgba(130,80,223,.08);
+  --bg-overlay-light: rgba(208,215,222,.15);
+  --bg-overlay: rgba(208,215,222,.3);
+  --bg-overlay-strong: rgba(208,215,222,.5);
 }
 
 /* ===== Reset & Base ===== */
@@ -265,7 +271,7 @@ a:hover { color: var(--accent-hover); }
   background: linear-gradient(135deg, #0f0a1e 0%, #0a0e17 40%, #081428 100%);
   padding: 5rem 1.5rem 4rem;
   text-align: center;
-  border-bottom: 1px solid rgba(48,54,61,.5);
+  border-bottom: 1px solid var(--border-primary);
   overflow: hidden;
 }
 .hero::before {
@@ -316,7 +322,7 @@ a:hover { color: var(--accent-hover); }
   font-weight: 800;
   margin-bottom: 1.5rem;
   padding-bottom: .5rem;
-  border-bottom: 1px solid rgba(48,54,61,.6);
+  border-bottom: 1px solid var(--border-primary);
   display: flex;
   align-items: center;
   gap: .5rem;
@@ -398,11 +404,11 @@ a.card { text-decoration: none; color: inherit; }
 }
 .data-table th, .data-table td {
   padding: .7rem .9rem;
-  border: 1px solid rgba(48,54,61,.5);
+  border: 1px solid var(--border-primary);
   text-align: left;
 }
 .data-table th {
-  background: rgba(22,27,34,.8);
+  background: var(--bg-overlay-strong);
   font-weight: 700;
   color: var(--text-primary);
   white-space: nowrap;
@@ -410,7 +416,7 @@ a.card { text-decoration: none; color: inherit; }
   text-transform: uppercase;
   letter-spacing: .04em;
 }
-.data-table tr:nth-child(even) { background: rgba(22,27,34,.3); }
+.data-table tr:nth-child(even) { background: var(--bg-overlay-light); }
 .data-table tr:hover { background: rgba(88,166,255,.04); }
 
 /* ===== Tabs ===== */
@@ -422,7 +428,7 @@ a.card { text-decoration: none; color: inherit; }
 }
 .tab-btn {
   padding: .5rem 1rem;
-  border: 1px solid rgba(48,54,61,.6);
+  border: 1px solid var(--border-primary);
   border-radius: 10px 10px 0 0;
   background: transparent;
   color: var(--text-muted);
@@ -434,16 +440,16 @@ a.card { text-decoration: none; color: inherit; }
 }
 .tab-btn.active,
 .tab-btn:hover {
-  background: rgba(22,27,34,.8);
+  background: var(--bg-overlay-strong);
   color: var(--accent);
-  border-bottom-color: rgba(22,27,34,.8);
+  border-bottom-color: var(--bg-overlay-strong);
 }
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
 
 /* ===== Accordion ===== */
 .accordion-item {
-  border: 1px solid rgba(48,54,61,.5);
+  border: 1px solid var(--border-primary);
   border-radius: 12px;
   margin-bottom: .5rem;
   overflow: hidden;
@@ -454,7 +460,7 @@ a.card { text-decoration: none; color: inherit; }
 .accordion-header {
   width: 100%;
   padding: .9rem 1.2rem;
-  background: rgba(22,27,34,.6);
+  background: var(--bg-overlay);
   color: var(--text-primary);
   border: none;
   text-align: left;
@@ -508,7 +514,7 @@ a.card { text-decoration: none; color: inherit; }
   flex: 1;
   min-width: 200px;
   padding: .6rem 1rem;
-  border: 1px solid rgba(48,54,61,.6);
+  border: 1px solid var(--border-primary);
   border-radius: 10px;
   background: rgba(10,14,23,.6);
   color: var(--text-primary);
@@ -523,7 +529,7 @@ a.card { text-decoration: none; color: inherit; }
 }
 .filter-btn {
   padding: .5rem 1rem;
-  border: 1px solid rgba(48,54,61,.6);
+  border: 1px solid var(--border-primary);
   border-radius: 10px;
   background: transparent;
   color: var(--text-muted);
@@ -535,7 +541,7 @@ a.card { text-decoration: none; color: inherit; }
 }
 .filter-btn.active,
 .filter-btn:hover {
-  background: rgba(22,27,34,.8);
+  background: var(--bg-overlay-strong);
   color: var(--accent);
   border-color: rgba(88,166,255,.4);
 }
@@ -543,7 +549,7 @@ a.card { text-decoration: none; color: inherit; }
 /* ===== Footer ===== */
 .site-footer {
   background: rgba(13,17,23,.8);
-  border-top: 1px solid rgba(48,54,61,.4);
+  border-top: 1px solid var(--border-secondary);
   padding: 2.5rem 1.5rem;
   text-align: center;
   color: #484f58;
@@ -604,9 +610,9 @@ a.card { text-decoration: none; color: inherit; }
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: rgba(22,27,34,.9);
+  background: var(--bg-overlay-strong);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(48,54,61,.6);
+  border: 1px solid var(--border-primary);
   color: var(--text-muted);
   cursor: pointer;
   display: flex;
@@ -647,7 +653,7 @@ a.card { text-decoration: none; color: inherit; }
 }
 .sim-control select, .sim-control input[type="number"] {
   padding: .5rem .8rem;
-  border: 1px solid rgba(48,54,61,.6);
+  border: 1px solid var(--border-primary);
   border-radius: 8px;
   background: rgba(10,14,23,.6);
   color: var(--text-primary);
@@ -682,10 +688,10 @@ a.card { text-decoration: none; color: inherit; }
 .btn-secondary {
   background: rgba(33,38,45,.8);
   color: var(--text-primary);
-  border: 1px solid rgba(48,54,61,.6);
+  border: 1px solid var(--border-primary);
 }
 .btn-secondary:hover {
-  background: rgba(48,54,61,.8);
+  background: var(--bg-overlay-strong);
   border-color: rgba(88,166,255,.3);
 }
 
@@ -694,7 +700,7 @@ a.card { text-decoration: none; color: inherit; }
   flex-wrap: wrap;
   gap: .4rem;
   padding: 1rem;
-  border: 1px dashed rgba(48,54,61,.6);
+  border: 1px dashed var(--border-primary);
   border-radius: 10px;
   min-height: 60px;
   margin-bottom: 1rem;
@@ -884,7 +890,7 @@ img { max-width: 100%; height: auto; }
     display: flex;
     align-items: center;
     padding: .3rem .5rem;
-    border: 1px solid rgba(48,54,61,.3);
+    border: 1px solid var(--border-secondary);
     border-radius: 6px;
     justify-content: center;
   }
@@ -972,9 +978,9 @@ img { max-width: 100%; height: auto; }
   transform: translateY(-50%);
   z-index: 80;
   display: none;
-  background: rgba(22,27,34,.85);
+  background: var(--bg-overlay-strong);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(48,54,61,.5);
+  border: 1px solid var(--border-primary);
   border-radius: 10px;
   padding: .5rem;
   box-shadow: 0 4px 20px rgba(0,0,0,.3);
@@ -1011,8 +1017,8 @@ img { max-width: 100%; height: auto; }
 .affiliate-banner {
   text-align: center;
   padding: 1.5rem 1rem;
-  background: rgba(22,27,34,.5);
-  border-top: 1px solid rgba(48,54,61,.4);
+  background: var(--bg-overlay);
+  border-top: 1px solid var(--border-secondary);
 }
 
 /* ===== Auto Table of Contents ===== */
