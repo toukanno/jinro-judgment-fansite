@@ -6,6 +6,19 @@ const config: CapacitorConfig = {
   webDir: 'dist',
   server: {
     androidScheme: 'https',
+    iosScheme: 'https',
+  },
+  ios: {
+    contentInset: 'automatic',
+    backgroundColor: '#0a0e17',
+    preferredContentMode: 'mobile',
+    scrollEnabled: true,
+  },
+  android: {
+    buildOptions: {
+      keystorePath: undefined,
+      keystoreAlias: undefined,
+    },
   },
   plugins: {
     SplashScreen: {
@@ -14,16 +27,16 @@ const config: CapacitorConfig = {
       backgroundColor: '#0a0e17',
       showSpinner: false,
       launchFadeOutDuration: 500,
+      splashImmersive: true,
+      splashFullScreen: true,
     },
     StatusBar: {
       style: 'DARK',
       backgroundColor: '#0a0e17',
     },
-  },
-  android: {
-    buildOptions: {
-      keystorePath: undefined,
-      keystoreAlias: undefined,
+    Keyboard: {
+      resize: 'body',
+      resizeOnFullScreen: true,
     },
   },
 };
