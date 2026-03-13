@@ -142,7 +142,7 @@
 
   <h1 class="section-title">&#x1F9E0; 人狼ジャッジメント クイズ</h1>
 
-  <p style="color:#8b949e;font-size:.9rem;margin-bottom:1rem;">知識を試そう！難易度を選んでスタート。</p>
+  <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:1rem;">知識を試そう！難易度を選んでスタート。</p>
 
   <div class="quiz-diff">
     <button class="filter-btn active" onclick="startQuiz('beginner',this)">初級（10問）</button>
@@ -160,7 +160,7 @@
       <div style="font-size:3rem;">&#x1F43A;</div>
       <div class="quiz-score" id="scoreText"></div>
       <div class="quiz-rank" id="rankText"></div>
-      <p id="rankDesc" style="color:#8b949e;margin-bottom:1rem;"></p>
+      <p id="rankDesc" style="color:var(--text-muted);margin-bottom:1rem;"></p>
       <button class="quiz-restart" onclick="startQuiz(currentDiff)">もう一度挑戦</button>
       <br>
       <a href="guide.html" style="font-size:.85rem;">初心者ガイドで復習する</a>
@@ -278,6 +278,8 @@ const QUIZ = {
     { q: '連続ガードなしの部屋で狩人が取るべき行動は？', opts: ['毎晩同じ人を護衛する', '毎晩護衛先を変える必要がある', '護衛をしない', 'COして護衛先を公開する'], ans: 1, exp: '連続ガードなしでは前日と同じ人を護衛できないため、毎晩護衛先を変える読み合いが発生します。' },
     { q: '独裁者を使う最適なタイミングは？', opts: ['初日に使って情報を得る', '人狼が確定した場面で使う', '占い師が2人いる時に使う', 'ゲーム開始直後'], ans: 1, exp: '独裁者は1回限りの即処刑能力。人狼が確定した場面で使えば確実に排除でき、投票の乱れも防げます。' },
     { q: '暗殺者が序盤に暗殺を使わない方がいい理由は？', opts: ['能力がまだ使えないから', '情報不足で誤暗殺のリスクが高いから', '暗殺は夜しか使えないから', '狩人に防がれるから'], ans: 1, exp: '序盤は情報が少なく、村側を誤って暗殺するリスクが高いため、中盤以降に温存するのが定石です。' },
+    { q: '「ランダム白」ルールで偽占い師がバレるパターンは？', opts: ['黒を出してしまう', '初日の占い理由を語ってしまう', '占い先を変更してしまう', '占い結果を出さない'], ans: 1, exp: 'ランダム白は自動的に白結果が出るため占い理由は存在しません。初日の理由を語ると偽物だとバレます。' },
+    { q: '大狼が占い師に占われるとどう出る？', opts: ['黒判定', '白判定', '判定不能', '占い師が死亡する'], ans: 1, exp: '大狼は占い師に占われても白判定が出るステルス型の人狼です。占い結果だけでは見抜けません。' },
   ]
 };
 
