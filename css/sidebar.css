@@ -1,34 +1,51 @@
 /* ===== PC Sticky Sidebar Layout ===== */
 
-/* Grid wrapper: main content + sidebar */
+/* Center the page-with-sidebar wrapper (sidebar hidden until real ads) */
+.page-with-sidebar {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.page-with-sidebar > .container {
+  padding: 2.5rem 0;
+}
+
+/* Hide sidebar on all screens (re-enable when real ads are placed) */
+.sidebar,
+.page-sidebar {
+  display: none !important;
+}
+
+/* ===== Grid layout ready for sidebar (uncomment when ads are live) ===== */
+/*
 @media (min-width: 900px) {
   .page-with-sidebar {
     display: grid;
     grid-template-columns: 1fr 300px;
     gap: 2rem;
     max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
   }
   .page-with-sidebar > .container {
     max-width: none;
-    padding: 0;
+    padding: 2.5rem 0;
     width: 100%;
   }
-
-  /* Sticky sidebar */
-  .page-sidebar {
+  .sidebar {
+    display: block !important;
     position: sticky;
     top: 80px;
     align-self: start;
-    display: flex;
+  }
+  .page-sidebar {
+    display: flex !important;
+    position: sticky;
+    top: 80px;
+    align-self: start;
     flex-direction: column;
     gap: 1.2rem;
     padding-top: 1rem;
     max-height: calc(100vh - 100px);
   }
-
-  /* Ad slot card */
   .sidebar-ad-slot {
     background: var(--bg-card, #161b22);
     border: 1px solid var(--border-primary, #30363d);
@@ -36,14 +53,6 @@
     padding: .8rem;
     text-align: center;
   }
-  .sidebar-ad-slot .ad-label {
-    font-size: .68rem;
-    color: var(--text-muted, #8b949e);
-    margin-bottom: .5rem;
-    letter-spacing: .05em;
-  }
-
-  /* Placeholder box */
   .sidebar-ad-placeholder {
     width: 300px;
     height: 250px;
@@ -58,28 +67,7 @@
     box-sizing: border-box;
   }
 }
-
-/* Hide sidebar on mobile / tablet */
-@media (max-width: 899px) {
-  .page-sidebar,
-  .sidebar {
-    display: none !important;
-  }
-  .page-with-sidebar {
-    display: block;
-  }
-}
-
-/* ===== Alias classes for HTML sidebar structure ===== */
-@media (min-width: 900px) {
-  .sidebar {
-    display: block;
-    position: sticky;
-    top: 80px;
-    align-self: start;
-  }
-}
-.sidebar { display: none; }
+*/
 
 .ad-placeholder {
   width: 300px;
