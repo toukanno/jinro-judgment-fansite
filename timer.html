@@ -854,6 +854,7 @@
   function start() {
     if (running || remaining <= 0) return;
     running = true;
+    if (intervalId !== null) clearInterval(intervalId);
     intervalId = setInterval(tick, 1000);
     btnStart.style.display = 'none';
     btnPause.style.display = '';

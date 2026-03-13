@@ -349,7 +349,9 @@
   function save() {
     try {
       localStorage.setItem('jg-notepad', JSON.stringify({ players, currentDay, maxDay, logs }));
-    } catch(e) {}
+    } catch(e) {
+      console.warn('メモ帳の保存に失敗しました:', e.message);
+    }
   }
 
   function load() {
@@ -362,7 +364,9 @@
         logs = d.logs || [];
         return true;
       }
-    } catch(e) {}
+    } catch(e) {
+      console.warn('メモ帳の読み込みに失敗しました:', e.message);
+    }
     return false;
   }
 

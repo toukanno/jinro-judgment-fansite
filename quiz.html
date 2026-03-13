@@ -331,6 +331,7 @@ function renderQuestion() {
 function answer(idx) {
   const q = questions[currentQ];
   const options = document.querySelectorAll('.quiz-option');
+  if (options[0] && options[0].classList.contains('disabled')) return;
   options.forEach((opt, i) => {
     opt.classList.add('disabled');
     if (i === q.ans) opt.classList.add('correct');
