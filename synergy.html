@@ -278,6 +278,25 @@ const SYNERGY_DATA = [
   { category: 'fox', tag: 'chaos', tagName: '第三勢力',
     title: '九尾の狐 + ささやく背教者', roles: ['九尾の狐','ささやく背教者'], rating: 4,
     desc: '九尾の狐の呪殺耐性とささやく背教者の狐チャットの組み合わせ。生存力と連携力が高い最強の妖狐陣営布陣。' },
+
+  // ===== 恋人陣営 =====
+  { category: 'village-info', tag: 'chaos', tagName: '恋人',
+    title: 'キューピッド + 狩人', roles: ['キューピッド','狩人'], rating: 3,
+    desc: 'キューピッドが狩人と他の役職を恋人にした場合、狩人が恋人を護衛して生存率UP。ただし恋人の相方が吊られると狩人も後追いするリスク。' },
+  { category: 'village-info', tag: 'chaos', tagName: '恋人',
+    title: 'キューピッド + 占い師', roles: ['キューピッド','占い師'], rating: 2,
+    desc: '占い師が恋人になると勝利条件が変わり村にとって危険。占い師は生存を優先し真結果を出さない可能性もある。編成時は注意。' },
+
+  // ===== 追加シナジー =====
+  { category: 'village-defense', tag: 'defense', tagName: '防御',
+    title: '共有者 + 狩人 + 占い師', roles: ['共有者','狩人','占い師'], rating: 5,
+    desc: '共有者が進行役としてグレーを狭め、狩人が占い師を護衛、占い師が情報を提供。最も安定した「指定進行」の三角形。ほぼ全編成の基本形。' },
+  { category: 'village-offense', tag: 'offense', tagName: '攻撃',
+    title: '罠師 + 赤ずきん', roles: ['罠師','赤ずきん'], rating: 3,
+    desc: '赤ずきんが噛まれやすい位置を取り、罠師が赤ずきんに罠を設置。人狼が赤ずきんを噛めば罠で死亡、噛まなければ赤ずきんが生存して推理に貢献。' },
+  { category: 'wolf', tag: 'chaos', tagName: '人狼側',
+    title: '一途な人狼 + 狂信者', roles: ['一途な人狼','狂信者'], rating: 4,
+    desc: '一途な人狼は指定先を必ず噛むため狩人の護衛を読む必要がない。狂信者は人狼を知っているため、一途の噛み先をフォローする連携が取れる。' },
 ];
 
 function renderStars(n) {
