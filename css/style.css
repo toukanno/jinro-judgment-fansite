@@ -852,11 +852,13 @@ img { max-width: 100%; height: auto; }
 
 /* ===== PC Layout (1024px+) ===== */
 @media (min-width: 1024px) {
-  /* Offset for fixed right banner (120px) */
+  /* Offset for fixed left/right banners (120px each) */
   body {
+    padding-left: 130px;
     padding-right: 130px;
   }
   .site-header {
+    padding-left: 130px;
     padding-right: 130px;
   }
   .card-grid {
