@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0e17">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JGDB">
+  <title>PCアプリ版について - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメント攻略データベースをPCアプリとしてインストールする方法を解説します。">
+  <meta property="og:title" content="PCアプリ版について - 人狼ジャッジメント攻略">
+  <meta property="og:description" content="攻略データベースをPCアプリとしてインストールする方法を解説します。">
+  <link rel="canonical" href="https://toukanno.github.io/jinro-judgment-fansite/pc-app.html">
+  <meta property="og:image" content="https://toukanno.github.io/jinro-judgment-fansite/icons/icon-512.svg">
+  <meta property="og:url" content="https://toukanno.github.io/jinro-judgment-fansite/pc-app.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="PCアプリ版について - 人狼ジャッジメント攻略">
+  <meta name="twitter:description" content="攻略データベースをPCアプリとしてインストールする方法を解説します。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="manifest" href="manifest.json">
+  <script src="js/theme.js"></script>
+  <style>
+    .install-hero {
+      text-align: center;
+      padding: 2rem 0 2.5rem;
+    }
+    .install-hero-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .install-hero h1 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #a78bfa, #58a6ff, #7ee787);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: .6rem;
+    }
+    .install-hero p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 540px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+    .install-action {
+      text-align: center;
+      margin: 2rem 0;
+    }
+    .install-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .8rem 2rem;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: inherit;
+    }
+    .install-action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(88,166,255,.3);
+    }
+    .install-action-btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    .install-status {
+      margin-top: 1rem;
+      font-size: .88rem;
+      color: var(--text-muted);
+    }
+    .install-status.installed {
+      color: var(--green);
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin: 2rem 0;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-primary);
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .feature-card-icon {
+      font-size: 2rem;
+      margin-bottom: .75rem;
+      display: block;
+    }
+    .feature-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: .4rem;
+    }
+    .feature-card p {
+      font-size: .85rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .how-to-section {
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-primary);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .how-to-section h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+    .browser-tabs {
+      display: flex;
+      gap: .25rem;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .browser-tab {
+      padding: .5rem 1rem;
+      border: 1px solid var(--border-primary);
+      border-radius: 10px 10px 0 0;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: .85rem;
+      font-weight: 600;
+      transition: background .2s, color .2s;
+      font-family: inherit;
+    }
+    .browser-tab.active {
+      background: var(--bg-overlay-strong);
+      color: var(--accent);
+      border-bottom-color: var(--bg-overlay-strong);
+    }
+    .browser-panel {
+      display: none;
+    }
+    .browser-panel.active {
+      display: block;
+    }
+    .step-list {
+      list-style: none;
+      counter-reset: steps;
+    }
+    .step-list li {
+      counter-increment: steps;
+      position: relative;
+      padding-left: 2.5rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.8;
+      font-size: .92rem;
+      color: var(--text-secondary);
+    }
+    .step-list li::before {
+      content: counter(steps);
+      position: absolute;
+      left: 0;
+      top: .1rem;
+      width: 1.8rem;
+      height: 1.8rem;
+      border-radius: 50%;
+      background: var(--accent-bg-strong);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: .82rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-list li strong {
+      color: var(--text-primary);
+    }
+    .step-list li code {
+      background: var(--bg-overlay-strong);
+      padding: .15rem .4rem;
+      border-radius: 4px;
+      font-size: .82rem;
+      color: var(--accent);
+    }
+    .uninstall-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .uninstall-section h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: .5rem;
+    }
+    .uninstall-section p {
+      font-size: .9rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+    @media (max-width: 600px) {
+      .install-hero h1 { font-size: 1.4rem; }
+      .install-hero-icon { font-size: 3rem; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .how-to-section, .uninstall-section { padding: 1.2rem; }
+    }
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5638346660274603"
+     crossorigin="anonymous"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-XXXXXXXXXX");</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="characters.html">キャラクター</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+        <li><a href="templates.html">部屋テンプレ</a></li>
+        <li><a href="copipe.html">コピペ集</a></li>
+        <li><a href="v3roles.html">V3新役職</a></li>
+        <li><a href="queen-wise.html">女王部屋</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="timer.html">タイマー</a></li>
+        <li><a href="exclusion.html">同村制限</a></li>
+        <li><a href="rope-calc.html">縄計算</a></li>
+        <li><a href="synergy.html">役職相性</a></li>
+        <li><a href="quiz.html">クイズ</a></li>
+        <li><a href="notepad.html">メモ帳</a></li>
+        <li><a href="memo.html">ゲームメモ</a></li>
+        <li><a href="role-compatibility.html">相性表</a></li>
+        <li><a href="gallery.html">ギャラリー</a></li>
+        <li><a href="settings.html">設定</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> PCアプリ版</div>
+
+  <div class="install-hero">
+    <span class="install-hero-icon">&#x1F4BB;</span>
+    <h1>PCアプリ版で快適プレイ</h1>
+    <p>人狼ジャッジメント攻略データベースをデスクトップアプリとしてインストールできます。ブラウザを開かずにワンクリックでアクセス。</p>
+  </div>
+
+  <div class="install-action">
+    <button class="install-action-btn" id="installBtn" disabled>
+      <span>&#x2B07;&#xFE0F;</span> アプリをインストール
+    </button>
+    <div class="install-status" id="installStatus">
+      お使いのブラウザがインストールに対応しているか確認中...
+    </div>
+  </div>
+
+  <h2 class="section-title">&#x2728; アプリ版のメリット</h2>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="feature-card-icon">&#x26A1;</span>
+      <h3>高速起動</h3>
+      <p>タスクバー/Dockからワンクリックで起動。ブラウザのタブを探す必要なし。</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-card-icon">&#x1F4F4;</span>
+      <h3>オフライン対応</h3>
+      <p>インターネット接続がなくても主要コンテンツを閲覧可能。外出先でも使えます。</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-card-icon">&#x1F5A5;&#xFE0F;</span>
+      <h3>専用ウィンドウ</h3>
+      <p>ブラウザのUI（アドレスバー等）なしのすっきりした画面で集中できます。</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-card-icon">&#x1F50D;</span>
+      <h3>クイック検索</h3>
+      <p>Ctrl+K（Mac: Cmd+K）でどこからでも即座にページ検索が可能。</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-card-icon">&#x1F4BE;</span>
+      <h3>軽量・省メモリ</h3>
+      <p>Electronアプリと違い、ブラウザエンジンを共有するため非常に軽量。</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-card-icon">&#x1F504;</span>
+      <h3>自動更新</h3>
+      <p>サイト更新時にアプリも自動で最新版に。手動アップデート不要。</p>
+    </div>
+  </div>
+
+  <div class="how-to-section">
+    <h2>&#x1F4D6; インストール方法</h2>
+    <div class="browser-tabs" id="browserTabs">
+      <button class="browser-tab active" data-panel="chrome-panel">Chrome / Edge</button>
+      <button class="browser-tab" data-panel="firefox-panel">Firefox</button>
+      <button class="browser-tab" data-panel="safari-panel">Safari (Mac)</button>
+    </div>
+
+    <div class="browser-panel active" id="chrome-panel">
+      <ol class="step-list">
+        <li>このページの<strong>「アプリをインストール」</strong>ボタンをクリック、またはアドレスバー右側の<strong>インストールアイコン</strong>をクリックします。</li>
+        <li>確認ダイアログが表示されたら<strong>「インストール」</strong>をクリックします。</li>
+        <li>デスクトップやタスクバーにショートカットが作成され、アプリとして起動できます。</li>
+      </ol>
+      <div class="tip-box">
+        アドレスバーにインストールアイコンが表示されない場合は、<strong>メニュー（&#x22EE;）</strong> → <strong>「アプリをインストール」</strong>または<strong>「ショートカットを作成」</strong>を選択してください。
+      </div>
+    </div>
+
+    <div class="browser-panel" id="firefox-panel">
+      <ol class="step-list">
+        <li>Firefoxは現在PWAの標準インストールに非対応です。</li>
+        <li>代わりに拡張機能 <strong>PWAs for Firefox</strong> をインストールすることで利用可能です。</li>
+        <li>または、<strong>Chrome</strong> や <strong>Edge</strong> でこのページを開いてインストールすることを推奨します。</li>
+      </ol>
+    </div>
+
+    <div class="browser-panel" id="safari-panel">
+      <ol class="step-list">
+        <li>macOS Sonoma (14) 以降のSafariで対応しています。</li>
+        <li>メニューバーの<strong>「ファイル」</strong> → <strong>「Dockに追加」</strong>を選択します。</li>
+        <li>アプリ名を確認して<strong>「追加」</strong>をクリックします。DockにWebアプリが追加されます。</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="uninstall-section">
+    <h2>&#x1F5D1;&#xFE0F; アンインストール方法</h2>
+    <p>
+      <strong>Chrome / Edge:</strong> アプリ起動後、タイトルバーのメニュー（&#x22EE;）→「アンインストール」を選択。<br>
+      <strong>Safari (Mac):</strong> DockのアプリアイコンをFinderの「アプリケーション」フォルダから削除。<br>
+      <strong>Windows:</strong>「設定」→「アプリ」→「インストールされているアプリ」から削除も可能です。
+    </p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-columns">
+    <div>
+      <h4>攻略コンテンツ</h4>
+      <a href="roles.html">役職一覧</a>
+      <a href="guide.html">初心者ガイド</a>
+      <a href="strategy.html">立ち回りガイド</a>
+      <a href="queen-wise.html">女王部屋攻略</a>
+      <a href="v3roles.html">V3新役職</a>
+    </div>
+    <div>
+      <h4>データ・資料</h4>
+      <a href="glossary.html">用語集</a>
+      <a href="composition.html">編成シミュレーター</a>
+      <a href="characters.html">キャラクター</a>
+      <a href="synergy.html">役職相性</a>
+      <a href="exclusion.html">同村制限</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div>
+      <h4>ツール</h4>
+      <a href="timer.html">議論タイマー</a>
+      <a href="rope-calc.html">縄計算</a>
+      <a href="notepad.html">メモ帳</a>
+      <a href="memo.html">ゲームメモ</a>
+      <a href="copipe.html">コピペ集</a>
+      <a href="templates.html">部屋テンプレ</a>
+      <a href="quiz.html">クイズ</a>
+    </div>
+    <div>
+      <h4>サイト情報</h4>
+      <a href="index.html">ホーム</a>
+      <a href="pc-app.html">PCアプリ版</a>
+      <a href="settings.html">設定</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+    </div>
+  </div>
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
+</footer>
+
+<script src="js/common.js"></script>
+<script>
+(function() {
+  // Browser tab switching
+  var tabs = document.querySelectorAll('.browser-tab');
+  var panels = document.querySelectorAll('.browser-panel');
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.panel).classList.add('active');
+    });
+  });
+
+  // Install button
+  var installBtn = document.getElementById('installBtn');
+  var installStatus = document.getElementById('installStatus');
+
+  // Check if already installed
+  if (window.matchMedia('(display-mode: standalone)').matches ||
+      window.matchMedia('(display-mode: window-controls-overlay)').matches ||
+      window.navigator.standalone === true) {
+    installBtn.disabled = true;
+    installBtn.innerHTML = '<span>&#x2705;</span> インストール済み';
+    installStatus.textContent = 'このアプリは既にインストールされています。';
+    installStatus.classList.add('installed');
+    return;
+  }
+
+  // Listen for beforeinstallprompt
+  if (window._pwaInstallPrompt) {
+    installBtn.disabled = false;
+    installStatus.textContent = 'お使いのブラウザでインストール可能です。';
+  } else {
+    installStatus.textContent = '上の手順に従って手動でインストールしてください。';
+  }
+
+  window.addEventListener('pwa-install-ready', function() {
+    installBtn.disabled = false;
+    installStatus.textContent = 'お使いのブラウザでインストール可能です。';
+  });
+
+  installBtn.addEventListener('click', function() {
+    if (window._pwaInstallPrompt) {
+      window._pwaInstallPrompt.prompt();
+      window._pwaInstallPrompt.userChoice.then(function(result) {
+        if (result.outcome === 'accepted') {
+          installBtn.disabled = true;
+          installBtn.innerHTML = '<span>&#x2705;</span> インストール済み';
+          installStatus.textContent = 'インストールが完了しました！';
+          installStatus.classList.add('installed');
+        }
+        window._pwaInstallPrompt = null;
+      });
+    }
+  });
+})();
+</script>
+</body>
+</html>

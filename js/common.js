@@ -96,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'gallery.html':            { icon: '\u{1F5BC}', color: '#a78bfa' },
     'survivor-count.html':     { icon: '\u{1F43A}', color: '#e74c3c' },
     'settings.html':           { icon: '\u{2699}',  color: '#8b949e' },
+    'pc-app.html':             { icon: '\u{1F4BB}', color: '#58a6ff' },
   };
 
   // Mark active nav link & inject icons/colors
@@ -300,6 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { href: 'role-compatibility.html', title: '相性表', desc: '役職相性マトリクス' },
     { href: 'gallery.html', title: 'ギャラリー', desc: '画像ギャラリー' },
     { href: 'settings.html', title: '設定', desc: 'テーマ・表示設定' },
+    { href: 'pc-app.html', title: 'PCアプリ版', desc: 'アプリとしてインストール' },
   ];
 
   (function initQuickSearch() {
@@ -385,6 +387,62 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     revealTargets.forEach(el => observer.observe(el));
+  }
+});
+
+// ===== PWA Install Prompt =====
+window._pwaInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  window._pwaInstallPrompt = e;
+  window.dispatchEvent(new Event('pwa-install-ready'));
+
+  // Show install banner (only if not dismissed recently)
+  var dismissed = sessionStorage.getItem('pwa-install-dismissed');
+  if (dismissed) return;
+
+  // Don't show if already in standalone mode
+  if (window.matchMedia('(display-mode: standalone)').matches ||
+      window.matchMedia('(display-mode: window-controls-overlay)').matches) return;
+
+  var banner = document.createElement('div');
+  banner.className = 'pwa-install-banner';
+  banner.innerHTML =
+    '<span class="pwa-install-banner-text"><strong>人狼JGDB</strong>をPCアプリとしてインストールできます</span>'
+    + '<button class="pwa-install-btn" id="pwaBannerInstall">インストール</button>'
+    + '<button class="pwa-install-dismiss" id="pwaBannerDismiss">閉じる</button>';
+  document.body.appendChild(banner);
+
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() { banner.classList.add('show'); });
+  });
+
+  document.getElementById('pwaBannerInstall').addEventListener('click', function() {
+    if (window._pwaInstallPrompt) {
+      window._pwaInstallPrompt.prompt();
+      window._pwaInstallPrompt.userChoice.then(function(result) {
+        if (result.outcome === 'accepted') {
+          banner.classList.remove('show');
+          setTimeout(function() { banner.remove(); }, 300);
+        }
+        window._pwaInstallPrompt = null;
+      });
+    }
+  });
+
+  document.getElementById('pwaBannerDismiss').addEventListener('click', function() {
+    banner.classList.remove('show');
+    setTimeout(function() { banner.remove(); }, 300);
+    sessionStorage.setItem('pwa-install-dismissed', '1');
+  });
+});
+
+window.addEventListener('appinstalled', () => {
+  window._pwaInstallPrompt = null;
+  var banner = document.querySelector('.pwa-install-banner');
+  if (banner) {
+    banner.classList.remove('show');
+    setTimeout(function() { banner.remove(); }, 300);
   }
 });
 
