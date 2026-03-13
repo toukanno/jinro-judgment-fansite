@@ -9,7 +9,6 @@ const ASSETS = [
   './glossary.html',
   './character.html',
   './characters.html',
-  './characters-gallery.html',
   './copipe.html',
   './queen-wise.html',
   './v3roles.html',

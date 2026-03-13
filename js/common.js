@@ -92,9 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'quiz.html':               { icon: '\u{1F9E0}', color: '#f0883e' },
     'notepad.html':            { icon: '\u{1F4DD}', color: '#f0883e' },
     'memo.html':               { icon: '\u{1F4D2}', color: '#f0883e' },
-    'characters-gallery.html': { icon: '\u{1F5BC}', color: '#a78bfa' },
     'role-compatibility.html': { icon: '\u{1F4CA}', color: '#7ee787' },
-    'gallery.html':            { icon: '\u{1F5BC}', color: '#a78bfa' },
     'settings.html':           { icon: '\u{2699}',  color: '#8b949e' },
   };
 
@@ -289,9 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { href: 'quiz.html', title: 'クイズ', desc: '知識テスト 初級〜上級' },
     { href: 'notepad.html', title: 'メモ帳', desc: 'ゲーム中のメモツール' },
     { href: 'memo.html', title: 'ゲームメモ', desc: 'プレイヤーごとの記録' },
-    { href: 'characters-gallery.html', title: 'キャラ図鑑', desc: 'キャラクター図鑑' },
     { href: 'role-compatibility.html', title: '相性表', desc: '役職相性マトリクス' },
-    { href: 'gallery.html', title: 'ギャラリー', desc: '画像ギャラリー' },
     { href: 'settings.html', title: '設定', desc: 'テーマ・表示設定' },
   ];
 
