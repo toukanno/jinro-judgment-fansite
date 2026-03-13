@@ -373,8 +373,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(() => {
-      // Keep the site functional even if offline registration fails.
-    });
+    navigator.serviceWorker.register('sw.js').then((reg) => {
+      reg.update();
+    }).catch(() => {});
   });
 }
