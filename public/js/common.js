@@ -1,21 +1,3 @@
-// ===== Toast Notification =====
-function showToast(message, type) {
-  type = type || 'error';
-  var existing = document.querySelector('.toast');
-  if (existing) existing.remove();
-  var el = document.createElement('div');
-  el.className = 'toast toast--' + type;
-  el.textContent = message;
-  document.body.appendChild(el);
-  requestAnimationFrame(function() {
-    requestAnimationFrame(function() { el.classList.add('show'); });
-  });
-  setTimeout(function() {
-    el.classList.remove('show');
-    setTimeout(function() { el.remove(); }, 300);
-  }, 4000);
-}
-
 // ===== Mobile Nav Toggle =====
 document.addEventListener('DOMContentLoaded', () => {
   // Skip to content link (accessibility)
@@ -68,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
     'memo.html':               { icon: '\u{1F4D2}', color: '#f0883e' },
     'characters-gallery.html': { icon: '\u{1F5BC}', color: '#a78bfa' },
     'role-compatibility.html': { icon: '\u{1F4CA}', color: '#7ee787' },
-    'gallery.html':            { icon: '\u{1F5BC}', color: '#a78bfa' },
     'settings.html':           { icon: '\u{2699}',  color: '#8b949e' },
   };
 
@@ -80,10 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const meta = NAV_META[href];
     if (meta) {
       a.style.borderLeftColor = meta.color;
-      var iconSpan = document.createElement('span');
-      iconSpan.className = 'nav-icon';
-      iconSpan.textContent = meta.icon;
-      a.insertBefore(iconSpan, a.firstChild);
+      a.insertAdjacentHTML('afterbegin', '<span class="nav-icon">' + meta.icon + '</span>');
     }
   });
 
@@ -176,47 +154,40 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Breadcrumb JSON-LD auto-generation
-  try {
-    const breadcrumbEl = document.querySelector('.breadcrumb');
-    if (breadcrumbEl && !document.querySelector('script[type="application/ld+json"][data-bc]')) {
-      const links = breadcrumbEl.querySelectorAll('a');
-      const items = [];
-      const base = 'https://toukanno.github.io/jinro-judgment-fansite/';
-      links.forEach((a, i) => {
-        const href = a.getAttribute('href');
-        const name = a.textContent.trim();
-        if (href && name) {
-          items.push({
-            '@type': 'ListItem',
-            position: i + 1,
-            name: name,
-            item: base + href
-          });
-        }
+  const breadcrumbEl = document.querySelector('.breadcrumb');
+  if (breadcrumbEl && !document.querySelector('script[type="application/ld+json"][data-bc]')) {
+    const links = breadcrumbEl.querySelectorAll('a');
+    const items = [];
+    const base = 'https://toukanno.github.io/jinro-judgment-fansite/';
+    links.forEach((a, i) => {
+      items.push({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: a.textContent.trim(),
+        item: base + a.getAttribute('href')
       });
-      // Add current page as last item
-      const lastNode = breadcrumbEl.lastChild;
-      const pageTitle = lastNode ? lastNode.textContent.trim() : '';
-      if (pageTitle) {
-        items.push({
-          '@type': 'ListItem',
-          position: items.length + 1,
-          name: pageTitle
-        });
-      }
-      if (items.length > 0) {
-        const script = document.createElement('script');
-        script.type = 'application/ld+json';
-        script.setAttribute('data-bc', '');
-        script.textContent = JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'BreadcrumbList',
-          itemListElement: items
-        });
-        document.head.appendChild(script);
-      }
+    });
+    // Add current page as last item
+    const pageTitle = breadcrumbEl.lastChild.textContent.trim();
+    if (pageTitle) {
+      items.push({
+        '@type': 'ListItem',
+        position: items.length + 1,
+        name: pageTitle
+      });
     }
-  } catch (e) { /* breadcrumb generation failed silently */ }
+    if (items.length > 0) {
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.setAttribute('data-bc', '');
+      script.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: items
+      });
+      document.head.appendChild(script);
+    }
+  }
 
   // Auto Table of Contents for long pages (3+ h2 headings)
   const tocMain = document.querySelector('main');
