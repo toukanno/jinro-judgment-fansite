@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jinro-judgment-fansite-v12';
+const CACHE_NAME = 'jinro-judgment-fansite-v13';
 const ASSETS = [
   './',
   './index.html',
@@ -33,6 +33,9 @@ const ASSETS = [
   './js/roles-data.js',
   './js/theme.js',
   './manifest.json',
+  './icons/apple-touch-icon.png',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
 ];
 
 self.addEventListener('install', (event) => {
