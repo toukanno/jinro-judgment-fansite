@@ -14,16 +14,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.main-nav');
   if (toggle && nav) {
-    toggle.addEventListener('click', () => {
+    function toggleMenu(e) {
+      e.preventDefault();
+      e.stopPropagation();
       nav.classList.toggle('open');
       toggle.setAttribute('aria-expanded', nav.classList.contains('open'));
-    });
+    }
+    function closeMenu() {
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+    toggle.addEventListener('click', toggleMenu);
     // Close menu when a link is clicked (SP)
     nav.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        nav.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      });
+      a.addEventListener('click', closeMenu);
+    });
+    // Close menu when tapping outside (SP)
+    document.addEventListener('click', (e) => {
+      if (nav.classList.contains('open') && !nav.contains(e.target) && !toggle.contains(e.target)) {
+        closeMenu();
+      }
     });
   }
 
