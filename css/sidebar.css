@@ -1,0 +1,98 @@
+/* ===== PC Sticky Sidebar Layout ===== */
+
+/* Grid wrapper: main content + sidebar */
+@media (min-width: 900px) {
+  .page-with-sidebar {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  .page-with-sidebar > .container {
+    max-width: none;
+    padding: 0;
+    width: 100%;
+  }
+
+  /* Sticky sidebar */
+  .page-sidebar {
+    position: sticky;
+    top: 80px;
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding-top: 1rem;
+    max-height: calc(100vh - 100px);
+  }
+
+  /* Ad slot card */
+  .sidebar-ad-slot {
+    background: var(--bg-card, #161b22);
+    border: 1px solid var(--border-primary, #30363d);
+    border-radius: 12px;
+    padding: .8rem;
+    text-align: center;
+  }
+  .sidebar-ad-slot .ad-label {
+    font-size: .68rem;
+    color: var(--text-muted, #8b949e);
+    margin-bottom: .5rem;
+    letter-spacing: .05em;
+  }
+
+  /* Placeholder box */
+  .sidebar-ad-placeholder {
+    width: 300px;
+    height: 250px;
+    background: var(--accent-bg, rgba(88,166,255,.08));
+    border: 2px dashed var(--border-secondary, #21262d);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted, #8b949e);
+    font-size: .82rem;
+    box-sizing: border-box;
+  }
+}
+
+/* Hide sidebar on mobile / tablet */
+@media (max-width: 899px) {
+  .page-sidebar,
+  .sidebar {
+    display: none !important;
+  }
+  .page-with-sidebar {
+    display: block;
+  }
+}
+
+/* ===== Alias classes for HTML sidebar structure ===== */
+@media (min-width: 900px) {
+  .sidebar {
+    display: block;
+    position: sticky;
+    top: 80px;
+    align-self: start;
+  }
+}
+.sidebar { display: none; }
+
+.ad-placeholder {
+  width: 300px;
+  height: 250px;
+  border: 2px dashed var(--border-primary, #30363d);
+  border-radius: 8px;
+  background: var(--bg-card, #161b22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted, #8b949e);
+  font-size: 0.85rem;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}

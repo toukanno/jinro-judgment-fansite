@@ -104,42 +104,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   }
 
-  // Sidebar Ads (PC only, left + right, auto-inject)
-  if (!document.querySelector('.sidebar-ad')) {
-    var adHTML = '<a href="//af.moshimo.com/af/c/click?a_id=5422323&p_id=54&pc_id=54&pl_id=1225" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc>'
-      + '<img src="//image.moshimo.com/af-img/0032/000000001225.gif" width="120" height="500" style="border:none;" alt="広告"></a>'
-      + '<img src="//i.moshimo.com/af/i/impression?a_id=5422323&p_id=54&pc_id=54&pl_id=1225" width="1" height="1" style="border:none;" loading="lazy" alt="">';
-    ['left', 'right'].forEach(function(side) {
-      var ad = document.createElement('div');
-      ad.className = 'sidebar-ad sidebar-ad-' + side;
-      ad.innerHTML = '<button class="sidebar-ad-close" aria-label="閉じる">&times;</button>' + adHTML;
-      document.body.appendChild(ad);
-      ad.querySelector('.sidebar-ad-close').addEventListener('click', function() {
-        ad.style.opacity = '0';
-        setTimeout(function() { ad.remove(); }, 300);
-      });
-    });
-  }
-
-  // Page Sidebar (PC only, auto-inject for long content pages)
+  // PC Sticky Sidebar (auto-inject on 900px+ screens with long content)
   if (window.matchMedia('(min-width: 900px)').matches && !document.querySelector('.page-sidebar')) {
-    const mainEl = document.querySelector('main.container, main');
-    if (mainEl && mainEl.scrollHeight > 800) {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'page-layout';
+    var mainEl = document.querySelector('main.container, main');
+    if (mainEl && mainEl.scrollHeight > 600) {
+      var wrapper = document.createElement('div');
+      wrapper.className = 'page-with-sidebar';
       mainEl.parentNode.insertBefore(wrapper, mainEl);
       wrapper.appendChild(mainEl);
-      const sidebar = document.createElement('aside');
+      var sidebar = document.createElement('aside');
       sidebar.className = 'page-sidebar';
-      sidebar.innerHTML = '<div class="page-sidebar-inner">'
-        + '<!-- Ad Slot 1: 300x250 バナー -->'
-        + '<div class="sidebar-ad-slot">'
-        + '<a href="//af.moshimo.com/af/c/click?a_id=5422323&p_id=54&pc_id=54&pl_id=616" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc>'
-        + '<img src="//image.moshimo.com/af-img/0032/000000000616.gif" width="300" height="250" style="border:none;" alt="広告" loading="lazy"></a>'
-        + '<img src="//i.moshimo.com/af/i/impression?a_id=5422323&p_id=54&pc_id=54&pl_id=616" width="1" height="1" style="border:none;" loading="lazy" alt="">'
+      sidebar.innerHTML =
+        '<div class="sidebar-ad-slot">'
+        + '<div class="ad-label">\u5E83\u544A</div>'
+        + '<div class="sidebar-ad-placeholder">'
+        + '<!-- \u3053\u3053\u306B\u5E83\u544A\u30B3\u30FC\u30C9\u3092\u633F\u5165 -->'
+        + '\u5E83\u544A\u30B9\u30DA\u30FC\u30B9<br>300\u00D7250'
         + '</div>'
-        + '<!-- Ad Slot 2: 300x250 バナー -->'
-        + '<div class="sidebar-ad-slot">広告スペース</div>'
+        + '</div>'
+        + '<div class="sidebar-ad-slot">'
+        + '<div class="ad-label">\u5E83\u544A</div>'
+        + '<div class="sidebar-ad-placeholder">'
+        + '<!-- \u3053\u3053\u306B\u5E83\u544A\u30B3\u30FC\u30C9\u3092\u633F\u5165 -->'
+        + '\u5E83\u544A\u30B9\u30DA\u30FC\u30B9<br>300\u00D7250'
+        + '</div>'
         + '</div>';
       wrapper.appendChild(sidebar);
     }
@@ -202,9 +190,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Auto Table of Contents for long pages (3+ h2 headings)
-  const mainEl = document.querySelector('main');
-  if (mainEl && !document.querySelector('.auto-toc')) {
-    const headings = mainEl.querySelectorAll('h2.section-title, h2');
+  const tocMain = document.querySelector('main');
+  if (tocMain && !document.querySelector('.auto-toc')) {
+    const headings = tocMain.querySelectorAll('h2.section-title, h2');
     if (headings.length >= 3) {
       const toc = document.createElement('details');
       toc.className = 'auto-toc';
