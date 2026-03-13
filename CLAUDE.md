@@ -9,26 +9,39 @@
 
 ## Current State
 
-This project is in its initial stage — only scaffolding files exist (README, LICENSE, .gitignore). No framework, dependencies, or source code have been set up yet. The .gitignore is pre-configured for a modern Node.js/JavaScript project with support for Next.js, Nuxt, Vite, and similar tools.
+A multi-page fan site built with **Vite + React 19 + TypeScript + Tailwind CSS 3**. The site uses a hybrid architecture: most pages are standalone HTML files with vanilla JS (`js/common.js`, `js/theme.js`, `js/roles-data.js`), while the React/TypeScript app lives under `src/`. Vite handles building all HTML entry points via its multi-page configuration in `vite.config.ts`.
 
 ## Repository Structure
 
 ```
 jinro-judgment-fansite/
-├── .gitignore        # Node.js + framework ignore rules
-├── LICENSE           # MIT
-├── README.md         # Project description (Japanese)
-└── CLAUDE.md         # This file
+├── index.html, roles.html, ...   # ~25 standalone HTML pages (multi-page Vite inputs)
+├── css/style.css                 # Main stylesheet
+├── js/                           # Vanilla JS modules (common.js, theme.js, roles-data.js)
+├── src/                          # React/TypeScript app (App.tsx, main.tsx)
+├── images/                       # Character images (Japanese filenames)
+├── icons/                        # App icons
+├── public/                       # Static assets (SW, manifest, icons)
+├── vite.config.ts                # Vite config with multi-page input
+├── tailwind.config.js            # Tailwind CSS config (dark theme colors, Japanese fonts)
+├── postcss.config.js             # PostCSS config
+├── tsconfig.json                 # TypeScript project references
+├── package.json                  # Dependencies & scripts
+├── sw.js                         # Service Worker
+├── manifest.json                 # PWA manifest
+├── sitemap.xml, robots.txt       # SEO files
+├── CLAUDE.md                     # This file
+├── LICENSE                       # MIT
+└── README.md                     # Project description (Japanese)
 ```
 
 ## Development Setup
 
-No build tooling or dependencies are configured yet. When they are added, update this section with:
-- Install command (e.g., `npm install`)
-- Dev server command (e.g., `npm run dev`)
-- Build command (e.g., `npm run build`)
-- Test command (e.g., `npm test`)
-- Lint command (e.g., `npm run lint`)
+- **Install**: `npm install`
+- **Dev server**: `npm run dev` (Vite)
+- **Build**: `npm run build` (runs `tsc -b && vite build`)
+- **Preview**: `npm run preview`
+- **Lint**: `npm run lint` (ESLint 9 with React hooks/refresh plugins)
 
 ## Conventions
 
@@ -37,17 +50,29 @@ No build tooling or dependencies are configured yet. When they are added, update
 - Commit messages should be in English.
 
 ### Code Style
-- Not yet configured. When ESLint/Prettier are added, follow the project's configured rules.
-- Run the linter before committing.
+- ESLint 9 is configured with `typescript-eslint`, `react-hooks`, and `react-refresh` plugins.
+- Run `npm run lint` before committing.
 
 ### Git Workflow
 - Branch names follow the pattern: `claude/<description>-<session-id>`
 - Write clear, descriptive commit messages in English.
 - Do not push to `main` without review.
 
-## Key Decisions (to be made)
-- [ ] Frontend framework (Next.js, Nuxt, Astro, etc.)
-- [ ] Styling approach (Tailwind, CSS Modules, etc.)
-- [ ] Content management (MDX, CMS, static JSON, etc.)
+## Key Decisions
+- [x] Frontend framework: **Vite + React 19** (multi-page HTML + React hybrid)
+- [x] Styling approach: **Tailwind CSS 3** + custom CSS (`css/style.css`)
+- [x] Content management: Static HTML pages with inline data / JS data files
 - [ ] Deployment target (Vercel, Netlify, GitHub Pages, etc.)
 - [ ] Testing framework (Vitest, Jest, Playwright, etc.)
+
+## Tech Stack
+
+| Category | Choice |
+|----------|--------|
+| Build tool | Vite 8 |
+| UI framework | React 19 + vanilla JS (hybrid) |
+| Language | TypeScript 5.9 |
+| Styling | Tailwind CSS 3 + custom CSS |
+| Routing | react-router-dom 7 |
+| Linting | ESLint 9 + typescript-eslint |
+| PWA | Service Worker + Web App Manifest |
