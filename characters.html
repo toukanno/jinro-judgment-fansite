@@ -23,6 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/sidebar.css">
   <script src="js/theme.js"></script>
   <link rel="manifest" href="manifest.json">
   <style>
@@ -321,6 +322,32 @@
       line-height: 1.6;
     }
 
+    /* ===== Lightbox ===== */
+    #charImageLightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.85);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      cursor: zoom-out;
+    }
+    #charImageLightbox.active { display: flex; }
+    #charImageLightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.5);
+      animation: lbIn .2s ease;
+    }
+    @keyframes lbIn {
+      from { opacity: 0; transform: scale(.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .char-detail-avatar img { cursor: zoom-in; }
+
     /* ===== Responsive ===== */
     @media (max-width: 768px) {
       .char-hero-section h1 { font-size: 1.8rem; }
@@ -470,6 +497,8 @@
   <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
 </footer>
 
+<div id="charImageLightbox"></div>
+
 <script src="js/common.js"></script>
 <script>
 (function() {
@@ -562,7 +591,7 @@
       appearance: ['赤茶色の髪', '通った鼻筋', '男らしい風貌', 'たくましい体格'],
       desc: '通った鼻筋に赤茶色の髪が特徴的な男性。たくましく男らしい風貌で、頼れる存在感がある。力強いプレイスタイルに似合うキャラクター。' },
     { name: 'トーマス', ruby: 'Thomas', gender: 'male', category: 'cat1', color: '#e2e8f0',
-      icon: '\u{1F9D4}',
+      icon: '\u{1F9D4}', img: 'images/トーマス1-9.png',
       summary: '肩まで伸びる白髪に立派な髭のおじいさん',
       appearance: ['肩まで伸びる白髪', '立派な髭', '穏やかな表情', '長老の風格'],
       desc: '肩まで伸びる白髪に立派な髭が特徴的なおじいさん。長老のような風格があり、落ち着いた知的な雰囲気を持つ。村の賢者的な役どころに人気。' },
@@ -614,7 +643,7 @@
       appearance: ['力強い体格', '東洋的な風貌', '堂々とした佇まい', '威圧感のある雰囲気'],
       desc: '力強い雰囲気を持つ男性キャラクター。堂々とした佇まいと東洋的な風貌が特徴。存在感のあるプレイに似合う。' },
     { name: 'カミラ', ruby: 'Camilla', gender: 'female', category: 'cat2', color: '#fb7185',
-      icon: '\u{1F339}',
+      icon: '\u{1F339}', img: 'images/カミラ1-9.png',
       summary: '妖艶で大人の魅力を持つ女性',
       appearance: ['妖艶な雰囲気', '大人の色気', 'セクシーな装い', 'ミステリアスな表情'],
       desc: '妖艶で大人の魅力を持つ女性。ミステリアスな雰囲気があり、人狼や狂人などの騙り役職でよく使用される。' },
@@ -649,7 +678,7 @@
       desc: 'プリンセスをモチーフにしたVIPキャラクター。高貴で美しい雰囲気が特徴。女王部屋のプリンセス役で使用するプレイヤーも多い。',
       motif: 'プリンセス' },
     { name: 'ポール', ruby: 'Paul', gender: 'male', category: 'cat3', color: '#a78bfa',
-      icon: '\u{1F46C}',
+      icon: '\u{1F46C}', img: 'images/キャラポール.jpg',
       summary: '双子モチーフのVIPキャラ',
       appearance: ['対称的なデザイン', '双子を思わせる装飾', '個性的な容姿', '神秘的な雰囲気'],
       desc: '双子をモチーフにしたVIPキャラクター。双子の役職と合わせて使用されることが多い。個性的で神秘的な雰囲気を持つ。',
@@ -750,8 +779,37 @@
     if (e.target === overlay) closeDetail();
   });
 
+  // Lightbox for detail avatar
+  var lightbox = document.getElementById('charImageLightbox');
+
+  function openLightbox(src, alt) {
+    lightbox.innerHTML = '<img src="' + src + '" alt="' + (alt || '') + '">';
+    lightbox.classList.add('active');
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    lightbox.innerHTML = '';
+  }
+
+  lightbox.addEventListener('click', closeLightbox);
+
+  detailEl.addEventListener('click', function(e) {
+    var img = e.target.closest('.char-detail-avatar img');
+    if (img) {
+      e.stopPropagation();
+      openLightbox(img.src, img.alt);
+    }
+  });
+
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && overlay.classList.contains('active')) closeDetail();
+    if (e.key === 'Escape') {
+      if (lightbox.classList.contains('active')) {
+        closeLightbox();
+      } else if (overlay.classList.contains('active')) {
+        closeDetail();
+      }
+    }
   });
 
   cardsEl.addEventListener('click', function(e) {
