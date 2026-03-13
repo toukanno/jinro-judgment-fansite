@@ -28,8 +28,8 @@
   <link rel="manifest" href="manifest.json">
   <style>
     .calc-frame {
-      background: #161b22;
-      border: 1px solid #30363d;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-primary);
       border-radius: 12px;
       padding: 2rem;
       max-width: 600px;
@@ -45,7 +45,7 @@
       flex: 1;
       font-size: .95rem;
       font-weight: 600;
-      color: #c9d1d9;
+      color: var(--text-secondary);
     }
     .calc-input-group .input-wrap {
       display: flex;
@@ -55,10 +55,10 @@
     .calc-btn {
       width: 36px;
       height: 36px;
-      border: 1px solid #30363d;
+      border: 1px solid var(--border-primary);
       border-radius: 6px;
       background: #21262d;
-      color: #e6edf3;
+      color: var(--text-primary);
       font-size: 1.2rem;
       font-weight: 700;
       cursor: pointer;
@@ -67,22 +67,22 @@
       justify-content: center;
       transition: all .15s;
     }
-    .calc-btn:hover { background: #30363d; border-color: #58a6ff; }
+    .calc-btn:hover { background: var(--bg-card); border-color: var(--accent); }
     .calc-btn:active { transform: scale(.9); }
     .calc-num {
       width: 50px;
       height: 36px;
       text-align: center;
-      border: 1px solid #30363d;
+      border: 1px solid var(--border-primary);
       border-radius: 6px;
-      background: #0d1117;
-      color: #e6edf3;
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
       font-size: 1.1rem;
       font-weight: 700;
     }
     .calc-result {
-      background: #0d1117;
-      border: 1px solid #30363d;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-primary);
       border-radius: 10px;
       padding: 1.5rem;
       text-align: center;
@@ -98,7 +98,7 @@
     .result-main.danger { color: #f85149; }
     .result-label {
       font-size: .9rem;
-      color: #8b949e;
+      color: var(--text-muted);
     }
     .result-detail {
       margin-top: 1rem;
@@ -108,7 +108,7 @@
     }
     .detail-item {
       background: rgba(22,27,34,.5);
-      border: 1px solid rgba(48,54,61,.5);
+      border: 1px solid var(--border-secondary);
       border-radius: 8px;
       padding: .8rem;
       text-align: center;
@@ -116,11 +116,11 @@
     .detail-item .num {
       font-size: 1.5rem;
       font-weight: 800;
-      color: #e6edf3;
+      color: var(--text-primary);
     }
     .detail-item .label {
       font-size: .78rem;
-      color: #8b949e;
+      color: var(--text-muted);
       margin-top: .2rem;
     }
     .situation-msg {
@@ -136,7 +136,7 @@
 
     .formula-box {
       background: rgba(88,166,255,.06);
-      border: 1px solid #30363d;
+      border: 1px solid var(--border-primary);
       border-radius: 10px;
       padding: 1.2rem 1.5rem;
       margin-bottom: 2rem;
@@ -144,18 +144,18 @@
       margin-left: auto;
       margin-right: auto;
     }
-    .formula-box h3 { color: #58a6ff; margin-bottom: .5rem; font-size: 1rem; }
+    .formula-box h3 { color: var(--accent); margin-bottom: .5rem; font-size: 1rem; }
     .formula-box code {
       display: block;
-      background: #0d1117;
+      background: var(--bg-tertiary);
       padding: .8rem 1rem;
       border-radius: 6px;
-      color: #e6edf3;
+      color: var(--text-primary);
       font-size: .95rem;
       margin: .5rem 0;
       text-align: center;
     }
-    .formula-box p { font-size: .88rem; color: #8b949e; line-height: 1.6; }
+    .formula-box p { font-size: .88rem; color: var(--text-muted); line-height: 1.6; }
 
     .ref-table {
       max-width: 600px;
@@ -186,10 +186,10 @@
       flex-shrink: 0;
     }
     .day-num.active { background: #238636; color: #fff; }
-    .day-num.past { background: #30363d; color: #8b949e; }
-    .day-num.future { background: rgba(48,54,61,.3); color: #484f58; }
-    .timeline-day .day-info { flex: 1; color: #c9d1d9; }
-    .timeline-day .day-count { font-weight: 700; color: #8b949e; font-size: .82rem; }
+    .day-num.past { background: var(--bg-card); color: var(--text-muted); }
+    .day-num.future { background: rgba(48,54,61,.3); color: var(--text-faint); }
+    .timeline-day .day-info { flex: 1; color: var(--text-secondary); }
+    .timeline-day .day-count { font-weight: 700; color: var(--text-muted); font-size: .82rem; }
 
     .calc-slider {
       -webkit-appearance: none;
@@ -207,18 +207,18 @@
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      background: #58a6ff;
+      background: var(--accent);
       cursor: pointer;
-      border: 2px solid #0d1117;
+      border: 2px solid var(--bg-tertiary);
       box-shadow: 0 2px 8px rgba(88,166,255,.3);
     }
     .calc-slider::-moz-range-thumb {
       width: 28px;
       height: 28px;
       border-radius: 50%;
-      background: #58a6ff;
+      background: var(--accent);
       cursor: pointer;
-      border: 2px solid #0d1117;
+      border: 2px solid var(--bg-tertiary);
       box-shadow: 0 2px 8px rgba(88,166,255,.3);
     }
 
