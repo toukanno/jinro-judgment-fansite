@@ -9,7 +9,7 @@
   "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "background_color": "#0a0e17",
   "theme_color": "#0a0e17",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "lang": "ja",
   "dir": "ltr",
   "categories": ["games", "entertainment", "education"],
@@ -28,6 +28,13 @@
       "type": "image/svg+xml",
       "form_factor": "narrow",
       "label": "人狼ジャッジメント攻略データベース"
+    },
+    {
+      "src": "icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "form_factor": "wide",
+      "label": "人狼ジャッジメント攻略データベース - PC版"
     }
   ],
   "shortcuts": [

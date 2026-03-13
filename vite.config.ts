@@ -36,6 +36,7 @@ export default defineConfig({
         gallery: resolve(__dirname, 'gallery.html'),
         'survivor-count': resolve(__dirname, 'survivor-count.html'),
         'room-id': resolve(__dirname, 'room-id.html'),
+        'pc-app': resolve(__dirname, 'pc-app.html'),
       },
     },
   },

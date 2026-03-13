@@ -28,6 +28,7 @@ const ASSETS = [
   './contact.html',
   './gallery.html',
   './survivor-count.html',
+  './pc-app.html',
   './css/style.css',
   './css/sidebar.css',
   './js/common.js',
