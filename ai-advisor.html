@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0e17">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JGDB">
+  <title>AI戦略アドバイザー - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="AIに人狼ジャッジメントの戦略・役職・立ち回りを質問できるチャット機能。初心者から上級者まで、あなたの疑問にAIが答えます。">
+  <meta property="og:title" content="AI戦略アドバイザー - 人狼ジャッジメント攻略">
+  <meta property="og:description" content="AIに人狼ジャッジメントの戦略・役職・立ち回りを質問できるチャット機能。">
+  <link rel="canonical" href="https://toukanno.github.io/jinro-judgment-fansite/ai-advisor.html">
+  <meta property="og:image" content="https://toukanno.github.io/jinro-judgment-fansite/icons/icon-512.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="AI戦略アドバイザー - 人狼ジャッジメント攻略">
+  <meta name="twitter:description" content="AIに人狼ジャッジメントの戦略・役職・立ち回りを質問できるチャット機能。">
+  <meta name="twitter:image" content="https://toukanno.github.io/jinro-judgment-fansite/icons/icon-512.svg">
+  <meta property="og:url" content="https://toukanno.github.io/jinro-judgment-fansite/ai-advisor.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <script src="js/theme.js"></script>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .ai-container { max-width: 800px; margin: 0 auto; }
+
+    .api-key-section {
+      background: rgba(22,27,34,.7); border: 1px solid rgba(48,54,61,.6);
+      border-radius: 12px; padding: 1.2rem; margin-bottom: 1.5rem;
+    }
+    .api-key-section summary {
+      cursor: pointer; font-weight: 600; color: #e6edf3; font-size: .95rem;
+      user-select: none;
+    }
+    .api-key-section summary::marker { color: #58a6ff; }
+    .api-key-inner { margin-top: 1rem; }
+    .api-key-note {
+      font-size: .85rem; color: #8b949e; line-height: 1.6; margin-bottom: .8rem;
+    }
+    .api-key-row {
+      display: flex; gap: .5rem; align-items: center;
+    }
+    .api-key-row input {
+      flex: 1; padding: .6rem .8rem; background: rgba(10,14,23,.6);
+      border: 1px solid rgba(48,54,61,.8); border-radius: 8px;
+      color: #e6edf3; font-size: .9rem; font-family: monospace;
+    }
+    .api-key-row input:focus {
+      outline: none; border-color: #58a6ff;
+    }
+    .api-key-row button {
+      padding: .6rem 1rem; background: #238636; color: #fff;
+      border: none; border-radius: 8px; cursor: pointer;
+      font-size: .9rem; font-weight: 600; white-space: nowrap;
+    }
+    .api-key-row button:hover { background: #2ea043; }
+    .api-key-status {
+      font-size: .82rem; margin-top: .5rem; color: #7ee787;
+    }
+    .api-key-status.error { color: #f85149; }
+
+    .chat-box {
+      background: rgba(22,27,34,.7); border: 1px solid rgba(48,54,61,.6);
+      border-radius: 12px; min-height: 400px; max-height: 60vh;
+      overflow-y: auto; padding: 1rem; margin-bottom: 1rem;
+      display: flex; flex-direction: column; gap: .8rem;
+      scroll-behavior: smooth;
+    }
+
+    .chat-welcome {
+      text-align: center; color: #8b949e; padding: 3rem 1rem;
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    }
+    .chat-welcome-icon { font-size: 3rem; }
+    .chat-welcome h3 { color: #e6edf3; font-size: 1.1rem; margin: 0; }
+    .chat-welcome p { font-size: .9rem; line-height: 1.6; margin: 0; }
+
+    .suggestion-chips {
+      display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center;
+      margin-top: .5rem;
+    }
+    .suggestion-chip {
+      padding: .4rem .8rem; background: rgba(88,166,255,.1);
+      border: 1px solid rgba(88,166,255,.3); border-radius: 20px;
+      color: #58a6ff; font-size: .82rem; cursor: pointer;
+      transition: all .2s;
+    }
+    .suggestion-chip:hover {
+      background: rgba(88,166,255,.2); border-color: #58a6ff;
+    }
+
+    .chat-msg {
+      max-width: 85%; padding: .8rem 1rem; border-radius: 12px;
+      font-size: .92rem; line-height: 1.7; word-break: break-word;
+      animation: fadeInMsg .3s ease;
+    }
+    @keyframes fadeInMsg {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .chat-msg.user {
+      align-self: flex-end; background: rgba(88,166,255,.15);
+      border: 1px solid rgba(88,166,255,.25); color: #e6edf3;
+    }
+    .chat-msg.assistant {
+      align-self: flex-start; background: rgba(46,52,64,.8);
+      border: 1px solid rgba(48,54,61,.6); color: #c9d1d9;
+    }
+    .chat-msg.assistant strong { color: #58a6ff; }
+    .chat-msg.error {
+      align-self: center; background: rgba(248,81,73,.1);
+      border: 1px solid rgba(248,81,73,.3); color: #f85149;
+      font-size: .88rem; text-align: center;
+    }
+
+    .chat-msg.assistant p { margin: 0 0 .5rem 0; }
+    .chat-msg.assistant p:last-child { margin-bottom: 0; }
+    .chat-msg.assistant ul, .chat-msg.assistant ol {
+      margin: .3rem 0; padding-left: 1.2rem;
+    }
+    .chat-msg.assistant li { margin-bottom: .2rem; }
+    .chat-msg.assistant code {
+      background: rgba(10,14,23,.5); padding: .1rem .3rem;
+      border-radius: 4px; font-size: .88em;
+    }
+
+    .typing-indicator {
+      align-self: flex-start; padding: .8rem 1rem;
+      background: rgba(46,52,64,.8); border: 1px solid rgba(48,54,61,.6);
+      border-radius: 12px; display: none;
+    }
+    .typing-indicator.show { display: flex; gap: .3rem; align-items: center; }
+    .typing-dot {
+      width: 6px; height: 6px; background: #58a6ff; border-radius: 50%;
+      animation: typingBounce 1.4s infinite;
+    }
+    .typing-dot:nth-child(2) { animation-delay: .2s; }
+    .typing-dot:nth-child(3) { animation-delay: .4s; }
+    @keyframes typingBounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: .4; }
+      30% { transform: translateY(-6px); opacity: 1; }
+    }
+
+    .chat-input-area {
+      display: flex; gap: .5rem; align-items: flex-end;
+    }
+    .chat-input-area textarea {
+      flex: 1; padding: .7rem 1rem; background: rgba(22,27,34,.7);
+      border: 1px solid rgba(48,54,61,.6); border-radius: 12px;
+      color: #e6edf3; font-size: .92rem; font-family: inherit;
+      resize: none; min-height: 44px; max-height: 120px;
+      line-height: 1.5;
+    }
+    .chat-input-area textarea:focus {
+      outline: none; border-color: #58a6ff;
+    }
+    .chat-input-area textarea::placeholder { color: #484f58; }
+    .chat-send-btn {
+      padding: .7rem 1.2rem; background: #58a6ff; color: #0a0e17;
+      border: none; border-radius: 12px; cursor: pointer;
+      font-size: 1.1rem; font-weight: 700; min-height: 44px;
+      transition: all .2s;
+    }
+    .chat-send-btn:hover { background: #79b8ff; }
+    .chat-send-btn:disabled {
+      background: rgba(48,54,61,.6); color: #484f58; cursor: not-allowed;
+    }
+
+    .chat-actions {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: .5rem;
+    }
+    .chat-clear-btn {
+      padding: .4rem .8rem; background: transparent;
+      border: 1px solid rgba(48,54,61,.6); border-radius: 8px;
+      color: #8b949e; font-size: .82rem; cursor: pointer;
+      transition: all .2s;
+    }
+    .chat-clear-btn:hover {
+      border-color: #f85149; color: #f85149;
+    }
+    .chat-note {
+      font-size: .8rem; color: #484f58;
+    }
+
+    @media (max-width: 768px) {
+      .chat-box { min-height: 300px; max-height: 50vh; }
+      .chat-msg { max-width: 92%; font-size: .9rem; }
+      .api-key-row { flex-direction: column; }
+      .api-key-row button { width: 100%; }
+      .suggestion-chip { font-size: .78rem; }
+    }
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5638346660274603"
+     crossorigin="anonymous"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-XXXXXXXXXX");</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="characters.html">キャラクター</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+        <li><a href="templates.html">部屋テンプレ</a></li>
+        <li><a href="copipe.html">コピペ集</a></li>
+        <li><a href="v3roles.html">V3新役職</a></li>
+        <li><a href="queen-wise.html">女王部屋</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="timer.html">タイマー</a></li>
+        <li><a href="exclusion.html">同村制限</a></li>
+        <li><a href="rope-calc.html">縄計算</a></li>
+        <li><a href="synergy.html">役職相性</a></li>
+        <li><a href="quiz.html">クイズ</a></li>
+        <li><a href="notepad.html">メモ帳</a></li>
+        <li><a href="memo.html">ゲームメモ</a></li>
+        <li><a href="role-compatibility.html">相性表</a></li>
+        <li><a href="gallery.html">ギャラリー</a></li>
+        <li><a href="ai-advisor.html">AI相談</a></li>
+        <li><a href="settings.html">設定</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> AI戦略アドバイザー</div>
+
+  <h1 class="section-title">&#x1F916; AI戦略アドバイザー</h1>
+
+  <div class="ai-container">
+    <details class="api-key-section" id="apiKeySection">
+      <summary>&#x1F511; APIキー設定</summary>
+      <div class="api-key-inner">
+        <p class="api-key-note">
+          Anthropic Claude APIキーを入力してください。キーはブラウザのローカルストレージに保存され、サーバーには送信されません。<br>
+          APIキーは <a href="https://console.anthropic.com/" target="_blank" rel="noopener" style="color:#58a6ff;">console.anthropic.com</a> で取得できます。
+        </p>
+        <div class="api-key-row">
+          <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off">
+          <button id="apiKeySaveBtn">保存</button>
+        </div>
+        <div class="api-key-status" id="apiKeyStatus"></div>
+      </div>
+    </details>
+
+    <div class="chat-box" id="chatBox">
+      <div class="chat-welcome" id="chatWelcome">
+        <div class="chat-welcome-icon">&#x1F43A;</div>
+        <h3>人狼ジャッジメント AI戦略アドバイザー</h3>
+        <p>役職の立ち回り、編成相談、戦術の質問など、<br>人狼ジャッジメントに関することなら何でも聞いてください。</p>
+        <div class="suggestion-chips">
+          <button class="suggestion-chip">占い師の立ち回りを教えて</button>
+          <button class="suggestion-chip">9人編成のおすすめは？</button>
+          <button class="suggestion-chip">人狼の騙り方のコツ</button>
+          <button class="suggestion-chip">初心者が気をつけること</button>
+        </div>
+      </div>
+      <div class="typing-indicator" id="typingIndicator">
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+      </div>
+    </div>
+
+    <div class="chat-input-area">
+      <textarea id="chatInput" placeholder="質問を入力してください..." rows="1"></textarea>
+      <button class="chat-send-btn" id="chatSendBtn" title="送信">&#x27A4;</button>
+    </div>
+    <div class="chat-actions">
+      <button class="chat-clear-btn" id="chatClearBtn">&#x1F5D1; 会話をクリア</button>
+      <span class="chat-note">Powered by Claude AI</span>
+    </div>
+  </div>
+</main>
+
+<div class="affiliate-banner">
+  <span class="af-pc"><a href="https://af.moshimo.com/af/c/click?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=620" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc><img src="https://image.moshimo.com/af-img/0032/000000000620.gif" width="468" height="60" style="border:none;" alt="楽天市場" loading="lazy"></a><img aria-hidden="true" src="https://i.moshimo.com/af/i/impression?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=620" width="1" height="1" style="border:none;" alt="" loading="lazy"></span>
+  <span class="af-sp"><a href="https://af.moshimo.com/af/c/click?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=617" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc><img src="https://image.moshimo.com/af-img/0032/000000000617.gif" width="100" height="60" style="border:none;" alt="楽天市場" loading="lazy"></a><img aria-hidden="true" src="https://i.moshimo.com/af/i/impression?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=617" width="1" height="1" style="border:none;" alt="" loading="lazy"></span>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-columns">
+    <div>
+      <h4>攻略コンテンツ</h4>
+      <a href="roles.html">役職一覧</a>
+      <a href="guide.html">初心者ガイド</a>
+      <a href="strategy.html">立ち回りガイド</a>
+      <a href="queen-wise.html">女王部屋攻略</a>
+      <a href="v3roles.html">V3新役職</a>
+    </div>
+    <div>
+      <h4>データ・資料</h4>
+      <a href="glossary.html">用語集</a>
+      <a href="composition.html">編成シミュレーター</a>
+      <a href="characters.html">キャラクター</a>
+      <a href="synergy.html">役職相性</a>
+      <a href="exclusion.html">同村制限</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div>
+      <h4>ツール</h4>
+      <a href="timer.html">議論タイマー</a>
+      <a href="rope-calc.html">縄計算</a>
+      <a href="notepad.html">メモ帳</a>
+      <a href="memo.html">ゲームメモ</a>
+      <a href="copipe.html">コピペ集</a>
+      <a href="templates.html">部屋テンプレ</a>
+      <a href="quiz.html">クイズ</a>
+      <a href="ai-advisor.html">AI相談</a>
+    </div>
+    <div>
+      <h4>サイト情報</h4>
+      <a href="index.html">ホーム</a>
+      <a href="settings.html">設定</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+    </div>
+  </div>
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
+</footer>
+
+<script src="js/roles-data.js"></script>
+<script src="js/common.js"></script>
+<script>
+(function() {
+  var STORAGE_KEY = 'jg-anthropic-api-key';
+  var HISTORY_KEY = 'jg-ai-chat-history';
+  var MODEL = 'claude-sonnet-4-20250514';
+
+  var chatBox = document.getElementById('chatBox');
+  var chatInput = document.getElementById('chatInput');
+  var sendBtn = document.getElementById('chatSendBtn');
+  var clearBtn = document.getElementById('chatClearBtn');
+  var welcomeEl = document.getElementById('chatWelcome');
+  var typingEl = document.getElementById('typingIndicator');
+  var apiKeyInput = document.getElementById('apiKeyInput');
+  var apiKeySaveBtn = document.getElementById('apiKeySaveBtn');
+  var apiKeyStatus = document.getElementById('apiKeyStatus');
+  var apiKeySection = document.getElementById('apiKeySection');
+
+  var conversationHistory = [];
+  var isStreaming = false;
+
+  // Build system prompt with role data
+  function buildSystemPrompt() {
+    var rolesSummary = '';
+    if (typeof ROLES_DATA !== 'undefined' && ROLES_DATA.length) {
+      rolesSummary = '\n\n## 役職データベース（' + ROLES_DATA.length + '役職）\n';
+      ROLES_DATA.forEach(function(r) {
+        rolesSummary += '- ' + r.icon + ' ' + r.name + '（' + r.team + '/' + r.rarity + '）: ' + r.description.substring(0, 80) + '\n';
+      });
+    }
+    return 'あなたは「人狼ジャッジメント」（Jinro Judgment）の戦略アドバイザーAIです。\n'
+      + '人狼ジャッジメントは、iOS/Androidで遊べる人気の人狼（社会的推理）ゲームアプリです。\n\n'
+      + '## あなたの役割\n'
+      + '- プレイヤーからの質問に日本語で丁寧に回答する\n'
+      + '- 役職の能力・立ち回り・戦術について具体的なアドバイスを提供する\n'
+      + '- 編成（部屋構成）の相談に応じる\n'
+      + '- 初心者にも分かりやすく、上級者にも有益な回答をする\n'
+      + '- 回答は簡潔にまとめ、箇条書きなどを活用して読みやすくする\n\n'
+      + '## 重要なルール\n'
+      + '- 人狼ジャッジメントに関係ない質問には「人狼ジャッジメントに関する質問にお答えします」と伝える\n'
+      + '- 不確実な情報は推測である旨を明記する\n'
+      + '- 回答は日本語で行う\n'
+      + rolesSummary;
+  }
+
+  // Load saved API key
+  function loadApiKey() {
+    var saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      apiKeyInput.value = saved;
+      apiKeyStatus.textContent = '✓ APIキーが設定されています';
+      apiKeyStatus.className = 'api-key-status';
+      apiKeySection.removeAttribute('open');
+    } else {
+      apiKeySection.setAttribute('open', '');
+    }
+  }
+
+  // Save API key
+  apiKeySaveBtn.addEventListener('click', function() {
+    var key = apiKeyInput.value.trim();
+    if (!key) {
+      apiKeyStatus.textContent = 'APIキーを入力してください';
+      apiKeyStatus.className = 'api-key-status error';
+      return;
+    }
+    localStorage.setItem(STORAGE_KEY, key);
+    apiKeyStatus.textContent = '✓ APIキーを保存しました';
+    apiKeyStatus.className = 'api-key-status';
+  });
+
+  // Load chat history
+  function loadHistory() {
+    try {
+      var saved = sessionStorage.getItem(HISTORY_KEY);
+      if (saved) {
+        conversationHistory = JSON.parse(saved);
+        if (conversationHistory.length > 0) {
+          welcomeEl.style.display = 'none';
+          conversationHistory.forEach(function(msg) {
+            appendMessage(msg.role, msg.content, true);
+          });
+          scrollToBottom();
+        }
+      }
+    } catch(e) { /* ignore */ }
+  }
+
+  function saveHistory() {
+    try {
+      sessionStorage.setItem(HISTORY_KEY, JSON.stringify(conversationHistory));
+    } catch(e) { /* ignore */ }
+  }
+
+  // Render markdown-like formatting
+  function renderContent(text) {
+    return text
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/`(.+?)`/g, '<code>$1</code>')
+      .replace(/\n\n/g, '</p><p>')
+      .replace(/\n- /g, '<br>• ')
+      .replace(/\n(\d+)\. /g, '<br>$1. ')
+      .replace(/\n/g, '<br>');
+  }
+
+  function appendMessage(role, content, skipAnimation) {
+    var div = document.createElement('div');
+    div.className = 'chat-msg ' + role;
+    if (role === 'assistant') {
+      div.innerHTML = '<p>' + renderContent(content) + '</p>';
+    } else if (role === 'error') {
+      div.textContent = content;
+    } else {
+      div.textContent = content;
+    }
+    if (skipAnimation) div.style.animation = 'none';
+    chatBox.insertBefore(div, typingEl);
+    return div;
+  }
+
+  function scrollToBottom() {
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function setLoading(on) {
+    isStreaming = on;
+    sendBtn.disabled = on;
+    chatInput.disabled = on;
+    typingEl.className = 'typing-indicator' + (on ? ' show' : '');
+    if (on) scrollToBottom();
+  }
+
+  // Send message to Claude API
+  async function sendMessage(userText) {
+    var apiKey = localStorage.getItem(STORAGE_KEY);
+    if (!apiKey) {
+      apiKeySection.setAttribute('open', '');
+      appendMessage('error', 'APIキーを設定してください。上の「APIキー設定」を開いて入力してください。');
+      scrollToBottom();
+      return;
+    }
+
+    welcomeEl.style.display = 'none';
+    appendMessage('user', userText);
+    conversationHistory.push({ role: 'user', content: userText });
+    saveHistory();
+    scrollToBottom();
+
+    setLoading(true);
+
+    try {
+      var response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: MODEL,
+          max_tokens: 1024,
+          system: buildSystemPrompt(),
+          messages: conversationHistory.slice(-20)
+        })
+      });
+
+      if (!response.ok) {
+        var errData = await response.json().catch(function() { return {}; });
+        var errMsg = errData.error ? errData.error.message : ('APIエラー: HTTP ' + response.status);
+        if (response.status === 401) {
+          errMsg = 'APIキーが無効です。正しいキーを設定してください。';
+          apiKeySection.setAttribute('open', '');
+        } else if (response.status === 429) {
+          errMsg = 'リクエスト制限に達しました。しばらく待ってから再度お試しください。';
+        }
+        throw new Error(errMsg);
+      }
+
+      var data = await response.json();
+      var assistantText = data.content && data.content[0] ? data.content[0].text : '応答を取得できませんでした。';
+
+      appendMessage('assistant', assistantText);
+      conversationHistory.push({ role: 'assistant', content: assistantText });
+      saveHistory();
+    } catch(e) {
+      conversationHistory.pop(); // remove the user message that failed
+      saveHistory();
+      appendMessage('error', e.message || 'エラーが発生しました。');
+    }
+
+    setLoading(false);
+    scrollToBottom();
+  }
+
+  // Event listeners
+  sendBtn.addEventListener('click', function() {
+    var text = chatInput.value.trim();
+    if (!text || isStreaming) return;
+    chatInput.value = '';
+    chatInput.style.height = 'auto';
+    sendMessage(text);
+  });
+
+  chatInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendBtn.click();
+    }
+  });
+
+  // Auto-resize textarea
+  chatInput.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+  });
+
+  clearBtn.addEventListener('click', function() {
+    if (conversationHistory.length === 0) return;
+    if (!confirm('会話履歴をクリアしますか？')) return;
+    conversationHistory = [];
+    saveHistory();
+    chatBox.querySelectorAll('.chat-msg').forEach(function(el) { el.remove(); });
+    welcomeEl.style.display = '';
+  });
+
+  // Suggestion chips
+  document.querySelectorAll('.suggestion-chip').forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      chatInput.value = this.textContent;
+      sendBtn.click();
+    });
+  });
+
+  loadApiKey();
+  loadHistory();
+})();
+</script>
+</body>
+</html>
