@@ -30,6 +30,7 @@ const ASSETS = [
   './css/style.css',
   './js/common.js',
   './js/roles-data.js',
+  './js/theme.js',
   './manifest.json',
 ];
 
