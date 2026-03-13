@@ -23,7 +23,7 @@
     display: grid;
     grid-template-columns: 1fr 180px;
     gap: 2rem;
-    max-width: 1400px;
+    max-width: 1200px;
   }
   .page-with-sidebar > .container {
     max-width: none;
@@ -59,10 +59,10 @@
   }
 }
 
-/* Wide screens: offset left padding to visually center main content against sidebar */
+/* Wide screens: keep main content centered */
 @media (min-width: 1400px) {
   .page-with-sidebar {
-    max-width: calc(1200px + 180px + 4rem);
+    max-width: 1280px;
   }
 }
 

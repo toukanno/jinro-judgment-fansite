@@ -852,9 +852,16 @@ img { max-width: 100%; height: auto; }
 
 /* ===== PC Layout (1024px+) ===== */
 @media (min-width: 1024px) {
+  /* Offset for fixed right banner (120px) */
+  body {
+    padding-right: 130px;
+  }
+  .site-header {
+    padding-right: 130px;
+  }
   .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.25rem;
   }
   .card-grid.card-grid--contents {
