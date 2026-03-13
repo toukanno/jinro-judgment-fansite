@@ -21,6 +21,8 @@
   <meta name="twitter:description" content="全役職の能力・立ち回り・編成考察を網羅したファンサイト。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.svg">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/sidebar.css">
   <script src="js/theme.js"></script>
@@ -455,6 +457,11 @@
       { title: '漂白噛みに注意', text: '偽占い師が白を出した相手を人狼が噛む「漂白噛み」は上級テクニック。噛まれた人が必ず村側とは限りません。占い師の真偽判定と合わせて考えましょう。', type: 'warning' },
       { title: 'メモを取る習慣を', text: '占い結果・霊能結果・投票先・死亡者の役職を毎日メモする習慣をつけましょう。情報整理ができる人は推理の精度が格段に上がります。', type: '' },
       { title: '発言は量より質', text: '多弁でも中身がない発言は村目に見えません。「誰が怪しいか」「なぜそう思うか」を具体的に述べることで、村側からの信頼を得られます。', type: '' },
+      { title: '共有者の片方COテクニック', text: '共有者の1人だけがCOし、もう1人は潜伏する「片方CO」は強力な戦術。潜伏側が偽占いに黒を出されたら共有COで偽確定させられます。', type: '' },
+      { title: '猫又のCOタイミング', text: '猫又は吊り指定された時にCOするのが基本。人狼は猫又を噛めないため、COすると実質的な確定白になります。ただし黒猫との真偽が問題になることも。', type: '' },
+      { title: '身内切りの見抜き方', text: '人狼が仲間に投票する「身内切り」は高度なテクニック。見抜くコツは、投票のタイミングと投票理由の薄さ。あまりにも簡単に仲間を切る人は逆に怪しいです。', type: 'warning' },
+      { title: 'PP対策の基本', text: 'PP（パワープレイ）は人狼側が過半数を取った時に成立します。対策として、縄余裕が少ない時は確実な処刑先を選びましょう。狂人が人狼を把握していない場合はチャンスあり。', type: 'warning' },
+      { title: '罠師の罠設置先', text: '罠師の罠は人狼の噛み先を予測して設置します。占い師護衛は狩人に任せ、罠は「確白で噛まれそうな人」や「自分自身」に設置するのが効果的です。', type: '' },
     ];
     const today = new Date();
     const idx = (today.getFullYear() * 366 + today.getMonth() * 31 + today.getDate()) % tips.length;
