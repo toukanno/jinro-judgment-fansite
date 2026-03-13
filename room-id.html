@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#161b22">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JGDB">
+  <title>部屋ID入力 - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントの部屋IDを入力・保存・共有できるツール。フレンドとの合流に便利です。">
+  <meta property="og:title" content="部屋ID入力 - 人狼ジャッジメント攻略">
+  <meta property="og:description" content="人狼ジャッジメントの部屋IDを入力・保存・共有できるツール。フレンドとの合流に便利です。">
+  <link rel="canonical" href="https://toukanno.github.io/jinro-judgment-fansite/room-id.html">
+  <meta property="og:image" content="https://toukanno.github.io/jinro-judgment-fansite/icons/icon-512.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="部屋ID入力 - 人狼ジャッジメント攻略">
+  <meta name="twitter:description" content="人狼ジャッジメントの部屋IDを入力・保存・共有できるツール。フレンドとの合流に便利です。">
+  <meta name="twitter:image" content="https://toukanno.github.io/jinro-judgment-fansite/icons/icon-512.svg">
+  <meta property="og:url" content="https://toukanno.github.io/jinro-judgment-fansite/room-id.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <script src="js/theme.js"></script>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .room-id-form {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-primary);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .room-id-form label {
+      display: block;
+      font-size: .9rem;
+      font-weight: 700;
+      color: #e6edf3;
+      margin-bottom: .5rem;
+    }
+    .room-id-input-row {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: 1rem;
+    }
+    .room-id-input {
+      flex: 1;
+      padding: .7rem 1rem;
+      border: 1px solid var(--border-primary);
+      border-radius: 8px;
+      background: var(--bg-tertiary);
+      color: #e6edf3;
+      font-size: 1.1rem;
+      font-family: 'Noto Sans JP', monospace;
+      letter-spacing: .15em;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .room-id-input:focus { border-color: #58a6ff; }
+    .room-id-input::placeholder { color: #484f58; letter-spacing: .05em; }
+    .room-id-memo {
+      width: 100%;
+      padding: .6rem 1rem;
+      border: 1px solid var(--border-primary);
+      border-radius: 8px;
+      background: var(--bg-tertiary);
+      color: #e6edf3;
+      font-size: .9rem;
+      font-family: 'Noto Sans JP', sans-serif;
+      outline: none;
+      transition: border-color .2s;
+      resize: none;
+    }
+    .room-id-memo:focus { border-color: #58a6ff; }
+    .room-id-memo::placeholder { color: #484f58; }
+    .btn-row {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+      margin-top: .8rem;
+    }
+    .btn {
+      padding: .55rem 1.2rem;
+      border: 1px solid var(--border-primary);
+      border-radius: 8px;
+      background: #21262d;
+      color: #c9d1d9;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+    .btn:hover { background: #30363d; color: #e6edf3; border-color: #58a6ff; }
+    .btn-primary {
+      background: rgba(88,166,255,.15);
+      color: #58a6ff;
+      border-color: #58a6ff;
+    }
+    .btn-primary:hover { background: rgba(88,166,255,.25); }
+    .btn-danger {
+      color: #f85149;
+      border-color: transparent;
+    }
+    .btn-danger:hover { background: rgba(248,81,73,.12); border-color: #f85149; }
+    .btn.copied { background: rgba(126,231,135,.15); color: #7ee787; border-color: #7ee787; }
+
+    .saved-list-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #e6edf3;
+      margin-bottom: .8rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .saved-item {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-primary);
+      border-radius: 8px;
+      padding: .8rem 1rem;
+      margin-bottom: .5rem;
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      transition: border-color .2s;
+    }
+    .saved-item:hover { border-color: #58a6ff; }
+    .saved-item-info { flex: 1; min-width: 0; }
+    .saved-item-id {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #e6edf3;
+      letter-spacing: .1em;
+      font-family: monospace;
+    }
+    .saved-item-memo {
+      font-size: .82rem;
+      color: #8b949e;
+      margin-top: .2rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .saved-item-time {
+      font-size: .72rem;
+      color: #484f58;
+      margin-top: .15rem;
+    }
+    .saved-item-actions {
+      display: flex;
+      gap: .3rem;
+      flex-shrink: 0;
+    }
+    .saved-item-actions .btn {
+      padding: .35rem .6rem;
+      font-size: .78rem;
+    }
+    .empty-state {
+      text-align: center;
+      color: #484f58;
+      padding: 2rem 1rem;
+      font-size: .9rem;
+    }
+
+    @media (max-width: 768px) {
+      .room-id-form { padding: 1rem; }
+      .room-id-input { font-size: 1rem; }
+      .btn { min-height: 44px; display: flex; align-items: center; justify-content: center; }
+      .saved-item { flex-wrap: wrap; gap: .5rem; }
+      .saved-item-actions { width: 100%; justify-content: flex-end; }
+      .saved-item-actions .btn { min-height: 44px; padding: .4rem .8rem; }
+    }
+
+    @media (max-width: 600px) {
+      .room-id-input-row { flex-direction: column; }
+      .btn-row { flex-direction: column; }
+      .btn { min-height: 44px; }
+    }
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5638346660274603"
+     crossorigin="anonymous"></script>
+<!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-XXXXXXXXXX");</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="characters.html">キャラクター</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+        <li><a href="templates.html">部屋テンプレ</a></li>
+        <li><a href="copipe.html">コピペ集</a></li>
+        <li><a href="v3roles.html">V3新役職</a></li>
+        <li><a href="queen-wise.html">女王部屋</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="timer.html">タイマー</a></li>
+        <li><a href="exclusion.html">同村制限</a></li>
+        <li><a href="rope-calc.html">縄計算</a></li>
+        <li><a href="synergy.html">役職相性</a></li>
+        <li><a href="quiz.html">クイズ</a></li>
+        <li><a href="notepad.html">メモ帳</a></li>
+        <li><a href="memo.html">ゲームメモ</a></li>
+        <li><a href="role-compatibility.html">相性表</a></li>
+        <li><a href="gallery.html">ギャラリー</a></li>
+        <li><a href="room-id.html">部屋ID</a></li>
+        <li><a href="settings.html">設定</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> 部屋ID入力</div>
+
+  <h1 class="section-title">&#x1F3E0; 部屋ID入力</h1>
+
+  <div class="tip-box">
+    <strong>使い方：</strong>部屋IDを入力して「保存」すると、ブラウザに記録されます。「コピー」ボタンでIDをコピーしてフレンドに共有できます。データはこのブラウザにのみ保存されます。
+  </div>
+
+  <div class="room-id-form">
+    <label for="roomIdInput">部屋ID</label>
+    <div class="room-id-input-row">
+      <input type="text" class="room-id-input" id="roomIdInput" placeholder="部屋IDを入力..." maxlength="20" autocomplete="off">
+    </div>
+    <label for="roomMemoInput">メモ（任意）</label>
+    <input type="text" class="room-id-memo" id="roomMemoInput" placeholder="例：○○さんの部屋、ガチ部屋 など" maxlength="100">
+    <div class="btn-row">
+      <button class="btn btn-primary" id="saveBtn">保存</button>
+      <button class="btn" id="copyInputBtn">IDをコピー</button>
+    </div>
+  </div>
+
+  <div class="saved-list-title">&#x1F4CB; 保存した部屋ID</div>
+  <div id="savedList"></div>
+</main>
+
+<div class="affiliate-banner">
+  <span class="af-pc"><a href="https://af.moshimo.com/af/c/click?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=620" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc><img src="https://image.moshimo.com/af-img/0032/000000000620.gif" width="468" height="60" style="border:none;" alt="楽天市場" loading="lazy"></a><img aria-hidden="true" src="https://i.moshimo.com/af/i/impression?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=620" width="1" height="1" style="border:none;" alt="" loading="lazy"></span>
+  <span class="af-sp"><a href="https://af.moshimo.com/af/c/click?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=617" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc><img src="https://image.moshimo.com/af-img/0032/000000000617.gif" width="100" height="60" style="border:none;" alt="楽天市場" loading="lazy"></a><img aria-hidden="true" src="https://i.moshimo.com/af/i/impression?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=617" width="1" height="1" style="border:none;" alt="" loading="lazy"></span>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-columns">
+    <div>
+      <h4>攻略コンテンツ</h4>
+      <a href="roles.html">役職一覧</a>
+      <a href="guide.html">初心者ガイド</a>
+      <a href="strategy.html">立ち回りガイド</a>
+      <a href="queen-wise.html">女王部屋攻略</a>
+      <a href="v3roles.html">V3新役職</a>
+    </div>
+    <div>
+      <h4>データ・資料</h4>
+      <a href="glossary.html">用語集</a>
+      <a href="composition.html">編成シミュレーター</a>
+      <a href="characters.html">キャラクター</a>
+      <a href="synergy.html">役職相性</a>
+      <a href="exclusion.html">同村制限</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div>
+      <h4>ツール</h4>
+      <a href="timer.html">議論タイマー</a>
+      <a href="rope-calc.html">縄計算</a>
+      <a href="notepad.html">メモ帳</a>
+      <a href="memo.html">ゲームメモ</a>
+      <a href="copipe.html">コピペ集</a>
+      <a href="templates.html">部屋テンプレ</a>
+      <a href="quiz.html">クイズ</a>
+      <a href="room-id.html">部屋ID</a>
+    </div>
+    <div>
+      <h4>サイト情報</h4>
+      <a href="index.html">ホーム</a>
+      <a href="settings.html">設定</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+    </div>
+  </div>
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
+</footer>
+
+<script src="js/common.js"></script>
+<script>
+const STORAGE_KEY = 'jg-room-ids';
+
+function loadRoomIds() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  } catch { return []; }
+}
+
+function saveRoomIds(ids) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+}
+
+function formatTime(ts) {
+  const d = new Date(ts);
+  const pad = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}/${pad(d.getMonth()+1)}/${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function copyToClipboard(text, btn) {
+  function onSuccess() {
+    btn.textContent = 'OK!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 1500);
+  }
+  function onFail() {
+    btn.textContent = '失敗';
+    setTimeout(() => { btn.textContent = 'コピー'; }, 1500);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(onSuccess).catch(onFail);
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); onSuccess(); } catch (e) { onFail(); }
+    document.body.removeChild(ta);
+  }
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function renderList() {
+  const list = loadRoomIds();
+  const el = document.getElementById('savedList');
+
+  if (list.length === 0) {
+    el.innerHTML = '<div class="empty-state">保存された部屋IDはありません。</div>';
+    return;
+  }
+
+  el.innerHTML = list.map((item, i) => `
+    <div class="saved-item">
+      <div class="saved-item-info">
+        <div class="saved-item-id">${escapeHtml(item.id)}</div>
+        ${item.memo ? `<div class="saved-item-memo">${escapeHtml(item.memo)}</div>` : ''}
+        <div class="saved-item-time">${formatTime(item.time)}</div>
+      </div>
+      <div class="saved-item-actions">
+        <button class="btn" onclick="copyToClipboard('${escapeHtml(item.id)}', this)">コピー</button>
+        <button class="btn btn-danger" onclick="deleteItem(${i})">削除</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function deleteItem(index) {
+  const list = loadRoomIds();
+  list.splice(index, 1);
+  saveRoomIds(list);
+  renderList();
+}
+
+// Save button
+document.getElementById('saveBtn').addEventListener('click', () => {
+  const idInput = document.getElementById('roomIdInput');
+  const memoInput = document.getElementById('roomMemoInput');
+  const id = idInput.value.trim();
+  if (!id) {
+    idInput.focus();
+    return;
+  }
+  const list = loadRoomIds();
+  list.unshift({ id: id, memo: memoInput.value.trim(), time: Date.now() });
+  // Keep max 50 entries
+  if (list.length > 50) list.length = 50;
+  saveRoomIds(list);
+  idInput.value = '';
+  memoInput.value = '';
+  renderList();
+});
+
+// Copy input button
+document.getElementById('copyInputBtn').addEventListener('click', function() {
+  const id = document.getElementById('roomIdInput').value.trim();
+  if (!id) {
+    document.getElementById('roomIdInput').focus();
+    return;
+  }
+  copyToClipboard(id, this);
+});
+
+// Enter key to save
+document.getElementById('roomIdInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') document.getElementById('saveBtn').click();
+});
+document.getElementById('roomMemoInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') document.getElementById('saveBtn').click();
+});
+
+renderList();
+</script>
+</body>
+</html>
