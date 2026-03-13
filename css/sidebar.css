@@ -10,15 +10,15 @@
   padding: 2.5rem 0;
 }
 
-/* Hide sidebar on mobile */
-@media (max-width: 899px) {
+/* Hide sidebar on mobile/tablet */
+@media (max-width: 1023px) {
   .sidebar,
   .page-sidebar {
     display: none !important;
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1024px) {
   .page-with-sidebar {
     display: grid;
     grid-template-columns: 1fr 180px;
@@ -56,13 +56,6 @@
   .sidebar-ad-slot img {
     max-width: 100%;
     height: auto;
-  }
-}
-
-/* Wide screens: add left padding to visually center content against sidebar */
-@media (min-width: 1200px) {
-  .page-with-sidebar {
-    padding-left: calc(180px + 2rem);
   }
 }
 

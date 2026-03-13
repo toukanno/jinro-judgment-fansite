@@ -168,8 +168,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // PC Sticky Sidebar (auto-inject on 900px+ screens with long content)
-  if (window.matchMedia('(min-width: 900px)').matches && !document.querySelector('.page-sidebar')) {
+  // PC Sticky Sidebar (auto-inject on 1024px+ screens with long content)
+  if (window.matchMedia('(min-width: 1024px)').matches && !document.querySelector('.page-sidebar')) {
     var mainEl = document.querySelector('main.container, main');
     if (mainEl && mainEl.scrollHeight > 600) {
       var wrapper = document.createElement('div');
@@ -187,6 +187,32 @@ document.addEventListener('DOMContentLoaded', () => {
         + '</div>';
       wrapper.appendChild(sidebar);
     }
+  }
+
+  // Rakuten side banner (PC only, fixed right center)
+  if (window.matchMedia('(min-width: 1024px)').matches && !document.getElementById('rakuten-side-banner')) {
+    var sideBanner = document.createElement('div');
+    sideBanner.id = 'rakuten-side-banner';
+    sideBanner.innerHTML =
+      '<a href="//af.moshimo.com/af/c/click?a_id=5422316&p_id=54&pc_id=54&pl_id=1225" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc>'
+      + '<img src="//image.moshimo.com/af-img/0032/000000001225.gif" width="120" height="500" style="border:none;">'
+      + '</a>'
+      + '<img src="//i.moshimo.com/af/i/impression?a_id=5422316&p_id=54&pc_id=54&pl_id=1225" width="1" height="1" style="border:none;" loading="lazy">';
+    var bannerStyle = document.createElement('style');
+    bannerStyle.textContent =
+      '#rakuten-side-banner { display: none; }'
+      + '@media (min-width: 1024px) {'
+      + '  #rakuten-side-banner {'
+      + '    display: block;'
+      + '    position: fixed;'
+      + '    right: 0;'
+      + '    top: 50%;'
+      + '    transform: translateY(-50%);'
+      + '    z-index: 9999;'
+      + '  }'
+      + '}';
+    document.head.appendChild(bannerStyle);
+    document.body.appendChild(sideBanner);
   }
 
   // Scroll progress bar (auto-inject)
