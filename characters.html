@@ -32,7 +32,7 @@
       background: linear-gradient(135deg, #1a1025 0%, #0d1117 50%, #0a1628 100%);
       padding: 3rem 1.5rem 2rem;
       text-align: center;
-      border-bottom: 1px solid #30363d;
+      border-bottom: 1px solid var(--border-primary);
     }
     .char-hero-section h1 {
       font-size: 2.2rem;
@@ -44,7 +44,7 @@
       margin-bottom: .5rem;
     }
     .char-hero-section p {
-      color: #8b949e;
+      color: var(--text-muted);
       font-size: 1.05rem;
       max-width: 600px;
       margin: 0 auto;
@@ -58,7 +58,7 @@
     }
     .char-stat {
       background: rgba(22,27,34,.6);
-      border: 1px solid #30363d;
+      border: 1px solid var(--border-primary);
       border-radius: 10px;
       padding: .5rem 1rem;
       text-align: center;
@@ -66,11 +66,11 @@
     .char-stat-num {
       font-size: 1.5rem;
       font-weight: 800;
-      color: #58a6ff;
+      color: var(--accent);
     }
     .char-stat-label {
       font-size: .75rem;
-      color: #8b949e;
+      color: var(--text-muted);
     }
 
     /* ===== Filters ===== */
@@ -91,7 +91,7 @@
       flex-wrap: wrap;
     }
     .char-count {
-      color: #8b949e;
+      color: var(--text-muted);
       font-size: .88rem;
       margin-bottom: 1rem;
     }
@@ -105,7 +105,7 @@
     }
     .char-card {
       background: var(--bg-card);
-      border: 1px solid #30363d;
+      border: 1px solid var(--border-primary);
       border-radius: 12px;
       padding: 1.2rem;
       cursor: pointer;
@@ -157,12 +157,12 @@
     .char-card-name {
       font-size: 1.1rem;
       font-weight: 800;
-      color: #e6edf3;
+      color: var(--text-primary);
       margin-bottom: .2rem;
     }
     .char-card-ruby {
       font-size: .72rem;
-      color: #8b949e;
+      color: var(--text-muted);
       margin-bottom: .6rem;
     }
     .char-card-tags {
@@ -179,13 +179,13 @@
       font-size: .68rem;
       font-weight: 600;
     }
-    .char-tag.t-male { background: rgba(88,166,255,.12); color: #58a6ff; border: 1px solid rgba(88,166,255,.25); }
+    .char-tag.t-male { background: rgba(88,166,255,.12); color: var(--accent); border: 1px solid rgba(88,166,255,.25); }
     .char-tag.t-female { background: rgba(247,120,186,.12); color: #f778ba; border: 1px solid rgba(247,120,186,.25); }
     .char-tag.t-cat1 { background: rgba(126,231,135,.1); color: #7ee787; border: 1px solid rgba(126,231,135,.2); }
     .char-tag.t-cat2 { background: rgba(210,153,34,.1); color: #d29922; border: 1px solid rgba(210,153,34,.2); }
     .char-tag.t-cat3 { background: rgba(167,139,250,.1); color: #a78bfa; border: 1px solid rgba(167,139,250,.2); }
     .char-card-desc {
-      color: #c9d1d9;
+      color: var(--text-secondary);
       font-size: .82rem;
       line-height: 1.6;
       display: -webkit-box;
@@ -206,8 +206,8 @@
     }
     .char-detail-overlay.active { display: flex; justify-content: center; align-items: flex-start; padding: 2rem 1rem; }
     .char-detail {
-      background: #161b22;
-      border: 1px solid #30363d;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-primary);
       border-radius: 16px;
       max-width: 560px;
       width: 100%;
@@ -224,8 +224,8 @@
       position: absolute;
       top: 1rem; right: 1rem;
       background: rgba(110,118,129,.2);
-      border: 1px solid #30363d;
-      color: #e6edf3;
+      border: 1px solid var(--border-primary);
+      color: var(--text-primary);
       width: 36px; height: 36px;
       border-radius: 50%;
       font-size: 1.2rem;
@@ -254,12 +254,12 @@
       font-size: 1.6rem;
       font-weight: 900;
       text-align: center;
-      color: #e6edf3;
+      color: var(--text-primary);
       margin-bottom: .2rem;
     }
     .char-detail-ruby {
       font-size: .85rem;
-      color: #8b949e;
+      color: var(--text-muted);
       text-align: center;
       margin-bottom: 1rem;
     }
@@ -276,14 +276,14 @@
     .char-detail-section h3 {
       font-size: .85rem;
       font-weight: 700;
-      color: #58a6ff;
+      color: var(--accent);
       margin-bottom: .5rem;
       padding-bottom: .3rem;
       border-bottom: 1px solid #21262d;
     }
     .char-detail-section p,
     .char-detail-section ul {
-      color: #c9d1d9;
+      color: var(--text-secondary);
       font-size: .9rem;
       line-height: 1.7;
     }
@@ -301,7 +301,7 @@
       margin-top: 1.5rem;
       background: rgba(88,166,255,.1);
       border: 1px solid rgba(88,166,255,.3);
-      color: #58a6ff;
+      color: var(--accent);
       border-radius: 8px;
       font-size: .9rem;
       font-weight: 600;

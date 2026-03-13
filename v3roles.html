@@ -31,7 +31,7 @@
       background: linear-gradient(135deg, #1a1025 0%, #0d1117 40%, #0a1628 100%);
       padding: 3.5rem 1.5rem 2.5rem;
       text-align: center;
-      border-bottom: 1px solid #30363d;
+      border-bottom: 1px solid var(--border-primary);
       position: relative;
       overflow: hidden;
     }
@@ -51,15 +51,15 @@
       background-clip: text;
       margin-bottom: .5rem;
     }
-    .update-hero .subtitle { color: #8b949e; font-size: 1rem; }
+    .update-hero .subtitle { color: var(--text-muted); font-size: 1rem; }
     .update-hero .update-date {
       display: inline-block;
       margin-top: .8rem;
       padding: .3rem .8rem;
-      border: 1px solid #30363d;
+      border: 1px solid var(--border-primary);
       border-radius: 20px;
       font-size: .82rem;
-      color: #8b949e;
+      color: var(--text-muted);
     }
 
     .team-section { margin-bottom: 3rem; }
@@ -71,20 +71,20 @@
       font-weight: 800;
       margin-bottom: 1.2rem;
       padding-bottom: .5rem;
-      border-bottom: 2px solid #30363d;
+      border-bottom: 2px solid var(--border-primary);
     }
     .team-header .team-icon { font-size: 1.5rem; }
 
     .role-card-v3 {
-      background: #161b22;
-      border: 1px solid #30363d;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-primary);
       border-radius: 10px;
       padding: 1.2rem 1.4rem;
       margin-bottom: .8rem;
       transition: border-color .2s, box-shadow .2s;
       cursor: pointer;
     }
-    .role-card-v3:hover { border-color: #58a6ff; box-shadow: 0 2px 12px rgba(88,166,255,.08); }
+    .role-card-v3:hover { border-color: var(--accent); box-shadow: 0 2px 12px rgba(88,166,255,.08); }
     .role-card-v3 .role-header {
       display: flex;
       align-items: center;
@@ -92,31 +92,31 @@
       margin-bottom: .5rem;
     }
     .role-card-v3 .role-icon { font-size: 1.5rem; }
-    .role-card-v3 .role-name { font-size: 1.05rem; font-weight: 700; color: #e6edf3; }
+    .role-card-v3 .role-name { font-size: 1.05rem; font-weight: 700; color: var(--text-primary); }
     .role-card-v3 .role-ability-tag {
       margin-left: auto;
       font-size: .78rem;
       padding: .15rem .5rem;
       border-radius: 4px;
       background: rgba(88,166,255,.12);
-      color: #58a6ff;
+      color: var(--accent);
       font-weight: 600;
     }
-    .role-card-v3 .role-desc { color: #c9d1d9; font-size: .9rem; line-height: 1.7; }
+    .role-card-v3 .role-desc { color: var(--text-secondary); font-size: .9rem; line-height: 1.7; }
     .role-card-v3 .role-strategy {
       margin-top: .6rem;
       padding: .6rem .8rem;
       background: rgba(88,166,255,.05);
       border-radius: 6px;
       font-size: .85rem;
-      color: #8b949e;
+      color: var(--text-muted);
       display: none;
     }
-    .role-card-v3 .role-strategy strong { color: #58a6ff; }
+    .role-card-v3 .role-strategy strong { color: var(--accent); }
     .role-card-v3.open .role-strategy { display: block; }
     .role-card-v3 .expand-hint {
       font-size: .75rem;
-      color: #484f58;
+      color: var(--text-faint);
       margin-top: .4rem;
     }
     .role-card-v3.open .expand-hint { display: none; }
@@ -135,25 +135,25 @@
       margin-bottom: 2.5rem;
     }
     .stat-card {
-      background: #161b22;
-      border: 1px solid #30363d;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-primary);
       border-radius: 10px;
       padding: 1.2rem;
       text-align: center;
     }
     .stat-card .stat-num { font-size: 2rem; font-weight: 900; }
-    .stat-card .stat-label { font-size: .82rem; color: #8b949e; margin-top: .2rem; }
+    .stat-card .stat-label { font-size: .82rem; color: var(--text-muted); margin-top: .2rem; }
 
     .source-note {
       background: rgba(88,166,255,.06);
-      border: 1px solid #30363d;
+      border: 1px solid var(--border-primary);
       border-radius: 8px;
       padding: 1rem 1.2rem;
       font-size: .85rem;
-      color: #8b949e;
+      color: var(--text-muted);
       margin-bottom: 2rem;
     }
-    .source-note a { color: #58a6ff; }
+    .source-note a { color: var(--accent); }
 
     .filter-bar {
       display: flex;

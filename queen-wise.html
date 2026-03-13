@@ -31,7 +31,7 @@
       background: linear-gradient(135deg, #1a0f20 0%, #0d1117 40%, #1a1508 100%);
       padding: 3.5rem 1.5rem 2.5rem;
       text-align: center;
-      border-bottom: 1px solid #30363d;
+      border-bottom: 1px solid var(--border-primary);
       position: relative;
       overflow: hidden;
     }
@@ -52,7 +52,7 @@
       background-clip: text;
       margin-bottom: .5rem;
     }
-    .qw-hero p { color: #8b949e; font-size: 1rem; }
+    .qw-hero p { color: var(--text-muted); font-size: 1rem; }
     .qw-hero .badge-row { margin-top: .8rem; display: flex; justify-content: center; gap: .5rem; flex-wrap: wrap; }
 
     .comp-table { margin-bottom: 2rem; }
@@ -62,8 +62,8 @@
       gap: .6rem;
     }
     .comp-chip {
-      background: #161b22;
-      border: 1px solid #30363d;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-primary);
       border-radius: 8px;
       padding: .6rem .8rem;
       text-align: center;
@@ -72,15 +72,15 @@
     }
     .comp-chip.village { border-color: rgba(126,231,135,.3); color: #7ee787; }
     .comp-chip.werewolf { border-color: rgba(248,81,73,.3); color: #f85149; }
-    .comp-chip.other { border-color: rgba(88,166,255,.3); color: #58a6ff; }
+    .comp-chip.other { border-color: rgba(88,166,255,.3); color: var(--accent); }
 
     .strat-section { margin-bottom: 3rem; }
-    .strat-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; }
+    .strat-card { background: var(--bg-secondary); border: 1px solid var(--border-primary); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; }
     .strat-card h3 { margin-bottom: .8rem; display: flex; align-items: center; gap: .5rem; }
-    .strat-card h4 { color: #58a6ff; margin: 1rem 0 .5rem; font-size: .95rem; }
+    .strat-card h4 { color: var(--accent); margin: 1rem 0 .5rem; font-size: .95rem; }
     .strat-card ul { margin-left: 1.5rem; margin-bottom: .8rem; }
-    .strat-card li { margin-bottom: .3rem; color: #c9d1d9; font-size: .92rem; }
-    .strat-card p { color: #c9d1d9; font-size: .92rem; line-height: 1.8; margin-bottom: .5rem; }
+    .strat-card li { margin-bottom: .3rem; color: var(--text-secondary); font-size: .92rem; }
+    .strat-card p { color: var(--text-secondary); font-size: .92rem; line-height: 1.8; margin-bottom: .5rem; }
 
     .do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
     .do-dont > div { border-radius: 8px; padding: 1rem; }
@@ -90,13 +90,13 @@
     .dont-box h5 { color: #f85149; margin-bottom: .5rem; }
     @media (max-width: 600px) { .do-dont { grid-template-columns: 1fr; } }
 
-    .flowchart { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 1.5rem; margin: 1rem 0; font-size: .88rem; }
+    .flowchart { background: var(--bg-tertiary); border: 1px solid var(--border-primary); border-radius: 8px; padding: 1.5rem; margin: 1rem 0; font-size: .88rem; }
     .flowchart .step { display: flex; align-items: flex-start; gap: .8rem; margin-bottom: .8rem; }
     .flowchart .step-num { border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .82rem; flex-shrink: 0; color: #fff; }
     .flowchart .step-num.village { background: #238636; }
     .flowchart .step-num.wolf { background: #da3633; }
     .flowchart .step-num.neutral { background: #58a6ff; }
-    .flowchart .arrow { text-align: center; color: #484f58; margin: .2rem 0; }
+    .flowchart .arrow { text-align: center; color: var(--text-faint); margin: .2rem 0; }
 
     .role-summary {
       display: grid;
@@ -105,13 +105,13 @@
       margin-bottom: 2rem;
     }
     .role-mini {
-      background: #161b22;
-      border: 1px solid #30363d;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-primary);
       border-radius: 10px;
       padding: 1.2rem;
     }
     .role-mini h4 { font-size: 1rem; margin-bottom: .4rem; display: flex; align-items: center; gap: .4rem; }
-    .role-mini p { color: #8b949e; font-size: .85rem; line-height: 1.6; }
+    .role-mini p { color: var(--text-muted); font-size: .85rem; line-height: 1.6; }
 
     .zone-explain {
       background: rgba(88,166,255,.06);
@@ -120,8 +120,8 @@
       padding: 1.2rem;
       margin: 1rem 0;
     }
-    .zone-explain h5 { color: #58a6ff; margin-bottom: .5rem; font-size: .95rem; }
-    .zone-explain p { color: #c9d1d9; font-size: .88rem; line-height: 1.7; }
+    .zone-explain h5 { color: var(--accent); margin-bottom: .5rem; font-size: .95rem; }
+    .zone-explain p { color: var(--text-secondary); font-size: .88rem; line-height: 1.7; }
 
     /* Responsive: 768px breakpoint */
     @media (max-width: 768px) {
@@ -560,6 +560,50 @@
         <li><strong>護衛職の生存</strong> &#x2014; 狩人・罠師・番犬の生死がゲームの勝敗を直接左右する</li>
         <li><strong>特殊役職の使いどころ</strong> &#x2014; 暗殺者・強欲な人狼など一度きりの能力は、タイミングが命</li>
         <li><strong>情報整理が勝敗を分ける</strong> &#x2014; 20人の大人数だからこそ、占い結果・投票先・死亡者の役職を常に整理する習慣が大切</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== 女王部屋の勝率を上げるコツ ===== -->
+  <div class="strat-section">
+    <h2 class="section-title">&#x1F4A1; 女王部屋で勝率を上げるコツ</h2>
+
+    <div class="strat-card">
+      <h3>&#x1F4CA; 陣営別の勝率改善ポイント</h3>
+      <div class="table-scroll">
+      <table class="data-table">
+        <tr><th>陣営</th><th>最重要ポイント</th><th>よくあるミス</th><th>改善策</th></tr>
+        <tr>
+          <td><strong style="color:#7ee787;">市民</strong></td>
+          <td>女王を3日目まで守り切る</td>
+          <td>護衛職が噛みで脱落</td>
+          <td>番犬→女王、狩人→賢者の二段護衛</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#f85149;">人狼</strong></td>
+          <td>3日目までに女王位置を特定</td>
+          <td>占い騙りの精度不足</td>
+          <td>妖術師結果を確実に共有、計画的な噛み</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#d2a8ff;">妖狐</strong></td>
+          <td>占われないグレー位置を維持</td>
+          <td>目立って占い対象になる</td>
+          <td>中程度の発言量で存在感を消す</td>
+        </tr>
+      </table>
+      </div>
+    </div>
+
+    <div class="strat-card">
+      <h3>&#x1F4AC; 発言量のコントロール</h3>
+      <p>女王部屋では発言量が位置バレに直結します。各役職の適切な発言量の目安：</p>
+      <ul>
+        <li><strong>女王</strong> - 中程度。多すぎると注目を浴び、少なすぎると「潜伏してる人」として疑われる</li>
+        <li><strong>賢者・妖術師</strong> - 多め。占いCOするため議論の中心になるのは自然</li>
+        <li><strong>番犬・狩人</strong> - 中程度〜やや少なめ。護衛先を悟られない発言を心がける</li>
+        <li><strong>暗殺者</strong> - 中程度。潜伏しつつ、情報収集のために適度に発言</li>
+        <li><strong>市民（素村）</strong> - 多め推奨。情報を出して村に貢献する姿勢が重要</li>
       </ul>
     </div>
   </div>

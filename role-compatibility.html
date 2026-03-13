@@ -32,8 +32,8 @@
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-      background: #161b22;
-      border: 1px solid #30363d;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-primary);
       border-radius: 10px;
       padding: 1rem 1.5rem;
       margin-bottom: 2rem;
@@ -61,13 +61,13 @@
     .filter-section label {
       display: block;
       font-size: .9rem;
-      color: #8b949e;
+      color: var(--text-muted);
       margin-bottom: .5rem;
     }
     .role-filter-select {
-      background: #161b22;
-      color: #c9d1d9;
-      border: 1px solid #30363d;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-primary);
       border-radius: 8px;
       padding: .6rem 1rem;
       font-size: .95rem;
@@ -82,7 +82,7 @@
     }
     .role-filter-select:focus {
       outline: none;
-      border-color: #58a6ff;
+      border-color: var(--accent);
     }
 
     /* Compatibility cards */
@@ -93,8 +93,8 @@
       margin-bottom: 2rem;
     }
     .compat-card {
-      background: #161b22;
-      border: 1px solid #30363d;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-primary);
       border-radius: 10px;
       padding: 1.3rem 1.5rem;
       transition: border-color .2s, transform .15s;
@@ -146,7 +146,7 @@
     .compat-card .pair-connector {
       font-weight: 700;
       font-size: 1rem;
-      color: #484f58;
+      color: var(--text-faint);
     }
     .compat-card .rating {
       font-size: 1.1rem;
@@ -166,7 +166,7 @@
     .type-badge.neutral { background: rgba(210,153,34,.12); color: #d29922; }
 
     .compat-card .card-desc {
-      color: #c9d1d9;
+      color: var(--text-secondary);
       font-size: .88rem;
       line-height: 1.7;
     }
@@ -174,22 +174,22 @@
     /* Summary box */
     .summary-box {
       background: rgba(88,166,255,.06);
-      border: 1px solid #30363d;
+      border: 1px solid var(--border-primary);
       border-radius: 10px;
       padding: 1.2rem 1.5rem;
       margin-bottom: 2rem;
       font-size: .9rem;
-      color: #c9d1d9;
+      color: var(--text-secondary);
       line-height: 1.7;
     }
-    .summary-box strong { color: #58a6ff; }
+    .summary-box strong { color: var(--accent); }
 
     .category-title {
       font-size: 1.2rem;
       font-weight: 800;
       margin: 2rem 0 1rem;
       padding-bottom: .5rem;
-      border-bottom: 2px solid #30363d;
+      border-bottom: 2px solid var(--border-primary);
       display: flex;
       align-items: center;
       gap: .5rem;
@@ -202,14 +202,14 @@
       border-radius: 0 8px 8px 0;
       margin: 1.5rem 0;
       font-size: .9rem;
-      color: #c9d1d9;
+      color: var(--text-secondary);
     }
     .tip-box strong { color: #7ee787; }
     .tip-box a { color: #7ee787; }
 
     .no-results {
       text-align: center;
-      color: #484f58;
+      color: var(--text-faint);
       padding: 3rem 1rem;
       font-size: .95rem;
       display: none;
@@ -227,28 +227,28 @@
     .matrix-table td {
       padding: .4rem .5rem;
       text-align: center;
-      border: 1px solid #30363d;
+      border: 1px solid var(--border-primary);
     }
     .matrix-table th {
-      background: #161b22;
-      color: #c9d1d9;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
       font-weight: 700;
       position: sticky;
     }
     .matrix-table thead th { top: 0; z-index: 2; }
-    .matrix-table th:first-child { left: 0; z-index: 3; background: #161b22; }
+    .matrix-table th:first-child { left: 0; z-index: 3; background: var(--bg-secondary); }
     .matrix-table td:first-child {
       font-weight: 700;
       text-align: left;
       position: sticky;
       left: 0;
-      background: #0d1117;
+      background: var(--bg-tertiary);
       z-index: 1;
     }
     .matrix-table .cell-good { background: rgba(126,231,135,.12); color: #7ee787; }
     .matrix-table .cell-bad { background: rgba(248,81,73,.10); color: #f85149; }
     .matrix-table .cell-neutral { background: rgba(210,153,34,.08); color: #d29922; }
-    .matrix-table .cell-self { background: #161b22; color: #30363d; }
+    .matrix-table .cell-self { background: var(--bg-secondary); color: #30363d; }
 
     @media (max-width: 768px) {
       .compat-grid { grid-template-columns: 1fr; }
