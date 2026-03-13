@@ -92,7 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
     'quiz.html':               { icon: '\u{1F9E0}', color: '#f0883e' },
     'notepad.html':            { icon: '\u{1F4DD}', color: '#f0883e' },
     'memo.html':               { icon: '\u{1F4D2}', color: '#f0883e' },
-    'characters-gallery.html': { icon: '\u{1F5BC}', color: '#a78bfa' },
     'role-compatibility.html': { icon: '\u{1F4CA}', color: '#7ee787' },
     'gallery.html':            { icon: '\u{1F5BC}', color: '#a78bfa' },
     'settings.html':           { icon: '\u{2699}',  color: '#8b949e' },
@@ -164,18 +163,10 @@ document.addEventListener('DOMContentLoaded', () => {
       sidebar.className = 'page-sidebar';
       sidebar.innerHTML =
         '<div class="sidebar-ad-slot">'
-        + '<div class="ad-label">\u5E83\u544A</div>'
-        + '<div class="sidebar-ad-placeholder">'
-        + '<!-- \u3053\u3053\u306B\u5E83\u544A\u30B3\u30FC\u30C9\u3092\u633F\u5165 -->'
-        + '\u5E83\u544A\u30B9\u30DA\u30FC\u30B9<br>300\u00D7250'
-        + '</div>'
-        + '</div>'
-        + '<div class="sidebar-ad-slot">'
-        + '<div class="ad-label">\u5E83\u544A</div>'
-        + '<div class="sidebar-ad-placeholder">'
-        + '<!-- \u3053\u3053\u306B\u5E83\u544A\u30B3\u30FC\u30C9\u3092\u633F\u5165 -->'
-        + '\u5E83\u544A\u30B9\u30DA\u30FC\u30B9<br>300\u00D7250'
-        + '</div>'
+        + '<a href="//af.moshimo.com/af/c/click?a_id=5422323&p_id=54&pc_id=54&pl_id=1231" rel="nofollow" referrerpolicy="no-referrer-when-downgrade">'
+        + '<img src="//image.moshimo.com/af-img/0032/000000001231.gif" width="120" height="500" style="border:none;">'
+        + '</a>'
+        + '<img src="//i.moshimo.com/af/i/impression?a_id=5422323&p_id=54&pc_id=54&pl_id=1231" width="1" height="1" style="border:none;" loading="lazy">'
         + '</div>';
       wrapper.appendChild(sidebar);
     }
@@ -289,7 +280,6 @@ document.addEventListener('DOMContentLoaded', () => {
     { href: 'quiz.html', title: 'クイズ', desc: '知識テスト 初級〜上級' },
     { href: 'notepad.html', title: 'メモ帳', desc: 'ゲーム中のメモツール' },
     { href: 'memo.html', title: 'ゲームメモ', desc: 'プレイヤーごとの記録' },
-    { href: 'characters-gallery.html', title: 'キャラ図鑑', desc: 'キャラクター図鑑' },
     { href: 'role-compatibility.html', title: '相性表', desc: '役職相性マトリクス' },
     { href: 'gallery.html', title: 'ギャラリー', desc: '画像ギャラリー' },
     { href: 'settings.html', title: '設定', desc: 'テーマ・表示設定' },

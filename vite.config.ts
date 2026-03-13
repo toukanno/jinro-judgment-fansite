@@ -32,7 +32,6 @@ export default defineConfig({
         synergy: resolve(__dirname, 'synergy.html'),
         memo: resolve(__dirname, 'memo.html'),
         'role-compatibility': resolve(__dirname, 'role-compatibility.html'),
-        'characters-gallery': resolve(__dirname, 'characters-gallery.html'),
         settings: resolve(__dirname, 'settings.html'),
         gallery: resolve(__dirname, 'gallery.html'),
       },
