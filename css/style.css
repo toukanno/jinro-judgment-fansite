@@ -474,6 +474,8 @@ a.card { text-decoration: none; color: inherit; }
 .role-badge.fox { background: rgba(210,153,34,.12); color: #d29922; border: 1px solid rgba(210,153,34,.25); }
 .role-badge.lovers { background: rgba(219,127,247,.12); color: #db7ff7; border: 1px solid rgba(219,127,247,.25); }
 .role-badge.other { background: rgba(139,148,158,.12); color: var(--text-muted); border: 1px solid rgba(139,148,158,.25); }
+.role-badge.devil { background: rgba(235,87,87,.12); color: #eb5757; border: 1px solid rgba(235,87,87,.25); }
+.role-badge.chicken { background: rgba(247,181,56,.12); color: #f7b538; border: 1px solid rgba(247,181,56,.25); }
 
 /* ===== Table ===== */
 .data-table {
