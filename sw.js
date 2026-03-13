@@ -34,6 +34,9 @@ const ASSETS = [
   './js/roles-data.js',
   './js/theme.js',
   './manifest.json',
+  './icons/apple-touch-icon.png',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
 ];
 
 self.addEventListener('install', (event) => {
