@@ -981,11 +981,10 @@ img { max-width: 100%; height: auto; }
   .reveal { opacity: 1; transform: none; }
 }
 
-/* ===== Sidebar Ad (PC only) ===== */
+/* ===== Sidebar Ad (PC only, left + right) ===== */
 .sidebar-ad {
   position: fixed;
   top: 50%;
-  right: 1rem;
   transform: translateY(-50%);
   z-index: 80;
   display: none;
@@ -997,6 +996,8 @@ img { max-width: 100%; height: auto; }
   box-shadow: 0 4px 20px rgba(0,0,0,.3);
   transition: opacity .3s;
 }
+.sidebar-ad-left { left: 1rem; }
+.sidebar-ad-right { right: 1rem; }
 .sidebar-ad img { display: block; border-radius: 6px; }
 .sidebar-ad-close {
   position: absolute;
@@ -1017,10 +1018,10 @@ img { max-width: 100%; height: auto; }
   transition: background .2s, color .2s;
 }
 .sidebar-ad-close:hover { background: #484f58; color: var(--text-primary); }
-@media (min-width: 1025px) {
+@media (min-width: 1280px) {
   .sidebar-ad { display: block; }
 }
-@media (max-width: 1024px) {
+@media (max-width: 1279px) {
   .sidebar-ad { display: none !important; }
 }
 
