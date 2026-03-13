@@ -49,6 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'notepad.html':            { icon: '\u{1F4DD}', color: '#f0883e' },
     'memo.html':               { icon: '\u{1F4D2}', color: '#f0883e' },
     'role-compatibility.html': { icon: '\u{1F4CA}', color: '#7ee787' },
+    'gallery.html':            { icon: '\u{1F5BC}', color: '#a78bfa' },
+    'ai-advisor.html':         { icon: '\u{1F916}', color: '#58a6ff' },
     'settings.html':           { icon: '\u{2699}',  color: '#8b949e' },
   };
 
