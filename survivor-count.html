@@ -362,64 +362,66 @@
 <script src="js/common.js"></script>
 <script>
 (function() {
-  var ROLES = [
-    { id: 'village', label: '生存人数（村人陣営）', icon: '\u{1F468}', barClass: 'village', initial: 7, max: 20 },
-    { id: 'wolf',    label: '残り人狼数',           icon: '\u{1F43A}', barClass: 'wolf',    initial: 2, max: 10 },
-    { id: 'fox',     label: '妖狐生存',             icon: '\u{1F98A}', barClass: 'fox',      initial: 0, max: 5 },
-    { id: 'other',   label: 'その他',               icon: '\u{1F47B}', barClass: 'other',    initial: 0, max: 10 }
+  const ROLES = [
+    { id: 'village', label: '生存人数（村人陣営）', icon: '👨', barClass: 'village', initial: 7, max: 20 },
+    { id: 'wolf',    label: '残り人狼数',           icon: '🐺', barClass: 'wolf',    initial: 2, max: 10 },
+    { id: 'fox',     label: '妖狐生存',             icon: '🦊', barClass: 'fox',      initial: 0, max: 5 },
+    { id: 'other',   label: 'その他',               icon: '👻', barClass: 'other',    initial: 0, max: 10 }
   ];
 
-  var counts = {};
+  const rolesMap = {};
+  ROLES.forEach(function(r) { rolesMap[r.id] = r; });
+
+  const counts = {};
   ROLES.forEach(function(r) { counts[r.id] = r.initial; });
 
-  var containersEl = document.getElementById('counters');
+  const containersEl = document.getElementById('counters');
+
+  // Cached DOM references (populated after buildUI)
+  const els = {};
 
   function render() {
-    var total = 0;
+    let total = 0;
     ROLES.forEach(function(r) { total += counts[r.id]; });
-    document.getElementById('totalCount').textContent = total;
+    els.totalCount.textContent = total;
 
     ROLES.forEach(function(r) {
-      var pct = total > 0 ? (counts[r.id] / total * 100) : 0;
-      var bar = document.getElementById('bar-' + r.id);
-      var num = document.getElementById('num-' + r.id);
-      var minBtn = document.getElementById('min-' + r.id);
-      if (bar) bar.style.width = pct + '%';
-      if (num) num.textContent = counts[r.id];
-      if (minBtn) minBtn.disabled = counts[r.id] <= 0;
+      const pct = total > 0 ? (counts[r.id] / total * 100) : 0;
+      els['bar_' + r.id].style.width = pct + '%';
+      els['num_' + r.id].textContent = counts[r.id];
+      els['min_' + r.id].disabled = counts[r.id] <= 0;
     });
 
     // Calculate miss tolerance: (village + other) - wolf - fox - 1
-    var village = counts.village;
-    var wolf = counts.wolf;
-    var fox = counts.fox;
-    var other = counts.other;
-    var miss = (village + other) - wolf - fox - 1;
+    const village = counts.village;
+    const wolf = counts.wolf;
+    const fox = counts.fox;
+    const other = counts.other;
+    const miss = (village + other) - wolf - fox - 1;
 
-    var resultEl = document.getElementById('resultNum');
-    var subEl = document.getElementById('resultSub');
-    var formulaEl = document.getElementById('formula');
+    const resultEl = els.resultNum;
+    const subEl = els.resultSub;
 
-    resultEl.className = 'sc-result';
+    resultEl.classList.remove('positive', 'zero', 'negative');
     if (miss > 0) {
-      resultEl.textContent = miss + '\u56DE';
+      resultEl.textContent = miss + '回';
       resultEl.classList.add('positive');
-      subEl.textContent = '\u3042\u3068' + miss + '\u56DE\u307E\u3067\u6295\u7968\u30DF\u30B9\u304C\u8A31\u5BB9\u3055\u308C\u307E\u3059';
+      subEl.textContent = 'あと' + miss + '回まで投票ミスが許容されます';
     } else if (miss === 0) {
-      resultEl.textContent = '0\u56DE\uFF08\u30DF\u30B9\u4E0D\u53EF\uFF09';
+      resultEl.textContent = '0回（ミス不可）';
       resultEl.classList.add('zero');
-      subEl.textContent = '\u6B21\u306E\u6295\u7968\u3067\u4EBA\u72FC\u3092\u5F53\u3066\u306A\u3044\u3068\u6557\u5317\u3067\u3059';
+      subEl.textContent = '次の投票で人狼を当てないと敗北です';
     } else {
-      resultEl.textContent = '\u4EBA\u72FC\u9663\u55B6\u6709\u5229';
+      resultEl.textContent = '人狼陣営有利';
       resultEl.classList.add('negative');
-      subEl.textContent = '\u6751\u4EBA\u9663\u55B6\u306F\u65E2\u306B\u52DD\u3066\u306A\u3044\u72B6\u614B\u3067\u3059';
+      subEl.textContent = '村人陣営は既に勝てない状態です';
     }
 
-    formulaEl.textContent = '(' + village + ' + ' + other + ') - ' + wolf + ' - ' + fox + ' - 1 = ' + miss;
+    els.formula.textContent = '(' + village + ' + ' + other + ') - ' + wolf + ' - ' + fox + ' - 1 = ' + miss;
   }
 
   function buildUI() {
-    var html = '';
+    let html = '';
     ROLES.forEach(function(r) {
       html +=
         '<div class="sc-card">' +
@@ -427,9 +429,9 @@
             '<span class="sc-icon">' + r.icon + '</span>' +
             '<span class="sc-label">' + r.label + '</span>' +
             '<div class="sc-controls">' +
-              '<button class="sc-btn" id="min-' + r.id + '" data-id="' + r.id + '" data-dir="-1" aria-label="' + r.label + '\u3092\u6E1B\u3089\u3059">\u2212</button>' +
+              '<button class="sc-btn" id="min-' + r.id + '" data-id="' + r.id + '" data-dir="-1" aria-label="' + r.label + 'を減らす">−</button>' +
               '<span class="sc-num" id="num-' + r.id + '">' + counts[r.id] + '</span>' +
-              '<button class="sc-btn" data-id="' + r.id + '" data-dir="1" aria-label="' + r.label + '\u3092\u5897\u3084\u3059">+</button>' +
+              '<button class="sc-btn" data-id="' + r.id + '" data-dir="1" aria-label="' + r.label + 'を増やす">+</button>' +
             '</div>' +
           '</div>' +
           '<div class="sc-bar-wrap">' +
@@ -438,19 +440,30 @@
         '</div>';
     });
     containersEl.innerHTML = html;
+
+    // Cache DOM references after building
+    ROLES.forEach(function(r) {
+      els['bar_' + r.id] = document.getElementById('bar-' + r.id);
+      els['num_' + r.id] = document.getElementById('num-' + r.id);
+      els['min_' + r.id] = document.getElementById('min-' + r.id);
+    });
+    els.totalCount = document.getElementById('totalCount');
+    els.resultNum = document.getElementById('resultNum');
+    els.resultSub = document.getElementById('resultSub');
+    els.formula = document.getElementById('formula');
   }
 
   buildUI();
   render();
 
   containersEl.addEventListener('click', function(e) {
-    var btn = e.target.closest('.sc-btn');
+    const btn = e.target.closest('.sc-btn');
     if (!btn || btn.disabled) return;
-    var id = btn.dataset.id;
-    var dir = parseInt(btn.dataset.dir, 10);
-    var role = ROLES.find(function(r) { return r.id === id; });
+    const id = btn.dataset.id;
+    const dir = parseInt(btn.dataset.dir, 10);
+    const role = rolesMap[id];
     if (!role) return;
-    var next = counts[id] + dir;
+    const next = counts[id] + dir;
     if (next < 0 || next > role.max) return;
     counts[id] = next;
     render();
