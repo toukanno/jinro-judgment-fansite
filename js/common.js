@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (href === currentPage) a.classList.add('active');
     const meta = NAV_META[href];
     if (meta) {
-      a.style.borderLeftColor = meta.color;
+      if (href === currentPage) a.style.borderLeftColor = meta.color;
       var iconSpan = document.createElement('span');
       iconSpan.className = 'nav-icon';
       iconSpan.textContent = meta.icon;
