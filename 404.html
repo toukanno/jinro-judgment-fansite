@@ -30,8 +30,8 @@
       min-height: 60vh; text-align: center; padding: 2rem;
     }
     .error-icon { font-size: 5rem; margin-bottom: 1rem; filter: drop-shadow(0 4px 20px rgba(248,81,73,.3)); }
-    .error-code { font-size: 4rem; font-weight: 900; color: #f85149; margin-bottom: .5rem; }
-    .error-msg { font-size: 1.2rem; color: #8b949e; margin-bottom: 2rem; max-width: 500px; }
+    .error-code { font-size: 4rem; font-weight: 900; color: var(--red); margin-bottom: .5rem; }
+    .error-msg { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2rem; max-width: 500px; }
     .error-links { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
     .error-links a {
       padding: .6rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: .9rem;
@@ -43,9 +43,9 @@
     }
     .error-links .primary:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(35,134,54,.3); }
     .error-links .secondary {
-      background: rgba(33,38,45,.8); color: #e6edf3; border: 1px solid rgba(48,54,61,.6);
+      background: var(--bg-overlay-strong); color: var(--text-primary); border: 1px solid var(--border-primary);
     }
-    .error-links .secondary:hover { border-color: rgba(88,166,255,.3); }
+    .error-links .secondary:hover { border-color: var(--accent); }
   </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5638346660274603"
      crossorigin="anonymous"></script>
@@ -97,6 +97,15 @@
     <a href="index.html" class="primary">ホームに戻る</a>
     <a href="roles.html" class="secondary">役職一覧を見る</a>
     <a href="faq.html" class="secondary">FAQを見る</a>
+  </div>
+  <div style="margin-top:3rem;width:100%;max-width:600px;">
+    <h3 style="font-size:1rem;color:var(--text-secondary);margin-bottom:1rem;">よく見られているページ</h3>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem;text-align:left;">
+      <a href="guide.html" class="card" style="padding:.8rem 1rem;font-size:.85rem;">&#x1F331; 初心者ガイド</a>
+      <a href="strategy.html" class="card" style="padding:.8rem 1rem;font-size:.85rem;">&#x1F9E0; 立ち回りガイド</a>
+      <a href="glossary.html" class="card" style="padding:.8rem 1rem;font-size:.85rem;">&#x1F4DA; 用語集</a>
+      <a href="quiz.html" class="card" style="padding:.8rem 1rem;font-size:.85rem;">&#x1F9E9; 理解度クイズ</a>
+    </div>
   </div>
 </main>
 
