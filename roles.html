@@ -329,6 +329,11 @@ renderExList('');
   const countEl = document.getElementById('roleCount');
   let activeTeam = 'all';
 
+  if (typeof ROLES_DATA === 'undefined' || !Array.isArray(ROLES_DATA)) {
+    list.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:2rem;">役職データの読み込みに失敗しました。ページを再読み込みしてください。</p>';
+    return;
+  }
+
   function renderCards(filter = '', team = 'all') {
     const filtered = ROLES_DATA.filter(r => {
       const matchName = r.name.includes(filter) || r.description.includes(filter) || r.ability.includes(filter);

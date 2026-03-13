@@ -1,3 +1,21 @@
+// ===== Toast Notification =====
+function showToast(message, type) {
+  type = type || 'error';
+  var existing = document.querySelector('.toast');
+  if (existing) existing.remove();
+  var el = document.createElement('div');
+  el.className = 'toast toast--' + type;
+  el.textContent = message;
+  document.body.appendChild(el);
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() { el.classList.add('show'); });
+  });
+  setTimeout(function() {
+    el.classList.remove('show');
+    setTimeout(function() { el.remove(); }, 300);
+  }, 4000);
+}
+
 // ===== Mobile Nav Toggle =====
 document.addEventListener('DOMContentLoaded', () => {
   // Skip to content link (accessibility)
@@ -154,40 +172,47 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Breadcrumb JSON-LD auto-generation
-  const breadcrumbEl = document.querySelector('.breadcrumb');
-  if (breadcrumbEl && !document.querySelector('script[type="application/ld+json"][data-bc]')) {
-    const links = breadcrumbEl.querySelectorAll('a');
-    const items = [];
-    const base = 'https://toukanno.github.io/jinro-judgment-fansite/';
-    links.forEach((a, i) => {
-      items.push({
-        '@type': 'ListItem',
-        position: i + 1,
-        name: a.textContent.trim(),
-        item: base + a.getAttribute('href')
+  try {
+    const breadcrumbEl = document.querySelector('.breadcrumb');
+    if (breadcrumbEl && !document.querySelector('script[type="application/ld+json"][data-bc]')) {
+      const links = breadcrumbEl.querySelectorAll('a');
+      const items = [];
+      const base = 'https://toukanno.github.io/jinro-judgment-fansite/';
+      links.forEach((a, i) => {
+        const href = a.getAttribute('href');
+        const name = a.textContent.trim();
+        if (href && name) {
+          items.push({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: name,
+            item: base + href
+          });
+        }
       });
-    });
-    // Add current page as last item
-    const pageTitle = breadcrumbEl.lastChild.textContent.trim();
-    if (pageTitle) {
-      items.push({
-        '@type': 'ListItem',
-        position: items.length + 1,
-        name: pageTitle
-      });
+      // Add current page as last item
+      const lastNode = breadcrumbEl.lastChild;
+      const pageTitle = lastNode ? lastNode.textContent.trim() : '';
+      if (pageTitle) {
+        items.push({
+          '@type': 'ListItem',
+          position: items.length + 1,
+          name: pageTitle
+        });
+      }
+      if (items.length > 0) {
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.setAttribute('data-bc', '');
+        script.textContent = JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: items
+        });
+        document.head.appendChild(script);
+      }
     }
-    if (items.length > 0) {
-      const script = document.createElement('script');
-      script.type = 'application/ld+json';
-      script.setAttribute('data-bc', '');
-      script.textContent = JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: items
-      });
-      document.head.appendChild(script);
-    }
-  }
+  } catch (e) { /* breadcrumb generation failed silently */ }
 
   // Auto Table of Contents for long pages (3+ h2 headings)
   const tocMain = document.querySelector('main');

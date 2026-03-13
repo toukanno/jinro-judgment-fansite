@@ -321,12 +321,12 @@
         document.getElementById('contactForm').style.display = 'none';
         document.getElementById('successMsg').style.display = 'block';
       } else {
-        alert('送信に失敗しました。時間をおいて再度お試しください。');
+        showToast('送信に失敗しました。時間をおいて再度お試しください。', 'error');
         submitBtn.disabled = false;
         submitBtn.textContent = '送信する';
       }
     }).catch(function() {
-      alert('送信に失敗しました。ネットワーク接続をご確認ください。');
+      showToast('送信に失敗しました。ネットワーク接続をご確認ください。', 'error');
       submitBtn.disabled = false;
       submitBtn.textContent = '送信する';
     });

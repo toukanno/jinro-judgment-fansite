@@ -324,7 +324,7 @@ function analyze() {
     }
   });
 
-  if (total === 0) { alert('役職を1つ以上選んでください。'); return; }
+  if (total === 0) { showToast('役職を1つ以上選んでください。', 'info'); return; }
 
   const res = document.getElementById('simResult');
   res.style.display = 'block';
