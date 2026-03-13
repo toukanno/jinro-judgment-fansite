@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jinro-judgment-fansite-v12';
+const CACHE_NAME = 'jinro-judgment-fansite-v13';
 const ASSETS = [
   './',
   './index.html',
@@ -37,7 +37,9 @@ const ASSETS = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(ASSETS))
+      .catch((err) => console.error('SW: cache initialization failed:', err))
   );
   self.skipWaiting();
 });
@@ -68,7 +70,10 @@ self.addEventListener('fetch', (event) => {
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
           return response;
         })
-        .catch(() => cached);
+        .catch(() => {
+          if (!cached) console.warn('SW: fetch failed and no cache for', event.request.url);
+          return cached;
+        });
 
       return cached || fetched;
     })
