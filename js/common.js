@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const NAV_META = {
     'index.html':              { icon: '\u{1F3E0}', color: '#58a6ff' },
     'roles.html':              { icon: '\u{1F4CB}', color: '#58a6ff' },
-    'characters.html':         { icon: '\u{1F3AD}', color: '#a78bfa' },
+    'characters.html':         { icon: '\u{1F3AD}', color: '#c084fc' },
     'guide.html':              { icon: '\u{1F4D6}', color: '#58a6ff' },
     'strategy.html':           { icon: '\u{1F3AF}', color: '#58a6ff' },
     'composition.html':        { icon: '\u{1F9E9}', color: '#7ee787' },
@@ -93,19 +93,22 @@ document.addEventListener('DOMContentLoaded', () => {
     'notepad.html':            { icon: '\u{1F4DD}', color: '#f0883e' },
     'memo.html':               { icon: '\u{1F4D2}', color: '#f0883e' },
     'role-compatibility.html': { icon: '\u{1F4CA}', color: '#7ee787' },
-    'gallery.html':            { icon: '\u{1F5BC}', color: '#a78bfa' },
+    'gallery.html':            { icon: '\u{1F5BC}', color: '#e879f9' },
     'survivor-count.html':     { icon: '\u{1F43A}', color: '#e74c3c' },
     'settings.html':           { icon: '\u{2699}',  color: '#8b949e' },
   };
 
   // Mark active nav link & inject icons/colors
   const currentPage = location.pathname.split('/').pop() || 'index.html';
+  const currentPageClean = currentPage.replace('.html', '');
   document.querySelectorAll('.main-nav a').forEach(a => {
     const href = a.getAttribute('href');
-    if (href === currentPage) a.classList.add('active');
+    const hrefClean = href.replace('.html', '');
+    const isActive = href === currentPage || hrefClean === currentPageClean;
+    if (isActive) a.classList.add('active');
     const meta = NAV_META[href];
     if (meta) {
-      if (href === currentPage) a.style.borderLeftColor = meta.color;
+      if (isActive) a.style.borderLeftColor = meta.color;
       var iconSpan = document.createElement('span');
       iconSpan.className = 'nav-icon';
       iconSpan.textContent = meta.icon;

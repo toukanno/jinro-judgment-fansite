@@ -810,6 +810,10 @@ img { max-width: 100%; height: auto; }
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.25rem;
   }
+  .card-grid--contents {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
 }
 
 /* ===== Responsive: Tablet (below 1024px) ===== */
