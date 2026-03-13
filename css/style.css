@@ -854,8 +854,12 @@ img { max-width: 100%; height: auto; }
 @media (min-width: 1024px) {
   .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
     gap: 1.25rem;
+  }
+  .card-grid.card-grid--contents {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
   }
 }
 
