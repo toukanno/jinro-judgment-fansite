@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1a1a2e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="人狼JGDB">
+  <title>生存者カウンター - 人狼ジャッジメント攻略</title>
+  <meta name="description" content="人狼ジャッジメントの生存者数を管理し、許容される投票ミス回数を自動計算するツール。">
+  <meta property="og:title" content="生存者カウンター - 人狼ジャッジメント攻略">
+  <meta property="og:description" content="人狼ジャッジメントの生存者数を管理し、許容される投票ミス回数を自動計算するツール。">
+  <link rel="canonical" href="https://toukanno.github.io/jinro-judgment-fansite/survivor-count.html">
+  <meta property="og:image" content="https://toukanno.github.io/jinro-judgment-fansite/icons/icon-512.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="生存者カウンター - 人狼ジャッジメント攻略">
+  <meta name="twitter:description" content="生存者数管理・投票ミス回数自動計算ツール。">
+  <meta name="twitter:image" content="https://toukanno.github.io/jinro-judgment-fansite/icons/icon-512.svg">
+  <meta property="og:url" content="https://toukanno.github.io/jinro-judgment-fansite/survivor-count.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/theme.js"></script>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    .sc-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 2rem;
+    }
+    .sc-hero {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .sc-hero h1 {
+      font-size: 1.6rem;
+      font-weight: 900;
+      background: linear-gradient(90deg, #4a90e2, #e74c3c, #f39c12);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: .3rem;
+    }
+    .sc-hero p {
+      color: var(--text-muted);
+      font-size: .85rem;
+    }
+
+    /* Counter Cards */
+    .sc-card {
+      background: rgba(255,255,255,.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px;
+      padding: 1rem 1.2rem;
+      margin-bottom: .8rem;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .sc-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,.25);
+    }
+    .sc-row {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+    }
+    .sc-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      width: 40px;
+      text-align: center;
+    }
+    .sc-label {
+      flex: 1;
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .sc-controls {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      flex-shrink: 0;
+    }
+    .sc-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.08);
+      color: var(--text-primary);
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .1s, background .15s, opacity .15s;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sc-btn:hover {
+      background: rgba(255,255,255,.15);
+      transform: scale(1.12);
+    }
+    .sc-btn:active {
+      transform: scale(.9);
+    }
+    .sc-btn:disabled {
+      opacity: .3;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .sc-num {
+      width: 40px;
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--text-primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Progress Bar */
+    .sc-bar-wrap {
+      margin-top: .6rem;
+      height: 6px;
+      background: rgba(255,255,255,.08);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .sc-bar {
+      height: 100%;
+      border-radius: 3px;
+      transition: width .35s cubic-bezier(.4,0,.2,1);
+      min-width: 0;
+    }
+    .sc-bar.village { background: linear-gradient(90deg, #4a90e2, #67b3ff); }
+    .sc-bar.wolf    { background: linear-gradient(90deg, #e74c3c, #ff6b6b); }
+    .sc-bar.fox     { background: linear-gradient(90deg, #f39c12, #ffb84d); }
+    .sc-bar.other   { background: linear-gradient(90deg, #9b59b6, #bb8fce); }
+
+    /* Summary */
+    .sc-summary {
+      background: rgba(255,255,255,.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px;
+      padding: 1.2rem;
+      margin-top: 1.2rem;
+      text-align: center;
+    }
+    .sc-summary-title {
+      font-size: .82rem;
+      color: var(--text-muted);
+      margin-bottom: .5rem;
+      font-weight: 600;
+    }
+    .sc-result {
+      font-size: 1.8rem;
+      font-weight: 900;
+      transition: color .2s;
+    }
+    .sc-result-sub {
+      font-size: .82rem;
+      color: var(--text-muted);
+      margin-top: .3rem;
+    }
+    .sc-result.positive { color: #4a90e2; }
+    .sc-result.zero     { color: #f39c12; }
+    .sc-result.negative { color: #e74c3c; }
+
+    .sc-formula {
+      font-size: .75rem;
+      color: var(--text-faint);
+      margin-top: .8rem;
+      padding-top: .8rem;
+      border-top: 1px solid rgba(255,255,255,.08);
+      font-family: monospace;
+    }
+
+    /* Reset */
+    .sc-reset-wrap {
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .sc-reset {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--text-muted);
+      padding: .55rem 1.5rem;
+      border-radius: 8px;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s, color .15s, transform .1s;
+    }
+    .sc-reset:hover {
+      background: rgba(255,255,255,.12);
+      color: var(--text-primary);
+    }
+    .sc-reset:active {
+      transform: scale(.95);
+    }
+
+    /* Total badge */
+    .sc-total {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .sc-total-item {
+      text-align: center;
+    }
+    .sc-total-num {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--text-primary);
+    }
+    .sc-total-label {
+      font-size: .7rem;
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 414px) {
+      .sc-wrap { padding: 1rem .8rem 1.5rem; }
+      .sc-hero h1 { font-size: 1.3rem; }
+      .sc-card { padding: .8rem 1rem; }
+      .sc-icon { font-size: 1.3rem; width: 32px; }
+      .sc-label { font-size: .8rem; }
+      .sc-btn { width: 32px; height: 32px; font-size: 1rem; }
+      .sc-num { width: 32px; font-size: 1.1rem; }
+      .sc-result { font-size: 1.5rem; }
+    }
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5638346660274603"
+     crossorigin="anonymous"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-XXXXXXXXXX");</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo"><span class="wolf-icon">&#x1F43A;</span> 人狼JGデータベース</a>
+    <button class="nav-toggle" aria-label="メニュー">&#9776;</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="roles.html">役職一覧</a></li>
+        <li><a href="characters.html">キャラクター</a></li>
+        <li><a href="guide.html">初心者ガイド</a></li>
+        <li><a href="strategy.html">立ち回り</a></li>
+        <li><a href="composition.html">編成考察</a></li>
+        <li><a href="glossary.html">用語集</a></li>
+        <li><a href="templates.html">部屋テンプレ</a></li>
+        <li><a href="copipe.html">コピペ集</a></li>
+        <li><a href="v3roles.html">V3新役職</a></li>
+        <li><a href="queen-wise.html">女王部屋</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="timer.html">タイマー</a></li>
+        <li><a href="exclusion.html">同村制限</a></li>
+        <li><a href="rope-calc.html">縄計算</a></li>
+        <li><a href="synergy.html">役職相性</a></li>
+        <li><a href="quiz.html">クイズ</a></li>
+        <li><a href="notepad.html">メモ帳</a></li>
+        <li><a href="memo.html">ゲームメモ</a></li>
+        <li><a href="role-compatibility.html">相性表</a></li>
+        <li><a href="gallery.html">ギャラリー</a></li>
+        <li><a href="survivor-count.html">生存者カウンター</a></li>
+        <li><a href="settings.html">設定</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="index.html">ホーム</a> <span>&gt;</span> 生存者カウンター</div>
+
+  <div class="sc-wrap">
+    <div class="sc-hero">
+      <h1>&#x1F43A; 生存者カウンター</h1>
+      <p>各陣営の生存者数を管理し、投票ミスの許容回数を自動計算します</p>
+    </div>
+
+    <div class="sc-total">
+      <div class="sc-total-item">
+        <div class="sc-total-num" id="totalCount">9</div>
+        <div class="sc-total-label">合計生存者</div>
+      </div>
+    </div>
+
+    <div id="counters"></div>
+
+    <div class="sc-summary">
+      <div class="sc-summary-title">許容される投票ミス回数</div>
+      <div class="sc-result" id="resultNum"></div>
+      <div class="sc-result-sub" id="resultSub"></div>
+      <div class="sc-formula" id="formula"></div>
+    </div>
+
+    <div class="sc-reset-wrap">
+      <button class="sc-reset" id="resetBtn">&#x21BA; リセット</button>
+    </div>
+  </div>
+</main>
+
+<div class="affiliate-banner">
+  <span class="af-pc"><a href="https://af.moshimo.com/af/c/click?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=620" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc><img src="https://image.moshimo.com/af-img/0032/000000000620.gif" width="468" height="60" style="border:none;" alt="楽天市場" loading="lazy"></a><img src="https://i.moshimo.com/af/i/impression?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=620" width="1" height="1" style="border:none;" alt="" loading="lazy"></span>
+  <span class="af-sp"><a href="https://af.moshimo.com/af/c/click?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=617" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc><img src="https://image.moshimo.com/af-img/0032/000000000617.gif" width="100" height="60" style="border:none;" alt="楽天市場" loading="lazy"></a><img src="https://i.moshimo.com/af/i/impression?a_id=5422316&amp;p_id=54&amp;pc_id=54&amp;pl_id=617" width="1" height="1" style="border:none;" alt="" loading="lazy"></span>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-columns">
+    <div>
+      <h4>攻略コンテンツ</h4>
+      <a href="roles.html">役職一覧</a>
+      <a href="guide.html">初心者ガイド</a>
+      <a href="strategy.html">立ち回りガイド</a>
+      <a href="queen-wise.html">女王部屋攻略</a>
+      <a href="v3roles.html">V3新役職</a>
+    </div>
+    <div>
+      <h4>データ・資料</h4>
+      <a href="glossary.html">用語集</a>
+      <a href="composition.html">編成シミュレーター</a>
+      <a href="characters.html">キャラクター</a>
+      <a href="synergy.html">役職相性</a>
+      <a href="exclusion.html">同村制限</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+    <div>
+      <h4>ツール</h4>
+      <a href="timer.html">議論タイマー</a>
+      <a href="rope-calc.html">縄計算</a>
+      <a href="notepad.html">メモ帳</a>
+      <a href="memo.html">ゲームメモ</a>
+      <a href="copipe.html">コピペ集</a>
+      <a href="templates.html">部屋テンプレ</a>
+      <a href="quiz.html">クイズ</a>
+      <a href="survivor-count.html">生存者カウンター</a>
+    </div>
+    <div>
+      <h4>サイト情報</h4>
+      <a href="index.html">ホーム</a>
+      <a href="settings.html">設定</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+    </div>
+  </div>
+  <p>人狼ジャッジメント 攻略データベース - ファンサイト</p>
+  <p>本サイトは非公式のファンサイトです。「人狼ジャッジメント」はそらいろ株式会社の登録商標です。</p>
+</footer>
+
+<script src="js/common.js"></script>
+<script>
+(function() {
+  var ROLES = [
+    { id: 'village', label: '生存人数（村人陣営）', icon: '\u{1F468}', barClass: 'village', initial: 7, max: 20 },
+    { id: 'wolf',    label: '残り人狼数',           icon: '\u{1F43A}', barClass: 'wolf',    initial: 2, max: 10 },
+    { id: 'fox',     label: '妖狐生存',             icon: '\u{1F98A}', barClass: 'fox',      initial: 0, max: 5 },
+    { id: 'other',   label: 'その他',               icon: '\u{1F47B}', barClass: 'other',    initial: 0, max: 10 }
+  ];
+
+  var counts = {};
+  ROLES.forEach(function(r) { counts[r.id] = r.initial; });
+
+  var containersEl = document.getElementById('counters');
+
+  function render() {
+    var total = 0;
+    ROLES.forEach(function(r) { total += counts[r.id]; });
+    document.getElementById('totalCount').textContent = total;
+
+    ROLES.forEach(function(r) {
+      var pct = total > 0 ? (counts[r.id] / total * 100) : 0;
+      var bar = document.getElementById('bar-' + r.id);
+      var num = document.getElementById('num-' + r.id);
+      var minBtn = document.getElementById('min-' + r.id);
+      if (bar) bar.style.width = pct + '%';
+      if (num) num.textContent = counts[r.id];
+      if (minBtn) minBtn.disabled = counts[r.id] <= 0;
+    });
+
+    // Calculate miss tolerance: (village + other) - wolf - fox - 1
+    var village = counts.village;
+    var wolf = counts.wolf;
+    var fox = counts.fox;
+    var other = counts.other;
+    var miss = (village + other) - wolf - fox - 1;
+
+    var resultEl = document.getElementById('resultNum');
+    var subEl = document.getElementById('resultSub');
+    var formulaEl = document.getElementById('formula');
+
+    resultEl.className = 'sc-result';
+    if (miss > 0) {
+      resultEl.textContent = miss + '\u56DE';
+      resultEl.classList.add('positive');
+      subEl.textContent = '\u3042\u3068' + miss + '\u56DE\u307E\u3067\u6295\u7968\u30DF\u30B9\u304C\u8A31\u5BB9\u3055\u308C\u307E\u3059';
+    } else if (miss === 0) {
+      resultEl.textContent = '0\u56DE\uFF08\u30DF\u30B9\u4E0D\u53EF\uFF09';
+      resultEl.classList.add('zero');
+      subEl.textContent = '\u6B21\u306E\u6295\u7968\u3067\u4EBA\u72FC\u3092\u5F53\u3066\u306A\u3044\u3068\u6557\u5317\u3067\u3059';
+    } else {
+      resultEl.textContent = '\u4EBA\u72FC\u9663\u55B6\u6709\u5229';
+      resultEl.classList.add('negative');
+      subEl.textContent = '\u6751\u4EBA\u9663\u55B6\u306F\u65E2\u306B\u52DD\u3066\u306A\u3044\u72B6\u614B\u3067\u3059';
+    }
+
+    formulaEl.textContent = '(' + village + ' + ' + other + ') - ' + wolf + ' - ' + fox + ' - 1 = ' + miss;
+  }
+
+  function buildUI() {
+    var html = '';
+    ROLES.forEach(function(r) {
+      html +=
+        '<div class="sc-card">' +
+          '<div class="sc-row">' +
+            '<span class="sc-icon">' + r.icon + '</span>' +
+            '<span class="sc-label">' + r.label + '</span>' +
+            '<div class="sc-controls">' +
+              '<button class="sc-btn" id="min-' + r.id + '" data-id="' + r.id + '" data-dir="-1" aria-label="' + r.label + '\u3092\u6E1B\u3089\u3059">\u2212</button>' +
+              '<span class="sc-num" id="num-' + r.id + '">' + counts[r.id] + '</span>' +
+              '<button class="sc-btn" data-id="' + r.id + '" data-dir="1" aria-label="' + r.label + '\u3092\u5897\u3084\u3059">+</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="sc-bar-wrap">' +
+            '<div class="sc-bar ' + r.barClass + '" id="bar-' + r.id + '"></div>' +
+          '</div>' +
+        '</div>';
+    });
+    containersEl.innerHTML = html;
+  }
+
+  buildUI();
+  render();
+
+  containersEl.addEventListener('click', function(e) {
+    var btn = e.target.closest('.sc-btn');
+    if (!btn || btn.disabled) return;
+    var id = btn.dataset.id;
+    var dir = parseInt(btn.dataset.dir, 10);
+    var role = ROLES.find(function(r) { return r.id === id; });
+    if (!role) return;
+    var next = counts[id] + dir;
+    if (next < 0 || next > role.max) return;
+    counts[id] = next;
+    render();
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    ROLES.forEach(function(r) { counts[r.id] = r.initial; });
+    render();
+  });
+})();
+</script>
+</body>
+</html>
