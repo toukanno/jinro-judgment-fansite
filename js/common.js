@@ -29,6 +29,22 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.prepend(skip);
   }
 
+  // Search button in header
+  const headerInner = document.querySelector('.header-inner');
+  if (headerInner && !document.querySelector('.header-search-btn')) {
+    const searchBtn = document.createElement('button');
+    searchBtn.className = 'header-search-btn';
+    searchBtn.setAttribute('aria-label', '検索');
+    searchBtn.innerHTML = '&#x1F50D;';
+    searchBtn.addEventListener('click', () => {
+      const overlay = document.querySelector('.qs-overlay');
+      if (overlay) { overlay.classList.add('open'); overlay.querySelector('.qs-input').focus(); }
+    });
+    const navToggle = headerInner.querySelector('.nav-toggle');
+    if (navToggle) headerInner.insertBefore(searchBtn, navToggle);
+    else headerInner.appendChild(searchBtn);
+  }
+
   const toggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.main-nav');
   if (toggle && nav) {

@@ -250,6 +250,21 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   border-radius: 1px;
 }
 
+/* Header Search Button */
+.header-search-btn {
+  background: none;
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: .3rem .6rem;
+  transition: border-color .2s, background .2s, color .2s;
+  min-width: 40px;
+  min-height: 40px;
+}
+.header-search-btn:hover { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
+
 /* Hamburger */
 .nav-toggle {
   display: none;
