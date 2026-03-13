@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jinro-judgment-fansite-v9';
+const CACHE_NAME = 'jinro-judgment-fansite-v15';
 const ASSETS = [
   './',
   './index.html',
@@ -26,11 +26,11 @@ const ASSETS = [
   './404.html',
   './privacy.html',
   './contact.html',
-  './css/style.css',
+  './gallery.html',
+  './survivor-count.html',
   './js/common.js',
   './js/roles-data.js',
   './js/theme.js',
-  './manifest.json',
 ];
 
 self.addEventListener('install', (event) => {
@@ -54,21 +54,17 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Network-first strategy: always try network, fallback to cache
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      const fetched = fetch(event.request)
-        .then((response) => {
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
-          }
-
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+    fetch(event.request)
+      .then((response) => {
+        if (!response || response.status !== 200 || response.type !== 'basic') {
           return response;
-        })
-        .catch(() => cached);
-
-      return cached || fetched;
-    })
+        }
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });

@@ -194,30 +194,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Rakuten side banner (PC only, fixed right center)
-  if (window.matchMedia('(min-width: 1024px)').matches && !document.getElementById('rakuten-side-banner')) {
-    var sideBanner = document.createElement('div');
-    sideBanner.id = 'rakuten-side-banner';
-    sideBanner.innerHTML =
-      '<a href="//af.moshimo.com/af/c/click?a_id=5422316&p_id=54&pc_id=54&pl_id=1225" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc>'
-      + '<img src="//image.moshimo.com/af-img/0032/000000001225.gif" width="120" height="500" style="border:none;">'
+  // Rakuten side banners (PC only, fixed left & right center)
+  if (window.matchMedia('(min-width: 1024px)').matches && !document.getElementById('rakuten-banner-right')) {
+    var bannerHTML =
+      '<a href="//af.moshimo.com/af/c/click?a_id=5422316&p_id=54&pc_id=54&pl_id=1249" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc>'
+      + '<img src="//image.moshimo.com/af-img/0032/000000001249.gif" width="120" height="500" style="border:none;">'
       + '</a>'
-      + '<img src="//i.moshimo.com/af/i/impression?a_id=5422316&p_id=54&pc_id=54&pl_id=1225" width="1" height="1" style="border:none;" loading="lazy">';
+      + '<img src="//i.moshimo.com/af/i/impression?a_id=5422316&p_id=54&pc_id=54&pl_id=1249" width="1" height="1" style="border:none;" loading="lazy">';
+    var rightBanner = document.createElement('div');
+    rightBanner.id = 'rakuten-banner-right';
+    rightBanner.style.display = 'none';
+    rightBanner.innerHTML = bannerHTML;
+    var leftBanner = document.createElement('div');
+    leftBanner.id = 'rakuten-banner-left';
+    leftBanner.style.display = 'none';
+    leftBanner.innerHTML = bannerHTML;
     var bannerStyle = document.createElement('style');
     bannerStyle.textContent =
-      '#rakuten-side-banner { display: none; }'
-      + '@media (min-width: 1024px) {'
-      + '  #rakuten-side-banner {'
-      + '    display: block;'
+      '@media (min-width: 1024px) {'
+      + '  #rakuten-banner-right {'
+      + '    display: block !important;'
       + '    position: fixed;'
       + '    right: 0;'
       + '    top: 50%;'
       + '    transform: translateY(-50%);'
       + '    z-index: 9999;'
       + '  }'
+      + '  #rakuten-banner-left {'
+      + '    display: block !important;'
+      + '    position: fixed;'
+      + '    left: 0;'
+      + '    top: 50%;'
+      + '    transform: translateY(-50%);'
+      + '    z-index: 9999;'
+      + '  }'
       + '}';
     document.head.appendChild(bannerStyle);
-    document.body.appendChild(sideBanner);
+    document.body.appendChild(rightBanner);
+    document.body.appendChild(leftBanner);
   }
 
   // Scroll progress bar (auto-inject)
