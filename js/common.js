@@ -194,44 +194,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Rakuten side banners (PC only, fixed left & right center)
-  if (window.matchMedia('(min-width: 1024px)').matches && !document.getElementById('rakuten-banner-right') && !document.getElementById('pc-side-ad-right')) {
-    var bannerHTML =
+  // 3-column layout with side affiliate ads (PC wide, 1200px+)
+  if (window.matchMedia('(min-width: 1200px)').matches && !document.querySelector('.site-layout-wrapper')) {
+    // Remove any inline fixed side ads if present
+    var oldAds = document.querySelectorAll('.pc-side-ad');
+    oldAds.forEach(function(el) { el.remove(); });
+    var adHTML =
       '<a href="//af.moshimo.com/af/c/click?a_id=5422316&p_id=54&pc_id=54&pl_id=1225" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" attributionsrc>'
       + '<img src="//image.moshimo.com/af-img/0032/000000001225.gif" width="120" height="500" style="border:none;">'
       + '</a>'
       + '<img src="//i.moshimo.com/af/i/impression?a_id=5422316&p_id=54&pc_id=54&pl_id=1225" width="1" height="1" style="border:none;" loading="lazy">';
-    var rightBanner = document.createElement('div');
-    rightBanner.id = 'rakuten-banner-right';
-    rightBanner.style.display = 'none';
-    rightBanner.innerHTML = bannerHTML;
-    var leftBanner = document.createElement('div');
-    leftBanner.id = 'rakuten-banner-left';
-    leftBanner.style.display = 'none';
-    leftBanner.innerHTML = bannerHTML;
-    var bannerStyle = document.createElement('style');
-    bannerStyle.textContent =
-      '@media (min-width: 1024px) {'
-      + '  #rakuten-banner-right {'
-      + '    display: block !important;'
-      + '    position: fixed;'
-      + '    right: 0;'
-      + '    top: 50%;'
-      + '    transform: translateY(-50%);'
-      + '    z-index: 9999;'
-      + '  }'
-      + '  #rakuten-banner-left {'
-      + '    display: block !important;'
-      + '    position: fixed;'
-      + '    left: 0;'
-      + '    top: 50%;'
-      + '    transform: translateY(-50%);'
-      + '    z-index: 9999;'
-      + '  }'
-      + '}';
-    document.head.appendChild(bannerStyle);
-    document.body.appendChild(rightBanner);
-    document.body.appendChild(leftBanner);
+    var layoutWrapper = document.createElement('div');
+    layoutWrapper.className = 'site-layout-wrapper';
+    var leftAd = document.createElement('div');
+    leftAd.className = 'site-side-ad';
+    leftAd.innerHTML = adHTML;
+    var rightAd = document.createElement('div');
+    rightAd.className = 'site-side-ad';
+    rightAd.innerHTML = adHTML;
+    var mainCol = document.createElement('div');
+    mainCol.className = 'site-main-column';
+    // Move all body children into the main column
+    while (document.body.firstChild) {
+      mainCol.appendChild(document.body.firstChild);
+    }
+    layoutWrapper.appendChild(leftAd);
+    layoutWrapper.appendChild(mainCol);
+    layoutWrapper.appendChild(rightAd);
+    document.body.appendChild(layoutWrapper);
   }
 
   // Scroll progress bar (auto-inject)
