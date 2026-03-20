@@ -853,15 +853,6 @@ img { max-width: 100%; height: auto; }
 
 /* ===== PC Layout (1024px+) ===== */
 @media (min-width: 1024px) {
-  /* Offset for fixed left/right banners (120px each) */
-  body {
-    padding-left: 130px;
-    padding-right: 130px;
-  }
-  .site-header {
-    padding-left: 130px;
-    padding-right: 130px;
-  }
   .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -871,6 +862,30 @@ img { max-width: 100%; height: auto; }
     grid-template-columns: repeat(3, 1fr) !important;
     gap: 16px !important;
   }
+}
+
+/* ===== 3-column layout with side affiliate ads (PC wide) ===== */
+@media (min-width: 1200px) {
+  .site-layout-wrapper {
+    display: grid;
+    grid-template-columns: 140px 1fr 140px;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  .site-side-ad {
+    position: sticky;
+    top: 80px;
+    align-self: start;
+    text-align: center;
+    padding-top: 1rem;
+    height: fit-content;
+  }
+  .site-main-column {
+    min-width: 0;
+  }
+}
+@media (max-width: 1199px) {
+  .site-side-ad { display: none !important; }
 }
 
 /* ===== Responsive: Tablet (below 1024px) ===== */
