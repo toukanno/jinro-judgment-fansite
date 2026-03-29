@@ -38,6 +38,7 @@ export default defineConfig({
         'room-id': resolve(__dirname, 'room-id.html'),
         'pc-app': resolve(__dirname, 'pc-app.html'),
         'ai-advisor': resolve(__dirname, 'ai-advisor.html'),
+        'intro-video': resolve(__dirname, 'intro-video.html'),
       },
     },
   },
